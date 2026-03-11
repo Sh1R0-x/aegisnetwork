@@ -38,15 +38,15 @@ Le site est one-page. Toutes les sections sont dans `App.tsx` :
 
 | Composant              | Rôle                                         |
 | ---------------------- | -------------------------------------------- |
-| `CountUp`              | Compteur animé (utilitaire)                  |
+| `CountUp`              | Compteur animé (1s, glow à la complétion)     |
 | `FiberBeams`           | Fond animé fibre optique (CSS keyframes)     |
 | `Navbar`               | Navigation fixe avec section active auto (IntersectionObserver) |
 | `Hero`                 | Accroche principale + CTA + fond animé premium  |
-| `Stats`                | 3 KPI animés (débit, uptime, support)        |
-| `Solutions`            | Grille 2 colonnes : Internet fibre & VoIP    |
-| `VoIPSection`          | Détail téléphonie pro                        |
-| `InfrastructureSection`| Détail infrastructure réseau                 |
-| `CTASection`           | Appel à l'action intermédiaire               |
+| `Stats`                | 3 KPI animés (coûts, appels, productivité)    |
+| `Solutions`            | 2 colonnes : Audit Réseau & Pilotage Téléphonie |
+| `VoIPSection`          | Accompagnement téléphonie (audit + sélection + transition) |
+| `OptimisationSection`  | Optimisation économique & mise en concurrence |
+| `CTASection`           | Appel à l'action (audit gratuit)              |
 | `ContactSection`       | Formulaire de contact (front-only)           |
 | `LegalModal`           | Mentions légales (modal depuis le footer)     |
 | `Footer`               | Pied de page + ouverture mentions légales     |

@@ -2,44 +2,38 @@ import {
   Zap,
   ShieldCheck,
   Activity,
-  Cpu,
-  Clock,
-  Network,
   PhoneCall,
   Mail,
   MapPin,
-  ArrowRight,
   BarChart3,
-  Layers,
   Globe,
-  Settings2,
-  X
+  X,
+  TrendingDown,
+  Search,
+  Target
 } from 'lucide-react';
-import { motion, useSpring, useTransform, useInView } from 'motion/react';
+import { motion, useInView } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
 import { AegisLogo } from './components/AegisLogo';
 
 const CountUp = ({ value, suffix = "", prefix = "" }: { value: string, suffix?: string, prefix?: string }) => {
-// ... (rest of CountUp remains same)
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [displayValue, setDisplayValue] = useState(0);
+  const [isComplete, setIsComplete] = useState(false);
 
-  // Extract number from string (e.g., "< 1ms" -> 1, "99.9%" -> 99.9)
   const numericValue = parseFloat(value.replace(/[^0-9.]/g, ''));
 
   useEffect(() => {
     if (isInView) {
-      let start = 0;
       const end = numericValue;
-      const duration = 2000;
+      const duration = 1000;
       const startTime = performance.now();
 
       const animate = (currentTime: number) => {
         const elapsed = currentTime - startTime;
         const progress = Math.min(elapsed / duration, 1);
 
-        // Ease out quad
         const easedProgress = 1 - (1 - progress) * (1 - progress);
         const current = easedProgress * end;
 
@@ -47,6 +41,8 @@ const CountUp = ({ value, suffix = "", prefix = "" }: { value: string, suffix?: 
 
         if (progress < 1) {
           requestAnimationFrame(animate);
+        } else {
+          setIsComplete(true);
         }
       };
 
@@ -55,7 +51,7 @@ const CountUp = ({ value, suffix = "", prefix = "" }: { value: string, suffix?: 
   }, [isInView, numericValue]);
 
   return (
-    <span ref={ref}>
+    <span ref={ref} className={isComplete ? 'stat-highlight' : ''}>
       {prefix}
       {numericValue % 1 === 0 ? Math.floor(displayValue) : displayValue.toFixed(1)}
       {suffix}
@@ -78,9 +74,9 @@ const scrollToSection = (id: string) => {
 };
 
 const NAV_SECTIONS = [
-  { id: 'solutions', label: 'Nos Solutions' },
+  { id: 'solutions', label: 'Notre approche' },
   { id: 'telephonie', label: 'Téléphonie' },
-  { id: 'reseau', label: 'Infrastructure' },
+  { id: 'optimisation', label: 'Optimisation' },
   { id: 'contact', label: 'Contact' },
 ];
 
@@ -116,7 +112,7 @@ const Navbar = () => {
             <h1 className="text-lg font-black tracking-[0.15em] text-white leading-none">
               AEGIS <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-violet-400">NETWORK</span>
             </h1>
-            <span className="text-[8px] uppercase tracking-[0.25em] text-slate-500 font-bold mt-0.5">High-Performance Connectivity</span>
+            <span className="text-[8px] uppercase tracking-[0.25em] text-slate-500 font-bold mt-0.5">Conseil & Optimisation IT</span>
           </div>
         </div>
         <div className="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-400">
@@ -170,21 +166,21 @@ const Hero = () => (
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-optical-blue opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-optical-blue"></span>
           </span>
-          Internet & Téléphonie Professionnelle
+          Conseil & Optimisation IT
         </div>
         <h1 className="text-5xl lg:text-7xl font-black text-white leading-[1.05] mb-8">
-          Optimisez votre <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-600 to-violet-500">Connectivité</span> simplement.
+          Optimisez votre <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-600 to-violet-500">infrastructure IT</span>, simplement.
         </h1>
         <p className="text-lg text-slate-400 leading-relaxed max-w-xl mb-12">
-          Nous simplifions vos infrastructures critiques. Profitez d'une connexion internet ultra-rapide et d'une téléphonie IP qui booste réellement votre productivité.
+          Nous accompagnons les TPE et PME dans le choix, l'optimisation et le pilotage de leurs solutions internet, téléphonie et infrastructure. Un interlocuteur expert, indépendant et orienté résultats.
         </p>
         <div className="flex flex-wrap gap-5">
           <a href="#contact" onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }} className="glow-button h-14 px-8 rounded-xl bg-gradient-to-r from-blue-600 to-accent-violet text-white font-bold text-lg flex items-center justify-center gap-3">
-            Demander un audit
+            Demander un audit gratuit
             <Zap size={20} />
           </a>
           <a href="#solutions" onClick={(e) => { e.preventDefault(); scrollToSection('solutions'); }} className="h-14 px-8 rounded-xl bg-white/5 border border-white/10 text-white font-bold text-lg flex items-center justify-center hover:bg-white/10 transition-all backdrop-blur-sm">
-            Voir nos solutions
+            Découvrir notre approche
           </a>
         </div>
       </motion.div>
@@ -208,17 +204,17 @@ const Hero = () => (
           <div className="absolute inset-0 flex items-center justify-center">
             <motion.div
               animate={{
-                scale: [1, 1.1, 1],
-                opacity: [0.3, 0.6, 0.3]
+                scale: [1, 1.05, 1],
+                opacity: [0.2, 0.4, 0.2]
               }}
-              transition={{ duration: 4, repeat: Infinity }}
+              transition={{ duration: 6, repeat: Infinity }}
               className="w-64 h-64 border-2 border-optical-blue/30 rounded-full blur-sm"
             />
             <motion.div
               animate={{
                 rotate: 360
               }}
-              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+              transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
               className="absolute w-80 h-80 border border-dashed border-white/10 rounded-full"
             />
           </div>
@@ -235,9 +231,9 @@ const Stats = () => (
     <div className="max-w-7xl mx-auto px-6">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {[
-          { icon: <Globe size={48} />, label: "Navigation Web", value: "2", prefix: "Jusqu'à ", suffix: "x plus rapide", sub: "Vitesse optimisée", color: "text-optical-blue" },
-          { icon: <PhoneCall size={48} />, label: "Appels perdus", value: "50", prefix: "Réduction jusqu'à ", suffix: "%", sub: "Gestion intelligente", color: "text-accent-violet" },
-          { icon: <Zap size={48} />, label: "Efficacité globale", value: "2", prefix: "Jusqu'à ", suffix: "x plus productif", sub: "Performance accrue", color: "text-blue-600" }
+          { icon: <TrendingDown size={48} />, label: "Coûts télécoms", value: "30", prefix: "Jusqu'à -", suffix: "%", sub: "Après audit et renégociation", color: "text-optical-blue" },
+          { icon: <PhoneCall size={48} />, label: "Appels mieux gérés", value: "50", prefix: "+", suffix: "%", sub: "Après optimisation", color: "text-accent-violet" },
+          { icon: <Zap size={48} />, label: "Gain de productivité", value: "2", prefix: "Jusqu'à ", suffix: "x", sub: "Sur le pilotage IT", color: "text-blue-600" }
         ].map((stat, i) => (
           <motion.div
             key={i}
@@ -274,9 +270,9 @@ const Solutions = () => (
     <FiberBeams />
     <div className="max-w-7xl mx-auto px-6">
       <div className="text-center max-w-3xl mx-auto mb-24">
-        <h2 className="text-optical-blue font-bold text-sm uppercase tracking-[0.3em] mb-4">Nos Solutions Concrètes</h2>
-        <h3 className="text-4xl lg:text-5xl font-black text-white mb-6">Deux piliers pour votre entreprise.</h3>
-        <p className="text-slate-400 text-lg">Nous avons simplifié notre offre pour répondre directement à vos besoins de performance et de communication.</p>
+        <h2 className="text-optical-blue font-bold text-sm uppercase tracking-[0.3em] mb-4">Notre Accompagnement</h2>
+        <h3 className="text-4xl lg:text-5xl font-black text-white mb-6">Deux leviers pour optimiser votre IT.</h3>
+        <p className="text-slate-400 text-lg">Nous intervenons comme consultant et chef de projet pour améliorer concrètement votre connectivité et votre téléphonie professionnelle.</p>
       </div>
 
       <div className="grid md:grid-cols-2 gap-12">
@@ -291,16 +287,16 @@ const Solutions = () => (
           <div className="w-16 h-16 rounded-2xl bg-blue-600/20 text-blue-400 flex items-center justify-center mb-8 group-hover:bg-blue-600 group-hover:text-white transition-all duration-500">
             <Globe size={32} />
           </div>
-          <h4 className="text-3xl font-black text-white mb-6">Internet & Réseau</h4>
+          <h4 className="text-3xl font-black text-white mb-6">Audit & Optimisation Réseau</h4>
           <p className="text-slate-400 text-lg leading-relaxed mb-8">
-            Une connexion stable et ultra-rapide. Nous optimisons vos configurations réseau pour garantir un débit maximal et une latence minimale.
+            Nous analysons votre infrastructure réseau et vos contrats existants. Nous identifions les surcoûts, challengeons vos fournisseurs et pilotons les changements.
           </p>
           <ul className="space-y-4 mb-10">
             {[
-              "Audit et optimisation de configuration",
-              "Connexion fibre haute disponibilité",
-              "Sécurisation des flux de données",
-              "Support technique ultra-réactif"
+              "Audit complet de l'existant",
+              "Comparatif et mise en concurrence",
+              "Renégociation des contrats",
+              "Pilotage de la migration si nécessaire"
             ].map((item, i) => (
               <li key={i} className="flex items-center gap-3 text-slate-300">
                 <div className="w-1.5 h-1.5 rounded-full bg-blue-500" />
@@ -321,16 +317,16 @@ const Solutions = () => (
           <div className="w-16 h-16 rounded-2xl bg-violet-600/20 text-violet-400 flex items-center justify-center mb-8 group-hover:bg-violet-600 group-hover:text-white transition-all duration-500">
             <PhoneCall size={32} />
           </div>
-          <h4 className="text-3xl font-black text-white mb-6">Téléphonie IP (VoIP)</h4>
+          <h4 className="text-3xl font-black text-white mb-6">Pilotage Téléphonie</h4>
           <p className="text-slate-400 text-lg leading-relaxed mb-8">
-            Ne perdez plus aucun appel. Nous transformons votre téléphonie en un outil de productivité simple, fiable et intelligent.
+            Nous évaluons votre téléphonie actuelle et vous aidons à choisir, déployer et optimiser la solution la plus adaptée à votre activité.
           </p>
           <ul className="space-y-4 mb-10">
             {[
-              "Réduction des appels perdus (> 50%)",
-              "Redirection intelligente des appels",
-              "Qualité audio HD sans coupure",
-              "Interface de gestion simplifiée"
+              "Analyse des coûts et des usages",
+              "Sélection du prestataire adapté",
+              "Accompagnement au déploiement",
+              "Suivi de qualité et ajustements"
             ].map((item, i) => (
               <li key={i} className="flex items-center gap-3 text-slate-300">
                 <div className="w-1.5 h-1.5 rounded-full bg-violet-500" />
@@ -359,16 +355,16 @@ const VoIPSection = () => (
     <div className="max-w-7xl mx-auto px-6 relative z-10">
       <div className="grid lg:grid-cols-2 gap-24 items-center">
         <div>
-          <h2 className="text-violet-400 font-bold text-sm uppercase tracking-[0.3em] mb-6">Téléphonie IP Optimisée</h2>
+          <h2 className="text-violet-400 font-bold text-sm uppercase tracking-[0.3em] mb-6">Accompagnement Téléphonie</h2>
           <h3 className="text-5xl lg:text-6xl font-black mb-10 leading-[1.1] text-white">
-            Ne perdez plus <br/>
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-blue-500">aucun appel.</span>
+            Votre téléphonie, <br/>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-blue-500">repensée.</span>
           </h3>
           <div className="space-y-10">
             {[
-              { icon: <PhoneCall />, title: "Réduction des appels perdus", desc: "Éliminez plus de 50% des appels manqués grâce à une gestion intelligente des flux entrants." },
-              { icon: <Activity />, title: "Gestion 2x plus pertinente", desc: "Redirigez vos clients vers le bon interlocuteur instantanément, sans attente inutile." },
-              { icon: <ShieldCheck />, title: "Fiabilité Totale", desc: "Une qualité sonore HD garantie, même en cas de forte charge réseau." }
+              { icon: <Search />, title: "Audit de votre solution actuelle", desc: "Nous analysons vos flux d'appels, vos coûts et votre configuration pour identifier ce qui peut être amélioré concrètement." },
+              { icon: <Activity />, title: "Sélection du meilleur prestataire", desc: "Nous comparons les offres du marché et négocions pour vous les meilleures conditions techniques et tarifaires." },
+              { icon: <ShieldCheck />, title: "Accompagnement au changement", desc: "Nous pilotons la transition vers la nouvelle solution et accompagnons vos équipes pour une adoption fluide." }
             ].map((item, i) => (
               <motion.div key={i} initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.15, duration: 0.5 }} viewport={{ once: true }} className="flex gap-6 group">
                 <div className="shrink-0 w-12 h-12 rounded-2xl bg-violet-600/30 flex items-center justify-center text-violet-400 border border-violet-600/40 group-hover:bg-violet-600 group-hover:text-white transition-all duration-500">
@@ -383,7 +379,7 @@ const VoIPSection = () => (
           </div>
           <div className="mt-14 flex flex-wrap gap-5">
             <a href="#contact" onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }} className="glow-button h-14 px-8 rounded-xl bg-gradient-to-r from-violet-600 to-blue-600 text-white font-bold flex items-center justify-center transition-all">
-              Optimiser ma téléphonie
+              Faire auditer ma téléphonie
             </a>
           </div>
         </div>
@@ -402,11 +398,11 @@ const VoIPSection = () => (
             transition={{ duration: 4, repeat: Infinity }}
             className="absolute -bottom-10 -left-10 glass-card rounded-[2rem] p-8 shadow-2xl text-white border-white/20 premium-glow"
           >
-            <p className="text-xs font-bold text-optical-blue uppercase tracking-widest mb-2">Efficiency Boost</p>
+            <p className="text-xs font-bold text-optical-blue uppercase tracking-widest mb-2">Gains constatés</p>
             <p className="text-4xl font-black">
               <CountUp value="25" prefix="+" suffix="%" />
             </p>
-            <p className="text-sm text-slate-400 mt-1">Taux de résolution</p>
+            <p className="text-sm text-slate-400 mt-1">Satisfaction client</p>
           </motion.div>
         </div>
       </div>
@@ -414,59 +410,37 @@ const VoIPSection = () => (
   </section>
 );
 
-const InfrastructureSection = () => (
-  <section id="reseau" className="py-32 relative bg-background-deep">
+const OptimisationSection = () => (
+  <section id="optimisation" className="py-32 relative bg-background-deep">
     <div className="max-w-7xl mx-auto px-6">
       <div className="flex flex-col lg:flex-row gap-20 items-center">
         <div className="lg:w-1/2 order-2 lg:order-1">
-          <div className="grid grid-cols-2 gap-6">
-            <div className="space-y-6">
-              <div className="relative rounded-3xl overflow-hidden group">
-                {/* IMAGE: Infrastructure Section - Modern Server Room/Data Center */}
-                <img
-                  className="w-full h-56 object-cover transition-transform duration-700 group-hover:scale-110"
-                  src="/img/photo-1544197150-b99a580bb7a8.jfif"
-                  alt="Modern Server Room"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-blue-600/20 mix-blend-overlay" />
-              </div>
-              <div className="glass-card p-8 rounded-3xl border-blue-600/20 hover:border-optical-blue/40 transition-all">
-                <Network className="text-optical-blue mb-4" size={32} />
-                <p className="font-bold text-white text-lg">Fibre Optique Dédiée</p>
-                <p className="text-sm text-slate-400 mt-2">Débit symétrique garanti par transport photonique.</p>
-              </div>
-            </div>
-            <div className="space-y-6 pt-16">
-              <div className="glass-card p-8 rounded-3xl border-accent-violet/20 hover:border-accent-violet/40 transition-all">
-                <Globe className="text-accent-violet mb-4" size={32} />
-                <p className="font-bold text-white text-lg">SD-WAN Intelligent</p>
-                <p className="text-sm text-slate-400 mt-2">Distribution dynamique des flux pour une agilité totale.</p>
-              </div>
-              <div className="relative rounded-3xl overflow-hidden group">
-                {/* IMAGE: Infrastructure Section - Global Connectivity/Satellite */}
-                <img
-                  className="w-full h-56 object-cover transition-transform duration-700 group-hover:scale-110"
-                  src="/img/photo-1451187580459-43490279c0fa.jfif"
-                  alt="Satellite"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-accent-violet/20 mix-blend-overlay" />
-              </div>
-            </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {[
+              { icon: <TrendingDown size={28} />, title: "Réduction des coûts", desc: "Identifiez les dépenses IT inutiles et renégociez vos contrats aux meilleures conditions.", color: "text-optical-blue", border: "border-blue-600/20 hover:border-optical-blue/40" },
+              { icon: <Search size={28} />, title: "Mise en concurrence", desc: "Comparez objectivement les offres du marché pour chaque poste de dépense.", color: "text-accent-violet", border: "border-accent-violet/20 hover:border-accent-violet/40" },
+              { icon: <Target size={28} />, title: "Prestations ajustées", desc: "Éliminez le surdimensionnement et ne payez que ce dont vous avez réellement besoin.", color: "text-blue-400", border: "border-blue-400/20 hover:border-blue-400/40" },
+              { icon: <BarChart3 size={28} />, title: "Visibilité totale", desc: "Obtenez une vue claire de vos dépenses IT et des leviers d'optimisation disponibles.", color: "text-emerald-400", border: "border-emerald-400/20 hover:border-emerald-400/40" }
+            ].map((card, i) => (
+              <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1, duration: 0.5 }} viewport={{ once: true }} className={`glass-card p-8 rounded-3xl ${card.border} transition-all`}>
+                <div className={`${card.color} mb-4`}>{card.icon}</div>
+                <p className="font-bold text-white text-lg">{card.title}</p>
+                <p className="text-sm text-slate-400 mt-2">{card.desc}</p>
+              </motion.div>
+            ))}
           </div>
         </div>
         <div className="lg:w-1/2 order-1 lg:order-2">
-          <h2 className="text-optical-blue font-bold text-sm uppercase tracking-[0.3em] mb-6">Infrastructure Haute-Vitesse</h2>
-          <h3 className="text-5xl font-black text-white mb-8 leading-tight">Le moteur photonique de votre entreprise.</h3>
+          <h2 className="text-optical-blue font-bold text-sm uppercase tracking-[0.3em] mb-6">Optimisation Économique</h2>
+          <h3 className="text-5xl font-black text-white mb-8 leading-tight">Payez moins. Performez mieux.</h3>
           <p className="text-slate-400 text-lg mb-10 leading-relaxed">
-            Nous déployons des solutions de connectivité de pointe, basées sur l'Ethernet ultra-performant et l'optique transportée, assurant une vélocité sans compromis pour vos données critiques.
+            Le marché des télécoms et des services IT est très concurrentiel. Beaucoup d'entreprises conservent des contrats inadaptés ou surdimensionnés. Nous vous aidons à reprendre le contrôle de vos dépenses, sans compromis sur la qualité.
           </p>
           <ul className="space-y-6 mb-12">
             {[
-              "Surveillance proactive des flux 24/7",
-              "Temps de réponse garanti par SLA",
-              "Experts réseau locaux disponibles en flux tendu"
+              "Audit complet de vos contrats et dépenses IT",
+              "Identification des prestations inutiles ou surdimensionnées",
+              "Recommandation d'alternatives plus adaptées et moins coûteuses"
             ].map((text, i) => (
               <motion.li key={i} initial={{ opacity: 0, x: -15 }} whileInView={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.1, duration: 0.4 }} viewport={{ once: true }} className="flex items-center gap-4 font-semibold text-slate-300 group">
                 <Zap className="text-optical-blue group-hover:scale-125 transition-transform" size={20} />
@@ -475,7 +449,7 @@ const InfrastructureSection = () => (
             ))}
           </ul>
           <a href="#contact" onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }} className="glow-button inline-flex h-14 px-10 rounded-xl bg-blue-600 text-white font-bold items-center justify-center hover:bg-blue-700 transition-all">
-            Contactez-nous
+            Demander un audit économique
           </a>
         </div>
       </div>
@@ -489,29 +463,29 @@ const CTASection = () => (
       <div className="bg-gradient-to-br from-blue-600/80 via-blue-700 to-accent-violet rounded-[3rem] p-12 lg:p-24 text-white flex flex-col lg:flex-row items-center gap-16 relative overflow-hidden premium-glow">
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white/10 rounded-full -mr-64 -mt-64 blur-[120px]" />
         <div className="relative z-10 lg:w-3/5">
-          <h3 className="text-4xl lg:text-6xl font-black mb-8 leading-tight">Accélérez votre transformation.</h3>
+          <h3 className="text-4xl lg:text-6xl font-black mb-8 leading-tight">Reprenez le contrôle de vos coûts IT.</h3>
           <p className="text-xl text-white/90 mb-12 leading-relaxed">
-            Bénéficiez d'un audit de performance complet. Nos experts cartographient vos flux actuels pour identifier chaque milliseconde d'optimisation possible.
+            Demandez un audit gratuit. Nous analysons vos contrats, vos usages et vos dépenses pour identifier les marges d'optimisation concrètes.
           </p>
           <button onClick={() => scrollToSection('contact')} className="h-16 px-10 rounded-2xl bg-white text-blue-700 font-bold text-xl hover:shadow-2xl transition-all hover:scale-105 cursor-pointer">
-            Demander mon audit de flux
+            Demander mon audit gratuit
           </button>
         </div>
         <div className="relative z-10 lg:w-2/5 grid grid-cols-2 gap-6">
           <div className="bg-white/10 backdrop-blur-xl p-8 rounded-[2rem] border border-white/20">
             <p className="text-4xl font-black mb-2 text-optical-blue">
-              <CountUp value="0" />
+              <CountUp value="30" suffix="%" />
             </p>
-            <p className="text-xs uppercase font-bold text-white/70 tracking-widest leading-relaxed">Latence résiduelle constatée</p>
+            <p className="text-xs uppercase font-bold text-white/70 tracking-widest leading-relaxed">Économie moyenne constatée</p>
           </div>
           <div className="bg-white/10 backdrop-blur-xl p-8 rounded-[2rem] border border-white/20">
             <p className="text-4xl font-black mb-2 text-optical-blue">
-              <CountUp value="15" suffix="min" />
+              <CountUp value="48" suffix="h" />
             </p>
-            <p className="text-xs uppercase font-bold text-white/70 tracking-widest leading-relaxed">Réponse aux flux critiques</p>
+            <p className="text-xs uppercase font-bold text-white/70 tracking-widest leading-relaxed">Délai d'analyse initial</p>
           </div>
           <div className="bg-white/10 backdrop-blur-xl p-8 rounded-[2rem] border border-white/20 col-span-2">
-            <p className="text-lg font-bold mb-4">Indicateur de Performance Flux</p>
+            <p className="text-lg font-bold mb-4">Taux de satisfaction client</p>
             <div className="w-full bg-white/20 h-3 rounded-full overflow-hidden">
               <motion.div
                 initial={{ width: 0 }}
@@ -534,8 +508,8 @@ const ContactSection = () => (
       <div className="grid lg:grid-cols-2 gap-24">
         <div>
           <h2 className="text-optical-blue font-bold text-sm uppercase tracking-[0.3em] mb-6">Contact & Audit</h2>
-          <h3 className="text-5xl font-black text-white mb-10 leading-tight">Connectez-vous à l'excellence.</h3>
-          <p className="text-slate-400 text-lg mb-12 leading-relaxed">Besoin d'une étude d'optimisation ou d'un conseil en architecture de flux ? Nos ingénieurs sont à votre écoute.</p>
+          <h3 className="text-5xl font-black text-white mb-10 leading-tight">Parlons de votre infrastructure.</h3>
+          <p className="text-slate-400 text-lg mb-12 leading-relaxed">Un audit, un conseil, une question sur vos contrats IT ? Nos consultants sont disponibles pour vous accompagner.</p>
           <div className="space-y-8">
             {[
               { icon: <PhoneCall />, label: "Ligne directe", value: "07 81 43 81 23", href: "tel:+33781438123" },
@@ -577,12 +551,12 @@ const ContactSection = () => (
             </div>
             <div className="space-y-3">
               <label className="text-sm font-bold text-slate-300 uppercase tracking-widest ml-1">Message</label>
-              <textarea className="w-full px-6 py-4 rounded-2xl border border-white/10 focus:border-optical-blue focus:ring-optical-blue bg-white/5 text-white placeholder:text-slate-600 transition-all outline-none" placeholder="Décrivez vos besoins de performance..." rows={4}></textarea>
+              <textarea className="w-full px-6 py-4 rounded-2xl border border-white/10 focus:border-optical-blue focus:ring-optical-blue bg-white/5 text-white placeholder:text-slate-600 transition-all outline-none" placeholder="Décrivez votre besoin (audit, conseil, optimisation...)" rows={4}></textarea>
             </div>
             <button type="button" className="glow-button w-full h-16 rounded-2xl bg-gradient-to-r from-blue-600 via-blue-600 to-accent-violet text-white font-bold text-xl uppercase tracking-widest">
               Envoyer ma demande
             </button>
-            <p className="text-center text-xs text-slate-500">Transmis via canal sécurisé haute priorité.</p>
+            <p className="text-center text-xs text-slate-500">Nous vous répondons sous 24 heures.</p>
           </form>
         </div>
       </div>
@@ -610,7 +584,7 @@ const LegalModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
         <div className="space-y-6 text-sm text-slate-400 leading-relaxed">
           <div>
             <h3 className="text-white font-bold mb-2">Éditeur du site</h3>
-            <p>Aegis Network</p>
+            <p>Aegis Network — Conseil et optimisation en infrastructures IT et télécommunications</p>
             <p>Contact : <a href="mailto:contact@aegisnetwork.fr" className="text-optical-blue hover:underline">contact@aegisnetwork.fr</a></p>
             <p>Téléphone : <a href="tel:+33781438123" className="text-optical-blue hover:underline">07 81 43 81 23</a></p>
             <p>Centre opérationnel : Lyon, France</p>
@@ -659,7 +633,7 @@ const Footer = () => {
                 <span className="text-lg font-black tracking-[0.15em] text-white leading-none">
                   AEGIS <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-violet-400">NETWORK</span>
                 </span>
-                <span className="text-[8px] uppercase tracking-[0.25em] text-slate-500 font-bold mt-0.5">High-Performance Connectivity</span>
+                <span className="text-[8px] uppercase tracking-[0.25em] text-slate-500 font-bold mt-0.5">Conseil & Optimisation IT</span>
               </div>
             </div>
             <div className="flex gap-8 text-xs font-bold text-slate-500 uppercase tracking-widest">
@@ -683,7 +657,7 @@ export default function App() {
         <Stats />
         <Solutions />
         <VoIPSection />
-        <InfrastructureSection />
+        <OptimisationSection />
         <CTASection />
         <ContactSection />
       </main>

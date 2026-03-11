@@ -3,9 +3,31 @@
 ## Identité
 
 - Site vitrine one-page pour Aegis Network
-- Cible : entreprises, professionnels
-- Activité : fournisseur d'accès internet et téléphonie pro haute-performance
+- Cible : TPE et PME, dirigeants et responsables IT
+- Activité : **conseil, audit et optimisation** en infrastructures IT et télécommunications
 - Design source : généré et mis à jour via **Google Stitch** (dossier `stitch/`)
+
+## Positionnement métier
+
+Aegis Network est un **consultant / accompagnateur / chef de projet IT** indépendant.
+
+**Ce qu'Aegis fait :**
+- Auditer l'infrastructure IT et télécom existante
+- Identifier les surcoûts et les sous-performances
+- Comparer les offres du marché et faire jouer la concurrence
+- Conseiller les meilleures options adaptées au contexte client
+- Renégocier ou challenger les contrats en place
+- Piloter les changements techniques (migration, déploiement)
+- Suivre la performance et ajuster dans le temps
+
+**Ce qu'Aegis ne fait PAS :**
+- Fournir directement l'accès internet ou la fibre
+- Opérer un réseau télécom
+- Vendre des abonnements ou des équipements
+- Garantir des SLA opérateur en son nom propre
+- Héberger des infrastructures
+
+**Axe central du site :** optimisation + pilotage + gains économiques + gains de productivité
 
 ## MCP
 
@@ -45,7 +67,7 @@ docs/               ← documentation technique
 
 ## Sections du site (App.tsx)
 
-Navbar → Hero → Stats → Solutions → VoIPSection → InfrastructureSection → CTASection → ContactSection → Footer (+ LegalModal)
+Navbar → Hero → Stats → Solutions → VoIPSection → OptimisationSection → CTASection → ContactSection → Footer (+ LegalModal)
 
 La section BrandBook a été supprimée.
 
@@ -73,7 +95,7 @@ Ne jamais modifier ces informations sans validation explicite.
 - **Deep Background** : `#020617` — fond principal (slate-950)
 - **Accent Violet** : `#7c3aed` — couleur secondaire, dégradés
 - **Tracking logo** : `0.15em` pour "AEGIS NETWORK"
-- **Tracking baseline** : `0.25em` pour "High-Performance Connectivity"
+- **Tracking baseline** : `0.25em` pour "Conseil & Optimisation IT"
 - **Typo titres** : Inter Black (900), tracking-tighter
 - **Effets** : glassmorphism, premium-glow, glow-button, fiber beams, float
 - **Ton visuel** : premium, technologique, sobre, pas cyberpunk
@@ -84,7 +106,8 @@ Ne jamais modifier ces informations sans validation explicite.
 - Phrases courtes, concrètes, orientées résultat
 - Pas de jargon inutile, pas de promesses vides
 - Pas de superlatifs gratuits ("le meilleur", "n°1", "révolutionnaire")
-- Axes : performance, fiabilité, connectivité, productivité, accompagnement
+- Axes : optimisation, pilotage, réduction des coûts, productivité, accompagnement
+- Aegis Network est présenté comme consultant/chef de projet, jamais comme opérateur ou fournisseur
 - Ne jamais inventer d'informations légales, d'adresse ou de téléphone
 
 ## Mentions légales
@@ -116,7 +139,10 @@ Ne jamais modifier ces informations sans validation explicite.
 - Framer Motion pour les entrées en viewport (`whileInView`, `initial`)
 - Stagger délay sur les listes de features (0.1–0.15s)
 - Hero : fond animé CSS pur (orbes gradient en dérive lente, grille tech, fiber beams premium)
-- CSS keyframes pour fiber beams, float, pulse-slow, hero-glow-drift
+- Hero float : amplitude réduite (8px / 8s) pour confort visuel
+- Hero éléments overlay : pulsation douce (6s) + rotation lente (30s)
+- CSS keyframes pour fiber beams, float, pulse-slow, hero-glow-drift, stat-highlight
+- CountUp : durée 1000ms avec glow bleu à la complétion (`stat-highlight`)
 - `prefers-reduced-motion` respecté (désactive toutes les animations CSS)
 
 ## Images

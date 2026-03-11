@@ -1,6 +1,6 @@
 # Aegis Network
 
-Site vitrine one-page haute-performance pour Aegis Network — fournisseur d'accès internet et de téléphonie professionnelle.
+Site vitrine one-page pour Aegis Network — conseil, audit et optimisation en infrastructures IT et télécommunications pour TPE et PME.
 
 > **Source de vérité** : GitHub `Sh1R0-x/aegisnetwork`, branche `main`.
 

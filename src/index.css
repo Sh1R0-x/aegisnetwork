@@ -90,11 +90,11 @@
 /* Floating animation */
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-15px); }
+  50% { transform: translateY(-8px); }
 }
 
 .animate-float {
-  animation: float 6s ease-in-out infinite;
+  animation: float 8s ease-in-out infinite;
 }
 
 /* === Navigation & scroll === */
@@ -160,6 +160,17 @@ html {
   pointer-events: none;
 }
 
+/* === Stat completion highlight === */
+@keyframes stat-highlight {
+  0% { text-shadow: 0 0 0 transparent; }
+  40% { text-shadow: 0 0 20px rgba(56, 189, 248, 0.6), 0 0 40px rgba(56, 189, 248, 0.3); }
+  100% { text-shadow: 0 0 0 transparent; }
+}
+
+.stat-highlight {
+  animation: stat-highlight 0.8s ease-out forwards;
+}
+
 /* === Reduced motion === */
 @media (prefers-reduced-motion: reduce) {
   .animate-hero-glow-1,
@@ -168,7 +179,8 @@ html {
   .animate-fiber-h,
   .animate-fiber-v,
   .animate-float,
-  .animate-pulse-slow {
+  .animate-pulse-slow,
+  .stat-highlight {
     animation: none !important;
   }
 }
