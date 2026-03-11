@@ -1,13 +1,22 @@
 {
   "files.eol": "\n",
+  "files.encoding": "utf8",
   "files.trimTrailingWhitespace": true,
   "files.insertFinalNewline": true,
   "editor.tabSize": 2,
   "editor.insertSpaces": true,
+  "editor.detectIndentation": false,
   "editor.formatOnSave": false,
-  "html.format.wrapLineLength": 120,
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "git.openRepositoryInParentFolders": "never",
   "search.exclude": {
     "**/node_modules": true,
-    "**/.git": true
+    "**/dist": true,
+    "**/.git": true,
+    "**/stitch": true
+  },
+  "files.exclude": {
+    "node_modules": true
   }
 }

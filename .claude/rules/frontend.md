@@ -1,41 +1,49 @@
 # Règles frontend — Aegis Network
 
-## HTML
+## React & TypeScript
 
-- Toujours utiliser des balises sémantiques
-- Attributs `lang="fr"` sur `<html>`
-- Attributs `alt` sur toutes les images
-- Navigation avec `aria-label`
-- Liens d'ancrage internes pour le one-page (`#section`)
+- Composants fonctionnels uniquement (pas de classes)
+- TypeScript strict, pas d'`any` explicite
+- Imports nommés pour les icônes Lucide et les hooks
+- Composants dans `src/components/` s'ils sont réutilisables
+- Si un composant est spécifique à une section, il reste dans `App.tsx`
 
-## CSS
+## Tailwind CSS
 
-- Organisation : reset → variables → base → composants → sections → responsive
-- Nommage : classes descriptives en kebab-case (`.hero-cta`, `.benefit-card`)
+- Utility-first, classes Tailwind directement sur les éléments
+- Custom properties dans `@theme` (fichier `src/index.css`)
 - Pas de `!important` sauf cas extrême documenté
-- Custom properties pour toutes les couleurs et espacements récurrents
-- Media queries en `max-width` (mobile-first implicite via clamp/grid)
+- Responsive via les préfixes `md:` et `lg:` (mobile-first)
+- Classes custom : `glass-card`, `premium-glow`, `glow-button`
 
-## JS
+## Animations (Framer Motion)
 
-- Vanilla uniquement, pas de jQuery, pas de librairie
-- IIFE pour éviter les globales
-- `"use strict"`
-- `addEventListener` avec `{ passive: true }` pour scroll/touch
-- IntersectionObserver pour les animations d'apparition (avec fallback)
+- Package `motion` (import depuis `motion/react`)
+- Entrées : `initial={{ opacity: 0, y: 20 }}` → `whileInView={{ opacity: 1, y: 0 }}`
+- `viewport={{ once: true }}` pour les animations au scroll
+- CSS keyframes pour les effets continus (fiber beams, float, pulse)
+- Respecter `prefers-reduced-motion` pour les animations CSS
+
+## Charte graphique
+
+- Optical Blue `#3b82f6` — primaire
+- Deep Background `#020617` — fond (slate-950)
+- Accent Violet `#7c3aed` — secondaire
+- Tracking logo : `0.15em`
+- Tracking baseline : `0.25em`
+- Titres : Inter Black (900), `tracking-tighter`
+- Icônes : Lucide React uniquement
 
 ## Performance
 
-- Pas de framework CSS (Bootstrap, Tailwind, etc.)
+- Images : `loading="lazy"`, `referrerPolicy="no-referrer"` pour Unsplash
 - Google Fonts en `display=swap`
-- Images futures en WebP avec fallback
 - Pas de requête API côté client
-- Poids cible : < 150 Ko total (hors fonts)
+- Build optimisé via Vite (`npm run build`)
 
 ## Accessibilité minimum
 
 - Contrastes AA sur tous les textes
 - Navigation clavier fonctionnelle
-- `aria-expanded` sur le menu mobile
-- `focus-visible` stylé
-- `.sr-only` pour les labels masqués visuellement
+- `alt` sur toutes les images
+- `aria-label` sur les éléments de navigation

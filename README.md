@@ -1,109 +1,103 @@
-# Aegis Network — Site vitrine
+# Aegis Network
 
-Site one-page statique pour Aegis Network. Infrastructure et sécurité IT pour TPE/PME.
+Site vitrine one-page haute-performance pour Aegis Network — fournisseur d'accès internet et de téléphonie professionnelle.
 
-> **Source de vérité** : le dépôt GitHub `Sh1R0-x/aegisnetwork`, branche `main`.
+> **Source de vérité** : GitHub `Sh1R0-x/aegisnetwork`, branche `main`.
 
-## Structure du projet
+## Stack technique
+
+- **React 19** + **TypeScript**
+- **Tailwind CSS 4** (plugin Vite)
+- **Framer Motion** (`motion`) pour les animations
+- **Lucide React** pour les icônes
+- **Vite 6** comme bundler
+- **Inter** (Google Fonts) comme typographie principale
+- Design source : **Google Stitch** (dossier `stitch/`)
+
+## Structure du repo
 
 ```
-index.html              Page unique du site
-favicon.svg             Favicon
-assets/
-  css/styles.css        Feuille de style
-  js/main.js            Script (nav mobile, animations)
-  img/                  Images futures
+index.html              Point d'entrée Vite (dev)
+src/
+  main.tsx              Bootstrap React
+  App.tsx               Composant racine (toutes les sections)
+  index.css             Tailwind + CSS custom (animations, glass, glow)
+  components/           Composants réutilisables
+    AegisLogo.tsx       Logo SVG animé
+public/
+  favicon.svg           Favicon
+  img/                  Images locales (Unsplash)
+stitch/                 Source Google Stitch (lecture seule)
+  design-guidelines.md  Charte graphique de référence
 docs/                   Documentation technique
-  ARCHITECTURE.md       Architecture et choix techniques
-  DEPLOYMENT_OVH_STARTER.md  Guide de déploiement OVH
-  CONTENT_STRUCTURE.md  Structure éditoriale
-  NEXT_STEPS.md         Améliorations prévues
-  WORKFLOW_COLLABORATION.md  Workflow multi-outils
-  MCP.md                Serveurs MCP retenus
 .claude/rules/          Règles pour assistants IA
 .vscode/                Réglages VS Code partagés
-CLAUDE.md               Règles globales du projet
-AGENTS.md               Règles MCP pour agents IA
-.mcp.json               Config MCP projet
 ```
 
-## Ouvrir le bon dossier dans VS Code
+## Démarrage rapide
 
+```bash
+npm install
+npm run dev
 ```
+
+Le site est accessible sur `http://localhost:3000`.
+
+## Build pour production
+
+```bash
+npm run build
+```
+
+Le dossier `dist/` contient le site statique prêt à déployer sur OVH Starter.
+
+## Déploiement OVH Starter
+
+Le contenu du dossier `dist/` (généré par `npm run build`) doit être poussé ou copié à la racine de l'hébergement OVH. Voir [docs/DEPLOYMENT_OVH_STARTER.md](docs/DEPLOYMENT_OVH_STARTER.md).
+
+## Prévisualiser le build
+
+```bash
+npm run preview
+```
+
+## Vérifier le workspace
+
+```powershell
 code c:\Dev\Aegisnetwork
+git rev-parse --show-toplevel   # doit retourner C:/Dev/Aegisnetwork
+git status --short --branch
+git remote -v                   # doit pointer vers Sh1R0-x/aegisnetwork.git
 ```
 
-Vérifier qu'on est bien à la racine :
-- Le fichier `index.html` doit être visible à la racine de l'explorateur
-- Le terminal intégré doit afficher `C:\Dev\Aegisnetwork>`
-- `git status` doit fonctionner sans erreur
+## Modifier le site
 
-## Prévisualiser localement
+1. Lire `CLAUDE.md` et `design-guidelines.md` avant toute modification
+2. `git status --short --branch`
+3. Modifier les fichiers dans `src/`
+4. Tester avec `npm run dev`
+5. `git add . && git commit -m "Description" && git push origin main`
 
-Ouvrir `index.html` directement dans un navigateur, ou lancer un serveur local :
+## Workflow Google Stitch
 
-```bash
-# Python 3
-python -m http.server 8000
-
-# Puis ouvrir http://localhost:8000
-```
-
-Ou avec l'extension VS Code **Live Server** : clic droit sur `index.html` → "Open with Live Server".
-
-## Modifier le contenu
-
-Tout le contenu est dans `index.html`. Les textes sont directement dans le HTML, organisés par sections clairement commentées :
-
-- `<!-- ====== HERO ====== -->` — Accroche principale
-- `<!-- ====== AVANTAGES ====== -->` — Bénéfices clients
-- `<!-- ====== OFFRES ====== -->` — Offres ponctuelle et accompagnement
-- `<!-- ====== MÉTHODE ====== -->` — Étapes de travail
-- `<!-- ====== CONTACT ====== -->` — Coordonnées et CTA
-- `<!-- ====== FOOTER ====== -->` — Pied de page
-
-Pour modifier les couleurs ou le design : éditer les variables CSS dans `assets/css/styles.css` (bloc `:root`).
-
-## Déployer sur OVH Starter
-
-Voir le guide complet : [docs/DEPLOYMENT_OVH_STARTER.md](docs/DEPLOYMENT_OVH_STARTER.md)
-
-En résumé :
-
-```bash
-git add .
-git commit -m "Description de la modification"
-git push origin main
-```
-
-OVH tire automatiquement le contenu de la branche `main`.
-
-## Premier push sur main
-
-Le premier push a déjà été effectué. Pour les modifications suivantes :
-
-```bash
-git add .
-git commit -m "Description courte de la modification"
-git push origin main
-```
-
-## Contraintes techniques
-
-- **Statique uniquement** : HTML + CSS + JS vanilla
-- **Aucun build nécessaire** : pas de npm, Webpack, Vite
-- **Aucune dépendance serveur** : pas de Node.js, pas de PHP, pas de DB
-- **Compatible OVH Starter** : `index.html` à la racine = le site fonctionne
+Les mises à jour design viennent de Google Stitch → dossier `stitch/`. Pour intégrer une update : comparer `stitch/src/` avec `src/`, appliquer les deltas. Ne jamais modifier `stitch/` directement.
 
 ## Documentation
 
 | Document | Contenu |
 |----------|---------|
 | [CLAUDE.md](CLAUDE.md) | Règles du projet |
+| [AGENTS.md](AGENTS.md) | Règles d'exécution pour agents IA |
+| [design-guidelines.md](design-guidelines.md) | Charte graphique complète |
 | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Architecture et choix techniques |
 | [docs/DEPLOYMENT_OVH_STARTER.md](docs/DEPLOYMENT_OVH_STARTER.md) | Guide de déploiement |
-| [docs/CONTENT_STRUCTURE.md](docs/CONTENT_STRUCTURE.md) | Structure éditoriale |
-| [docs/NEXT_STEPS.md](docs/NEXT_STEPS.md) | Prochaines étapes |
 | [docs/WORKFLOW_COLLABORATION.md](docs/WORKFLOW_COLLABORATION.md) | Workflow multi-outils |
-| [docs/MCP.md](docs/MCP.md) | Serveurs MCP retenus |
-| [AGENTS.md](AGENTS.md) | Règles MCP pour agents IA |
+| [docs/NEXT_STEPS.md](docs/NEXT_STEPS.md) | Prochaines étapes |
+
+## Documentation utile
+
+- [AGENTS.md](AGENTS.md) : règles d'exécution pour agents et MCP
+- [CLAUDE.md](CLAUDE.md) : contraintes projet et style
+- [docs/WORKFLOW_COLLABORATION.md](docs/WORKFLOW_COLLABORATION.md) : workflow commun entre outils
+- [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) : choix techniques
+- [docs/DEPLOYMENT_OVH_STARTER.md](docs/DEPLOYMENT_OVH_STARTER.md) : déploiement OVH

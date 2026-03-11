@@ -7,12 +7,28 @@ Desktop.ini
 *.swp
 *.swo
 *~
+*.code-workspace
 .vscode/*
 !.vscode/settings.json
 !.vscode/extensions.json
 .idea/
 *.sublime-project
 *.sublime-workspace
+.history/
+
+# Agent local settings
+.claude/settings.local.json
+
+# Node
+node_modules/
+dist/
+build/
+
+# Env
+.env
+.env.local
+.env.*.local
+!.env.example
 
 # Logs
 *.log

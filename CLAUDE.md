@@ -3,8 +3,9 @@
 ## Identité
 
 - Site vitrine one-page pour Aegis Network
-- Cible : dirigeants TPE/PME
-- Activité : infrastructure et sécurité IT
+- Cible : entreprises, professionnels
+- Activité : fournisseur d'accès internet et téléphonie pro haute-performance
+- Design source : généré et mis à jour via **Google Stitch** (dossier `stitch/`)
 
 ## MCP
 
@@ -16,36 +17,52 @@
 - Rester simple et pragmatique ; ne pas multiplier les MCP sans raison
 - Ne pas ajouter de nouveau MCP sans justification claire
 
-## Contraintes techniques absolues
+## Stack technique
 
-- **Statique uniquement** : HTML + CSS + JS vanilla
-- **Pas de build** : pas de npm, Vite, Webpack, PostCSS, Sass en prod
-- **Pas de framework** : pas de React, Vue, Next, Nuxt, Astro
-- **Pas de Node.js côté serveur**
-- **Pas de base de données**
-- **Pas de Docker**
-- **Hébergement OVH Starter** : le dossier racine sert `index.html` directement
-- **Zéro dépendance npm** dans le repo
+- **React 19** + **TypeScript**
+- **Tailwind CSS 4** (via plugin Vite)
+- **Framer Motion** (`motion` package) pour les animations
+- **Lucide React** pour les icônes
+- **Vite 6** comme bundler de dev et de build
+- **Inter** (Google Fonts) comme typographie principale
+- Build : `npm run build` → dossier `dist/`
+- Hébergement : le dossier `dist/` est déployé sur OVH Starter
 
 ## Structure
 
 ```
-index.html          ← page unique, point d'entrée
-assets/css/         ← feuilles de style
-assets/js/          ← scripts vanilla
-assets/img/         ← images (futures)
-favicon.svg         ← favicon SVG
+index.html          ← point d'entrée Vite (dev)
+src/
+  main.tsx          ← bootstrap React
+  App.tsx           ← composant racine, toutes les sections
+  index.css         ← Tailwind + custom CSS (animations, glass, glow)
+  components/       ← composants réutilisables (AegisLogo, etc.)
+public/
+  favicon.svg       ← favicon
+  img/              ← images locales (Unsplash downloads)
+stitch/             ← source Google Stitch (référence design, lecture seule)
 docs/               ← documentation technique
 ```
 
 ## Style de code
 
-- HTML sémantique (`<header>`, `<main>`, `<section>`, `<footer>`)
-- CSS custom properties pour la palette (pas de valeurs magiques)
-- JS en IIFE, `"use strict"`, pas de `var` global
+- Composants React fonctionnels (pas de classes)
+- TypeScript strict, pas d'`any` explicite
+- Tailwind utility-first, custom properties dans `@theme` (index.css)
 - Indentation : 2 espaces
 - Encoding : UTF-8, LF
-- Pas de minification manuelle — le code reste lisible
+- Code lisible, pas de minification manuelle
+
+## Charte graphique (source : design-guidelines.md)
+
+- **Optical Blue** : `#3b82f6` — couleur primaire, accents, glows
+- **Deep Background** : `#020617` — fond principal (slate-950)
+- **Accent Violet** : `#7c3aed` — couleur secondaire, dégradés
+- **Tracking logo** : `0.15em` pour "AEGIS NETWORK"
+- **Tracking baseline** : `0.25em` pour "High-Performance Connectivity"
+- **Typo titres** : Inter Black (900), tracking-tighter
+- **Effets** : glassmorphism, premium-glow, glow-button, fiber beams, float
+- **Ton visuel** : premium, technologique, sobre, pas cyberpunk
 
 ## Copywriting
 
@@ -53,24 +70,24 @@ docs/               ← documentation technique
 - Phrases courtes, concrètes, orientées résultat
 - Pas de jargon inutile, pas de promesses vides
 - Pas de superlatifs gratuits ("le meilleur", "n°1", "révolutionnaire")
-- Axes : sécurité, fiabilité, optimisation, réduction des coûts, accompagnement humain
+- Axes : performance, fiabilité, connectivité, productivité, accompagnement
 - Ne jamais inventer d'informations légales, d'adresse ou de téléphone
-
-## Design
-
-- Palette principale : violet (`#7c3aed` → `#4c1d95`)
-- Neutres : gris zinc
-- Responsive mobile-first testé à 320px, 768px, 1024px+
-- Pas d'animations lourdes — respecter `prefers-reduced-motion`
-- Typographie : Inter (Google Fonts), fallback system-ui
 
 ## Interdictions
 
 - Ne pas ajouter de pages supplémentaires (one-page)
-- Ne pas ajouter de CMS ou de formulaire backend
+- Ne pas ajouter de CMS ou de formulaire backend fonctionnel
 - Ne pas ajouter de cookie banner sans besoin réel
 - Ne pas ajouter d'analytics sans validation explicite
-- Ne pas utiliser de CDN pour des frameworks JS
+- Ne pas modifier le dossier `stitch/` (lecture seule, source Stitch)
+- Ne pas ajouter de dépendances lourdes sans justification
+
+## Workflow Google Stitch
+
+- Les mises à jour design viennent de Google Stitch → dossier `stitch/`
+- Pour intégrer une update Stitch : comparer `stitch/src/` avec `src/`, appliquer les deltas
+- `stitch/design-guidelines.md` est la référence graphique à jour
+- Ne jamais modifier `stitch/` directement — c'est une copie de la source Stitch
 
 ## Workflow de collaboration (Claude / Copilot / Codex)
 
@@ -78,7 +95,6 @@ docs/               ← documentation technique
 - Toujours lire la doc projet (`CLAUDE.md`, `README.md`, `AGENTS.md`) avant modification
 - Toujours vérifier `git status` avant toute intervention
 - Ne pas modifier de fichiers en dehors du repo
-- Ne pas introduire de stack incompatible OVH Starter
 - Mettre à jour la documentation après tout changement structurant
 - Privilégier des patchs minimaux et ciblés
 - Signaler clairement les hypothèses prises
