@@ -9,13 +9,10 @@
 
 ## MCP
 
-- Priorité : `context7`, `playwright`, `chrome-devtools`
-- `context7` : documentation technique récente et versionnée ; si l'info peut venir de là, ne pas improviser
-- `playwright` : smoke tests navigateur, parcours simples, vérifications UI de base
-- `chrome-devtools` : debug console, réseau, layout, performance
-- `github` : optionnel, seulement si le besoin concerne réellement GitHub
-- Rester simple et pragmatique ; ne pas multiplier les MCP sans raison
-- Ne pas ajouter de nouveau MCP sans justification claire
+- **Seul MCP utilisé** : `context7` — documentation technique récente et versionnée
+- `playwright` et `chrome-devtools` restent configurés dans `.mcp.json` mais ne sont pas nécessaires au workflow courant
+- Ne pas ajouter de nouveau MCP sans justification claire et gain concret immédiat
+- Si `context7` peut fournir l'info, ne pas improviser de mémoire
 
 ## Stack technique
 
@@ -26,12 +23,13 @@
 - **Vite 6** comme bundler de dev et de build
 - **Inter** (Google Fonts) comme typographie principale
 - Build : `npm run build` → dossier `dist/`
-- Hébergement : le dossier `dist/` est déployé sur OVH Starter
+- Hébergement : `dist/` est versionné et déployé sur OVH Starter via `.htaccess` (réécriture vers `dist/`)
 
 ## Structure
 
 ```
 index.html          ← point d'entrée Vite (dev)
+.htaccess           ← réécriture Apache pour servir dist/ sur OVH
 src/
   main.tsx          ← bootstrap React
   App.tsx           ← composant racine, toutes les sections
@@ -40,9 +38,24 @@ src/
 public/
   favicon.svg       ← favicon
   img/              ← images locales (Unsplash downloads)
+dist/               ← build de production (versionné, déployé sur OVH)
 stitch/             ← source Google Stitch (référence design, lecture seule)
 docs/               ← documentation technique
 ```
+
+## Sections du site (App.tsx)
+
+Navbar → Hero → Stats → Solutions → VoIPSection → InfrastructureSection → CTASection → ContactSection → Footer (+ LegalModal)
+
+La section BrandBook a été supprimée.
+
+## Informations de contact
+
+- Téléphone : 07 81 43 81 23
+- Email : contact@aegisnetwork.fr
+- Localisation : Lyon, France
+
+Ne jamais modifier ces informations sans validation explicite.
 
 ## Style de code
 
@@ -72,6 +85,14 @@ docs/               ← documentation technique
 - Pas de superlatifs gratuits ("le meilleur", "n°1", "révolutionnaire")
 - Axes : performance, fiabilité, connectivité, productivité, accompagnement
 - Ne jamais inventer d'informations légales, d'adresse ou de téléphone
+
+## Mentions légales
+
+- Intégrées dans une modal accessible depuis le footer
+- Composant `LegalModal` dans `App.tsx`
+- Placeholders `TODO:` pour les données non confirmées (SIRET, forme juridique, directeur de publication)
+- Hébergeur OVH documenté avec adresse réelle
+- Pas de politique de confidentialité séparée tant qu'aucun cookie/analytics n'est actif
 
 ## Interdictions
 

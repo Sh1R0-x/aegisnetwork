@@ -54,7 +54,9 @@ git push origin main
 
 - Messages en anglais ou français, concis
 - Un commit = un changement logique
-- Pas de fichiers générés (`dist/`, `node_modules/`) dans les commits
+- `dist/` est versionné (il contient le build de production déployé sur OVH)
+- `node_modules/` n'est jamais commité
+- Toujours exécuter `npm run build` avant de committer pour que `dist/` soit à jour
 
 ## Règles partagées
 
@@ -63,3 +65,12 @@ git push origin main
 - Toujours lire `CLAUDE.md` et `AGENTS.md` avant une modification structurante
 - Ne jamais modifier `stitch/` directement
 - Mettre à jour la doc après tout changement d'architecture
+
+## Reprise après modifications d'un autre agent
+
+1. `git pull origin main` pour récupérer la dernière version
+2. Lire `CLAUDE.md` (sections, contacts, mentions légales, MCP)
+3. `npm install` si `package.json` a changé
+4. `npm run lint` pour vérifier la cohérence
+5. Ne pas refactorer du code existant sans demande explicite
+6. Si un doute existe sur un choix précédent, le signaler au lieu de le modifier

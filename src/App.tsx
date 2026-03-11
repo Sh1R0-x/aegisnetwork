@@ -1,18 +1,19 @@
-import { 
-  Zap, 
-  ShieldCheck, 
-  Activity, 
-  Cpu, 
-  Clock, 
-  Network, 
-  PhoneCall, 
-  Mail, 
-  MapPin, 
+import {
+  Zap,
+  ShieldCheck,
+  Activity,
+  Cpu,
+  Clock,
+  Network,
+  PhoneCall,
+  Mail,
+  MapPin,
   ArrowRight,
   BarChart3,
   Layers,
   Globe,
-  Settings2
+  Settings2,
+  X
 } from 'lucide-react';
 import { motion, useSpring, useTransform, useInView } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
@@ -23,10 +24,10 @@ const CountUp = ({ value, suffix = "", prefix = "" }: { value: string, suffix?: 
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [displayValue, setDisplayValue] = useState(0);
-  
+
   // Extract number from string (e.g., "< 1ms" -> 1, "99.9%" -> 99.9)
   const numericValue = parseFloat(value.replace(/[^0-9.]/g, ''));
-  
+
   useEffect(() => {
     if (isInView) {
       let start = 0;
@@ -37,11 +38,11 @@ const CountUp = ({ value, suffix = "", prefix = "" }: { value: string, suffix?: 
       const animate = (currentTime: number) => {
         const elapsed = currentTime - startTime;
         const progress = Math.min(elapsed / duration, 1);
-        
+
         // Ease out quad
         const easedProgress = 1 - (1 - progress) * (1 - progress);
         const current = easedProgress * end;
-        
+
         setDisplayValue(current);
 
         if (progress < 1) {
@@ -74,40 +75,36 @@ const FiberBeams = () => (
 
 const Navbar = () => (
   <nav className="fixed top-0 w-full z-50 bg-background-deep/80 backdrop-blur-md border-b border-white/5">
-    <div className="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
-      <div className="flex items-center gap-4">
-        <div className="p-1 rounded-xl">
-          <AegisLogo className="w-14 h-14" />
-        </div>
+    <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+      <div className="flex items-center gap-3">
+        <AegisLogo className="w-9 h-9" />
         <div className="flex flex-col">
-          <h1 className="text-2xl font-black tracking-[0.15em] text-white leading-none">
+          <h1 className="text-lg font-black tracking-[0.15em] text-white leading-none">
             AEGIS <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-violet-400">NETWORK</span>
           </h1>
-          <span className="text-[10px] uppercase tracking-[0.25em] text-slate-500 font-bold mt-1">High-Performance Connectivity</span>
+          <span className="text-[8px] uppercase tracking-[0.25em] text-slate-500 font-bold mt-0.5">High-Performance Connectivity</span>
         </div>
       </div>
-      <div className="hidden md:flex items-center gap-10 text-base font-bold text-slate-300">
-        <a href="#solutions" className="hover:text-optical-blue transition-colors">Nos Solutions</a>
-        <a href="#telephonie" className="hover:text-optical-blue transition-colors">Téléphonie</a>
-        <a href="#brand-book" className="hover:text-optical-blue transition-colors">Charte</a>
-        <a href="#contact" className="hover:text-optical-blue transition-colors">Contact</a>
+      <div className="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-400">
+        <a href="#solutions" className="hover:text-optical-blue transition-colors py-1 border-b border-transparent hover:border-optical-blue/50">Nos Solutions</a>
+        <a href="#telephonie" className="hover:text-optical-blue transition-colors py-1 border-b border-transparent hover:border-optical-blue/50">Téléphonie</a>
+        <a href="#reseau" className="hover:text-optical-blue transition-colors py-1 border-b border-transparent hover:border-optical-blue/50">Infrastructure</a>
+        <a href="#contact" className="hover:text-optical-blue transition-colors py-1 border-b border-transparent hover:border-optical-blue/50">Contact</a>
       </div>
-      <div className="flex gap-3">
-        <a href="#contact" className="glow-button flex items-center justify-center rounded-xl h-13 px-10 bg-gradient-to-r from-blue-600 to-accent-violet text-white text-base font-bold">
-          Contactez-nous
-        </a>
-      </div>
+      <a href="#contact" className="glow-button flex items-center justify-center rounded-lg h-10 px-6 bg-gradient-to-r from-blue-600 to-accent-violet text-white text-sm font-bold">
+        Contactez-nous
+      </a>
     </div>
   </nav>
 );
 
 const Hero = () => (
-  <section className="relative pt-40 pb-24 lg:pt-52 lg:pb-40 overflow-hidden">
+  <section className="relative pt-28 pb-24 lg:pt-36 lg:pb-40 overflow-hidden">
     <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-600/20 blur-[120px] rounded-full pointer-events-none" />
     <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-accent-violet/10 blur-[120px] rounded-full pointer-events-none" />
-    
+
     <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8 }}
@@ -136,8 +133,8 @@ const Hero = () => (
           </a>
         </div>
       </motion.div>
-      
-      <motion.div 
+
+      <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 1 }}
@@ -145,26 +142,26 @@ const Hero = () => (
       >
         <div className="relative z-10 rounded-[2.5rem] overflow-hidden shadow-2xl border border-white/10 premium-glow bg-slate-900">
           {/* IMAGE: Hero Main Visual - Abstract Fiber Optic Technology */}
-          <img 
-            className="w-full h-[550px] object-cover opacity-80 mix-blend-lighten" 
-            src="https://images.unsplash.com/photo-1551703599-6b3e8379aa8c?auto=format&fit=crop&q=80&w=1200" 
-            alt="Fiber Optic Technology" 
+          <img
+            className="w-full h-[550px] object-cover opacity-80 mix-blend-lighten"
+            src="https://images.unsplash.com/photo-1551703599-6b3e8379aa8c?auto=format&fit=crop&q=80&w=1200"
+            alt="Fiber Optic Technology"
             referrerPolicy="no-referrer"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-background-deep via-transparent to-transparent" />
-          
+
           {/* Overlaying dynamic elements */}
           <div className="absolute inset-0 flex items-center justify-center">
-            <motion.div 
-              animate={{ 
+            <motion.div
+              animate={{
                 scale: [1, 1.1, 1],
                 opacity: [0.3, 0.6, 0.3]
               }}
               transition={{ duration: 4, repeat: Infinity }}
               className="w-64 h-64 border-2 border-optical-blue/30 rounded-full blur-sm"
             />
-            <motion.div 
-              animate={{ 
+            <motion.div
+              animate={{
                 rotate: 360
               }}
               transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
@@ -188,7 +185,7 @@ const Stats = () => (
           { icon: <PhoneCall size={48} />, label: "Appels perdus", value: "50", prefix: "Réduction jusqu'à ", suffix: "%", sub: "Gestion intelligente", color: "text-accent-violet" },
           { icon: <Zap size={48} />, label: "Efficacité globale", value: "2", prefix: "Jusqu'à ", suffix: "x plus productif", sub: "Performance accrue", color: "text-blue-600" }
         ].map((stat, i) => (
-          <motion.div 
+          <motion.div
             key={i}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -230,7 +227,7 @@ const Solutions = () => (
 
       <div className="grid md:grid-cols-2 gap-12">
         {/* Solution 1: Internet */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
@@ -259,7 +256,7 @@ const Solutions = () => (
         </motion.div>
 
         {/* Solution 2: Telephony */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, x: 20 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
@@ -295,10 +292,10 @@ const VoIPSection = () => (
   <section id="telephonie" className="py-32 relative overflow-hidden bg-slate-950">
     <div className="absolute inset-0 opacity-20">
       {/* IMAGE: VoIP Section Background - Network/Data Visualization */}
-      <img 
-        className="w-full h-full object-cover mix-blend-screen" 
-        src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=1200" 
-        alt="Network background" 
+      <img
+        className="w-full h-full object-cover mix-blend-screen"
+        src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=1200"
+        alt="Network background"
         referrerPolicy="no-referrer"
       />
       <div className="absolute inset-0 bg-gradient-to-r from-background-deep via-background-deep/60 to-transparent" />
@@ -337,14 +334,14 @@ const VoIPSection = () => (
         <div className="relative">
           <div className="glass-card rounded-[3rem] p-6 shadow-2xl border-white/10 premium-glow">
             {/* IMAGE: VoIP Section Feature - Professional using digital tools */}
-            <img 
-              className="rounded-[2rem] w-full h-auto" 
-              src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=800" 
-              alt="Digital professional" 
+            <img
+              className="rounded-[2rem] w-full h-auto"
+              src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=800"
+              alt="Digital professional"
               referrerPolicy="no-referrer"
             />
           </div>
-          <motion.div 
+          <motion.div
             animate={{ y: [0, -10, 0] }}
             transition={{ duration: 4, repeat: Infinity }}
             className="absolute -bottom-10 -left-10 glass-card rounded-[2rem] p-8 shadow-2xl text-white border-white/20 premium-glow"
@@ -370,10 +367,10 @@ const InfrastructureSection = () => (
             <div className="space-y-6">
               <div className="relative rounded-3xl overflow-hidden group">
                 {/* IMAGE: Infrastructure Section - Modern Server Room/Data Center */}
-                <img 
-                  className="w-full h-56 object-cover transition-transform duration-700 group-hover:scale-110" 
-                  src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&q=80&w=600" 
-                  alt="Modern Server Room" 
+                <img
+                  className="w-full h-56 object-cover transition-transform duration-700 group-hover:scale-110"
+                  src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&q=80&w=600"
+                  alt="Modern Server Room"
                   referrerPolicy="no-referrer"
                 />
                 <div className="absolute inset-0 bg-blue-600/20 mix-blend-overlay" />
@@ -392,10 +389,10 @@ const InfrastructureSection = () => (
               </div>
               <div className="relative rounded-3xl overflow-hidden group">
                 {/* IMAGE: Infrastructure Section - Global Connectivity/Satellite */}
-                <img 
-                  className="w-full h-56 object-cover transition-transform duration-700 group-hover:scale-110" 
-                  src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=600" 
-                  alt="Satellite" 
+                <img
+                  className="w-full h-56 object-cover transition-transform duration-700 group-hover:scale-110"
+                  src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=600"
+                  alt="Satellite"
                   referrerPolicy="no-referrer"
                 />
                 <div className="absolute inset-0 bg-accent-violet/20 mix-blend-overlay" />
@@ -460,11 +457,11 @@ const CTASection = () => (
           <div className="bg-white/10 backdrop-blur-xl p-8 rounded-[2rem] border border-white/20 col-span-2">
             <p className="text-lg font-bold mb-4">Indicateur de Performance Flux</p>
             <div className="w-full bg-white/20 h-3 rounded-full overflow-hidden">
-              <motion.div 
+              <motion.div
                 initial={{ width: 0 }}
                 whileInView={{ width: '98%' }}
                 transition={{ duration: 2, ease: "easeOut" }}
-                className="bg-gradient-to-r from-optical-blue to-white h-full shadow-[0_0_15px_rgba(255,255,255,0.8)]" 
+                className="bg-gradient-to-r from-optical-blue to-white h-full shadow-[0_0_15px_rgba(255,255,255,0.8)]"
               />
             </div>
           </div>
@@ -485,9 +482,9 @@ const ContactSection = () => (
           <p className="text-slate-400 text-lg mb-12 leading-relaxed">Besoin d'une étude d'optimisation ou d'un conseil en architecture de flux ? Nos ingénieurs sont à votre écoute.</p>
           <div className="space-y-8">
             {[
-              { icon: <PhoneCall />, label: "Ligne directe", value: "0800 123 456" },
-              { icon: <Mail />, label: "Digital Hub", value: "contact@aegis-network.fr" },
-              { icon: <MapPin />, label: "Centre Opérationnel", value: "Paris, France" }
+              { icon: <PhoneCall />, label: "Ligne directe", value: "07 81 43 81 23", href: "tel:+33781438123" },
+              { icon: <Mail />, label: "Email", value: "contact@aegisnetwork.fr", href: "mailto:contact@aegisnetwork.fr" },
+              { icon: <MapPin />, label: "Centre Opérationnel", value: "Lyon, France", href: undefined }
             ].map((item, i) => (
               <div key={i} className="flex items-center gap-6 group">
                 <div className="w-14 h-14 rounded-2xl bg-blue-600/20 flex items-center justify-center text-optical-blue border border-blue-600/20 shadow-lg group-hover:bg-blue-600 group-hover:text-white transition-all">
@@ -495,7 +492,11 @@ const ContactSection = () => (
                 </div>
                 <div>
                   <p className="text-sm text-slate-500 font-bold uppercase tracking-widest">{item.label}</p>
-                  <p className="text-xl font-bold text-white">{item.value}</p>
+                  {item.href ? (
+                    <a href={item.href} className="text-xl font-bold text-white hover:text-optical-blue transition-colors">{item.value}</a>
+                  ) : (
+                    <p className="text-xl font-bold text-white">{item.value}</p>
+                  )}
                 </div>
               </div>
             ))}
@@ -533,122 +534,93 @@ const ContactSection = () => (
   </section>
 );
 
-const BrandBook = () => (
-  <section id="brand-book" className="py-32 relative bg-slate-950 overflow-hidden">
-    <div className="max-w-7xl mx-auto px-6 relative z-10">
-      <div className="text-center mb-20">
-        <h2 className="text-optical-blue font-bold text-sm uppercase tracking-[0.3em] mb-4">Brand Identity</h2>
-        <h3 className="text-4xl lg:text-5xl font-black text-white">Charte Graphique AEGIS</h3>
-      </div>
-      
-      <div className="grid lg:grid-cols-3 gap-12">
-        {/* Colors */}
-        <div className="glass-card p-10 rounded-[2.5rem] border-white/5">
-          <h4 className="text-xl font-bold text-white mb-8 flex items-center gap-3">
-            <div className="w-2 h-8 bg-blue-600 rounded-full" />
-            Palette de Couleurs
-          </h4>
-          <div className="space-y-6">
-            {[
-              { name: "Optical Blue", hex: "#3b82f6", class: "bg-blue-500" },
-              { name: "Deep Background", hex: "#020617", class: "bg-slate-950 border border-white/10" },
-              { name: "Accent Violet", hex: "#7c3aed", class: "bg-violet-600" },
-              { name: "Slate Text", hex: "#94a3b8", class: "bg-slate-400" }
-            ].map((color, i) => (
-              <div key={i} className="flex items-center gap-4">
-                <div className={`w-14 h-14 rounded-2xl ${color.class} shadow-lg`} />
-                <div>
-                  <p className="text-white font-bold">{color.name}</p>
-                  <p className="text-slate-500 text-sm font-mono">{color.hex}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+const LegalModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
+  if (!isOpen) return null;
 
-        {/* Typography */}
-        <div className="glass-card p-10 rounded-[2.5rem] border-white/5">
-          <h4 className="text-xl font-bold text-white mb-8 flex items-center gap-3">
-            <div className="w-2 h-8 bg-violet-600 rounded-full" />
-            Typographie
-          </h4>
-          <div className="space-y-8">
-            <div>
-              <p className="text-slate-500 text-xs font-bold uppercase tracking-widest mb-2">Primary Font (Headings)</p>
-              <p className="text-3xl font-black text-white tracking-tighter">Inter Black (900)</p>
-              <p className="text-slate-400 text-sm mt-1">Utilisée pour les titres et l'impact visuel. Force et modernité.</p>
-            </div>
-            <div>
-              <p className="text-slate-500 text-xs font-bold uppercase tracking-widest mb-2">Secondary Font (Body)</p>
-              <p className="text-2xl font-medium text-white">Inter Regular (400/500)</p>
-              <p className="text-slate-400 text-sm mt-1">Utilisée pour le corps de texte. Lisibilité optimale sur écrans.</p>
-            </div>
-            <div>
-              <p className="text-slate-500 text-xs font-bold uppercase tracking-widest mb-2">Logo Spacing (Tracking)</p>
-              <p className="text-lg font-black text-white tracking-[0.15em]">AEGIS NETWORK</p>
-              <p className="text-slate-400 text-sm mt-1">Tracking équilibré (0.15em) pour une allure premium et lisible.</p>
-            </div>
-          </div>
-        </div>
+  return (
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-label="Mentions légales">
+      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
+      <div className="relative bg-slate-900 border border-white/10 rounded-3xl max-w-2xl w-full max-h-[80vh] overflow-y-auto p-8 md:p-12 shadow-2xl">
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 p-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/10 transition-all"
+          aria-label="Fermer"
+        >
+          <X size={20} />
+        </button>
 
-        {/* Logo Usage & Variations */}
-        <div className="glass-card p-10 rounded-[2.5rem] border-white/5">
-          <h4 className="text-xl font-bold text-white mb-8 flex items-center gap-3">
-            <div className="w-2 h-8 bg-optical-blue rounded-full" />
-            Usage & Variations
-          </h4>
-          <div className="space-y-8">
-            <div className="flex flex-col items-center">
-              <div className="p-6 bg-slate-900 rounded-[2rem] border border-white/10 mb-3 w-full flex justify-center">
-                <AegisLogo className="w-16 h-16" />
-              </div>
-              <p className="text-xs text-slate-500 font-bold uppercase">Version Dark (Default)</p>
-            </div>
-            <div className="flex flex-col items-center">
-              <div className="p-6 bg-white rounded-[2rem] border border-slate-200 mb-3 w-full flex justify-center">
-                <AegisLogo className="w-16 h-16" />
-              </div>
-              <p className="text-xs text-slate-500 font-bold uppercase">Version Light (Print/Alt)</p>
-            </div>
-            <p className="text-center text-slate-400 text-sm leading-relaxed px-4">
-              Le logo doit conserver un espace de protection égal à 50% de sa largeur. Le dégradé photonique est l'élément signature.
-            </p>
+        <h2 className="text-2xl font-black text-white mb-8">Mentions légales</h2>
+
+        <div className="space-y-6 text-sm text-slate-400 leading-relaxed">
+          <div>
+            <h3 className="text-white font-bold mb-2">Éditeur du site</h3>
+            <p>Aegis Network</p>
+            <p>Contact : <a href="mailto:contact@aegisnetwork.fr" className="text-optical-blue hover:underline">contact@aegisnetwork.fr</a></p>
+            <p>Téléphone : <a href="tel:+33781438123" className="text-optical-blue hover:underline">07 81 43 81 23</a></p>
+            <p>Centre opérationnel : Lyon, France</p>
+            <p className="mt-2 text-yellow-500/80 text-xs">TODO: compléter — forme juridique, SIRET/RCS, capital social, nom du directeur de publication</p>
+          </div>
+
+          <div>
+            <h3 className="text-white font-bold mb-2">Hébergement</h3>
+            <p>OVHcloud — 2, rue Kellermann — 59100 Roubaix — France</p>
+            <p>Tél. : 1007</p>
+            <p><a href="https://www.ovhcloud.com" className="text-optical-blue hover:underline" target="_blank" rel="noopener noreferrer">www.ovhcloud.com</a></p>
+          </div>
+
+          <div>
+            <h3 className="text-white font-bold mb-2">Propriété intellectuelle</h3>
+            <p>L'ensemble du contenu de ce site (textes, images, logo, éléments graphiques) est la propriété d'Aegis Network, sauf mention contraire. Toute reproduction, même partielle, est interdite sans autorisation préalable.</p>
+          </div>
+
+          <div>
+            <h3 className="text-white font-bold mb-2">Données personnelles</h3>
+            <p>Ce site ne collecte aucune donnée personnelle de manière automatique. Le formulaire de contact transmet les informations saisies par l'utilisateur dans le seul but de répondre à sa demande. Aucun cookie de suivi ou d'analyse n'est utilisé.</p>
+            <p className="mt-2 text-yellow-500/80 text-xs">TODO: à adapter si un outil d'analytics ou des cookies sont ajoutés ultérieurement</p>
+          </div>
+
+          <div>
+            <h3 className="text-white font-bold mb-2">Responsabilité</h3>
+            <p>Aegis Network s'efforce de fournir des informations aussi précises que possible. Toutefois, l'entreprise ne saurait être tenue responsable des omissions, inexactitudes ou résultats obtenus suite à l'utilisation de ces informations.</p>
           </div>
         </div>
       </div>
     </div>
-  </section>
-);
+  );
+};
 
-const Footer = () => (
-  <footer className="bg-background-deep py-20 border-t border-white/5">
-    <div className="max-w-7xl mx-auto px-6">
-      <div className="flex flex-col md:flex-row justify-between items-center gap-10">
-        <div className="flex items-center gap-4">
-          <div className="p-1 rounded-xl">
-            <AegisLogo className="w-10 h-10" />
-          </div>
-          <div className="flex flex-col">
-            <h1 className="text-xl font-black tracking-[0.15em] text-white leading-none">
-              AEGIS <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-violet-400">NETWORK</span>
-            </h1>
-            <span className="text-[8px] uppercase tracking-[0.25em] text-slate-500 font-bold mt-1">High-Performance Connectivity</span>
+const Footer = () => {
+  const [legalOpen, setLegalOpen] = useState(false);
+
+  return (
+    <>
+      <footer className="bg-background-deep py-16 border-t border-white/5">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-8">
+            <div className="flex items-center gap-3">
+              <AegisLogo className="w-8 h-8" />
+              <div className="flex flex-col">
+                <span className="text-lg font-black tracking-[0.15em] text-white leading-none">
+                  AEGIS <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-violet-400">NETWORK</span>
+                </span>
+                <span className="text-[8px] uppercase tracking-[0.25em] text-slate-500 font-bold mt-0.5">High-Performance Connectivity</span>
+              </div>
+            </div>
+            <div className="flex gap-8 text-xs font-bold text-slate-500 uppercase tracking-widest">
+              <button onClick={() => setLegalOpen(true)} className="hover:text-optical-blue transition-colors cursor-pointer">Mentions Légales</button>
+            </div>
+            <p className="text-xs text-slate-500 font-medium">© 2026 Aegis Network.</p>
           </div>
         </div>
-        <div className="flex gap-10 text-sm font-bold text-slate-500 uppercase tracking-widest">
-          <a href="#" className="hover:text-optical-blue transition-colors">Mentions Légales</a>
-          <a href="#" className="hover:text-optical-blue transition-colors">Confidentialité</a>
-          <a href="#" className="hover:text-optical-blue transition-colors">Cookies</a>
-        </div>
-        <p className="text-sm text-slate-500 font-medium">© 2026 Aegis Network. Engineered for Performance.</p>
-      </div>
-    </div>
-  </footer>
-);
+      </footer>
+      <LegalModal isOpen={legalOpen} onClose={() => setLegalOpen(false)} />
+    </>
+  );
+};
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-background-deep selection:bg-blue-600 selection:text-white">
+    <div className="min-h-screen bg-background-deep selection:bg-blue-600 selection:text-white scroll-smooth">
       <Navbar />
       <main>
         <Hero />
@@ -658,7 +630,6 @@ export default function App() {
         <InfrastructureSection />
         <CTASection />
         <ContactSection />
-        <BrandBook />
       </main>
       <Footer />
     </div>
