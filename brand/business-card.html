@@ -18,7 +18,6 @@
       --slate-700: #334155;
       --slate-400: #94A3B8;
       --slate-50: #F8FAFC;
-      /* Card dimensions */
       --card-w: 85mm;
       --card-h: 55mm;
       --bleed: 3mm;
@@ -32,59 +31,18 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* ======================== */
-    /* SCREEN PREVIEW           */
-    /* ======================== */
-    .preview-wrapper {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 60px 40px;
-    }
+    .preview-wrapper { max-width: 960px; margin: 0 auto; padding: 60px 40px; }
 
-    .preview-header {
-      text-align: center;
-      margin-bottom: 60px;
-    }
-    .preview-header h1 {
-      font-size: 1.5rem;
-      font-weight: 900;
-      letter-spacing: -0.02em;
-      color: #fff;
-      margin-bottom: 8px;
-    }
-    .preview-header p {
-      font-size: 0.85rem;
-      color: var(--slate-400);
-    }
+    .preview-header { text-align: center; margin-bottom: 60px; }
+    .preview-header h1 { font-size: 1.5rem; font-weight: 900; letter-spacing: -0.02em; color: #fff; margin-bottom: 8px; }
+    .preview-header p { font-size: 0.85rem; color: var(--slate-400); }
 
-    .preview-section {
-      margin-bottom: 60px;
-    }
-    .preview-section h2 {
-      font-size: 0.7rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.2em;
-      color: var(--optical-blue);
-      margin-bottom: 24px;
-    }
+    .preview-section { margin-bottom: 60px; }
+    .preview-section h2 { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: var(--optical-blue); margin-bottom: 24px; }
 
-    .preview-cards {
-      display: flex;
-      gap: 40px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
+    .preview-cards { display: flex; gap: 40px; flex-wrap: wrap; justify-content: center; }
 
-    /* Card preview container with shadow */
-    .card-preview {
-      width: 340px;
-      height: 220px;
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 25px 60px -15px rgba(0,0,0,0.5);
-      position: relative;
-    }
+    .card-preview { width: 340px; height: 220px; border-radius: 8px; overflow: hidden; box-shadow: 0 25px 60px -15px rgba(0,0,0,0.5); position: relative; }
 
     /* ======================== */
     /* RECTO — Fond clair        */
@@ -102,64 +60,29 @@
     .recto::after {
       content: '';
       position: absolute;
-      bottom: -40px;
-      right: -40px;
-      width: 180px;
-      height: 180px;
+      bottom: -40px; right: -40px;
+      width: 180px; height: 180px;
       background: linear-gradient(135deg, rgba(37,99,235,0.06), rgba(124,58,237,0.03));
       border-radius: 50%;
       pointer-events: none;
     }
 
-    .recto-top {
-      position: relative;
-      z-index: 1;
-    }
-    .recto-brand {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 28px;
-    }
-    .recto-brand svg { width: 22px; height: 22px; flex-shrink: 0; }
-    .recto-brand-text {
-      font-size: 0.6rem;
-      font-weight: 900;
-      letter-spacing: 0.15em;
-      color: var(--slate-900);
-    }
+    .recto-top { position: relative; z-index: 1; }
+    .recto-brand { display: flex; align-items: center; gap: 10px; margin-bottom: 24px; }
+    .recto-brand svg { width: 28px; height: 28px; flex-shrink: 0; }
+    .recto-brand-text { font-size: 0.7rem; font-weight: 900; letter-spacing: 0.15em; color: var(--slate-900); }
     .recto-brand-text span { color: var(--aegis-blue); }
 
-    .recto-name {
-      font-size: 1rem;
-      font-weight: 800;
-      color: var(--slate-900);
-      margin-bottom: 3px;
-      letter-spacing: -0.01em;
-    }
-    .recto-title {
-      font-size: 0.6rem;
-      font-weight: 600;
-      color: var(--aegis-blue);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-    }
+    .recto-name { font-size: 1.1rem; font-weight: 800; color: var(--slate-900); margin-bottom: 4px; letter-spacing: -0.01em; }
+    .recto-title { font-size: 0.65rem; font-weight: 600; color: var(--aegis-blue); letter-spacing: 0.02em; }
 
-    .recto-bottom {
-      position: relative;
-      z-index: 1;
-    }
-    .recto-contact {
-      font-size: 0.55rem;
-      color: var(--slate-700);
-      line-height: 1.8;
-    }
+    .recto-bottom { position: relative; z-index: 1; }
+    .recto-contact { font-size: 0.6rem; color: var(--slate-700); line-height: 1.9; }
+    .recto-contact-line { display: flex; align-items: center; gap: 6px; margin-bottom: 2px; }
+    .recto-contact-line svg { width: 11px; height: 11px; flex-shrink: 0; }
     .recto-accent {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 3px;
-      height: 100%;
+      position: absolute; top: 0; left: 0;
+      width: 3px; height: 100%;
       background: linear-gradient(180deg, var(--aegis-blue), var(--deep-violet));
       border-radius: 2px;
     }
@@ -181,52 +104,25 @@
     }
     .verso::before {
       content: '';
-      position: absolute;
-      top: -30%;
-      left: -20%;
-      width: 60%;
-      height: 60%;
+      position: absolute; top: -30%; left: -20%;
+      width: 60%; height: 60%;
       background: radial-gradient(circle, rgba(37,99,235,0.06), transparent 70%);
       pointer-events: none;
     }
     .verso::after {
       content: '';
-      position: absolute;
-      bottom: -30%;
-      right: -20%;
-      width: 60%;
-      height: 60%;
+      position: absolute; bottom: -30%; right: -20%;
+      width: 60%; height: 60%;
       background: radial-gradient(circle, rgba(124,58,237,0.04), transparent 70%);
       pointer-events: none;
     }
 
-    .verso svg { width: 48px; height: 48px; position: relative; z-index: 1; }
-    .verso-brand {
-      position: relative;
-      z-index: 1;
-    }
-    .verso-title {
-      font-size: 0.85rem;
-      font-weight: 900;
-      letter-spacing: 0.15em;
-      color: #fff;
-    }
+    .verso svg { width: 56px; height: 56px; position: relative; z-index: 1; }
+    .verso-brand { position: relative; z-index: 1; }
+    .verso-title { font-size: 0.9rem; font-weight: 900; letter-spacing: 0.15em; color: #fff; }
     .verso-title span { color: var(--optical-blue); }
-    .verso-sub {
-      font-size: 0.4rem;
-      font-weight: 600;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--slate-400);
-      margin-top: 5px;
-    }
-    .verso-url {
-      font-size: 0.45rem;
-      color: var(--slate-700);
-      letter-spacing: 0.05em;
-      position: relative;
-      z-index: 1;
-    }
+    .verso-sub { font-size: 0.42rem; font-weight: 600; letter-spacing: 0.25em; text-transform: uppercase; color: var(--slate-400); margin-top: 5px; }
+    .verso-url { font-size: 0.45rem; color: var(--slate-700); letter-spacing: 0.05em; position: relative; z-index: 1; }
 
     /* ======================== */
     /* VERSION ALTERNATIVE       */
@@ -241,11 +137,8 @@
       position: relative;
     }
     .recto-alt .recto-accent {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 3px;
+      position: absolute; top: 0; left: 0;
+      width: 100%; height: 3px;
       background: linear-gradient(90deg, var(--aegis-blue), var(--deep-violet));
       border-radius: 0;
     }
@@ -260,91 +153,44 @@
       padding: 32px;
       margin-top: 40px;
     }
-    .specs h3 {
-      font-size: 0.9rem;
-      font-weight: 700;
-      color: #fff;
-      margin-bottom: 16px;
-    }
-    .specs p {
-      font-size: 0.8rem;
-      color: var(--slate-400);
-      margin-bottom: 8px;
-      line-height: 1.7;
-    }
-    .specs code {
-      background: rgba(255,255,255,0.05);
-      padding: 1px 6px;
-      border-radius: 4px;
-      font-size: 0.75rem;
-    }
+    .specs h3 { font-size: 0.9rem; font-weight: 700; color: #fff; margin-bottom: 16px; }
+    .specs p { font-size: 0.8rem; color: var(--slate-400); margin-bottom: 8px; line-height: 1.7; }
+    .specs code { background: rgba(255,255,255,0.05); padding: 1px 6px; border-radius: 4px; font-size: 0.75rem; }
 
     /* ======================== */
     /* PRINT VERSION             */
     /* ======================== */
     @media print {
-      body {
-        background: #fff;
-        margin: 0;
-        padding: 0;
-      }
-      .preview-wrapper,
-      .preview-header,
-      .preview-section h2,
-      .specs {
-        display: none;
-      }
-
-      .print-card {
-        display: block !important;
-        page-break-after: always;
-      }
+      body { background: #fff; margin: 0; padding: 0; }
+      .preview-wrapper, .preview-header, .preview-section h2, .specs { display: none; }
+      .print-card { display: block !important; page-break-after: always; }
     }
 
-    /* Print-ready cards (hidden on screen) */
-    .print-card {
-      display: none;
-    }
+    .print-card { display: none; }
 
     .print-card-recto,
     .print-card-verso {
-      /* 85x55mm + 3mm bleed each side = 91x61mm */
-      width: 91mm;
-      height: 61mm;
-      position: relative;
-      overflow: hidden;
+      width: 91mm; height: 61mm;
+      position: relative; overflow: hidden;
     }
 
     .print-card-recto .print-inner,
     .print-card-verso .print-inner {
-      /* Actual card area */
-      position: absolute;
-      top: 3mm;
-      left: 3mm;
-      right: 3mm;
-      bottom: 3mm;
+      position: absolute; top: 3mm; left: 3mm; right: 3mm; bottom: 3mm;
     }
 
-    .print-card-recto {
-      background: var(--slate-50);
-    }
+    .print-card-recto { background: var(--slate-50); }
     .print-card-recto .print-inner {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      padding: 7mm;
+      display: flex; flex-direction: column; justify-content: space-between; padding: 7mm;
     }
 
-    .print-card-verso {
-      background: linear-gradient(145deg, var(--slate-900), #131B2E);
-    }
+    .print-card-verso { background: linear-gradient(145deg, var(--slate-900), #131B2E); }
     .print-card-verso .print-inner {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      gap: 4mm;
+      display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 4mm;
     }
+
+    .print-contact-line { display: flex; align-items: center; gap: 1.5mm; }
+    .print-contact-line svg { width: 2.5mm; height: 2.5mm; flex-shrink: 0; }
 
     @media (max-width: 768px) {
       .preview-wrapper { padding: 32px 20px; }
@@ -354,9 +200,6 @@
 </head>
 <body>
 
-<!-- ============================== -->
-<!-- SCREEN PREVIEW                 -->
-<!-- ============================== -->
 <div class="preview-wrapper">
 
   <div class="preview-header">
@@ -382,14 +225,27 @@
               </svg>
               <span class="recto-brand-text">AEGIS <span>NETWORK</span></span>
             </div>
-            <p class="recto-name">Ludovic Rochet-Bellavia</p>
-            <p class="recto-title">Dirigeant</p>
+            <p class="recto-name">Ludovic ROCHET-BELLAVIA</p>
+            <p class="recto-title">Consultant réseaux &amp; téléphonie</p>
           </div>
           <div class="recto-bottom" style="padding-left: 14px;">
             <div class="recto-contact">
-              <p>07 81 43 81 23</p>
-              <p>contact@aegisnetwork.fr</p>
-              <p>aegisnetwork.fr · Lyon, France</p>
+              <p class="recto-contact-line">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#334155" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                07 81 43 81 23
+              </p>
+              <p class="recto-contact-line">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#334155" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                contact@aegisnetwork.fr
+              </p>
+              <p class="recto-contact-line">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#334155" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                aegisnetwork.fr
+              </p>
+              <p class="recto-contact-line">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#334155" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                Lyon, France
+              </p>
             </div>
           </div>
         </div>
@@ -407,7 +263,7 @@
           </svg>
           <div class="verso-brand">
             <p class="verso-title">AEGIS <span>NETWORK</span></p>
-            <p class="verso-sub">High-Performance Connectivity</p>
+            <p class="verso-sub">Conseil &amp; Optimisation IT</p>
           </div>
           <p class="verso-url">aegisnetwork.fr</p>
         </div>
@@ -427,24 +283,32 @@
           <div class="recto-accent"></div>
           <div class="recto-top" style="padding-top: 8px;">
             <div class="recto-brand">
-              <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:20px; height:20px;">
+              <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:26px; height:26px;">
                 <defs><linearGradient id="ra1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#2563EB"/><stop offset="100%" stop-color="#7C3AED"/></linearGradient></defs>
                 <path d="M15 85 L50 15 L85 85" stroke="url(#ra1)" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
                 <path d="M35 85 H65" stroke="url(#ra1)" stroke-width="14" stroke-linecap="round"/>
               </svg>
               <span class="recto-brand-text">AEGIS <span>NETWORK</span></span>
             </div>
-            <p class="recto-name" style="margin-top: 12px;">Ludovic Rochet-Bellavia</p>
-            <p class="recto-title">Dirigeant</p>
+            <p class="recto-name" style="margin-top: 12px;">Ludovic ROCHET-BELLAVIA</p>
+            <p class="recto-title">Consultant réseaux &amp; téléphonie</p>
           </div>
           <div class="recto-bottom">
             <div class="recto-contact">
-              <p style="margin-bottom:2px;">
-                <strong style="color: var(--slate-900); font-weight: 600;">T</strong> 07 81 43 81 23 ·
-                <strong style="color: var(--slate-900); font-weight: 600;">E</strong> contact@aegisnetwork.fr
+              <p class="recto-contact-line">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#334155" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                07 81 43 81 23
               </p>
-              <p>
-                <strong style="color: var(--slate-900); font-weight: 600;">W</strong> aegisnetwork.fr ·
+              <p class="recto-contact-line">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#334155" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                contact@aegisnetwork.fr
+              </p>
+              <p class="recto-contact-line">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#334155" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                aegisnetwork.fr
+              </p>
+              <p class="recto-contact-line">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#334155" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
                 Lyon, France
               </p>
             </div>
@@ -464,7 +328,7 @@
           </svg>
           <div class="verso-brand">
             <p class="verso-title">AEGIS <span>NETWORK</span></p>
-            <p class="verso-sub">High-Performance Connectivity</p>
+            <p class="verso-sub">Conseil &amp; Optimisation IT</p>
           </div>
           <p class="verso-url">aegisnetwork.fr</p>
         </div>
@@ -490,32 +354,38 @@
 </div>
 
 <!-- ============================== -->
-<!-- PRINT VERSIONS (hidden on screen, visible on print) -->
+<!-- PRINT VERSIONS                 -->
 <!-- ============================== -->
 <div class="print-card">
   <div class="print-card-recto">
     <div class="print-inner">
       <div>
-        <div style="display:flex; align-items:center; gap:2mm; margin-bottom:8mm;">
-          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:6mm; height:6mm;">
+        <div style="display:flex; align-items:center; gap:2.5mm; margin-bottom:7mm;">
+          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:7mm; height:7mm;">
             <defs><linearGradient id="pr1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#2563EB"/><stop offset="100%" stop-color="#7C3AED"/></linearGradient></defs>
             <path d="M15 85 L50 15 L85 85" stroke="url(#pr1)" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
             <path d="M35 85 H65" stroke="url(#pr1)" stroke-width="14" stroke-linecap="round"/>
           </svg>
-          <span style="font-size:7pt; font-weight:900; letter-spacing:0.15em; color:#0F172A;">AEGIS <span style="color:#2563EB;">NETWORK</span></span>
+          <span style="font-size:8pt; font-weight:900; letter-spacing:0.15em; color:#0F172A;">AEGIS <span style="color:#2563EB;">NETWORK</span></span>
         </div>
-        <p style="font-size:11pt; font-weight:800; color:#0F172A; margin-bottom:1mm;">Ludovic Rochet-Bellavia</p>
-        <p style="font-size:7pt; font-weight:600; color:#2563EB; text-transform:uppercase; letter-spacing:0.1em;">Dirigeant</p>
+        <p style="font-size:11pt; font-weight:800; color:#0F172A; margin-bottom:1mm;">Ludovic ROCHET-BELLAVIA</p>
+        <p style="font-size:7pt; font-weight:600; color:#2563EB; letter-spacing:0.02em;">Consultant réseaux &amp; téléphonie</p>
       </div>
-      <div>
-        <p style="font-size:7pt; color:#475569; line-height:1.8; margin:0;">
-          07 81 43 81 23<br>
-          contact@aegisnetwork.fr<br>
+      <div style="font-size:7pt; color:#475569; line-height:2;">
+        <p style="margin:0; display:flex; align-items:center; gap:1.5mm;">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:2.5mm; height:2.5mm;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          07 81 43 81 23
+        </p>
+        <p style="margin:0; display:flex; align-items:center; gap:1.5mm;">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:2.5mm; height:2.5mm;"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          contact@aegisnetwork.fr
+        </p>
+        <p style="margin:0; display:flex; align-items:center; gap:1.5mm;">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:2.5mm; height:2.5mm;"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
           aegisnetwork.fr · Lyon, France
         </p>
       </div>
     </div>
-    <!-- Left accent bar -->
     <div style="position:absolute; top:3mm; left:3mm; width:0.8mm; height:calc(100% - 6mm); background:linear-gradient(180deg, #2563EB, #7C3AED); border-radius:1mm;"></div>
   </div>
 </div>
@@ -523,7 +393,7 @@
 <div class="print-card">
   <div class="print-card-verso">
     <div class="print-inner">
-      <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:14mm; height:14mm;">
+      <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:16mm; height:16mm;">
         <defs><linearGradient id="pv1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#2563EB"/><stop offset="100%" stop-color="#7C3AED"/></linearGradient></defs>
         <path d="M15 85 L50 15 L85 85" stroke="url(#pv1)" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
         <path d="M35 85 H65" stroke="url(#pv1)" stroke-width="12" stroke-linecap="round"/>
@@ -532,7 +402,7 @@
       </svg>
       <div style="text-align:center;">
         <p style="font-size:10pt; font-weight:900; letter-spacing:0.15em; color:#fff; margin:0;">AEGIS <span style="color:#3B82F6;">NETWORK</span></p>
-        <p style="font-size:5pt; font-weight:600; letter-spacing:0.25em; text-transform:uppercase; color:#64748B; margin-top:2mm;">High-Performance Connectivity</p>
+        <p style="font-size:5.5pt; font-weight:600; letter-spacing:0.25em; text-transform:uppercase; color:#64748B; margin-top:2mm;">Conseil &amp; Optimisation IT</p>
       </div>
       <p style="font-size:6pt; color:#475569; letter-spacing:0.05em; margin:0;">aegisnetwork.fr</p>
     </div>

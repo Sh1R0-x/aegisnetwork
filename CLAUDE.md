@@ -67,7 +67,7 @@ docs/               ← documentation technique
 
 ## Sections du site (App.tsx)
 
-Navbar → Hero → Stats → Solutions → VoIPSection → OptimisationSection → CTASection → ContactSection → Footer (+ LegalModal)
+Navbar → Hero → ValueProposition → Stats → Solutions → VoIPSection → OptimisationSection → ImpactCalculator → CTASection → ContactSection → Footer (+ LegalModal)
 
 La section BrandBook a été supprimée.
 
@@ -142,8 +142,21 @@ Ne jamais modifier ces informations sans validation explicite.
 - Hero float : amplitude réduite (8px / 8s) pour confort visuel
 - Hero éléments overlay : pulsation douce (6s) + rotation lente (30s)
 - CSS keyframes pour fiber beams, float, pulse-slow, hero-glow-drift, stat-highlight
-- CountUp : durée 1000ms avec glow bleu à la complétion (`stat-highlight`)
+- CountUp : durée 1000ms avec glow bleu à la complétion (`stat-highlight`, 2.5s)
 - `prefers-reduced-motion` respecté (désactive toutes les animations CSS)
+
+## Statistiques et sources
+
+- **Chiffres sourcés** (France Num 2025, BEREC 2022, SDI 2023, Cybermalveillance 2025) intégrés dans ValueProposition et ImpactCalculator
+- **Hypothèses du simulateur** : clairement distinguées des données sourcées, valeurs par défaut prudentes, ajustables par l'utilisateur
+- Ne jamais présenter une hypothèse du simulateur comme un fait sourcé
+
+## Elements.tsx (UI Kit)
+
+- Situé dans `stitch/elements/Elements.tsx` (lecture seule, source Stitch)
+- Contient des composants réutilisables : BentoGrid, PricingToggle, StatusDashboard, ProcessTimeline, FeatureComparison, HoverCards, Testimonials, ROICalculator, NetworkMap, MagneticCTA, GraphicElements
+- Le `ImpactCalculator` de App.tsx est adapté depuis `Element8ROICalculator` de Elements.tsx
+- Si un composant existe dans Elements.tsx, privilégier la réutilisation plutôt que la recréation
 
 ## Images
 

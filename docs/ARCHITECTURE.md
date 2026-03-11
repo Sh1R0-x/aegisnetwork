@@ -38,14 +38,18 @@ Le site est one-page. Toutes les sections sont dans `App.tsx` :
 
 | Composant              | Rôle                                         |
 | ---------------------- | -------------------------------------------- |
-| `CountUp`              | Compteur animé (1s, glow à la complétion)     |
+| `CountUp`              | Compteur animé (1s, glow 2.5s à la complétion) |
 | `FiberBeams`           | Fond animé fibre optique (CSS keyframes)     |
 | `Navbar`               | Navigation fixe avec section active auto (IntersectionObserver) |
 | `Hero`                 | Accroche principale + CTA + fond animé premium  |
+| `ValueProposition`     | Pain points + mini simulateur budget + stats sourcées |
 | `Stats`                | 3 KPI animés (coûts, appels, productivité)    |
 | `Solutions`            | 2 colonnes : Audit Réseau & Pilotage Téléphonie |
 | `VoIPSection`          | Accompagnement téléphonie (audit + sélection + transition) |
 | `OptimisationSection`  | Optimisation économique & mise en concurrence |
+| `ImpactCalculator`     | Simulateur interactif gains temps/argent (adapté d'Elements.tsx) |
+| `CalcSlider`           | Sous-composant slider pour le simulateur      |
+| `CalcResult`           | Sous-composant ligne de résultat              |
 | `CTASection`           | Appel à l'action (audit gratuit)              |
 | `ContactSection`       | Formulaire de contact (front-only)           |
 | `LegalModal`           | Mentions légales (modal depuis le footer)     |

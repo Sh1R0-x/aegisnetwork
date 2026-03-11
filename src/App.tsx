@@ -9,13 +9,17 @@ import {
   Globe,
   X,
   TrendingDown,
+  TrendingUp,
   Search,
   Target,
   AlertTriangle,
   Scale,
-  Calculator
+  Calculator,
+  ChevronDown,
+  Info,
+  Clock
 } from 'lucide-react';
-import { motion, useInView } from 'motion/react';
+import { motion, useInView, AnimatePresence } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
 import { AegisLogo } from './components/AegisLogo';
 
@@ -285,6 +289,18 @@ const ValueProposition = () => {
                 </div>
               </motion.div>
             ))}
+
+            {/* Sourced market context */}
+            <div className="mt-6 pt-4 border-t border-white/5 space-y-2">
+              <p className="text-[11px] text-slate-500 leading-relaxed flex items-start gap-1.5">
+                <BarChart3 size={12} className="shrink-0 mt-0.5 text-slate-600" />
+                78 % des dirigeants de TPE/PME estiment que le numérique est un bénéfice réel pour leur entreprise. <span className="text-slate-600 shrink-0">— France Num, 2025</span>
+              </p>
+              <p className="text-[11px] text-slate-500 leading-relaxed flex items-start gap-1.5">
+                <BarChart3 size={12} className="shrink-0 mt-0.5 text-slate-600" />
+                Les PME renégocient plus souvent avec le même fournisseur, sans mise en concurrence. <span className="text-slate-600 shrink-0">— BEREC, 2022</span>
+              </p>
+            </div>
           </div>
 
           {/* ROI Simulator */}
@@ -376,8 +392,7 @@ const Stats = () => (
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.15, duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
             viewport={{ once: true }}
-            whileHover={{ y: -5, scale: 1.02 }}
-            className="glass-card p-10 rounded-3xl flex flex-col gap-3 group hover:border-optical-blue/40 transition-all relative overflow-hidden"
+            className="glass-card p-10 rounded-3xl flex flex-col gap-3 group hover:border-optical-blue/40 hover:-translate-y-1 hover:scale-[1.02] transition-all duration-300 relative overflow-hidden"
           >
             <div className="absolute -right-4 -top-4 opacity-5 group-hover:opacity-10 transition-opacity">
               {stat.icon}
@@ -413,8 +428,8 @@ const Solutions = () => (
       <div className="grid md:grid-cols-2 gap-12">
         {/* Solution 1: Internet */}
         <motion.div
-          initial={{ opacity: 0, x: -30 }}
-          whileInView={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
           viewport={{ once: true }}
           className="glass-card p-12 rounded-[3rem] border-white/5 hover:border-blue-500/30 transition-all group"
@@ -443,9 +458,9 @@ const Solutions = () => (
 
         {/* Solution 2: Telephony */}
         <motion.div
-          initial={{ opacity: 0, x: 30 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, delay: 0.15, ease: [0.25, 0.1, 0.25, 1] }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
           viewport={{ once: true }}
           className="glass-card p-12 rounded-[3rem] border-white/5 hover:border-violet-500/30 transition-all group"
         >
@@ -591,6 +606,320 @@ const OptimisationSection = () => (
     </div>
   </section>
 );
+
+const CalcSlider = ({ label, value, onChange, min, max, step, unit = "", note }: {
+  label: string;
+  value: number;
+  onChange: (v: number) => void;
+  min: number;
+  max: number;
+  step: number;
+  unit?: string;
+  note: string;
+}) => (
+  <div>
+    <div className="flex justify-between items-baseline mb-1.5">
+      <label className="text-xs font-semibold text-slate-300">{label}</label>
+      <span className="text-sm font-bold text-white tabular-nums">{value}{unit}</span>
+    </div>
+    <input
+      type="range"
+      min={min} max={max} step={step}
+      value={value}
+      onChange={(e) => onChange(parseFloat(e.target.value))}
+      className="calc-slider w-full"
+      aria-label={label}
+    />
+    <p className="text-[11px] text-slate-600 mt-1 leading-relaxed">{note}</p>
+  </div>
+);
+
+const CalcResult = ({ label, value, highlight = false }: { label: string; value: string; highlight?: boolean }) => (
+  <div className="flex items-center justify-between">
+    <span className="text-sm text-slate-400">{label}</span>
+    <span className={`text-sm font-bold ${highlight ? 'text-emerald-400' : 'text-white'}`}>{value}</span>
+  </div>
+);
+
+const ImpactCalculator = () => {
+  const [missedCalls, setMissedCalls] = useState(30);
+  const [recoveryRate, setRecoveryRate] = useState(30);
+  const [avgCallValue, setAvgCallValue] = useState(80);
+
+  const [incidents, setIncidents] = useState(4);
+  const [timePerIncident, setTimePerIncident] = useState(2);
+  const [hourlyRate, setHourlyRate] = useState(45);
+
+  const [mode, setMode] = useState<'prudent' | 'realiste' | 'ambitieux'>('realiste');
+  const [showSources, setShowSources] = useState(false);
+
+  const modeConfig = {
+    prudent: { label: 'Prudent', multiplier: 0.7 },
+    realiste: { label: 'Réaliste', multiplier: 1.0 },
+    ambitieux: { label: 'Ambitieux', multiplier: 1.3 }
+  };
+
+  const m = modeConfig[mode].multiplier;
+
+  const callsRecovered = Math.round(missedCalls * (recoveryRate / 100) * m);
+  const revenueRecovered = Math.round(callsRecovered * avgCallValue);
+  const hoursSaved = Math.round(incidents * timePerIncident * m * 10) / 10;
+  const timeSavingValue = Math.round(hoursSaved * hourlyRate);
+  const totalMonthly = revenueRecovered + timeSavingValue;
+  const totalAnnual = totalMonthly * 12;
+
+  const fmt = (n: number) => n.toLocaleString('fr-FR');
+
+  return (
+    <section id="simulateur" className="py-32 relative bg-background-deep">
+      <div className="max-w-7xl mx-auto px-6">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center max-w-3xl mx-auto mb-12"
+        >
+          <h2 className="text-optical-blue font-bold text-sm uppercase tracking-[0.3em] mb-4">Simulateur d'Impact</h2>
+          <h3 className="text-4xl lg:text-5xl font-black text-white mb-6 leading-tight">
+            Estimez vos gains{' '}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-violet-400">concrets.</span>
+          </h3>
+          <p className="text-slate-400 text-lg leading-relaxed">
+            Ajustez les curseurs selon votre réalité. Les résultats sont des estimations basées sur vos hypothèses, pas des promesses.
+          </p>
+        </motion.div>
+
+        {/* Mode selector */}
+        <div className="flex justify-center mb-8">
+          <div className="bg-white/5 p-1 rounded-xl flex items-center gap-1 border border-white/10">
+            {(['prudent', 'realiste', 'ambitieux'] as const).map((key) => (
+              <button
+                key={key}
+                onClick={() => setMode(key)}
+                className={`px-5 py-2 rounded-lg text-sm font-bold transition-all cursor-pointer ${
+                  mode === key
+                    ? 'bg-blue-600 text-white'
+                    : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                {modeConfig[key].label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="grid lg:grid-cols-3 gap-6">
+          {/* Axe A: Calls */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+            className="glass-card rounded-2xl p-6 border-white/10"
+          >
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-10 h-10 rounded-xl bg-blue-600/15 flex items-center justify-center">
+                <PhoneCall size={18} className="text-optical-blue" />
+              </div>
+              <div>
+                <h4 className="font-bold text-white text-sm">A. Appels mieux traités</h4>
+                <p className="text-xs text-slate-500">Opportunités récupérées</p>
+              </div>
+            </div>
+
+            <div className="space-y-5">
+              <CalcSlider
+                label="Appels manqués / mois"
+                value={missedCalls}
+                onChange={setMissedCalls}
+                min={5} max={200} step={5}
+                note="Appels non aboutis, mal routés ou sans réponse."
+              />
+              <CalcSlider
+                label="Part récupérable"
+                value={recoveryRate}
+                onChange={setRecoveryRate}
+                min={10} max={70} step={5}
+                unit="%"
+                note="Part d'appels récupérables avec un meilleur routage et standard."
+              />
+              <CalcSlider
+                label="Valeur moy. par appel abouti"
+                value={avgCallValue}
+                onChange={setAvgCallValue}
+                min={20} max={500} step={10}
+                unit="€"
+                note="Valeur estimée d'un appel converti ou d'une opportunité traitée."
+              />
+            </div>
+          </motion.div>
+
+          {/* Axe B: Time */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            viewport={{ once: true }}
+            className="glass-card rounded-2xl p-6 border-white/10"
+          >
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-10 h-10 rounded-xl bg-violet-600/15 flex items-center justify-center">
+                <Clock size={18} className="text-accent-violet" />
+              </div>
+              <div>
+                <h4 className="font-bold text-white text-sm">B. Temps recentré sur le métier</h4>
+                <p className="text-xs text-slate-500">Coordination déléguée</p>
+              </div>
+            </div>
+
+            <div className="space-y-5">
+              <CalcSlider
+                label="Incidents / escalades par mois"
+                value={incidents}
+                onChange={setIncidents}
+                min={1} max={20} step={1}
+                note="Pannes, lenteurs, échanges prestataires, relances opérateur…"
+              />
+              <CalcSlider
+                label="Temps moyen par gestion"
+                value={timePerIncident}
+                onChange={setTimePerIncident}
+                min={0.5} max={8} step={0.5}
+                unit="h"
+                note="Temps passé à appeler, relancer, suivre — par incident."
+              />
+              <CalcSlider
+                label="Valeur horaire interne"
+                value={hourlyRate}
+                onChange={setHourlyRate}
+                min={20} max={150} step={5}
+                unit="€/h"
+                note="Coût estimatif d'une heure de temps interne mobilisée."
+              />
+            </div>
+
+            <p className="text-[11px] text-slate-600 mt-5 leading-relaxed italic">
+              Temps recentré sur le métier plutôt que sur la gestion d'incidents ou les échanges prestataires.
+            </p>
+          </motion.div>
+
+          {/* Results */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            viewport={{ once: true }}
+            className="glass-card rounded-2xl p-6 border-optical-blue/20 bg-blue-950/20 relative overflow-hidden"
+          >
+            <div className="absolute top-0 right-0 w-40 h-40 bg-blue-600/10 rounded-full blur-[60px]" />
+
+            <div className="flex items-center gap-3 mb-6 relative z-10">
+              <div className="w-10 h-10 rounded-xl bg-emerald-600/15 flex items-center justify-center">
+                <TrendingUp size={18} className="text-emerald-400" />
+              </div>
+              <div>
+                <h4 className="font-bold text-white text-sm">Résultats estimés</h4>
+                <p className="text-xs text-slate-500">Mode {modeConfig[mode].label.toLowerCase()} (×{m})</p>
+              </div>
+            </div>
+
+            <div className="space-y-4 relative z-10">
+              <CalcResult label="Appels récupérés" value={`${callsRecovered} /mois`} />
+              <CalcResult label="CA récupéré" value={`+${fmt(revenueRecovered)}€`} highlight />
+
+              <div className="border-t border-white/5 my-2" />
+
+              <CalcResult label="Temps libéré" value={`${hoursSaved}h /mois`} />
+              <CalcResult label="Valeur temps gagné" value={`+${fmt(timeSavingValue)}€`} highlight />
+
+              <div className="border-t border-white/10 pt-4 mt-4">
+                <div className="text-center">
+                  <p className="text-xs text-slate-400 uppercase tracking-widest font-bold mb-1">Impact mensuel estimé</p>
+                  <div className="text-4xl font-black text-white">+{fmt(totalMonthly)}€</div>
+                  <p className="text-sm text-slate-400 mt-2">
+                    Soit <span className="text-optical-blue font-bold">+{fmt(totalAnnual)}€</span> /an
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <p className="text-[11px] text-slate-600 mt-4 leading-relaxed relative z-10">
+              Estimation indicative basée sur vos hypothèses. Résultats variables selon le secteur et le contexte.
+            </p>
+          </motion.div>
+        </div>
+
+        {/* Sources & notes */}
+        <div className="mt-6 text-center">
+          <button
+            onClick={() => setShowSources(!showSources)}
+            className="text-xs text-slate-500 hover:text-slate-300 transition-colors inline-flex items-center gap-1.5 cursor-pointer"
+          >
+            <Info size={12} />
+            Sources & hypothèses
+            <ChevronDown size={12} className={`transition-transform ${showSources ? 'rotate-180' : ''}`} />
+          </button>
+
+          <AnimatePresence>
+            {showSources && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 'auto', opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                className="overflow-hidden"
+              >
+                <div className="mt-4 glass-card rounded-xl p-5 text-left max-w-3xl mx-auto border-white/5">
+                  <p className="text-xs font-bold text-slate-300 uppercase tracking-widest mb-3">Hypothèses du simulateur</p>
+                  <ul className="space-y-2.5 text-xs text-slate-400">
+                    <li className="flex items-start gap-2">
+                      <span className="text-optical-blue font-bold shrink-0">¹</span>
+                      <span>
+                        Le taux d'appels manqués en PME varie selon les études sectorielles.
+                        La part récupérable dépend du routage, des horaires et de la qualité du standard.
+                        Les valeurs ci-dessus sont des hypothèses ajustables — pas des moyennes universelles.
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-optical-blue font-bold shrink-0">²</span>
+                      <span>
+                        La valeur d'un appel abouti est très variable (secteur, panier moyen, taux de conversion).
+                        La valeur par défaut de 80 € est volontairement prudente. Ajustez-la selon votre activité.
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-optical-blue font-bold shrink-0">³</span>
+                      <span>
+                        Le temps de gestion d'un incident télécom/opérateur inclut les appels au support,
+                        les relances, le suivi de ticket et la coordination interne.
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-optical-blue font-bold shrink-0">⁴</span>
+                      <span>
+                        Le coefficient de mode (prudent ×0.7, réaliste ×1.0, ambitieux ×1.3)
+                        pondère les résultats selon votre niveau de confiance dans les hypothèses.
+                      </span>
+                    </li>
+                  </ul>
+                  <div className="border-t border-white/5 mt-4 pt-4">
+                    <p className="text-xs font-bold text-slate-300 uppercase tracking-widest mb-3">Contexte marché (sources indépendantes)</p>
+                    <ul className="space-y-2 text-xs text-slate-400">
+                      <li>78 % des dirigeants de TPE/PME estiment que le numérique représente un bénéfice réel. — <span className="text-slate-500">France Num, Baromètre 2025</span></li>
+                      <li>Les PME renégocient plus souvent avec le même fournisseur, les grandes entreprises remettent davantage en concurrence. — <span className="text-slate-500">BEREC, 2022</span></li>
+                      <li>Pour 54 % des TPE, les charges administratives déléguées représentent 1 à 3 % du CA. — <span className="text-slate-500">SDI, 2023</span></li>
+                      <li>29 % des TPE-PME victimes d'incidents déclarent des interruptions de service. — <span className="text-slate-500">Cybermalveillance.gouv.fr, 2025</span></li>
+                    </ul>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </div>
+    </section>
+  );
+};
 
 const CTASection = () => (
   <section className="py-32 relative">
@@ -794,6 +1123,7 @@ export default function App() {
         <Solutions />
         <VoIPSection />
         <OptimisationSection />
+        <ImpactCalculator />
         <CTASection />
         <ContactSection />
       </main>

@@ -163,12 +163,13 @@ html {
 /* === Stat completion highlight === */
 @keyframes stat-highlight {
   0% { text-shadow: 0 0 0 transparent; }
-  40% { text-shadow: 0 0 20px rgba(56, 189, 248, 0.6), 0 0 40px rgba(56, 189, 248, 0.3); }
+  12% { text-shadow: 0 0 20px rgba(56, 189, 248, 0.6), 0 0 40px rgba(56, 189, 248, 0.3); }
+  55% { text-shadow: 0 0 15px rgba(56, 189, 248, 0.45), 0 0 30px rgba(56, 189, 248, 0.2); }
   100% { text-shadow: 0 0 0 transparent; }
 }
 
 .stat-highlight {
-  animation: stat-highlight 0.8s ease-out forwards;
+  animation: stat-highlight 2.5s ease-out forwards;
 }
 
 /* === ROI Simulator slider === */
@@ -209,6 +210,49 @@ html {
 }
 
 .roi-slider::-moz-range-track {
+  background: transparent;
+  border: none;
+}
+
+/* === Calculator sliders === */
+.calc-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.1);
+  outline: none;
+  cursor: pointer;
+}
+
+.calc-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: white;
+  border: 2px solid var(--color-optical-blue);
+  box-shadow: 0 0 8px rgba(56, 189, 248, 0.3);
+  cursor: pointer;
+  transition: box-shadow 0.2s;
+}
+
+.calc-slider::-webkit-slider-thumb:hover {
+  box-shadow: 0 0 16px rgba(56, 189, 248, 0.5);
+}
+
+.calc-slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: white;
+  border: 2px solid var(--color-optical-blue);
+  box-shadow: 0 0 8px rgba(56, 189, 248, 0.3);
+  cursor: pointer;
+}
+
+.calc-slider::-moz-range-track {
   background: transparent;
   border: none;
 }
