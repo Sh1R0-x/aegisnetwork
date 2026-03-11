@@ -16,6 +16,7 @@
 
 ```
 index.html              ← Point d'entrée Vite (dev)
+.htaccess              ← Réécriture Apache (dist/ + HTTPS)
 src/
   main.tsx              ← Bootstrap React (StrictMode)
   App.tsx               ← Composant racine, toutes les sections
@@ -25,6 +26,7 @@ src/
 public/
   favicon.svg           ← Favicon Aegis
   img/                  ← Images locales (Unsplash downloads)
+dist/                   ← Build de production (versionné)
 stitch/                 ← Source Google Stitch (lecture seule)
 docs/                   ← Documentation technique
 .claude/rules/          ← Règles pour agents IA
@@ -46,8 +48,8 @@ Le site est one-page. Toutes les sections sont dans `App.tsx` :
 | `InfrastructureSection`| Détail infrastructure réseau                 |
 | `CTASection`           | Appel à l'action intermédiaire               |
 | `ContactSection`       | Formulaire de contact (front-only)           |
-| `BrandBook`            | Showcase charte graphique (couleurs, typo)   |
-| `Footer`               | Pied de page avec liens et mentions          |
+| `LegalModal`           | Mentions légales (modal depuis le footer)     |
+| `Footer`               | Pied de page + ouverture mentions légales     |
 
 ## Conventions
 

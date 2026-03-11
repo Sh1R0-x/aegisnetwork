@@ -18,6 +18,7 @@ Site vitrine one-page haute-performance pour Aegis Network — fournisseur d'acc
 
 ```
 index.html              Point d'entrée Vite (dev)
+.htaccess              Réécriture Apache (dist/ + HTTPS)
 src/
   main.tsx              Bootstrap React
   App.tsx               Composant racine (toutes les sections)
@@ -27,6 +28,7 @@ src/
 public/
   favicon.svg           Favicon
   img/                  Images locales (Unsplash)
+dist/                   Build de production (versionné)
 stitch/                 Source Google Stitch (lecture seule)
   design-guidelines.md  Charte graphique de référence
 docs/                   Documentation technique
@@ -53,7 +55,14 @@ Le dossier `dist/` contient le site statique prêt à déployer sur OVH Starter.
 
 ## Déploiement OVH Starter
 
-Le contenu du dossier `dist/` (généré par `npm run build`) doit être poussé ou copié à la racine de l'hébergement OVH. Voir [docs/DEPLOYMENT_OVH_STARTER.md](docs/DEPLOYMENT_OVH_STARTER.md).
+Le dépôt contient les sources et le dossier `dist/` (build). Le `.htaccess` redirige les requêtes vers `dist/` et force HTTPS.
+
+```bash
+npm run build              # Génère dist/
+git add -A && git commit && git push origin main
+```
+
+Ensuite déclencher le déploiement OVH (sync du repo). Voir [docs/DEPLOYMENT_OVH_STARTER.md](docs/DEPLOYMENT_OVH_STARTER.md).
 
 ## Prévisualiser le build
 
@@ -76,7 +85,8 @@ git remote -v                   # doit pointer vers Sh1R0-x/aegisnetwork.git
 2. `git status --short --branch`
 3. Modifier les fichiers dans `src/`
 4. Tester avec `npm run dev`
-5. `git add . && git commit -m "Description" && git push origin main`
+5. `npm run build`
+6. `git add -A && git commit -m "Description" && git push origin main`
 
 ## Workflow Google Stitch
 
@@ -87,8 +97,10 @@ Les mises à jour design viennent de Google Stitch → dossier `stitch/`. Pour i
 | Document | Contenu |
 |----------|---------|
 | [CLAUDE.md](CLAUDE.md) | Règles du projet |
-| [AGENTS.md](AGENTS.md) | Règles d'exécution pour agents IA |
-| [design-guidelines.md](design-guidelines.md) | Charte graphique complète |
+| [AGENTS.md](AGENTS.md) | Règles d'exécution pour agents IA || [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Architecture technique |
+| [docs/DEPLOYMENT_OVH_STARTER.md](docs/DEPLOYMENT_OVH_STARTER.md) | Déploiement OVH |
+| [docs/WORKFLOW_COLLABORATION.md](docs/WORKFLOW_COLLABORATION.md) | Workflow multi-agents |
+| [docs/MCP.md](docs/MCP.md) | Serveurs MCP || [design-guidelines.md](design-guidelines.md) | Charte graphique complète |
 | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Architecture et choix techniques |
 | [docs/DEPLOYMENT_OVH_STARTER.md](docs/DEPLOYMENT_OVH_STARTER.md) | Guide de déploiement |
 | [docs/WORKFLOW_COLLABORATION.md](docs/WORKFLOW_COLLABORATION.md) | Workflow multi-outils |
