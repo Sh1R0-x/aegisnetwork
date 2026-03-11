@@ -22,7 +22,7 @@ Le site Aegis Network est **100 % statique**. Il n'y a aucun build, aucune dépe
 OVH Starter peut se lier à un dépôt Git pour déployer automatiquement :
 
 1. Dans l'espace client, section **Multisite** ou **FTP/SSH**
-2. Associez le dépôt GitHub `https://github.com/VOTRE-ORG/aegisnetwork.git`
+2. Associez le dépôt GitHub `https://github.com/Sh1R0-x/aegisnetwork.git`
 3. Branche : `main`
 4. Dossier cible : racine (`/`) ou le dossier configuré dans Multisite
 
@@ -35,7 +35,7 @@ Après chaque push sur `main`, OVH tire les fichiers automatiquement.
 git init
 git add .
 git commit -m "Initial commit — site vitrine Aegis Network"
-git remote add origin https://github.com/VOTRE-ORG/aegisnetwork.git
+git remote add origin https://github.com/Sh1R0-x/aegisnetwork.git
 git branch -M main
 git push -u origin main
 ```
