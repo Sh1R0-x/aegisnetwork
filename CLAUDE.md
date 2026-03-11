@@ -67,9 +67,9 @@ docs/               ← documentation technique
 
 ## Sections du site (App.tsx)
 
-Navbar → Hero → CostControl → TimeLoss → RootCause → WhyAegis → ImpactCalculator → EvolutionConseil → DiagnosticQuestions → CTASection → ContactSection → Footer (+ LegalModal)
+Navbar → Hero → GainBlock → CostControl → TimeLoss → RootCause → WhyAegis → ImpactCalculator → EvolutionConseil → DiagnosticQuestions → CTASection → ContactSection → Footer (+ LegalModal)
 
-Flux narratif : coûts → temps perdu → diagnostic de fond → légitimité/approche → simulateur → évolution → auto-diagnostic → action
+Flux narratif : gains concrets → coûts → temps perdu → diagnostic de fond → légitimité/approche → simulateur → évolution → auto-diagnostic → action
 
 ## Informations de contact
 
@@ -147,7 +147,7 @@ Ne jamais modifier ces informations sans validation explicite.
 ## Statistiques et sources
 
 - **Chiffres sourcés** (France Num 2025, BEREC 2022, SDI 2023, Cybermalveillance 2025) intégrés dans CostControl, TimeLoss et ImpactCalculator
-- **Hypothèses du simulateur** : clairement distinguées des données sourcées, valeurs par défaut prudentes, ajustables par l'utilisateur
+- **Hypothèses du simulateur** : 4 curseurs (heures/semaine, part récupérable, coût horaire, budget IT mensuel), layout 2 colonnes, pas de mode prudent/réaliste/ambitieux, hypothèse 20 % d’économie contrats
 - Ne jamais présenter une hypothèse du simulateur comme un fait sourcé
 
 ## Elements.tsx (UI Kit)

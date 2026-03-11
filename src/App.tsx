@@ -39,6 +39,7 @@ const scrollToSection = (id: string) => {
 };
 
 const NAV_SECTIONS = [
+  { id: 'gains', label: 'Vos gains' },
   { id: 'enjeux', label: 'Vos enjeux' },
   { id: 'approche', label: 'Notre approche' },
   { id: 'simulateur', label: 'Simulateur' },
@@ -173,27 +174,64 @@ const Hero = () => (
               transition={{ duration: 6, repeat: Infinity }}
               className="w-64 h-64 border-2 border-optical-blue/30 rounded-full blur-sm"
             />
-            <motion.div
-              animate={{
-                rotate: 360
-              }}
-              transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-              className="absolute w-80 h-80 border border-dashed border-white/10 rounded-full"
-            />
+
           </div>
         </div>
         <div className="absolute -top-12 -right-12 w-64 h-64 bg-blue-600/30 rounded-full blur-[100px] animate-pulse-slow" />
 
-        <motion.div
-          animate={{ y: [0, -8, 0] }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute -bottom-8 -left-8 glass-card rounded-2xl p-6 shadow-2xl text-white border-white/20 premium-glow"
-        >
-          <p className="text-xs font-bold text-optical-blue uppercase tracking-widest mb-1">Gains constatés</p>
-          <p className="text-3xl font-black">15–30%</p>
-          <p className="text-xs text-slate-400 mt-1">d'économies sur les contrats</p>
-        </motion.div>
+
       </motion.div>
+    </div>
+  </section>
+);
+
+const GainBlock = () => (
+  <section id="gains" className="py-24 relative overflow-hidden">
+    <FiberBeams />
+    <div className="max-w-7xl mx-auto px-6">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="text-center max-w-3xl mx-auto mb-16"
+      >
+        <h2 className="text-optical-blue font-bold text-sm uppercase tracking-[0.3em] mb-4">Résultats concrets</h2>
+        <h3 className="text-4xl lg:text-5xl font-black text-white mb-6 leading-tight">
+          Ce que vous allez{' '}
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-violet-400">y gagner.</span>
+        </h3>
+        <p className="text-slate-400 text-lg leading-relaxed">
+          Un accompagnement Aegis, c'est du temps récupéré, des coûts maîtrisés et une infrastructure qui travaille pour vous — pas l'inverse.
+        </p>
+      </motion.div>
+
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {[
+          { icon: <TrendingDown size={22} />, title: "Coûts réduits", desc: "Contrats audités, comparés et renégociés. Vous ne payez que ce qui est utile.", color: "text-optical-blue" },
+          { icon: <Clock size={22} />, title: "Temps recentré", desc: "On gère vos prestataires et vos incidents. Vous vous concentrez sur votre activité.", color: "text-accent-violet" },
+          { icon: <Search size={22} />, title: "Fournisseurs challengés", desc: "Mise en concurrence systématique. Vous obtenez le juste prix, pas le tarif par défaut.", color: "text-emerald-400" },
+          { icon: <Users size={22} />, title: "Un interlocuteur unique", desc: "Fini les allers-retours entre opérateur, intégrateur et hébergeur. Un seul contact.", color: "text-optical-blue" },
+          { icon: <ShieldCheck size={22} />, title: "Contrats maîtrisés", desc: "Vous savez ce que vous payez, pourquoi, et jusqu'à quand. Plus de mauvaises surprises.", color: "text-accent-violet" },
+          { icon: <RefreshCw size={22} />, title: "Suivi dans la durée", desc: "Vos besoins changent, le marché évolue. On ajuste et on optimise en continu.", color: "text-emerald-400" }
+        ].map((item, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: i * 0.08, duration: 0.4 }}
+            viewport={{ once: true }}
+            className="glass-card p-8 rounded-2xl border-white/5 hover:border-blue-500/20 transition-all flex gap-5"
+          >
+            <div className={`shrink-0 w-11 h-11 rounded-xl bg-white/5 flex items-center justify-center ${item.color}`}>
+              {item.icon}
+            </div>
+            <div>
+              <p className="font-bold text-white mb-1">{item.title}</p>
+              <p className="text-sm text-slate-400 leading-relaxed">{item.desc}</p>
+            </div>
+          </motion.div>
+        ))}
+      </div>
     </div>
   </section>
 );
@@ -548,37 +586,23 @@ const CalcResult = ({ label, value, highlight = false }: { label: string; value:
 );
 
 const ImpactCalculator = () => {
-  const [missedCalls, setMissedCalls] = useState(30);
-  const [recoveryRate, setRecoveryRate] = useState(30);
-  const [avgCallValue, setAvgCallValue] = useState(80);
-
-  const [incidents, setIncidents] = useState(4);
-  const [timePerIncident, setTimePerIncident] = useState(2);
+  const [hoursPerWeek, setHoursPerWeek] = useState(4);
+  const [recoveryRate, setRecoveryRate] = useState(40);
   const [hourlyRate, setHourlyRate] = useState(45);
-
-  const [mode, setMode] = useState<'prudent' | 'realiste' | 'ambitieux'>('realiste');
+  const [monthlyBudget, setMonthlyBudget] = useState(1500);
   const [showSources, setShowSources] = useState(false);
 
-  const modeConfig = {
-    prudent: { label: 'Prudent', multiplier: 0.7 },
-    realiste: { label: 'Réaliste', multiplier: 1.0 },
-    ambitieux: { label: 'Ambitieux', multiplier: 1.3 }
-  };
-
-  const m = modeConfig[mode].multiplier;
-
-  const callsRecovered = Math.round(missedCalls * (recoveryRate / 100) * m);
-  const revenueRecovered = Math.round(callsRecovered * avgCallValue);
-  const hoursSaved = Math.round(incidents * timePerIncident * m * 10) / 10;
-  const timeSavingValue = Math.round(hoursSaved * hourlyRate);
-  const totalMonthly = revenueRecovered + timeSavingValue;
+  const hoursRecoveredMonth = Math.round(hoursPerWeek * (recoveryRate / 100) * 4.33 * 10) / 10;
+  const timeSavingMonth = Math.round(hoursRecoveredMonth * hourlyRate);
+  const contractSavingMonth = Math.round(monthlyBudget * 0.20);
+  const totalMonthly = timeSavingMonth + contractSavingMonth;
   const totalAnnual = totalMonthly * 12;
 
   const fmt = (n: number) => n.toLocaleString('fr-FR');
 
   return (
     <section id="simulateur" className="py-32 relative bg-background-deep">
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-6xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -586,158 +610,92 @@ const ImpactCalculator = () => {
           transition={{ duration: 0.6 }}
           className="text-center max-w-3xl mx-auto mb-12"
         >
-          <h2 className="text-optical-blue font-bold text-sm uppercase tracking-[0.3em] mb-4">Simulateur d'Impact</h2>
+          <h2 className="text-optical-blue font-bold text-sm uppercase tracking-[0.3em] mb-4">Simulateur</h2>
           <h3 className="text-4xl lg:text-5xl font-black text-white mb-6 leading-tight">
             Estimez vos gains{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-violet-400">concrets.</span>
           </h3>
           <p className="text-slate-400 text-lg leading-relaxed">
-            Ajustez les curseurs selon votre réalité. Les résultats sont des estimations basées sur vos hypothèses, pas des promesses.
+            Ajustez les curseurs selon votre situation. Les résultats sont des estimations, pas des promesses.
           </p>
         </motion.div>
 
-        {/* Mode selector */}
-        <div className="flex justify-center mb-8">
-          <div className="bg-white/5 p-1 rounded-xl flex items-center gap-1 border border-white/10">
-            {(['prudent', 'realiste', 'ambitieux'] as const).map((key) => (
-              <button
-                key={key}
-                onClick={() => setMode(key)}
-                className={`px-5 py-2 rounded-lg text-sm font-bold transition-all cursor-pointer ${
-                  mode === key
-                    ? 'bg-blue-600 text-white'
-                    : 'text-slate-400 hover:text-white'
-                }`}
-              >
-                {modeConfig[key].label}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        <div className="grid lg:grid-cols-3 gap-6">
-          {/* Axe A: Calls */}
+        <div className="grid lg:grid-cols-2 gap-10">
+          {/* Inputs */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
-            className="glass-card rounded-2xl p-6 border-white/10"
+            className="glass-card rounded-2xl p-8 border-white/10"
           >
-            <div className="flex items-center gap-3 mb-6">
+            <div className="flex items-center gap-3 mb-8">
               <div className="w-10 h-10 rounded-xl bg-blue-600/15 flex items-center justify-center">
-                <PhoneCall size={18} className="text-optical-blue" />
+                <BarChart3 size={18} className="text-optical-blue" />
               </div>
-              <div>
-                <h4 className="font-bold text-white text-sm">A. Appels mieux traités</h4>
-                <p className="text-xs text-slate-500">Opportunités récupérées</p>
-              </div>
+              <h4 className="font-bold text-white">Vos paramètres</h4>
             </div>
 
-            <div className="space-y-5">
+            <div className="space-y-6">
               <CalcSlider
-                label="Appels manqués / mois"
-                value={missedCalls}
-                onChange={setMissedCalls}
-                min={5} max={200} step={5}
-                note="Appels non aboutis, mal routés ou sans réponse."
+                label="Heures / semaine en gestion IT"
+                value={hoursPerWeek}
+                onChange={setHoursPerWeek}
+                min={1} max={20} step={1}
+                unit="h"
+                note="Appels SAV, relances prestataires, coordination, suivi d'incidents."
               />
               <CalcSlider
-                label="Part récupérable"
+                label="Part récupérable avec meilleur cadrage"
                 value={recoveryRate}
                 onChange={setRecoveryRate}
                 min={10} max={70} step={5}
                 unit="%"
-                note="Part d'appels récupérables avec un meilleur routage et standard."
+                note="Temps que vous pourriez réinvestir dans votre activité."
               />
               <CalcSlider
-                label="Valeur moy. par appel abouti"
-                value={avgCallValue}
-                onChange={setAvgCallValue}
-                min={20} max={500} step={10}
-                unit="€"
-                note="Valeur estimée d'un appel converti ou d'une opportunité traitée."
-              />
-            </div>
-          </motion.div>
-
-          {/* Axe B: Time */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            viewport={{ once: true }}
-            className="glass-card rounded-2xl p-6 border-white/10"
-          >
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 rounded-xl bg-violet-600/15 flex items-center justify-center">
-                <Clock size={18} className="text-accent-violet" />
-              </div>
-              <div>
-                <h4 className="font-bold text-white text-sm">B. Temps recentré sur le métier</h4>
-                <p className="text-xs text-slate-500">Coordination déléguée</p>
-              </div>
-            </div>
-
-            <div className="space-y-5">
-              <CalcSlider
-                label="Incidents / escalades par mois"
-                value={incidents}
-                onChange={setIncidents}
-                min={1} max={20} step={1}
-                note="Pannes, lenteurs, échanges prestataires, relances opérateur…"
-              />
-              <CalcSlider
-                label="Temps moyen par gestion"
-                value={timePerIncident}
-                onChange={setTimePerIncident}
-                min={0.5} max={8} step={0.5}
-                unit="h"
-                note="Temps passé à appeler, relancer, suivre — par incident."
-              />
-              <CalcSlider
-                label="Valeur horaire interne"
+                label="Coût horaire interne estimé"
                 value={hourlyRate}
                 onChange={setHourlyRate}
                 min={20} max={150} step={5}
                 unit="€/h"
-                note="Coût estimatif d'une heure de temps interne mobilisée."
+                note="Valeur d'une heure de votre temps ou de votre équipe."
+              />
+              <CalcSlider
+                label="Budget IT & télécom mensuel"
+                value={monthlyBudget}
+                onChange={setMonthlyBudget}
+                min={200} max={10000} step={100}
+                unit="€"
+                note="Total mensuel : abonnements, licences, maintenance, téléphonie."
               />
             </div>
-
-            <p className="text-[11px] text-slate-600 mt-5 leading-relaxed italic">
-              Temps recentré sur le métier plutôt que sur la gestion d'incidents ou les échanges prestataires.
-            </p>
           </motion.div>
 
           {/* Results */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
             viewport={{ once: true }}
-            className="glass-card rounded-2xl p-6 border-optical-blue/20 bg-blue-950/20 relative overflow-hidden"
+            className="glass-card rounded-2xl p-8 border-optical-blue/20 bg-blue-950/20 relative overflow-hidden"
           >
             <div className="absolute top-0 right-0 w-40 h-40 bg-blue-600/10 rounded-full blur-[60px]" />
 
-            <div className="flex items-center gap-3 mb-6 relative z-10">
+            <div className="flex items-center gap-3 mb-8 relative z-10">
               <div className="w-10 h-10 rounded-xl bg-emerald-600/15 flex items-center justify-center">
                 <TrendingUp size={18} className="text-emerald-400" />
               </div>
-              <div>
-                <h4 className="font-bold text-white text-sm">Résultats estimés</h4>
-                <p className="text-xs text-slate-500">Mode {modeConfig[mode].label.toLowerCase()} (×{m})</p>
-              </div>
+              <h4 className="font-bold text-white">Résultats estimés</h4>
             </div>
 
-            <div className="space-y-4 relative z-10">
-              <CalcResult label="Appels récupérés" value={`${callsRecovered} /mois`} />
-              <CalcResult label="CA récupéré" value={`+${fmt(revenueRecovered)}€`} highlight />
+            <div className="space-y-5 relative z-10">
+              <CalcResult label="Heures récupérées / mois" value={`${hoursRecoveredMonth}h`} />
+              <CalcResult label="Valeur du temps recentré" value={`+${fmt(timeSavingMonth)}€ /mois`} highlight />
 
               <div className="border-t border-white/5 my-2" />
 
-              <CalcResult label="Temps libéré" value={`${hoursSaved}h /mois`} />
-              <CalcResult label="Valeur temps gagné" value={`+${fmt(timeSavingValue)}€`} highlight />
+              <CalcResult label="Économies contrats estimées" value={`+${fmt(contractSavingMonth)}€ /mois`} highlight />
 
               <div className="border-t border-white/10 pt-4 mt-4">
                 <div className="text-center">
@@ -750,8 +708,8 @@ const ImpactCalculator = () => {
               </div>
             </div>
 
-            <p className="text-[11px] text-slate-600 mt-4 leading-relaxed relative z-10">
-              Estimation indicative basée sur vos hypothèses. Résultats variables selon le secteur et le contexte.
+            <p className="text-[11px] text-slate-600 mt-6 leading-relaxed relative z-10">
+              Estimation indicative. L'économie sur vos contrats dépend de votre situation. Hypothèse : 20 % d'optimisation sur le budget IT.
             </p>
           </motion.div>
         </div>
@@ -781,30 +739,17 @@ const ImpactCalculator = () => {
                     <li className="flex items-start gap-2">
                       <span className="text-optical-blue font-bold shrink-0">¹</span>
                       <span>
-                        Le taux d'appels manqués en PME varie selon les études sectorielles.
-                        La part récupérable dépend du routage, des horaires et de la qualité du standard.
-                        Les valeurs ci-dessus sont des hypothèses ajustables — pas des moyennes universelles.
+                        Le temps de gestion IT inclut les appels au support, les relances prestataires,
+                        le suivi de tickets et la coordination interne. La part récupérable dépend de
+                        la qualité du cadrage et de l'accompagnement mis en place.
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-optical-blue font-bold shrink-0">²</span>
                       <span>
-                        La valeur d'un appel abouti est très variable (secteur, panier moyen, taux de conversion).
-                        La valeur par défaut de 80 € est volontairement prudente. Ajustez-la selon votre activité.
-                      </span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-optical-blue font-bold shrink-0">³</span>
-                      <span>
-                        Le temps de gestion d'un incident télécom/opérateur inclut les appels au support,
-                        les relances, le suivi de ticket et la coordination interne.
-                      </span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-optical-blue font-bold shrink-0">⁴</span>
-                      <span>
-                        Le coefficient de mode (prudent ×0.7, réaliste ×1.0, ambitieux ×1.3)
-                        pondère les résultats selon votre niveau de confiance dans les hypothèses.
+                        L'hypothèse de 20 % d'économie sur le budget IT est volontairement prudente.
+                        Elle couvre les gains issus de la renégociation, la suppression de doublons
+                        et l'optimisation des abonnements. Le résultat réel dépend du contexte.
                       </span>
                     </li>
                   </ul>
@@ -962,10 +907,14 @@ const CTASection = () => (
       <div className="bg-gradient-to-br from-blue-600/80 via-blue-700 to-accent-violet rounded-[3rem] p-12 lg:p-24 text-white relative overflow-hidden premium-glow">
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white/10 rounded-full -mr-64 -mt-64 blur-[120px]" />
         <div className="relative z-10 text-center max-w-3xl mx-auto">
-          <h3 className="text-4xl lg:text-6xl font-black mb-8 leading-tight">Un premier échange, sans engagement.</h3>
-          <p className="text-xl text-white/90 mb-12 leading-relaxed">
+          <h3 className="text-4xl lg:text-6xl font-black mb-8 leading-tight">Un premier échange, gratuit et sans engagement.</h3>
+          <p className="text-xl text-white/90 mb-6 leading-relaxed">
             Parlez-nous de votre situation. Nous vous dirons honnêtement si nous pouvons vous aider — et comment.
           </p>
+          <div className="flex flex-wrap justify-center gap-4 text-sm text-white/70 mb-12">
+            <span className="flex items-center gap-2"><MapPin size={16} /> Déplacements Lyon, Ain, Isère</span>
+            <span className="flex items-center gap-2"><Users size={16} /> Aussi en visio</span>
+          </div>
           <button onClick={() => scrollToSection('contact')} className="h-16 px-10 rounded-2xl bg-white text-blue-700 font-bold text-xl hover:shadow-2xl transition-all hover:scale-105 cursor-pointer">
             Prendre rendez-vous
           </button>
@@ -983,7 +932,18 @@ const ContactSection = () => (
         <div>
           <h2 className="text-optical-blue font-bold text-sm uppercase tracking-[0.3em] mb-6">Contact & Audit</h2>
           <h3 className="text-5xl font-black text-white mb-10 leading-tight">Parlons de votre situation.</h3>
-          <p className="text-slate-400 text-lg mb-12 leading-relaxed">Un diagnostic, un conseil, une question sur vos contrats ? Nous sommes disponibles pour en discuter.</p>
+          <p className="text-slate-400 text-lg mb-8 leading-relaxed">Un diagnostic, un conseil, une question sur vos contrats ? Nous sommes disponibles pour en discuter.</p>
+          <div className="flex flex-wrap gap-3 mb-12">
+            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-600/10 border border-blue-600/20 text-sm text-slate-300">
+              <CheckCircle size={14} className="text-optical-blue" /> Premier échange gratuit
+            </span>
+            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-600/10 border border-blue-600/20 text-sm text-slate-300">
+              <MapPin size={14} className="text-optical-blue" /> Lyon · Ain · Isère
+            </span>
+            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-600/10 border border-blue-600/20 text-sm text-slate-300">
+              <Users size={14} className="text-optical-blue" /> Disponible en visio
+            </span>
+          </div>
           <div className="space-y-8">
             {[
               { icon: <PhoneCall />, label: "Ligne directe", value: "07 81 43 81 23", href: "tel:+33781438123" },
@@ -1128,6 +1088,7 @@ export default function App() {
       <Navbar />
       <main>
         <Hero />
+        <GainBlock />
         <CostControl />
         <TimeLoss />
         <RootCause />

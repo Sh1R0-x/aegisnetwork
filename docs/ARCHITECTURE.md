@@ -41,17 +41,18 @@ Le site est one-page. Toutes les sections sont dans `App.tsx` :
 | `FiberBeams`           | Fond animé fibre optique (CSS keyframes)     |
 | `Navbar`               | Navigation fixe avec section active auto (IntersectionObserver) |
 | `Hero`                 | Accroche « reprendre le contrôle » + CTA + fond animé premium  |
+| `GainBlock`            | « Ce que vous allez y gagner » — 6 bénéfices concrets en grille |
 | `CostControl`          | Enjeux coûts : contrats, mise en concurrence, surcoûts + stat BEREC |
 | `TimeLoss`             | Temps perdu en gestion IT : SAV, coordination, pannes + stats sourcées |
 | `RootCause`            | « On colmate, rarement on diagnostique » — causes vs symptômes |
 | `WhyAegis`             | Légitimité : indépendance, objectivité, interlocuteur unique + citation fondateur |
-| `ImpactCalculator`     | Simulateur interactif gains temps/argent (adapté d'Elements.tsx) |
+| `ImpactCalculator`     | Simulateur 4 curseurs : heures/semaine, part récupérable, coût horaire, budget IT |
 | `CalcSlider`           | Sous-composant slider pour le simulateur      |
 | `CalcResult`           | Sous-composant ligne de résultat              |
 | `EvolutionConseil`     | Accompagnement durable : revue, veille, pilotage évolutions |
 | `DiagnosticQuestions`  | Auto-diagnostic : 6 questions dirigeant + CTA |
-| `CTASection`           | Appel à l'action doux (premier échange, sans engagement) |
-| `ContactSection`       | Formulaire de contact (front-only)           |
+| `CTASection`           | Appel à l'action : premier échange gratuit, déplacements Lyon/Ain/Isère, visio |
+| `ContactSection`       | Formulaire de contact + badges (gratuit, zone, visio) |
 | `LegalModal`           | Mentions légales (modal depuis le footer)     |
 | `Footer`               | Pied de page + ouverture mentions légales     |
 
