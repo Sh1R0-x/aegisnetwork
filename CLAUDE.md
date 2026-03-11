@@ -6,6 +6,16 @@
 - Cible : dirigeants TPE/PME
 - Activité : infrastructure et sécurité IT
 
+## MCP
+
+- Priorité : `context7`, `playwright`, `chrome-devtools`
+- `context7` : documentation technique récente et versionnée ; si l'info peut venir de là, ne pas improviser
+- `playwright` : smoke tests navigateur, parcours simples, vérifications UI de base
+- `chrome-devtools` : debug console, réseau, layout, performance
+- `github` : optionnel, seulement si le besoin concerne réellement GitHub
+- Rester simple et pragmatique ; ne pas multiplier les MCP sans raison
+- Ne pas ajouter de nouveau MCP sans justification claire
+
 ## Contraintes techniques absolues
 
 - **Statique uniquement** : HTML + CSS + JS vanilla
@@ -61,3 +71,16 @@ docs/               ← documentation technique
 - Ne pas ajouter de cookie banner sans besoin réel
 - Ne pas ajouter d'analytics sans validation explicite
 - Ne pas utiliser de CDN pour des frameworks JS
+
+## Workflow de collaboration (Claude / Copilot / Codex)
+
+- Toujours travailler depuis la racine du repo (`c:\Dev\Aegisnetwork`)
+- Toujours lire la doc projet (`CLAUDE.md`, `README.md`, `AGENTS.md`) avant modification
+- Toujours vérifier `git status` avant toute intervention
+- Ne pas modifier de fichiers en dehors du repo
+- Ne pas introduire de stack incompatible OVH Starter
+- Mettre à jour la documentation après tout changement structurant
+- Privilégier des patchs minimaux et ciblés
+- Signaler clairement les hypothèses prises
+- Laisser le repo dans un état compréhensible pour l'outil suivant
+- GitHub (`main`) est la source de vérité — toujours push après modification

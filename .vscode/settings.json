@@ -1,0 +1,13 @@
+{
+  "files.eol": "\n",
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.formatOnSave": false,
+  "html.format.wrapLineLength": 120,
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/.git": true
+  }
+}

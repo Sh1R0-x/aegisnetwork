@@ -2,6 +2,8 @@
 
 Site one-page statique pour Aegis Network. Infrastructure et sécurité IT pour TPE/PME.
 
+> **Source de vérité** : le dépôt GitHub `Sh1R0-x/aegisnetwork`, branche `main`.
+
 ## Structure du projet
 
 ```
@@ -16,9 +18,25 @@ docs/                   Documentation technique
   DEPLOYMENT_OVH_STARTER.md  Guide de déploiement OVH
   CONTENT_STRUCTURE.md  Structure éditoriale
   NEXT_STEPS.md         Améliorations prévues
+  WORKFLOW_COLLABORATION.md  Workflow multi-outils
+  MCP.md                Serveurs MCP retenus
 .claude/rules/          Règles pour assistants IA
+.vscode/                Réglages VS Code partagés
 CLAUDE.md               Règles globales du projet
+AGENTS.md               Règles MCP pour agents IA
+.mcp.json               Config MCP projet
 ```
+
+## Ouvrir le bon dossier dans VS Code
+
+```
+code c:\Dev\Aegisnetwork
+```
+
+Vérifier qu'on est bien à la racine :
+- Le fichier `index.html` doit être visible à la racine de l'explorateur
+- Le terminal intégré doit afficher `C:\Dev\Aegisnetwork>`
+- `git status` doit fonctionner sans erreur
 
 ## Prévisualiser localement
 
@@ -62,16 +80,13 @@ OVH tire automatiquement le contenu de la branche `main`.
 
 ## Premier push sur main
 
-```bash
-git init
-git add .
-git commit -m "Initial commit — site vitrine Aegis Network"
-git remote add origin https://github.com/VOTRE-ORG/aegisnetwork.git
-git branch -M main
-git push -u origin main
-```
+Le premier push a déjà été effectué. Pour les modifications suivantes :
 
-> Remplacer `VOTRE-ORG` par le nom de votre organisation ou utilisateur GitHub.
+```bash
+git add .
+git commit -m "Description courte de la modification"
+git push origin main
+```
 
 ## Contraintes techniques
 
@@ -89,3 +104,6 @@ git push -u origin main
 | [docs/DEPLOYMENT_OVH_STARTER.md](docs/DEPLOYMENT_OVH_STARTER.md) | Guide de déploiement |
 | [docs/CONTENT_STRUCTURE.md](docs/CONTENT_STRUCTURE.md) | Structure éditoriale |
 | [docs/NEXT_STEPS.md](docs/NEXT_STEPS.md) | Prochaines étapes |
+| [docs/WORKFLOW_COLLABORATION.md](docs/WORKFLOW_COLLABORATION.md) | Workflow multi-outils |
+| [docs/MCP.md](docs/MCP.md) | Serveurs MCP retenus |
+| [AGENTS.md](AGENTS.md) | Règles MCP pour agents IA |
