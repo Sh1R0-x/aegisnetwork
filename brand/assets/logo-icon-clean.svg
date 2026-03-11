@@ -1,0 +1,11 @@
+<svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="aegis-clean" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2563EB"/>
+      <stop offset="100%" stop-color="#7C3AED"/>
+    </linearGradient>
+  </defs>
+  <!-- Aegis Network — Icon épuré (sans nodes) pour petites tailles -->
+  <path d="M15 85 L50 15 L85 85" stroke="url(#aegis-clean)" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M35 85 H65" stroke="url(#aegis-clean)" stroke-width="14" stroke-linecap="round"/>
+</svg>

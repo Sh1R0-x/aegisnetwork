@@ -10,7 +10,10 @@ import {
   X,
   TrendingDown,
   Search,
-  Target
+  Target,
+  AlertTriangle,
+  Scale,
+  Calculator
 } from 'lucide-react';
 import { motion, useInView } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
@@ -224,6 +227,138 @@ const Hero = () => (
     </div>
   </section>
 );
+
+const ValueProposition = () => {
+  const [monthlySpend, setMonthlySpend] = useState(3000);
+
+  const savingsLow = Math.round(monthlySpend * 0.15);
+  const savingsHigh = Math.round(monthlySpend * 0.30);
+  const annualLow = savingsLow * 12;
+  const annualHigh = savingsHigh * 12;
+  const progress = ((monthlySpend - 500) / (20000 - 500)) * 100;
+
+  const fmt = (n: number) => n.toLocaleString('fr-FR');
+
+  return (
+    <section className="py-24 relative">
+      <div className="max-w-7xl mx-auto px-6">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center max-w-3xl mx-auto mb-16"
+        >
+          <h2 className="text-optical-blue font-bold text-sm uppercase tracking-[0.3em] mb-4">Pourquoi Aegis Network</h2>
+          <h3 className="text-4xl lg:text-5xl font-black text-white mb-6 leading-tight">
+            Vos dépenses IT méritent un{' '}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-violet-400">regard expert.</span>
+          </h3>
+          <p className="text-slate-400 text-lg leading-relaxed">
+            La plupart des TPE et PME paient trop cher pour des services mal dimensionnés. Nous auditons, comparons et renégocions pour rendre chaque euro utile.
+          </p>
+        </motion.div>
+
+        <div className="grid lg:grid-cols-2 gap-12 items-start">
+          {/* Pain points */}
+          <div className="space-y-5">
+            {[
+              { icon: <AlertTriangle size={22} />, title: "Contrats jamais relus", desc: "Vos abonnements sont renouvelés par défaut, sans mise en concurrence ni vérification.", color: "text-amber-400", bg: "bg-amber-500/10 border-amber-500/20" },
+              { icon: <TrendingDown size={22} />, title: "Surcoûts invisibles", desc: "Options inutiles, surdimensionnement, doublons — les dépenses cachées s'accumulent.", color: "text-red-400", bg: "bg-red-500/10 border-red-500/20" },
+              { icon: <Scale size={22} />, title: "Aucune mise en concurrence", desc: "Sans comparatif objectif, impossible de savoir si vous payez le juste prix.", color: "text-orange-400", bg: "bg-orange-500/10 border-orange-500/20" },
+              { icon: <ShieldCheck size={22} />, title: "Pas d'interlocuteur neutre", desc: "Les opérateurs défendent leurs marges. Vous avez besoin d'un conseil indépendant.", color: "text-blue-400", bg: "bg-blue-500/10 border-blue-500/20" }
+            ].map((item, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ delay: i * 0.1, duration: 0.5 }}
+                viewport={{ once: true }}
+                className="flex gap-5 group"
+              >
+                <div className={`shrink-0 w-12 h-12 rounded-2xl ${item.bg} border flex items-center justify-center ${item.color}`}>
+                  {item.icon}
+                </div>
+                <div>
+                  <h4 className="text-lg font-bold text-white mb-1">{item.title}</h4>
+                  <p className="text-slate-400 text-sm leading-relaxed">{item.desc}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* ROI Simulator */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            viewport={{ once: true }}
+            className="glass-card p-10 rounded-[2.5rem] border-white/10 relative overflow-hidden"
+          >
+            <div className="absolute -top-20 -right-20 w-40 h-40 bg-blue-600/10 rounded-full blur-[80px]" />
+            <div className="relative z-10">
+              <div className="flex items-center gap-3 mb-8">
+                <div className="w-10 h-10 rounded-xl bg-blue-600/20 border border-blue-600/30 flex items-center justify-center text-optical-blue">
+                  <Calculator size={20} />
+                </div>
+                <h4 className="text-xl font-bold text-white">Simulez vos économies</h4>
+              </div>
+
+              <label htmlFor="roi-slider" className="text-sm font-bold text-slate-300 uppercase tracking-widest block mb-3">
+                Budget IT mensuel
+              </label>
+              <p className="text-3xl font-black text-white mb-5">
+                {fmt(monthlySpend)} €<span className="text-slate-500 text-lg font-medium"> / mois</span>
+              </p>
+              <input
+                id="roi-slider"
+                type="range"
+                min={500}
+                max={20000}
+                step={100}
+                value={monthlySpend}
+                onChange={(e) => setMonthlySpend(Number(e.target.value))}
+                className="roi-slider w-full"
+                style={{
+                  background: `linear-gradient(to right, var(--color-optical-blue) 0%, var(--color-accent-violet) ${progress}%, rgba(255,255,255,0.1) ${progress}%)`
+                }}
+                aria-label="Budget IT mensuel en euros"
+              />
+              <div className="flex justify-between text-xs text-slate-500 mt-2 mb-8">
+                <span>500 €</span>
+                <span>20 000 €</span>
+              </div>
+
+              <div className="bg-white/5 rounded-2xl p-6 border border-white/5 mb-4">
+                <p className="text-sm text-slate-400 mb-2">Économie estimée par mois</p>
+                <p className="text-2xl font-black text-optical-blue">
+                  {fmt(savingsLow)} € — {fmt(savingsHigh)} €
+                </p>
+              </div>
+
+              <div className="bg-gradient-to-r from-blue-600/10 to-accent-violet/10 rounded-2xl p-6 border border-blue-600/20 mb-8">
+                <p className="text-sm text-slate-400 mb-2">Économie annuelle projetée</p>
+                <p className="text-3xl font-black text-white">
+                  {fmt(annualLow)} € — {fmt(annualHigh)} €
+                </p>
+              </div>
+
+              <a
+                href="#contact"
+                onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }}
+                className="glow-button w-full h-14 rounded-xl bg-gradient-to-r from-blue-600 to-accent-violet text-white font-bold text-lg flex items-center justify-center gap-2"
+              >
+                Vérifier avec un audit gratuit
+                <Zap size={18} />
+              </a>
+              <p className="text-center text-xs text-slate-500 mt-4">Estimation indicative basée sur les audits réalisés.</p>
+            </div>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+};
 
 const Stats = () => (
   <section className="py-20 relative z-20">
@@ -654,6 +789,7 @@ export default function App() {
       <Navbar />
       <main>
         <Hero />
+        <ValueProposition />
         <Stats />
         <Solutions />
         <VoIPSection />

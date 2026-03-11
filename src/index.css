@@ -171,6 +171,48 @@ html {
   animation: stat-highlight 0.8s ease-out forwards;
 }
 
+/* === ROI Simulator slider === */
+.roi-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: 3px;
+  outline: none;
+  cursor: pointer;
+}
+
+.roi-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: white;
+  border: 3px solid var(--color-optical-blue);
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+  cursor: pointer;
+  transition: box-shadow 0.2s;
+}
+
+.roi-slider::-webkit-slider-thumb:hover {
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.6);
+}
+
+.roi-slider::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: white;
+  border: 3px solid var(--color-optical-blue);
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+  cursor: pointer;
+}
+
+.roi-slider::-moz-range-track {
+  background: transparent;
+  border: none;
+}
+
 /* === Reduced motion === */
 @media (prefers-reduced-motion: reduce) {
   .animate-hero-glow-1,
