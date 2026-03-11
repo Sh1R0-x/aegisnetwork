@@ -122,9 +122,9 @@ const Hero = () => (
 
     <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
       <motion.div
-        initial={{ opacity: 0, x: -20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.8 }}
+        initial={{ opacity: 0, x: -30, filter: 'blur(8px)' }}
+        animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
+        transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1] }}
         className="relative z-10"
       >
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-600/20 border border-blue-600/30 text-optical-blue text-xs font-bold uppercase tracking-widest mb-8">
@@ -152,9 +152,9 @@ const Hero = () => (
       </motion.div>
 
       <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1 }}
+        initial={{ opacity: 0, scale: 0.92, filter: 'blur(12px)' }}
+        animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+        transition={{ duration: 1.2, ease: [0.25, 0.1, 0.25, 1] }}
         className="relative animate-float"
       >
         <div className="relative z-10 rounded-[2.5rem] overflow-hidden shadow-2xl border border-white/10 premium-glow bg-slate-900">
@@ -188,10 +188,12 @@ const Hero = () => (
 const GainBlock = () => (
   <section id="gains" className="py-24 relative overflow-hidden">
     <FiberBeams />
-    <div className="max-w-7xl mx-auto px-6">
+    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-blue-600/[0.04] blur-[150px] rounded-full pointer-events-none" />
+    <div className="max-w-7xl mx-auto px-6 relative z-10">
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0, y: 30, filter: 'blur(6px)' }}
+        whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+        transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
         viewport={{ once: true }}
         className="text-center max-w-3xl mx-auto mb-16"
       >
@@ -216,13 +218,13 @@ const GainBlock = () => (
         ].map((item, i) => (
           <motion.div
             key={i}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.08, duration: 0.4 }}
+            initial={{ opacity: 0, y: 30, scale: 0.95 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ delay: i * 0.1, duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
             viewport={{ once: true }}
-            className="glass-card p-8 rounded-2xl border-white/5 hover:border-blue-500/20 transition-all flex gap-5"
+            className="gain-card p-8 rounded-2xl flex gap-5"
           >
-            <div className={`shrink-0 w-11 h-11 rounded-xl bg-white/5 flex items-center justify-center ${item.color}`}>
+            <div className={`shrink-0 w-12 h-12 rounded-xl bg-white/[0.08] flex items-center justify-center ${item.color}`}>
               {item.icon}
             </div>
             <div>
@@ -240,7 +242,13 @@ const CostControl = () => (
   <section id="enjeux" className="py-32 relative overflow-hidden">
     <FiberBeams />
     <div className="max-w-7xl mx-auto px-6">
-      <div className="text-center max-w-3xl mx-auto mb-20">
+      <motion.div
+        initial={{ opacity: 0, y: 25 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+        viewport={{ once: true }}
+        className="text-center max-w-3xl mx-auto mb-20"
+      >
         <h2 className="text-optical-blue font-bold text-sm uppercase tracking-[0.3em] mb-4">Vos enjeux</h2>
         <h3 className="text-4xl lg:text-5xl font-black text-white mb-6 leading-tight">
           Vos contrats IT méritent un{' '}
@@ -249,7 +257,7 @@ const CostControl = () => (
         <p className="text-slate-400 text-lg leading-relaxed">
           La plupart des TPE et PME conservent des abonnements inadaptés, surdimensionnés ou jamais renégociés. C'est précisément là que nous intervenons.
         </p>
-      </div>
+      </motion.div>
 
       <div className="grid md:grid-cols-3 gap-8 mb-16">
         {[
@@ -277,11 +285,11 @@ const CostControl = () => (
         ].map((card, i) => (
           <motion.div
             key={i}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.1, duration: 0.5 }}
+            initial={{ opacity: 0, y: 25, scale: 0.97 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ delay: i * 0.12, duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
             viewport={{ once: true }}
-            className={`glass-card p-10 rounded-3xl ${card.border} transition-all`}
+            className={`glass-card cause-card p-10 rounded-3xl ${card.border}`}
           >
             <div className={`${card.color} mb-4`}>{card.icon}</div>
             <p className="font-bold text-white text-xl mb-3">{card.title}</p>
@@ -373,9 +381,9 @@ const TimeLoss = () => (
               ].map((stat, i) => (
                 <motion.div
                   key={i}
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.1, duration: 0.4 }}
+                  initial={{ opacity: 0, y: 15, x: -10 }}
+                  whileInView={{ opacity: 1, y: 0, x: 0 }}
+                  transition={{ delay: i * 0.12, duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
                   viewport={{ once: true }}
                   className="flex items-start gap-4"
                 >
@@ -526,8 +534,9 @@ const WhyAegis = () => (
       </div>
 
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0, y: 20, scale: 0.98 }}
+        whileInView={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
         viewport={{ once: true }}
         className="glass-card rounded-[2rem] p-10 lg:p-14 max-w-3xl mx-auto border-optical-blue/10 relative overflow-hidden"
       >
@@ -810,7 +819,13 @@ const EvolutionConseil = () => (
             ))}
           </div>
         </div>
-        <div className="relative">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95, filter: 'blur(8px)' }}
+          whileInView={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+          transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
+          viewport={{ once: true }}
+          className="relative"
+        >
           <div className="glass-card rounded-[3rem] p-6 shadow-2xl border-white/10 premium-glow">
             <img
               className="rounded-[2rem] w-full h-auto"
@@ -819,7 +834,7 @@ const EvolutionConseil = () => (
               loading="lazy"
             />
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   </section>

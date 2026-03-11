@@ -203,6 +203,57 @@ html {
   border: none;
 }
 
+/* === Premium card systems === */
+@keyframes shimmer-sweep {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.gain-card {
+  position: relative;
+  overflow: hidden;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(24px);
+  border: 1px solid rgba(56, 189, 248, 0.1);
+  box-shadow: 0 0 20px -8px rgba(56, 189, 248, 0.08);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.gain-card:hover {
+  border-color: rgba(56, 189, 248, 0.25);
+  box-shadow:
+    0 0 30px -5px rgba(56, 189, 248, 0.15),
+    0 0 60px -15px rgba(124, 58, 237, 0.1);
+  transform: translateY(-2px);
+}
+
+.gain-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    105deg,
+    transparent 35%,
+    rgba(56, 189, 248, 0.03) 45%,
+    rgba(56, 189, 248, 0.07) 50%,
+    rgba(56, 189, 248, 0.03) 55%,
+    transparent 65%
+  );
+  background-size: 200% 100%;
+  animation: shimmer-sweep 8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.cause-card {
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cause-card:hover {
+  box-shadow: 0 0 25px -8px rgba(124, 58, 237, 0.12);
+  transform: translateY(-2px);
+}
+
 /* === Reduced motion === */
 @media (prefers-reduced-motion: reduce) {
   .animate-hero-glow-1,
@@ -212,7 +263,8 @@ html {
   .animate-fiber-v,
   .animate-float,
   .animate-pulse-slow,
-  .stat-highlight {
+  .stat-highlight,
+  .gain-card::after {
     animation: none !important;
   }
 }
