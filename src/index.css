@@ -18,7 +18,7 @@
   .glass-card {
     @apply bg-slate-900/40 backdrop-blur-xl border border-white/10 shadow-2xl;
   }
-  
+
   .premium-glow {
     box-shadow: 0 0 40px -10px rgba(30, 64, 175, 0.5);
   }
@@ -95,4 +95,80 @@
 
 .animate-float {
   animation: float 6s ease-in-out infinite;
+}
+
+/* === Navigation & scroll === */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+/* === Hero premium animated background === */
+@keyframes hero-glow-drift-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, 20px) scale(1.05); }
+  66% { transform: translate(-20px, -15px) scale(0.95); }
+}
+
+@keyframes hero-glow-drift-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-25px, -20px) scale(1.03); }
+  66% { transform: translate(20px, 30px) scale(0.97); }
+}
+
+@keyframes hero-glow-drift-3 {
+  0%, 100% { transform: translate(0, 0); opacity: 0.05; }
+  50% { transform: translate(15px, -15px); opacity: 0.1; }
+}
+
+.animate-hero-glow-1 {
+  animation: hero-glow-drift-1 20s ease-in-out infinite;
+}
+
+.animate-hero-glow-2 {
+  animation: hero-glow-drift-2 25s ease-in-out infinite;
+}
+
+.animate-hero-glow-3 {
+  animation: hero-glow-drift-3 15s ease-in-out infinite;
+}
+
+.hero-grid {
+  background-image:
+    linear-gradient(rgba(56, 189, 248, 0.3) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(56, 189, 248, 0.3) 1px, transparent 1px);
+  background-size: 80px 80px;
+}
+
+.fiber-beam-hero {
+  position: absolute;
+  background: linear-gradient(90deg, transparent, var(--color-optical-blue), var(--color-accent-violet), transparent);
+  height: 1px;
+  width: 300px;
+  filter: blur(0.5px);
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.fiber-beam-hero-v {
+  position: absolute;
+  background: linear-gradient(180deg, transparent, var(--color-accent-violet), var(--color-optical-blue), transparent);
+  width: 1px;
+  height: 300px;
+  filter: blur(0.5px);
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+/* === Reduced motion === */
+@media (prefers-reduced-motion: reduce) {
+  .animate-hero-glow-1,
+  .animate-hero-glow-2,
+  .animate-hero-glow-3,
+  .animate-fiber-h,
+  .animate-fiber-v,
+  .animate-float,
+  .animate-pulse-slow {
+    animation: none !important;
+  }
 }

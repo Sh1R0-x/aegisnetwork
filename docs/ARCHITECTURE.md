@@ -40,8 +40,8 @@ Le site est one-page. Toutes les sections sont dans `App.tsx` :
 | ---------------------- | -------------------------------------------- |
 | `CountUp`              | Compteur animé (utilitaire)                  |
 | `FiberBeams`           | Fond animé fibre optique (CSS keyframes)     |
-| `Navbar`               | Navigation fixe avec logo et liens ancres    |
-| `Hero`                 | Accroche principale + CTA                    |
+| `Navbar`               | Navigation fixe avec section active auto (IntersectionObserver) |
+| `Hero`                 | Accroche principale + CTA + fond animé premium  |
 | `Stats`                | 3 KPI animés (débit, uptime, support)        |
 | `Solutions`            | Grille 2 colonnes : Internet fibre & VoIP    |
 | `VoIPSection`          | Détail téléphonie pro                        |
@@ -55,9 +55,28 @@ Le site est one-page. Toutes les sections sont dans `App.tsx` :
 
 - **Un composant = une section** dans `App.tsx` (pas de fichier séparé sauf si réutilisable)
 - **Composants réutilisables** dans `src/components/` (ex: `AegisLogo`)
-- **Animations d'entrée** : `initial={{ opacity: 0, y: 20 }}` → `whileInView={{ opacity: 1, y: 0 }}`
-- **CSS custom** : glassmorphism (`.glass-card`), glow (`.premium-glow`, `.glow-button`), fiber beams
+- **Animations d'entrée** : `initial={{ opacity: 0, y: 20 }}` → `whileInView={{ opacity: 1, y: 0 }}` avec stagger
+- **CSS custom** : glassmorphism (`.glass-card`), glow (`.premium-glow`, `.glow-button`), fiber beams, hero animated glows
 - **Responsive** : mobile-first avec `md:` et `lg:`
+
+## Navigation
+
+- **Pas de hash dans l'URL** : la navigation utilise `scrollToSection()` (JS `scrollIntoView({ behavior: 'smooth' })`)
+- **Section active** : détectée via `IntersectionObserver` dans le composant `Navbar`
+- **Scroll offset** : géré par `scroll-padding-top: 5rem` en CSS pour éviter que le header fixe recouvre les sections
+- Les liens `<a href="#section">` internes utilisent `onClick` avec `preventDefault()` pour éviter la pollution de l'URL
+
+## Images
+
+- Les images sont stockées localement dans `public/img/` (copies Unsplash)
+- Référencées en chemin absolu (`/img/filename.jfif`) dans les composants
+- Attribut `loading="lazy"` sur toutes les images hors Hero
+
+## Accessibilité & Performance
+
+- `prefers-reduced-motion` respecté : toutes les animations CSS désactivées
+- `scroll-behavior: smooth` via CSS (respecté par les préférences système)
+- Build < 410 KB gzip total, pas de requêtes API externes
 
 ## Build & Déploiement
 

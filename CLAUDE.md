@@ -62,6 +62,7 @@ Ne jamais modifier ces informations sans validation explicite.
 - Composants React fonctionnels (pas de classes)
 - TypeScript strict, pas d'`any` explicite
 - Tailwind utility-first, custom properties dans `@theme` (index.css)
+- Navigation via `scrollToSection()` (pas de `<a href="#">` natif)
 - Indentation : 2 espaces
 - Encoding : UTF-8, LF
 - Code lisible, pas de minification manuelle
@@ -102,6 +103,27 @@ Ne jamais modifier ces informations sans validation explicite.
 - Ne pas ajouter d'analytics sans validation explicite
 - Ne pas modifier le dossier `stitch/` (lecture seule, source Stitch)
 - Ne pas ajouter de dépendances lourdes sans justification
+
+## Stratégie de navigation
+
+- Navigation JS sans hash URL : `scrollToSection()` avec `scrollIntoView({ behavior: 'smooth' })`
+- Section active détectée via `IntersectionObserver` (rootMargin: `-80px 0px -50% 0px`)
+- `scroll-padding-top: 5rem` en CSS pour compenser le header fixe
+- Liens `<a href="#section">` conservés pour la sémantique mais neutralisés par `preventDefault()`
+
+## Animations
+
+- Framer Motion pour les entrées en viewport (`whileInView`, `initial`)
+- Stagger délay sur les listes de features (0.1–0.15s)
+- Hero : fond animé CSS pur (orbes gradient en dérive lente, grille tech, fiber beams premium)
+- CSS keyframes pour fiber beams, float, pulse-slow, hero-glow-drift
+- `prefers-reduced-motion` respecté (désactive toutes les animations CSS)
+
+## Images
+
+- Stockées localement dans `public/img/` (copies Unsplash)
+- Référencées en `/img/filename.jfif` (pas de CDN externe)
+- `loading="lazy"` sur toutes les images sauf Hero
 
 ## Workflow Google Stitch
 

@@ -73,35 +73,90 @@ const FiberBeams = () => (
   </div>
 );
 
-const Navbar = () => (
-  <nav className="fixed top-0 w-full z-50 bg-background-deep/80 backdrop-blur-md border-b border-white/5">
-    <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-      <div className="flex items-center gap-3">
-        <AegisLogo className="w-9 h-9" />
-        <div className="flex flex-col">
-          <h1 className="text-lg font-black tracking-[0.15em] text-white leading-none">
-            AEGIS <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-violet-400">NETWORK</span>
-          </h1>
-          <span className="text-[8px] uppercase tracking-[0.25em] text-slate-500 font-bold mt-0.5">High-Performance Connectivity</span>
+const scrollToSection = (id: string) => {
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+};
+
+const NAV_SECTIONS = [
+  { id: 'solutions', label: 'Nos Solutions' },
+  { id: 'telephonie', label: 'Téléphonie' },
+  { id: 'reseau', label: 'Infrastructure' },
+  { id: 'contact', label: 'Contact' },
+];
+
+const Navbar = () => {
+  const [activeSection, setActiveSection] = useState('');
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -50% 0px' }
+    );
+
+    NAV_SECTIONS.forEach(({ id }) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <nav className="fixed top-0 w-full z-50 bg-background-deep/80 backdrop-blur-md border-b border-white/5">
+      <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <AegisLogo className="w-9 h-9" />
+          <div className="flex flex-col">
+            <h1 className="text-lg font-black tracking-[0.15em] text-white leading-none">
+              AEGIS <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-violet-400">NETWORK</span>
+            </h1>
+            <span className="text-[8px] uppercase tracking-[0.25em] text-slate-500 font-bold mt-0.5">High-Performance Connectivity</span>
+          </div>
         </div>
+        <div className="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-400">
+          {NAV_SECTIONS.map(({ id, label }) => (
+            <button
+              key={id}
+              onClick={() => scrollToSection(id)}
+              className={`py-1 border-b-2 transition-all duration-300 cursor-pointer ${
+                activeSection === id
+                  ? 'text-optical-blue border-optical-blue'
+                  : 'border-transparent hover:text-optical-blue hover:border-optical-blue/50'
+              }`}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+        <button
+          onClick={() => scrollToSection('contact')}
+          className="glow-button flex items-center justify-center rounded-lg h-10 px-6 bg-gradient-to-r from-blue-600 to-accent-violet text-white text-sm font-bold cursor-pointer"
+        >
+          Contactez-nous
+        </button>
       </div>
-      <div className="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-400">
-        <a href="#solutions" className="hover:text-optical-blue transition-colors py-1 border-b border-transparent hover:border-optical-blue/50">Nos Solutions</a>
-        <a href="#telephonie" className="hover:text-optical-blue transition-colors py-1 border-b border-transparent hover:border-optical-blue/50">Téléphonie</a>
-        <a href="#reseau" className="hover:text-optical-blue transition-colors py-1 border-b border-transparent hover:border-optical-blue/50">Infrastructure</a>
-        <a href="#contact" className="hover:text-optical-blue transition-colors py-1 border-b border-transparent hover:border-optical-blue/50">Contact</a>
-      </div>
-      <a href="#contact" className="glow-button flex items-center justify-center rounded-lg h-10 px-6 bg-gradient-to-r from-blue-600 to-accent-violet text-white text-sm font-bold">
-        Contactez-nous
-      </a>
-    </div>
-  </nav>
-);
+    </nav>
+  );
+};
 
 const Hero = () => (
   <section className="relative pt-28 pb-24 lg:pt-36 lg:pb-40 overflow-hidden">
-    <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-600/20 blur-[120px] rounded-full pointer-events-none" />
-    <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-accent-violet/10 blur-[120px] rounded-full pointer-events-none" />
+    {/* Animated gradient orbs */}
+    <div className="absolute top-[-15%] left-[-10%] w-[45%] h-[45%] bg-blue-600/15 blur-[120px] rounded-full pointer-events-none animate-hero-glow-1" />
+    <div className="absolute bottom-[-15%] right-[-10%] w-[45%] h-[45%] bg-accent-violet/10 blur-[120px] rounded-full pointer-events-none animate-hero-glow-2" />
+    <div className="absolute top-[20%] left-[35%] w-[25%] h-[25%] bg-blue-500/5 blur-[100px] rounded-full pointer-events-none animate-hero-glow-3" />
+    {/* Subtle tech grid */}
+    <div className="absolute inset-0 hero-grid opacity-[0.02] pointer-events-none" />
+    {/* Hero fiber beams */}
+    <div className="fiber-beam-hero animate-fiber-h top-[30%]" style={{ animationDelay: '0s', animationDuration: '12s' }} />
+    <div className="fiber-beam-hero animate-fiber-h top-[70%]" style={{ animationDelay: '5s', animationDuration: '15s' }} />
+    <div className="fiber-beam-hero-v animate-fiber-v left-[55%]" style={{ animationDelay: '2s', animationDuration: '18s' }} />
 
     <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
       <motion.div
@@ -124,11 +179,11 @@ const Hero = () => (
           Nous simplifions vos infrastructures critiques. Profitez d'une connexion internet ultra-rapide et d'une téléphonie IP qui booste réellement votre productivité.
         </p>
         <div className="flex flex-wrap gap-5">
-          <a href="#contact" className="glow-button h-14 px-8 rounded-xl bg-gradient-to-r from-blue-600 to-accent-violet text-white font-bold text-lg flex items-center justify-center gap-3">
+          <a href="#contact" onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }} className="glow-button h-14 px-8 rounded-xl bg-gradient-to-r from-blue-600 to-accent-violet text-white font-bold text-lg flex items-center justify-center gap-3">
             Demander un audit
             <Zap size={20} />
           </a>
-          <a href="#solutions" className="h-14 px-8 rounded-xl bg-white/5 border border-white/10 text-white font-bold text-lg flex items-center justify-center hover:bg-white/10 transition-all backdrop-blur-sm">
+          <a href="#solutions" onClick={(e) => { e.preventDefault(); scrollToSection('solutions'); }} className="h-14 px-8 rounded-xl bg-white/5 border border-white/10 text-white font-bold text-lg flex items-center justify-center hover:bg-white/10 transition-all backdrop-blur-sm">
             Voir nos solutions
           </a>
         </div>
@@ -144,9 +199,8 @@ const Hero = () => (
           {/* IMAGE: Hero Main Visual - Abstract Fiber Optic Technology */}
           <img
             className="w-full h-[550px] object-cover opacity-80 mix-blend-lighten"
-            src="https://images.unsplash.com/photo-1551703599-6b3e8379aa8c?auto=format&fit=crop&q=80&w=1200"
+            src="/img/photo-1551703599-6b3e8379aa8c.jfif"
             alt="Fiber Optic Technology"
-            referrerPolicy="no-referrer"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-background-deep via-transparent to-transparent" />
 
@@ -176,7 +230,7 @@ const Hero = () => (
 );
 
 const Stats = () => (
-  <section className="py-12 relative z-20">
+  <section className="py-20 relative z-20">
     <FiberBeams />
     <div className="max-w-7xl mx-auto px-6">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -189,7 +243,7 @@ const Stats = () => (
             key={i}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.2 }}
+            transition={{ delay: i * 0.15, duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
             viewport={{ once: true }}
             whileHover={{ y: -5, scale: 1.02 }}
             className="glass-card p-10 rounded-3xl flex flex-col gap-3 group hover:border-optical-blue/40 transition-all relative overflow-hidden"
@@ -228,8 +282,9 @@ const Solutions = () => (
       <div className="grid md:grid-cols-2 gap-12">
         {/* Solution 1: Internet */}
         <motion.div
-          initial={{ opacity: 0, x: -20 }}
+          initial={{ opacity: 0, x: -30 }}
           whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
           viewport={{ once: true }}
           className="glass-card p-12 rounded-[3rem] border-white/5 hover:border-blue-500/30 transition-all group"
         >
@@ -257,8 +312,9 @@ const Solutions = () => (
 
         {/* Solution 2: Telephony */}
         <motion.div
-          initial={{ opacity: 0, x: 20 }}
+          initial={{ opacity: 0, x: 30 }}
           whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6, delay: 0.15, ease: [0.25, 0.1, 0.25, 1] }}
           viewport={{ once: true }}
           className="glass-card p-12 rounded-[3rem] border-white/5 hover:border-violet-500/30 transition-all group"
         >
@@ -294,9 +350,9 @@ const VoIPSection = () => (
       {/* IMAGE: VoIP Section Background - Network/Data Visualization */}
       <img
         className="w-full h-full object-cover mix-blend-screen"
-        src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=1200"
+        src="/img/photo-1550751827-4bd374c3f58b.jfif"
         alt="Network background"
-        referrerPolicy="no-referrer"
+        loading="lazy"
       />
       <div className="absolute inset-0 bg-gradient-to-r from-background-deep via-background-deep/60 to-transparent" />
     </div>
@@ -314,7 +370,7 @@ const VoIPSection = () => (
               { icon: <Activity />, title: "Gestion 2x plus pertinente", desc: "Redirigez vos clients vers le bon interlocuteur instantanément, sans attente inutile." },
               { icon: <ShieldCheck />, title: "Fiabilité Totale", desc: "Une qualité sonore HD garantie, même en cas de forte charge réseau." }
             ].map((item, i) => (
-              <div key={i} className="flex gap-6 group">
+              <motion.div key={i} initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.15, duration: 0.5 }} viewport={{ once: true }} className="flex gap-6 group">
                 <div className="shrink-0 w-12 h-12 rounded-2xl bg-violet-600/30 flex items-center justify-center text-violet-400 border border-violet-600/40 group-hover:bg-violet-600 group-hover:text-white transition-all duration-500">
                   {item.icon}
                 </div>
@@ -322,11 +378,11 @@ const VoIPSection = () => (
                   <h4 className="text-xl font-bold mb-2 text-white">{item.title}</h4>
                   <p className="text-slate-400 leading-relaxed">{item.desc}</p>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
           <div className="mt-14 flex flex-wrap gap-5">
-            <a href="#contact" className="glow-button h-14 px-8 rounded-xl bg-gradient-to-r from-violet-600 to-blue-600 text-white font-bold flex items-center justify-center transition-all">
+            <a href="#contact" onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }} className="glow-button h-14 px-8 rounded-xl bg-gradient-to-r from-violet-600 to-blue-600 text-white font-bold flex items-center justify-center transition-all">
               Optimiser ma téléphonie
             </a>
           </div>
@@ -336,9 +392,9 @@ const VoIPSection = () => (
             {/* IMAGE: VoIP Section Feature - Professional using digital tools */}
             <img
               className="rounded-[2rem] w-full h-auto"
-              src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=800"
+              src="/img/photo-1516321318423-f06f85e504b3.jfif"
               alt="Digital professional"
-              referrerPolicy="no-referrer"
+              loading="lazy"
             />
           </div>
           <motion.div
@@ -369,9 +425,9 @@ const InfrastructureSection = () => (
                 {/* IMAGE: Infrastructure Section - Modern Server Room/Data Center */}
                 <img
                   className="w-full h-56 object-cover transition-transform duration-700 group-hover:scale-110"
-                  src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&q=80&w=600"
+                  src="/img/photo-1544197150-b99a580bb7a8.jfif"
                   alt="Modern Server Room"
-                  referrerPolicy="no-referrer"
+                  loading="lazy"
                 />
                 <div className="absolute inset-0 bg-blue-600/20 mix-blend-overlay" />
               </div>
@@ -391,9 +447,9 @@ const InfrastructureSection = () => (
                 {/* IMAGE: Infrastructure Section - Global Connectivity/Satellite */}
                 <img
                   className="w-full h-56 object-cover transition-transform duration-700 group-hover:scale-110"
-                  src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=600"
+                  src="/img/photo-1451187580459-43490279c0fa.jfif"
                   alt="Satellite"
-                  referrerPolicy="no-referrer"
+                  loading="lazy"
                 />
                 <div className="absolute inset-0 bg-accent-violet/20 mix-blend-overlay" />
               </div>
@@ -412,13 +468,13 @@ const InfrastructureSection = () => (
               "Temps de réponse garanti par SLA",
               "Experts réseau locaux disponibles en flux tendu"
             ].map((text, i) => (
-              <li key={i} className="flex items-center gap-4 font-semibold text-slate-300 group">
+              <motion.li key={i} initial={{ opacity: 0, x: -15 }} whileInView={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.1, duration: 0.4 }} viewport={{ once: true }} className="flex items-center gap-4 font-semibold text-slate-300 group">
                 <Zap className="text-optical-blue group-hover:scale-125 transition-transform" size={20} />
                 {text}
-              </li>
+              </motion.li>
             ))}
           </ul>
-          <a href="#contact" className="glow-button inline-flex h-14 px-10 rounded-xl bg-blue-600 text-white font-bold items-center justify-center hover:bg-blue-700 transition-all">
+          <a href="#contact" onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }} className="glow-button inline-flex h-14 px-10 rounded-xl bg-blue-600 text-white font-bold items-center justify-center hover:bg-blue-700 transition-all">
             Contactez-nous
           </a>
         </div>
@@ -437,7 +493,7 @@ const CTASection = () => (
           <p className="text-xl text-white/90 mb-12 leading-relaxed">
             Bénéficiez d'un audit de performance complet. Nos experts cartographient vos flux actuels pour identifier chaque milliseconde d'optimisation possible.
           </p>
-          <button className="h-16 px-10 rounded-2xl bg-white text-blue-700 font-bold text-xl hover:shadow-2xl transition-all hover:scale-105">
+          <button onClick={() => scrollToSection('contact')} className="h-16 px-10 rounded-2xl bg-white text-blue-700 font-bold text-xl hover:shadow-2xl transition-all hover:scale-105 cursor-pointer">
             Demander mon audit de flux
           </button>
         </div>
@@ -620,7 +676,7 @@ const Footer = () => {
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-background-deep selection:bg-blue-600 selection:text-white scroll-smooth">
+    <div className="min-h-screen bg-background-deep selection:bg-blue-600 selection:text-white">
       <Navbar />
       <main>
         <Hero />
