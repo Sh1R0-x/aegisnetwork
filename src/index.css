@@ -214,17 +214,21 @@ html {
   overflow: hidden;
   background: rgba(15, 23, 42, 0.6);
   backdrop-filter: blur(24px);
-  border: 1px solid rgba(56, 189, 248, 0.1);
-  box-shadow: 0 0 20px -8px rgba(56, 189, 248, 0.08);
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(56, 189, 248, 0.18);
+  box-shadow:
+    0 0 25px -5px rgba(56, 189, 248, 0.12),
+    inset 0 1px 0 rgba(56, 189, 248, 0.06);
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.5s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
 }
 
 .gain-card:hover {
-  border-color: rgba(56, 189, 248, 0.25);
+  border-color: rgba(56, 189, 248, 0.35);
   box-shadow:
-    0 0 30px -5px rgba(56, 189, 248, 0.15),
-    0 0 60px -15px rgba(124, 58, 237, 0.1);
-  transform: translateY(-2px);
+    0 0 40px -5px rgba(56, 189, 248, 0.2),
+    0 0 80px -15px rgba(124, 58, 237, 0.12),
+    inset 0 1px 0 rgba(56, 189, 248, 0.1);
+  transform: translateY(-3px);
 }
 
 .gain-card::after {
@@ -234,11 +238,11 @@ html {
   border-radius: inherit;
   background: linear-gradient(
     105deg,
-    transparent 35%,
-    rgba(56, 189, 248, 0.03) 45%,
-    rgba(56, 189, 248, 0.07) 50%,
-    rgba(56, 189, 248, 0.03) 55%,
-    transparent 65%
+    transparent 28%,
+    rgba(56, 189, 248, 0.04) 40%,
+    rgba(56, 189, 248, 0.10) 50%,
+    rgba(56, 189, 248, 0.04) 60%,
+    transparent 72%
   );
   background-size: 200% 100%;
   animation: shimmer-sweep 8s ease-in-out infinite;
@@ -246,7 +250,8 @@ html {
 }
 
 .cause-card {
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.5s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
 }
 
 .cause-card:hover {

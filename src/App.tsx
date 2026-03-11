@@ -122,9 +122,9 @@ const Hero = () => (
 
     <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
       <motion.div
-        initial={{ opacity: 0, x: -30, filter: 'blur(8px)' }}
-        animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
-        transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1] }}
+        initial={{ opacity: 0, x: -30 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
         className="relative z-10"
       >
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-600/20 border border-blue-600/30 text-optical-blue text-xs font-bold uppercase tracking-widest mb-8">
@@ -152,16 +152,19 @@ const Hero = () => (
       </motion.div>
 
       <motion.div
-        initial={{ opacity: 0, scale: 0.92, filter: 'blur(12px)' }}
-        animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
-        transition={{ duration: 1.2, ease: [0.25, 0.1, 0.25, 1] }}
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1] }}
         className="relative animate-float"
       >
         <div className="relative z-10 rounded-[2.5rem] overflow-hidden shadow-2xl border border-white/10 premium-glow bg-slate-900">
           <img
-            className="w-full h-[550px] object-cover opacity-80 mix-blend-lighten"
+            className="w-full h-[550px] object-cover opacity-80"
             src="/img/photo-1551703599-6b3e8379aa8c.jfif"
             alt="Infrastructure réseau"
+            fetchPriority="high"
+            width={800}
+            height={550}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-background-deep via-transparent to-transparent" />
 
@@ -191,8 +194,8 @@ const GainBlock = () => (
     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-blue-600/[0.04] blur-[150px] rounded-full pointer-events-none" />
     <div className="max-w-7xl mx-auto px-6 relative z-10">
       <motion.div
-        initial={{ opacity: 0, y: 30, filter: 'blur(6px)' }}
-        whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
         viewport={{ once: true }}
         className="text-center max-w-3xl mx-auto mb-16"
@@ -203,7 +206,7 @@ const GainBlock = () => (
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-violet-400">y gagner.</span>
         </h3>
         <p className="text-slate-400 text-lg leading-relaxed">
-          Un accompagnement Aegis, c'est du temps récupéré, des coûts maîtrisés et une infrastructure qui travaille pour vous — pas l'inverse.
+          Un accompagnement Aegis, c'est du temps récupéré, des coûts maîtrisés et une infrastructure qui travaille pour vous, pas l'inverse.
         </p>
       </motion.div>
 
@@ -224,11 +227,11 @@ const GainBlock = () => (
             viewport={{ once: true }}
             className="gain-card p-8 rounded-2xl flex gap-5"
           >
-            <div className={`shrink-0 w-12 h-12 rounded-xl bg-white/[0.08] flex items-center justify-center ${item.color}`}>
+            <div className={`shrink-0 w-12 h-12 rounded-xl bg-white/10 border border-white/[0.08] flex items-center justify-center ${item.color}`}>
               {item.icon}
             </div>
             <div>
-              <p className="font-bold text-white mb-1">{item.title}</p>
+              <p className="font-bold text-white text-lg mb-1">{item.title}</p>
               <p className="text-sm text-slate-400 leading-relaxed">{item.desc}</p>
             </div>
           </motion.div>
@@ -455,7 +458,7 @@ const RootCause = () => (
           <h2 className="text-optical-blue font-bold text-sm uppercase tracking-[0.3em] mb-6">Le vrai problème</h2>
           <h3 className="text-5xl font-black text-white mb-8 leading-tight">On colmate. Rarement on diagnostique.</h3>
           <p className="text-slate-400 text-lg mb-10 leading-relaxed">
-            Beaucoup d'entreprises enchaînent les correctifs sans jamais prendre le recul nécessaire. On change de fournisseur, on ajoute une ligne, on monte en débit — mais personne ne regarde la cause réelle du problème.
+            Beaucoup d'entreprises enchaînent les correctifs sans jamais prendre le recul nécessaire. On change de fournisseur, on ajoute une ligne, on monte en débit. Mais personne ne regarde la cause réelle du problème.
           </p>
           <ul className="space-y-6 mb-12">
             {[
@@ -551,7 +554,7 @@ const WhyAegis = () => (
             </div>
             <div>
               <p className="text-white font-bold">Fondateur, Aegis Network</p>
-              <p className="text-xs text-slate-500">Consultant IT indépendant — Lyon</p>
+              <p className="text-xs text-slate-500">Consultant IT indépendant · Lyon</p>
             </div>
           </div>
         </div>
@@ -756,10 +759,10 @@ const ImpactCalculator = () => {
                   <div className="border-t border-white/5 mt-4 pt-4">
                     <p className="text-xs font-bold text-slate-300 uppercase tracking-widest mb-3">Contexte marché (sources indépendantes)</p>
                     <ul className="space-y-2 text-xs text-slate-400">
-                      <li>78 % des dirigeants de TPE/PME estiment que le numérique représente un bénéfice réel. — <span className="text-slate-500">France Num, Baromètre 2025</span></li>
-                      <li>Les PME renégocient plus souvent avec le même fournisseur, les grandes entreprises remettent davantage en concurrence. — <span className="text-slate-500">BEREC, 2022</span></li>
-                      <li>Pour 54 % des TPE, les charges administratives déléguées représentent 1 à 3 % du CA. — <span className="text-slate-500">SDI, 2023</span></li>
-                      <li>29 % des TPE-PME victimes d'incidents déclarent des interruptions de service. — <span className="text-slate-500">Cybermalveillance.gouv.fr, 2025</span></li>
+                      <li>78 % des dirigeants de TPE/PME estiment que le numérique représente un bénéfice réel. <span className="text-slate-500">France Num, Baromètre 2025</span></li>
+                      <li>Les PME renégocient plus souvent avec le même fournisseur, les grandes entreprises remettent davantage en concurrence. <span className="text-slate-500">BEREC, 2022</span></li>
+                      <li>Pour 54 % des TPE, les charges administratives déléguées représentent 1 à 3 % du CA. <span className="text-slate-500">SDI, 2023</span></li>
+                      <li>29 % des TPE-PME victimes d'incidents déclarent des interruptions de service. <span className="text-slate-500">Cybermalveillance.gouv.fr, 2025</span></li>
                     </ul>
                   </div>
                 </div>
@@ -820,8 +823,8 @@ const EvolutionConseil = () => (
           </div>
         </div>
         <motion.div
-          initial={{ opacity: 0, scale: 0.95, filter: 'blur(8px)' }}
-          whileInView={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
           viewport={{ once: true }}
           className="relative"
@@ -866,7 +869,7 @@ const DiagnosticQuestions = () => {
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-violet-400">parlent ?</span>
           </h3>
           <p className="text-slate-400 text-lg leading-relaxed">
-            Prenez 30 secondes. Si vous répondez « non » à au moins deux de ces questions, un diagnostic pourrait vous faire gagner du temps — et de l'argent.
+            Prenez 30 secondes. Si vous répondez « non » à au moins deux de ces questions, un diagnostic pourrait vous faire gagner du temps, et de l'argent.
           </p>
         </motion.div>
 
@@ -915,7 +918,7 @@ const CTASection = () => (
         <div className="relative z-10 text-center max-w-3xl mx-auto">
           <h3 className="text-4xl lg:text-6xl font-black mb-8 leading-tight">Un premier échange, gratuit et sans engagement.</h3>
           <p className="text-xl text-white/90 mb-6 leading-relaxed">
-            Parlez-nous de votre situation. Nous vous dirons honnêtement si nous pouvons vous aider — et comment.
+            Parlez-nous de votre situation. Nous vous dirons honnêtement si nous pouvons vous aider, et comment.
           </p>
           <div className="flex flex-wrap justify-center gap-4 text-sm text-white/70 mb-12">
             <span className="flex items-center gap-2"><MapPin size={16} /> Déplacements Lyon, Ain, Isère</span>
@@ -1024,16 +1027,16 @@ const LegalModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
         <div className="space-y-6 text-sm text-slate-400 leading-relaxed">
           <div>
             <h3 className="text-white font-bold mb-2">Éditeur du site</h3>
-            <p>Aegis Network — Conseil et optimisation en infrastructures IT et télécommunications</p>
+            <p>Aegis Network. Conseil et optimisation en infrastructures IT et télécommunications</p>
             <p>Contact : <a href="mailto:contact@aegisnetwork.fr" className="text-optical-blue hover:underline">contact@aegisnetwork.fr</a></p>
             <p>Téléphone : <a href="tel:+33781438123" className="text-optical-blue hover:underline">07 81 43 81 23</a></p>
             <p>Centre opérationnel : Lyon, France</p>
-            <p className="mt-2 text-yellow-500/80 text-xs">TODO: compléter — forme juridique, SIRET/RCS, capital social, nom du directeur de publication</p>
+            <p className="mt-2 text-yellow-500/80 text-xs">TODO: compléter : forme juridique, SIRET/RCS, capital social, nom du directeur de publication</p>
           </div>
 
           <div>
             <h3 className="text-white font-bold mb-2">Hébergement</h3>
-            <p>OVHcloud — 2, rue Kellermann — 59100 Roubaix — France</p>
+            <p>OVHcloud, 2 rue Kellermann, 59100 Roubaix, France</p>
             <p>Tél. : 1007</p>
             <p><a href="https://www.ovhcloud.com" className="text-optical-blue hover:underline" target="_blank" rel="noopener noreferrer">www.ovhcloud.com</a></p>
           </div>
