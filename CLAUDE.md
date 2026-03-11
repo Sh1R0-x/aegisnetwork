@@ -67,9 +67,9 @@ docs/               ← documentation technique
 
 ## Sections du site (App.tsx)
 
-Navbar → Hero → ValueProposition → Stats → Solutions → VoIPSection → OptimisationSection → ImpactCalculator → CTASection → ContactSection → Footer (+ LegalModal)
+Navbar → Hero → CostControl → TimeLoss → RootCause → WhyAegis → ImpactCalculator → EvolutionConseil → DiagnosticQuestions → CTASection → ContactSection → Footer (+ LegalModal)
 
-La section BrandBook a été supprimée.
+Flux narratif : coûts → temps perdu → diagnostic de fond → légitimité/approche → simulateur → évolution → auto-diagnostic → action
 
 ## Informations de contact
 
@@ -141,13 +141,12 @@ Ne jamais modifier ces informations sans validation explicite.
 - Hero : fond animé CSS pur (orbes gradient en dérive lente, grille tech, fiber beams premium)
 - Hero float : amplitude réduite (8px / 8s) pour confort visuel
 - Hero éléments overlay : pulsation douce (6s) + rotation lente (30s)
-- CSS keyframes pour fiber beams, float, pulse-slow, hero-glow-drift, stat-highlight
-- CountUp : durée 1000ms avec glow bleu à la complétion (`stat-highlight`, 2.5s)
+- CSS keyframes pour fiber beams, float, pulse-slow, hero-glow-drift
 - `prefers-reduced-motion` respecté (désactive toutes les animations CSS)
 
 ## Statistiques et sources
 
-- **Chiffres sourcés** (France Num 2025, BEREC 2022, SDI 2023, Cybermalveillance 2025) intégrés dans ValueProposition et ImpactCalculator
+- **Chiffres sourcés** (France Num 2025, BEREC 2022, SDI 2023, Cybermalveillance 2025) intégrés dans CostControl, TimeLoss et ImpactCalculator
 - **Hypothèses du simulateur** : clairement distinguées des données sourcées, valeurs par défaut prudentes, ajustables par l'utilisateur
 - Ne jamais présenter une hypothèse du simulateur comme un fait sourcé
 

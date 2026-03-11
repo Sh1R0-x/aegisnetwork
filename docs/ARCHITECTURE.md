@@ -38,19 +38,19 @@ Le site est one-page. Toutes les sections sont dans `App.tsx` :
 
 | Composant              | Rôle                                         |
 | ---------------------- | -------------------------------------------- |
-| `CountUp`              | Compteur animé (1s, glow 2.5s à la complétion) |
 | `FiberBeams`           | Fond animé fibre optique (CSS keyframes)     |
 | `Navbar`               | Navigation fixe avec section active auto (IntersectionObserver) |
-| `Hero`                 | Accroche principale + CTA + fond animé premium  |
-| `ValueProposition`     | Pain points + mini simulateur budget + stats sourcées |
-| `Stats`                | 3 KPI animés (coûts, appels, productivité)    |
-| `Solutions`            | 2 colonnes : Audit Réseau & Pilotage Téléphonie |
-| `VoIPSection`          | Accompagnement téléphonie (audit + sélection + transition) |
-| `OptimisationSection`  | Optimisation économique & mise en concurrence |
+| `Hero`                 | Accroche « reprendre le contrôle » + CTA + fond animé premium  |
+| `CostControl`          | Enjeux coûts : contrats, mise en concurrence, surcoûts + stat BEREC |
+| `TimeLoss`             | Temps perdu en gestion IT : SAV, coordination, pannes + stats sourcées |
+| `RootCause`            | « On colmate, rarement on diagnostique » — causes vs symptômes |
+| `WhyAegis`             | Légitimité : indépendance, objectivité, interlocuteur unique + citation fondateur |
 | `ImpactCalculator`     | Simulateur interactif gains temps/argent (adapté d'Elements.tsx) |
 | `CalcSlider`           | Sous-composant slider pour le simulateur      |
 | `CalcResult`           | Sous-composant ligne de résultat              |
-| `CTASection`           | Appel à l'action (audit gratuit)              |
+| `EvolutionConseil`     | Accompagnement durable : revue, veille, pilotage évolutions |
+| `DiagnosticQuestions`  | Auto-diagnostic : 6 questions dirigeant + CTA |
+| `CTASection`           | Appel à l'action doux (premier échange, sans engagement) |
 | `ContactSection`       | Formulaire de contact (front-only)           |
 | `LegalModal`           | Mentions légales (modal depuis le footer)     |
 | `Footer`               | Pied de page + ouverture mentions légales     |

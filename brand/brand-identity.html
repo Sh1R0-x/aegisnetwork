@@ -302,13 +302,29 @@
     .margin-label-top { top: -20px; left: 50%; transform: translateX(-50%); }
     .margin-label-right { right: -48px; top: 50%; transform: translateY(-50%); }
 
-    /* Print styles */
+    /* Print styles — A4 portrait PDF-ready */
+    @page {
+      size: A4 portrait;
+      margin: 20mm 18mm 24mm 18mm;
+    }
+
     @media print {
-      body { background: #fff; color: #1E293B; }
-      .container { max-width: 100%; padding: 0 24px; }
-      .cover { min-height: auto; padding: 60px 24px; page-break-after: always; }
+      body { background: #fff; color: #1E293B; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .container { max-width: 100%; padding: 0; }
+      .cover { min-height: auto; padding: 60px 0; page-break-after: always; }
       .cover::before, .cover::after { display: none; }
-      .section { padding: 40px 0; page-break-inside: avoid; border-color: #E2E8F0; }
+      .section { padding: 32px 0; border-color: #E2E8F0; }
+      .section { page-break-before: auto; }
+      /* Prevent orphaned headings */
+      h2, h3, h4 { page-break-after: avoid; }
+      .card, .logo-showcase, .dodont-grid, .card-grid, table { page-break-inside: avoid; }
+      /* Force page breaks between major sections */
+      #logo { page-break-before: always; }
+      #colors { page-break-before: always; }
+      #typography { page-break-before: always; }
+      #universe { page-break-before: always; }
+      #applications { page-break-before: always; }
+      #rules { page-break-before: always; }
       h1, h2, h3 { color: #0F172A; }
       p, .lead, .small { color: #334155; }
       h4 { color: var(--aegis-blue); }
@@ -323,6 +339,8 @@
       .toc a { color: #0F172A; }
       .margin-demo { background: #F8FAFC; border-color: #E2E8F0; }
       .cover-meta { border-color: #E2E8F0; color: #94A3B8; }
+      /* Avoid empty trailing pages */
+      .section:last-child { padding-bottom: 0; margin-bottom: 0; }
     }
 
     @media (max-width: 768px) {
@@ -518,7 +536,7 @@
           </svg>
           <div class="wordmark">
             <span class="wordmark-title" style="color: #fff;">AEGIS <span style="background: linear-gradient(135deg,#3B82F6,#7C3AED); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">NETWORK</span></span>
-            <span class="wordmark-sub" style="color: var(--slate-400);">High-Performance Connectivity</span>
+            <span class="wordmark-sub" style="color: var(--slate-400);">Conseil &amp; Optimisation IT</span>
           </div>
         </div>
         <span class="label">Lockup principal — fond sombre</span>
@@ -549,7 +567,7 @@
           </svg>
           <div class="wordmark">
             <span class="wordmark-title" style="color: #0F172A;">AEGIS <span style="background: linear-gradient(135deg,#2563EB,#7C3AED); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">NETWORK</span></span>
-            <span class="wordmark-sub" style="color: #64748B;">High-Performance Connectivity</span>
+            <span class="wordmark-sub" style="color: #64748B;">Conseil &amp; Optimisation IT</span>
           </div>
         </div>
         <span class="label" style="color: #94A3B8;">Lockup — fond clair</span>
@@ -897,7 +915,7 @@
 
       <div class="type-sample">
         <p class="specimen" style="font-size: 0.875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: var(--optical-blue);">Surtitre / Label</p>
-        <p class="meta">Inter Bold (700) · 0.875rem / 14px · uppercase · letter-spacing: 0.15em</p>
+        <p class="meta">Inter Bold (700) &middot; 0.875rem / 14px &middot; uppercase &middot; letter-spacing: 0.15em</p>
       </div>
 
       <div class="type-sample">
@@ -925,7 +943,7 @@
         </thead>
         <tbody>
           <tr><td>Wordmark "AEGIS NETWORK"</td><td>0.15em</td><td style="letter-spacing: 0.15em; font-weight: 900; color: #fff;">AEGIS NETWORK</td></tr>
-          <tr><td>Baseline "High-Performance Connectivity"</td><td>0.25em</td><td style="letter-spacing: 0.25em; font-weight: 700; font-size: 0.65rem; text-transform: uppercase; color: var(--slate-400);">High-Performance Connectivity</td></tr>
+          <tr><td>Baseline "Conseil &amp; Optimisation IT"</td><td>0.25em</td><td style="letter-spacing: 0.25em; font-weight: 700; font-size: 0.65rem; text-transform: uppercase; color: var(--slate-400);">Conseil &amp; Optimisation IT</td></tr>
           <tr><td>Surtitres de section</td><td>0.3em</td><td style="letter-spacing: 0.3em; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; color: var(--optical-blue);">Nos Solutions Concrètes</td></tr>
           <tr><td>Micro-labels</td><td>0.2em</td><td style="letter-spacing: 0.2em; font-weight: 700; font-size: 0.7rem; text-transform: uppercase; color: var(--slate-400);">INTERNET & TÉLÉPHONIE PRO</td></tr>
         </tbody>
@@ -1107,8 +1125,8 @@
                 <span style="font-size:0.65rem; font-weight:900; letter-spacing:0.15em; color:#0F172A;">AEGIS </span><span style="font-size:0.65rem; font-weight:900; letter-spacing:0.15em; color:#2563EB;">NETWORK</span>
               </div>
             </div>
-            <p style="font-size:0.95rem; font-weight:800; color:#0F172A; margin-bottom:2px;">Ludovic Rochet-Bellavia</p>
-            <p style="font-size:0.65rem; font-weight:600; color:#2563EB; text-transform:uppercase; letter-spacing:0.1em;">Dirigeant</p>
+            <p style="font-size:0.95rem; font-weight:800; color:#0F172A; margin-bottom:2px;">Ludovic ROCHET-BELLAVIA</p>
+            <p style="font-size:0.65rem; font-weight:600; color:#2563EB; letter-spacing:0.02em;">Consultant réseaux &amp; téléphonie</p>
           </div>
           <div style="position:relative; z-index:1;">
             <p style="font-size:0.6rem; color:#64748B; margin-bottom:2px;">07 81 43 81 23 · contact@aegisnetwork.fr</p>
@@ -1126,7 +1144,7 @@
           </svg>
           <div style="text-align:center;">
             <p style="font-size:0.85rem; font-weight:900; letter-spacing:0.15em; color:#fff;">AEGIS <span style="color:#3B82F6;">NETWORK</span></p>
-            <p style="font-size:0.45rem; font-weight:600; letter-spacing:0.25em; color:#64748B; text-transform:uppercase; margin-top:4px;">High-Performance Connectivity</p>
+            <p style="font-size:0.45rem; font-weight:600; letter-spacing:0.25em; color:#64748B; text-transform:uppercase; margin-top:4px;">Conseil &amp; Optimisation IT</p>
           </div>
           <p style="font-size:0.5rem; color:#475569; letter-spacing:0.05em;">aegisnetwork.fr</p>
         </div>
@@ -1148,8 +1166,8 @@
               </svg>
             </td>
             <td style="padding-left:20px; vertical-align:top;">
-              <p style="margin:0 0 2px; font-size:15px; font-weight:700; color:#0F172A;">Ludovic Rochet-Bellavia</p>
-              <p style="margin:0 0 8px; font-size:12px; color:#2563EB; font-weight:600;">Dirigeant — AEGIS NETWORK</p>
+              <p style="margin:0 0 2px; font-size:15px; font-weight:700; color:#0F172A;">Ludovic ROCHET-BELLAVIA</p>
+              <p style="margin:0 0 8px; font-size:12px; color:#2563EB; font-weight:600;">Consultant réseaux &amp; téléphonie — AEGIS NETWORK</p>
               <p style="margin:0; font-size:11px; color:#64748B; line-height:1.6;">
                 07 81 43 81 23 · <a href="mailto:contact@aegisnetwork.fr" style="color:#2563EB; text-decoration:none;">contact@aegisnetwork.fr</a><br>
                 <a href="https://aegisnetwork.fr" style="color:#2563EB; text-decoration:none;">aegisnetwork.fr</a> · Lyon, France

@@ -6,65 +6,23 @@ import {
   Mail,
   MapPin,
   BarChart3,
-  Globe,
   X,
   TrendingDown,
   TrendingUp,
   Search,
   Target,
-  AlertTriangle,
-  Scale,
-  Calculator,
   ChevronDown,
   Info,
-  Clock
+  Clock,
+  Users,
+  CheckCircle,
+  Lightbulb,
+  ArrowRight,
+  RefreshCw
 } from 'lucide-react';
-import { motion, useInView, AnimatePresence } from 'motion/react';
-import { useEffect, useRef, useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { useEffect, useState } from 'react';
 import { AegisLogo } from './components/AegisLogo';
-
-const CountUp = ({ value, suffix = "", prefix = "" }: { value: string, suffix?: string, prefix?: string }) => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const [displayValue, setDisplayValue] = useState(0);
-  const [isComplete, setIsComplete] = useState(false);
-
-  const numericValue = parseFloat(value.replace(/[^0-9.]/g, ''));
-
-  useEffect(() => {
-    if (isInView) {
-      const end = numericValue;
-      const duration = 1000;
-      const startTime = performance.now();
-
-      const animate = (currentTime: number) => {
-        const elapsed = currentTime - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-
-        const easedProgress = 1 - (1 - progress) * (1 - progress);
-        const current = easedProgress * end;
-
-        setDisplayValue(current);
-
-        if (progress < 1) {
-          requestAnimationFrame(animate);
-        } else {
-          setIsComplete(true);
-        }
-      };
-
-      requestAnimationFrame(animate);
-    }
-  }, [isInView, numericValue]);
-
-  return (
-    <span ref={ref} className={isComplete ? 'stat-highlight' : ''}>
-      {prefix}
-      {numericValue % 1 === 0 ? Math.floor(displayValue) : displayValue.toFixed(1)}
-      {suffix}
-    </span>
-  );
-};
 
 const FiberBeams = () => (
   <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
@@ -81,9 +39,9 @@ const scrollToSection = (id: string) => {
 };
 
 const NAV_SECTIONS = [
-  { id: 'solutions', label: 'Notre approche' },
-  { id: 'telephonie', label: 'Téléphonie' },
-  { id: 'optimisation', label: 'Optimisation' },
+  { id: 'enjeux', label: 'Vos enjeux' },
+  { id: 'approche', label: 'Notre approche' },
+  { id: 'simulateur', label: 'Simulateur' },
   { id: 'contact', label: 'Contact' },
 ];
 
@@ -176,19 +134,19 @@ const Hero = () => (
           Conseil & Optimisation IT
         </div>
         <h1 className="text-5xl lg:text-7xl font-black text-white leading-[1.05] mb-8">
-          Optimisez votre <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-600 to-violet-500">infrastructure IT</span>, simplement.
+          Reprenez le contrôle <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-600 to-violet-500">de vos dépenses IT.</span>
         </h1>
         <p className="text-lg text-slate-400 leading-relaxed max-w-xl mb-12">
-          Nous accompagnons les TPE et PME dans le choix, l'optimisation et le pilotage de leurs solutions internet, téléphonie et infrastructure. Un interlocuteur expert, indépendant et orienté résultats.
+          Contrats opaques, prestataires jamais challengés, temps perdu en gestion d'incidents… Aegis Network vous aide à y voir clair, réduire vos coûts et vous recentrer sur votre activité.
         </p>
         <div className="flex flex-wrap gap-5">
-          <a href="#contact" onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }} className="glow-button h-14 px-8 rounded-xl bg-gradient-to-r from-blue-600 to-accent-violet text-white font-bold text-lg flex items-center justify-center gap-3">
-            Demander un audit gratuit
+          <button onClick={() => scrollToSection('contact')} className="glow-button h-14 px-8 rounded-xl bg-gradient-to-r from-blue-600 to-accent-violet text-white font-bold text-lg flex items-center justify-center gap-3 cursor-pointer">
+            Demander un diagnostic gratuit
             <Zap size={20} />
-          </a>
-          <a href="#solutions" onClick={(e) => { e.preventDefault(); scrollToSection('solutions'); }} className="h-14 px-8 rounded-xl bg-white/5 border border-white/10 text-white font-bold text-lg flex items-center justify-center hover:bg-white/10 transition-all backdrop-blur-sm">
-            Découvrir notre approche
-          </a>
+          </button>
+          <button onClick={() => scrollToSection('enjeux')} className="h-14 px-8 rounded-xl bg-white/5 border border-white/10 text-white font-bold text-lg flex items-center justify-center hover:bg-white/10 transition-all backdrop-blur-sm cursor-pointer">
+            Comprendre nos axes
+          </button>
         </div>
       </motion.div>
 
@@ -199,15 +157,13 @@ const Hero = () => (
         className="relative animate-float"
       >
         <div className="relative z-10 rounded-[2.5rem] overflow-hidden shadow-2xl border border-white/10 premium-glow bg-slate-900">
-          {/* IMAGE: Hero Main Visual - Abstract Fiber Optic Technology */}
           <img
             className="w-full h-[550px] object-cover opacity-80 mix-blend-lighten"
             src="/img/photo-1551703599-6b3e8379aa8c.jfif"
-            alt="Fiber Optic Technology"
+            alt="Infrastructure réseau"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-background-deep via-transparent to-transparent" />
 
-          {/* Overlaying dynamic elements */}
           <div className="absolute inset-0 flex items-center justify-center">
             <motion.div
               animate={{
@@ -227,277 +183,98 @@ const Hero = () => (
           </div>
         </div>
         <div className="absolute -top-12 -right-12 w-64 h-64 bg-blue-600/30 rounded-full blur-[100px] animate-pulse-slow" />
+
+        <motion.div
+          animate={{ y: [0, -8, 0] }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute -bottom-8 -left-8 glass-card rounded-2xl p-6 shadow-2xl text-white border-white/20 premium-glow"
+        >
+          <p className="text-xs font-bold text-optical-blue uppercase tracking-widest mb-1">Gains constatés</p>
+          <p className="text-3xl font-black">15–30%</p>
+          <p className="text-xs text-slate-400 mt-1">d'économies sur les contrats</p>
+        </motion.div>
       </motion.div>
     </div>
   </section>
 );
 
-const ValueProposition = () => {
-  const [monthlySpend, setMonthlySpend] = useState(3000);
-
-  const savingsLow = Math.round(monthlySpend * 0.15);
-  const savingsHigh = Math.round(monthlySpend * 0.30);
-  const annualLow = savingsLow * 12;
-  const annualHigh = savingsHigh * 12;
-  const progress = ((monthlySpend - 500) / (20000 - 500)) * 100;
-
-  const fmt = (n: number) => n.toLocaleString('fr-FR');
-
-  return (
-    <section className="py-24 relative">
-      <div className="max-w-7xl mx-auto px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center max-w-3xl mx-auto mb-16"
-        >
-          <h2 className="text-optical-blue font-bold text-sm uppercase tracking-[0.3em] mb-4">Pourquoi Aegis Network</h2>
-          <h3 className="text-4xl lg:text-5xl font-black text-white mb-6 leading-tight">
-            Vos dépenses IT méritent un{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-violet-400">regard expert.</span>
-          </h3>
-          <p className="text-slate-400 text-lg leading-relaxed">
-            La plupart des TPE et PME paient trop cher pour des services mal dimensionnés. Nous auditons, comparons et renégocions pour rendre chaque euro utile.
-          </p>
-        </motion.div>
-
-        <div className="grid lg:grid-cols-2 gap-12 items-start">
-          {/* Pain points */}
-          <div className="space-y-5">
-            {[
-              { icon: <AlertTriangle size={22} />, title: "Contrats jamais relus", desc: "Vos abonnements sont renouvelés par défaut, sans mise en concurrence ni vérification.", color: "text-amber-400", bg: "bg-amber-500/10 border-amber-500/20" },
-              { icon: <TrendingDown size={22} />, title: "Surcoûts invisibles", desc: "Options inutiles, surdimensionnement, doublons — les dépenses cachées s'accumulent.", color: "text-red-400", bg: "bg-red-500/10 border-red-500/20" },
-              { icon: <Scale size={22} />, title: "Aucune mise en concurrence", desc: "Sans comparatif objectif, impossible de savoir si vous payez le juste prix.", color: "text-orange-400", bg: "bg-orange-500/10 border-orange-500/20" },
-              { icon: <ShieldCheck size={22} />, title: "Pas d'interlocuteur neutre", desc: "Les opérateurs défendent leurs marges. Vous avez besoin d'un conseil indépendant.", color: "text-blue-400", bg: "bg-blue-500/10 border-blue-500/20" }
-            ].map((item, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ delay: i * 0.1, duration: 0.5 }}
-                viewport={{ once: true }}
-                className="flex gap-5 group"
-              >
-                <div className={`shrink-0 w-12 h-12 rounded-2xl ${item.bg} border flex items-center justify-center ${item.color}`}>
-                  {item.icon}
-                </div>
-                <div>
-                  <h4 className="text-lg font-bold text-white mb-1">{item.title}</h4>
-                  <p className="text-slate-400 text-sm leading-relaxed">{item.desc}</p>
-                </div>
-              </motion.div>
-            ))}
-
-            {/* Sourced market context */}
-            <div className="mt-6 pt-4 border-t border-white/5 space-y-2">
-              <p className="text-[11px] text-slate-500 leading-relaxed flex items-start gap-1.5">
-                <BarChart3 size={12} className="shrink-0 mt-0.5 text-slate-600" />
-                78 % des dirigeants de TPE/PME estiment que le numérique est un bénéfice réel pour leur entreprise. <span className="text-slate-600 shrink-0">— France Num, 2025</span>
-              </p>
-              <p className="text-[11px] text-slate-500 leading-relaxed flex items-start gap-1.5">
-                <BarChart3 size={12} className="shrink-0 mt-0.5 text-slate-600" />
-                Les PME renégocient plus souvent avec le même fournisseur, sans mise en concurrence. <span className="text-slate-600 shrink-0">— BEREC, 2022</span>
-              </p>
-            </div>
-          </div>
-
-          {/* ROI Simulator */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            viewport={{ once: true }}
-            className="glass-card p-10 rounded-[2.5rem] border-white/10 relative overflow-hidden"
-          >
-            <div className="absolute -top-20 -right-20 w-40 h-40 bg-blue-600/10 rounded-full blur-[80px]" />
-            <div className="relative z-10">
-              <div className="flex items-center gap-3 mb-8">
-                <div className="w-10 h-10 rounded-xl bg-blue-600/20 border border-blue-600/30 flex items-center justify-center text-optical-blue">
-                  <Calculator size={20} />
-                </div>
-                <h4 className="text-xl font-bold text-white">Simulez vos économies</h4>
-              </div>
-
-              <label htmlFor="roi-slider" className="text-sm font-bold text-slate-300 uppercase tracking-widest block mb-3">
-                Budget IT mensuel
-              </label>
-              <p className="text-3xl font-black text-white mb-5">
-                {fmt(monthlySpend)} €<span className="text-slate-500 text-lg font-medium"> / mois</span>
-              </p>
-              <input
-                id="roi-slider"
-                type="range"
-                min={500}
-                max={20000}
-                step={100}
-                value={monthlySpend}
-                onChange={(e) => setMonthlySpend(Number(e.target.value))}
-                className="roi-slider w-full"
-                style={{
-                  background: `linear-gradient(to right, var(--color-optical-blue) 0%, var(--color-accent-violet) ${progress}%, rgba(255,255,255,0.1) ${progress}%)`
-                }}
-                aria-label="Budget IT mensuel en euros"
-              />
-              <div className="flex justify-between text-xs text-slate-500 mt-2 mb-8">
-                <span>500 €</span>
-                <span>20 000 €</span>
-              </div>
-
-              <div className="bg-white/5 rounded-2xl p-6 border border-white/5 mb-4">
-                <p className="text-sm text-slate-400 mb-2">Économie estimée par mois</p>
-                <p className="text-2xl font-black text-optical-blue">
-                  {fmt(savingsLow)} € — {fmt(savingsHigh)} €
-                </p>
-              </div>
-
-              <div className="bg-gradient-to-r from-blue-600/10 to-accent-violet/10 rounded-2xl p-6 border border-blue-600/20 mb-8">
-                <p className="text-sm text-slate-400 mb-2">Économie annuelle projetée</p>
-                <p className="text-3xl font-black text-white">
-                  {fmt(annualLow)} € — {fmt(annualHigh)} €
-                </p>
-              </div>
-
-              <a
-                href="#contact"
-                onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }}
-                className="glow-button w-full h-14 rounded-xl bg-gradient-to-r from-blue-600 to-accent-violet text-white font-bold text-lg flex items-center justify-center gap-2"
-              >
-                Vérifier avec un audit gratuit
-                <Zap size={18} />
-              </a>
-              <p className="text-center text-xs text-slate-500 mt-4">Estimation indicative basée sur les audits réalisés.</p>
-            </div>
-          </motion.div>
-        </div>
-      </div>
-    </section>
-  );
-};
-
-const Stats = () => (
-  <section className="py-20 relative z-20">
+const CostControl = () => (
+  <section id="enjeux" className="py-32 relative overflow-hidden">
     <FiberBeams />
     <div className="max-w-7xl mx-auto px-6">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div className="text-center max-w-3xl mx-auto mb-20">
+        <h2 className="text-optical-blue font-bold text-sm uppercase tracking-[0.3em] mb-4">Vos enjeux</h2>
+        <h3 className="text-4xl lg:text-5xl font-black text-white mb-6 leading-tight">
+          Vos contrats IT méritent un{' '}
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-violet-400">regard neuf.</span>
+        </h3>
+        <p className="text-slate-400 text-lg leading-relaxed">
+          La plupart des TPE et PME conservent des abonnements inadaptés, surdimensionnés ou jamais renégociés. C'est précisément là que nous intervenons.
+        </p>
+      </div>
+
+      <div className="grid md:grid-cols-3 gap-8 mb-16">
         {[
-          { icon: <TrendingDown size={48} />, label: "Coûts télécoms", value: "30", prefix: "Jusqu'à -", suffix: "%", sub: "Après audit et renégociation", color: "text-optical-blue" },
-          { icon: <PhoneCall size={48} />, label: "Appels mieux gérés", value: "50", prefix: "+", suffix: "%", sub: "Après optimisation", color: "text-accent-violet" },
-          { icon: <Zap size={48} />, label: "Gain de productivité", value: "2", prefix: "Jusqu'à ", suffix: "x", sub: "Sur le pilotage IT", color: "text-blue-600" }
-        ].map((stat, i) => (
+          {
+            icon: <TrendingDown size={28} />,
+            title: "Contrats reconduits par habitude",
+            desc: "Vous renouvelez vos abonnements sans vérifier si une offre plus adaptée existe. Les tarifs évoluent, pas vos contrats.",
+            color: "text-optical-blue",
+            border: "border-blue-600/20 hover:border-optical-blue/40"
+          },
+          {
+            icon: <Search size={28} />,
+            title: "Aucune mise en concurrence",
+            desc: "Votre fournisseur actuel n'a jamais été challengé. Sans comparaison, impossible de savoir si vous payez le juste prix.",
+            color: "text-accent-violet",
+            border: "border-accent-violet/20 hover:border-accent-violet/40"
+          },
+          {
+            icon: <Target size={28} />,
+            title: "Surcoûts invisibles",
+            desc: "Options inutiles, services doublonnés, lignes inactives… Les postes de dépense oubliés s'accumulent discrètement.",
+            color: "text-emerald-400",
+            border: "border-emerald-400/20 hover:border-emerald-400/40"
+          }
+        ].map((card, i) => (
           <motion.div
             key={i}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.15, duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
+            transition={{ delay: i * 0.1, duration: 0.5 }}
             viewport={{ once: true }}
-            className="glass-card p-10 rounded-3xl flex flex-col gap-3 group hover:border-optical-blue/40 hover:-translate-y-1 hover:scale-[1.02] transition-all duration-300 relative overflow-hidden"
+            className={`glass-card p-10 rounded-3xl ${card.border} transition-all`}
           >
-            <div className="absolute -right-4 -top-4 opacity-5 group-hover:opacity-10 transition-opacity">
-              {stat.icon}
-            </div>
-            <div className={`${stat.color} mb-2 transition-transform group-hover:scale-110 duration-500`}>
-              {stat.icon}
-            </div>
-            <p className="text-slate-400 font-medium tracking-wide">{stat.label}</p>
-            <h3 className="text-3xl lg:text-4xl font-black text-white tracking-tighter">
-              <CountUp value={stat.value} prefix={stat.prefix} suffix={stat.suffix} />
-            </h3>
-            <div className="flex items-center gap-2 text-optical-blue text-sm font-bold mt-2">
-              <BarChart3 size={16} />
-              {stat.sub}
-            </div>
+            <div className={`${card.color} mb-4`}>{card.icon}</div>
+            <p className="font-bold text-white text-xl mb-3">{card.title}</p>
+            <p className="text-slate-400 leading-relaxed">{card.desc}</p>
           </motion.div>
         ))}
       </div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="glass-card rounded-2xl p-8 max-w-2xl mx-auto border-white/5 text-center"
+      >
+        <p className="text-sm text-slate-400 leading-relaxed">
+          <span className="text-white font-bold">Les PME renégocient le plus souvent avec leur fournisseur actuel</span>, sans remettre en concurrence.
+          Les grandes entreprises, elles, comparent systématiquement.
+        </p>
+        <p className="text-xs text-slate-600 mt-3">Source : BEREC, 2022</p>
+      </motion.div>
     </div>
   </section>
 );
 
-const Solutions = () => (
-  <section id="solutions" className="py-32 relative overflow-hidden">
-    <FiberBeams />
-    <div className="max-w-7xl mx-auto px-6">
-      <div className="text-center max-w-3xl mx-auto mb-24">
-        <h2 className="text-optical-blue font-bold text-sm uppercase tracking-[0.3em] mb-4">Notre Accompagnement</h2>
-        <h3 className="text-4xl lg:text-5xl font-black text-white mb-6">Deux leviers pour optimiser votre IT.</h3>
-        <p className="text-slate-400 text-lg">Nous intervenons comme consultant et chef de projet pour améliorer concrètement votre connectivité et votre téléphonie professionnelle.</p>
-      </div>
-
-      <div className="grid md:grid-cols-2 gap-12">
-        {/* Solution 1: Internet */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
-          viewport={{ once: true }}
-          className="glass-card p-12 rounded-[3rem] border-white/5 hover:border-blue-500/30 transition-all group"
-        >
-          <div className="w-16 h-16 rounded-2xl bg-blue-600/20 text-blue-400 flex items-center justify-center mb-8 group-hover:bg-blue-600 group-hover:text-white transition-all duration-500">
-            <Globe size={32} />
-          </div>
-          <h4 className="text-3xl font-black text-white mb-6">Audit & Optimisation Réseau</h4>
-          <p className="text-slate-400 text-lg leading-relaxed mb-8">
-            Nous analysons votre infrastructure réseau et vos contrats existants. Nous identifions les surcoûts, challengeons vos fournisseurs et pilotons les changements.
-          </p>
-          <ul className="space-y-4 mb-10">
-            {[
-              "Audit complet de l'existant",
-              "Comparatif et mise en concurrence",
-              "Renégociation des contrats",
-              "Pilotage de la migration si nécessaire"
-            ].map((item, i) => (
-              <li key={i} className="flex items-center gap-3 text-slate-300">
-                <div className="w-1.5 h-1.5 rounded-full bg-blue-500" />
-                {item}
-              </li>
-            ))}
-          </ul>
-        </motion.div>
-
-        {/* Solution 2: Telephony */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
-          viewport={{ once: true }}
-          className="glass-card p-12 rounded-[3rem] border-white/5 hover:border-violet-500/30 transition-all group"
-        >
-          <div className="w-16 h-16 rounded-2xl bg-violet-600/20 text-violet-400 flex items-center justify-center mb-8 group-hover:bg-violet-600 group-hover:text-white transition-all duration-500">
-            <PhoneCall size={32} />
-          </div>
-          <h4 className="text-3xl font-black text-white mb-6">Pilotage Téléphonie</h4>
-          <p className="text-slate-400 text-lg leading-relaxed mb-8">
-            Nous évaluons votre téléphonie actuelle et vous aidons à choisir, déployer et optimiser la solution la plus adaptée à votre activité.
-          </p>
-          <ul className="space-y-4 mb-10">
-            {[
-              "Analyse des coûts et des usages",
-              "Sélection du prestataire adapté",
-              "Accompagnement au déploiement",
-              "Suivi de qualité et ajustements"
-            ].map((item, i) => (
-              <li key={i} className="flex items-center gap-3 text-slate-300">
-                <div className="w-1.5 h-1.5 rounded-full bg-violet-500" />
-                {item}
-              </li>
-            ))}
-          </ul>
-        </motion.div>
-      </div>
-    </div>
-  </section>
-);
-
-const VoIPSection = () => (
-  <section id="telephonie" className="py-32 relative overflow-hidden bg-slate-950">
+const TimeLoss = () => (
+  <section className="py-32 relative overflow-hidden bg-slate-950">
     <div className="absolute inset-0 opacity-20">
-      {/* IMAGE: VoIP Section Background - Network/Data Visualization */}
       <img
         className="w-full h-full object-cover mix-blend-screen"
         src="/img/photo-1550751827-4bd374c3f58b.jfif"
-        alt="Network background"
+        alt="Réseau de données"
         loading="lazy"
       />
       <div className="absolute inset-0 bg-gradient-to-r from-background-deep via-background-deep/60 to-transparent" />
@@ -505,18 +282,37 @@ const VoIPSection = () => (
     <div className="max-w-7xl mx-auto px-6 relative z-10">
       <div className="grid lg:grid-cols-2 gap-24 items-center">
         <div>
-          <h2 className="text-violet-400 font-bold text-sm uppercase tracking-[0.3em] mb-6">Accompagnement Téléphonie</h2>
+          <h2 className="text-accent-violet font-bold text-sm uppercase tracking-[0.3em] mb-6">Temps perdu</h2>
           <h3 className="text-5xl lg:text-6xl font-black mb-10 leading-[1.1] text-white">
-            Votre téléphonie, <br/>
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-blue-500">repensée.</span>
+            Le temps passé à gérer vos prestataires{' '}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-blue-500">a un coût.</span>
           </h3>
           <div className="space-y-10">
             {[
-              { icon: <Search />, title: "Audit de votre solution actuelle", desc: "Nous analysons vos flux d'appels, vos coûts et votre configuration pour identifier ce qui peut être amélioré concrètement." },
-              { icon: <Activity />, title: "Sélection du meilleur prestataire", desc: "Nous comparons les offres du marché et négocions pour vous les meilleures conditions techniques et tarifaires." },
-              { icon: <ShieldCheck />, title: "Accompagnement au changement", desc: "Nous pilotons la transition vers la nouvelle solution et accompagnons vos équipes pour une adoption fluide." }
+              {
+                icon: <PhoneCall />,
+                title: "Heures au téléphone avec le SAV",
+                desc: "Appels au support, relances, attentes… Chaque incident mobilise du temps qui ne profite pas à votre activité."
+              },
+              {
+                icon: <Activity />,
+                title: "Coordination entre prestataires",
+                desc: "Quand l'opérateur, l'intégrateur et l'hébergeur se renvoient la balle, c'est vous qui perdez du temps à arbitrer."
+              },
+              {
+                icon: <Clock />,
+                title: "Pannes et lenteurs récurrentes",
+                desc: "Des incidents réguliers que personne ne résout vraiment. On redémarre, on contourne, on subit."
+              }
             ].map((item, i) => (
-              <motion.div key={i} initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.15, duration: 0.5 }} viewport={{ once: true }} className="flex gap-6 group">
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ delay: i * 0.15, duration: 0.5 }}
+                viewport={{ once: true }}
+                className="flex gap-6 group"
+              >
                 <div className="shrink-0 w-12 h-12 rounded-2xl bg-violet-600/30 flex items-center justify-center text-violet-400 border border-violet-600/40 group-hover:bg-violet-600 group-hover:text-white transition-all duration-500">
                   {item.icon}
                 </div>
@@ -527,52 +323,81 @@ const VoIPSection = () => (
               </motion.div>
             ))}
           </div>
-          <div className="mt-14 flex flex-wrap gap-5">
-            <a href="#contact" onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }} className="glow-button h-14 px-8 rounded-xl bg-gradient-to-r from-violet-600 to-blue-600 text-white font-bold flex items-center justify-center transition-all">
-              Faire auditer ma téléphonie
-            </a>
-          </div>
         </div>
-        <div className="relative">
-          <div className="glass-card rounded-[3rem] p-6 shadow-2xl border-white/10 premium-glow">
-            {/* IMAGE: VoIP Section Feature - Professional using digital tools */}
-            <img
-              className="rounded-[2rem] w-full h-auto"
-              src="/img/photo-1516321318423-f06f85e504b3.jfif"
-              alt="Digital professional"
-              loading="lazy"
-            />
+        <div>
+          <div className="glass-card rounded-3xl p-10 border-white/10">
+            <p className="text-xs font-bold text-accent-violet uppercase tracking-widest mb-6">Impact concret</p>
+            <div className="space-y-6">
+              {[
+                { value: "4h", label: "par mois en moyenne passées à gérer des incidents IT dans une PME de 10 à 50 salariés" },
+                { value: "54%", label: "des TPE estiment que les charges administratives déléguées pèsent 1 à 3 % du CA" },
+                { value: "29%", label: "des TPE-PME victimes d'incidents déclarent des interruptions de service" }
+              ].map((stat, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.1, duration: 0.4 }}
+                  viewport={{ once: true }}
+                  className="flex items-start gap-4"
+                >
+                  <span className="text-3xl font-black text-white shrink-0 w-16">{stat.value}</span>
+                  <p className="text-sm text-slate-400 leading-relaxed">{stat.label}</p>
+                </motion.div>
+              ))}
+            </div>
+            <p className="text-[11px] text-slate-600 mt-6 leading-relaxed">Sources : SDI 2023, Cybermalveillance.gouv.fr 2025</p>
           </div>
-          <motion.div
-            animate={{ y: [0, -10, 0] }}
-            transition={{ duration: 4, repeat: Infinity }}
-            className="absolute -bottom-10 -left-10 glass-card rounded-[2rem] p-8 shadow-2xl text-white border-white/20 premium-glow"
-          >
-            <p className="text-xs font-bold text-optical-blue uppercase tracking-widest mb-2">Gains constatés</p>
-            <p className="text-4xl font-black">
-              <CountUp value="25" prefix="+" suffix="%" />
-            </p>
-            <p className="text-sm text-slate-400 mt-1">Satisfaction client</p>
-          </motion.div>
         </div>
       </div>
     </div>
   </section>
 );
 
-const OptimisationSection = () => (
-  <section id="optimisation" className="py-32 relative bg-background-deep">
+const RootCause = () => (
+  <section className="py-32 relative bg-background-deep">
     <div className="max-w-7xl mx-auto px-6">
       <div className="flex flex-col lg:flex-row gap-20 items-center">
         <div className="lg:w-1/2 order-2 lg:order-1">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {[
-              { icon: <TrendingDown size={28} />, title: "Réduction des coûts", desc: "Identifiez les dépenses IT inutiles et renégociez vos contrats aux meilleures conditions.", color: "text-optical-blue", border: "border-blue-600/20 hover:border-optical-blue/40" },
-              { icon: <Search size={28} />, title: "Mise en concurrence", desc: "Comparez objectivement les offres du marché pour chaque poste de dépense.", color: "text-accent-violet", border: "border-accent-violet/20 hover:border-accent-violet/40" },
-              { icon: <Target size={28} />, title: "Prestations ajustées", desc: "Éliminez le surdimensionnement et ne payez que ce dont vous avez réellement besoin.", color: "text-blue-400", border: "border-blue-400/20 hover:border-blue-400/40" },
-              { icon: <BarChart3 size={28} />, title: "Visibilité totale", desc: "Obtenez une vue claire de vos dépenses IT et des leviers d'optimisation disponibles.", color: "text-emerald-400", border: "border-emerald-400/20 hover:border-emerald-400/40" }
+              {
+                icon: <Zap size={28} />,
+                title: "On ajoute du débit",
+                desc: "…alors que le problème vient d'un routage mal configuré ou d'un équipement obsolète.",
+                color: "text-optical-blue",
+                border: "border-blue-600/20 hover:border-optical-blue/40"
+              },
+              {
+                icon: <PhoneCall size={28} />,
+                title: "On change de standard",
+                desc: "…alors que le vrai souci est un mauvais paramétrage des renvois d'appels ou des files d'attente.",
+                color: "text-accent-violet",
+                border: "border-accent-violet/20 hover:border-accent-violet/40"
+              },
+              {
+                icon: <RefreshCw size={28} />,
+                title: "On change de fournisseur",
+                desc: "…sans avoir identifié ce qui ne fonctionnait pas. Le problème suit le nouveau contrat.",
+                color: "text-blue-400",
+                border: "border-blue-400/20 hover:border-blue-400/40"
+              },
+              {
+                icon: <TrendingDown size={28} />,
+                title: "On subit les renouvellements",
+                desc: "…parce que personne n'a le temps ni le recul pour les remettre en question.",
+                color: "text-emerald-400",
+                border: "border-emerald-400/20 hover:border-emerald-400/40"
+              }
             ].map((card, i) => (
-              <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1, duration: 0.5 }} viewport={{ once: true }} className={`glass-card p-8 rounded-3xl ${card.border} transition-all`}>
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.1, duration: 0.5 }}
+                viewport={{ once: true }}
+                className={`glass-card p-8 rounded-3xl ${card.border} transition-all`}
+              >
                 <div className={`${card.color} mb-4`}>{card.icon}</div>
                 <p className="font-bold text-white text-lg">{card.title}</p>
                 <p className="text-sm text-slate-400 mt-2">{card.desc}</p>
@@ -581,28 +406,109 @@ const OptimisationSection = () => (
           </div>
         </div>
         <div className="lg:w-1/2 order-1 lg:order-2">
-          <h2 className="text-optical-blue font-bold text-sm uppercase tracking-[0.3em] mb-6">Optimisation Économique</h2>
-          <h3 className="text-5xl font-black text-white mb-8 leading-tight">Payez moins. Performez mieux.</h3>
+          <h2 className="text-optical-blue font-bold text-sm uppercase tracking-[0.3em] mb-6">Le vrai problème</h2>
+          <h3 className="text-5xl font-black text-white mb-8 leading-tight">On colmate. Rarement on diagnostique.</h3>
           <p className="text-slate-400 text-lg mb-10 leading-relaxed">
-            Le marché des télécoms et des services IT est très concurrentiel. Beaucoup d'entreprises conservent des contrats inadaptés ou surdimensionnés. Nous vous aidons à reprendre le contrôle de vos dépenses, sans compromis sur la qualité.
+            Beaucoup d'entreprises enchaînent les correctifs sans jamais prendre le recul nécessaire. On change de fournisseur, on ajoute une ligne, on monte en débit — mais personne ne regarde la cause réelle du problème.
           </p>
           <ul className="space-y-6 mb-12">
             {[
-              "Audit complet de vos contrats et dépenses IT",
-              "Identification des prestations inutiles ou surdimensionnées",
-              "Recommandation d'alternatives plus adaptées et moins coûteuses"
+              "Diagnostic indépendant de votre infrastructure",
+              "Identification des causes, pas seulement des symptômes",
+              "Recommandations claires, sans conflit d'intérêt"
             ].map((text, i) => (
-              <motion.li key={i} initial={{ opacity: 0, x: -15 }} whileInView={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.1, duration: 0.4 }} viewport={{ once: true }} className="flex items-center gap-4 font-semibold text-slate-300 group">
-                <Zap className="text-optical-blue group-hover:scale-125 transition-transform" size={20} />
+              <motion.li
+                key={i}
+                initial={{ opacity: 0, x: -15 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ delay: i * 0.1, duration: 0.4 }}
+                viewport={{ once: true }}
+                className="flex items-center gap-4 font-semibold text-slate-300 group"
+              >
+                <CheckCircle className="text-optical-blue group-hover:scale-125 transition-transform" size={20} />
                 {text}
               </motion.li>
             ))}
           </ul>
-          <a href="#contact" onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }} className="glow-button inline-flex h-14 px-10 rounded-xl bg-blue-600 text-white font-bold items-center justify-center hover:bg-blue-700 transition-all">
-            Demander un audit économique
-          </a>
         </div>
       </div>
+    </div>
+  </section>
+);
+
+const WhyAegis = () => (
+  <section id="approche" className="py-32 relative overflow-hidden">
+    <FiberBeams />
+    <div className="max-w-7xl mx-auto px-6">
+      <div className="text-center max-w-3xl mx-auto mb-20">
+        <h2 className="text-optical-blue font-bold text-sm uppercase tracking-[0.3em] mb-4">Notre approche</h2>
+        <h3 className="text-4xl lg:text-5xl font-black text-white mb-6 leading-tight">
+          Un consultant indépendant.{' '}
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-violet-400">Pas un revendeur.</span>
+        </h3>
+        <p className="text-slate-400 text-lg leading-relaxed">
+          Aegis Network n'est pas un opérateur, pas un intégrateur, pas un revendeur. Nous sommes un interlocuteur unique qui travaille exclusivement dans votre intérêt.
+        </p>
+      </div>
+
+      <div className="grid md:grid-cols-3 gap-8 mb-16">
+        {[
+          {
+            icon: <ShieldCheck size={28} />,
+            title: "Aucune commission fournisseur",
+            desc: "Nous ne touchons rien de vos prestataires. Nos recommandations sont guidées uniquement par votre intérêt.",
+            color: "text-optical-blue"
+          },
+          {
+            icon: <Search size={28} />,
+            title: "Audit objectif et documenté",
+            desc: "Nous analysons l'existant sans a priori. Chaque recommandation est argumentée, chiffrée et vérifiable.",
+            color: "text-accent-violet"
+          },
+          {
+            icon: <Users size={28} />,
+            title: "Un interlocuteur unique",
+            desc: "Fini les échanges entre cinq prestataires qui se renvoient la balle. Un seul contact qui coordonne tout.",
+            color: "text-emerald-400"
+          }
+        ].map((card, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: i * 0.1, duration: 0.5 }}
+            viewport={{ once: true }}
+            className="glass-card p-10 rounded-3xl border-white/5 hover:border-blue-500/20 transition-all text-center"
+          >
+            <div className={`${card.color} mb-4 flex justify-center`}>{card.icon}</div>
+            <p className="font-bold text-white text-xl mb-3">{card.title}</p>
+            <p className="text-slate-400 leading-relaxed">{card.desc}</p>
+          </motion.div>
+        ))}
+      </div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="glass-card rounded-[2rem] p-10 lg:p-14 max-w-3xl mx-auto border-optical-blue/10 relative overflow-hidden"
+      >
+        <div className="absolute top-0 left-0 w-32 h-32 bg-blue-600/5 rounded-full blur-[40px]" />
+        <div className="relative z-10">
+          <p className="text-lg lg:text-xl text-slate-300 leading-relaxed italic mb-6">
+            « J'ai créé Aegis parce que j'ai vu trop d'entreprises payer pour des services inadaptés, sans jamais avoir quelqu'un de leur côté pour les aider à y voir clair. Mon rôle, c'est d'être ce regard extérieur, objectif et concret. »
+          </p>
+          <div className="flex items-center gap-4">
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-600 to-violet-600 flex items-center justify-center text-white font-bold text-sm">
+              AN
+            </div>
+            <div>
+              <p className="text-white font-bold">Fondateur, Aegis Network</p>
+              <p className="text-xs text-slate-500">Consultant IT indépendant — Lyon</p>
+            </div>
+          </div>
+        </div>
+      </motion.div>
     </div>
   </section>
 );
@@ -921,44 +827,148 @@ const ImpactCalculator = () => {
   );
 };
 
+const EvolutionConseil = () => (
+  <section className="py-32 relative bg-background-deep">
+    <div className="max-w-7xl mx-auto px-6">
+      <div className="grid lg:grid-cols-2 gap-20 items-center">
+        <div>
+          <h2 className="text-optical-blue font-bold text-sm uppercase tracking-[0.3em] mb-6">Accompagnement durable</h2>
+          <h3 className="text-5xl font-black text-white mb-8 leading-tight">Un accompagnement qui évolue avec votre activité.</h3>
+          <p className="text-slate-400 text-lg mb-10 leading-relaxed">
+            Un audit ponctuel, c'est bien. Un suivi régulier, c'est mieux. Vos besoins changent, le marché évolue, vos contrats arrivent à échéance. Nous restons à vos côtés pour ajuster, anticiper et optimiser dans la durée.
+          </p>
+          <div className="space-y-8">
+            {[
+              {
+                icon: <BarChart3 />,
+                title: "Revue périodique",
+                desc: "Nous réévaluons vos contrats et vos usages à intervalles réguliers pour identifier de nouveaux leviers."
+              },
+              {
+                icon: <Lightbulb />,
+                title: "Veille et recommandations",
+                desc: "Nouvelles offres, évolutions technologiques, changements réglementaires : nous vous tenons informé de ce qui compte."
+              },
+              {
+                icon: <ArrowRight />,
+                title: "Pilotage des évolutions",
+                desc: "Quand un changement s'impose, nous le cadrons, le pilotons et nous assurons qu'il se passe bien."
+              }
+            ].map((item, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ delay: i * 0.15, duration: 0.5 }}
+                viewport={{ once: true }}
+                className="flex gap-6 group"
+              >
+                <div className="shrink-0 w-12 h-12 rounded-2xl bg-blue-600/20 flex items-center justify-center text-optical-blue border border-blue-600/30 group-hover:bg-blue-600 group-hover:text-white transition-all duration-500">
+                  {item.icon}
+                </div>
+                <div>
+                  <h4 className="text-xl font-bold mb-2 text-white">{item.title}</h4>
+                  <p className="text-slate-400 leading-relaxed">{item.desc}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+        <div className="relative">
+          <div className="glass-card rounded-[3rem] p-6 shadow-2xl border-white/10 premium-glow">
+            <img
+              className="rounded-[2rem] w-full h-auto"
+              src="/img/photo-1516321318423-f06f85e504b3.jfif"
+              alt="Accompagnement professionnel"
+              loading="lazy"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+);
+
+const DiagnosticQuestions = () => {
+  const questions = [
+    "Savez-vous exactement ce que vous payez chaque mois en IT et télécom ?",
+    "Avez-vous comparé vos contrats avec les offres actuelles du marché ?",
+    "Avez-vous un interlocuteur unique pour tout ce qui touche à votre infrastructure ?",
+    "Connaissez-vous la date de fin de chacun de vos engagements ?",
+    "En cas de panne, savez-vous qui appeler et quoi exiger ?",
+    "Avez-vous déjà estimé le temps que votre équipe passe à gérer des problèmes IT ?"
+  ];
+
+  return (
+    <section id="diagnostic" className="py-32 relative overflow-hidden">
+      <FiberBeams />
+      <div className="max-w-4xl mx-auto px-6">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-optical-blue font-bold text-sm uppercase tracking-[0.3em] mb-4">Auto-diagnostic</h2>
+          <h3 className="text-4xl lg:text-5xl font-black text-white mb-6 leading-tight">
+            Ces questions vous{' '}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-violet-400">parlent ?</span>
+          </h3>
+          <p className="text-slate-400 text-lg leading-relaxed">
+            Prenez 30 secondes. Si vous répondez « non » à au moins deux de ces questions, un diagnostic pourrait vous faire gagner du temps — et de l'argent.
+          </p>
+        </motion.div>
+
+        <div className="space-y-4 mb-12">
+          {questions.map((q, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ delay: i * 0.08, duration: 0.4 }}
+              viewport={{ once: true }}
+              className="glass-card rounded-2xl p-6 border-white/5 hover:border-optical-blue/20 transition-all flex items-start gap-4"
+            >
+              <div className="shrink-0 w-8 h-8 rounded-lg bg-blue-600/15 flex items-center justify-center text-optical-blue text-sm font-bold">
+                {i + 1}
+              </div>
+              <p className="text-slate-300 font-medium leading-relaxed">{q}</p>
+            </motion.div>
+          ))}
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center"
+        >
+          <p className="text-slate-400 mb-8">Deux « non » ou plus ? Parlons-en.</p>
+          <button
+            onClick={() => scrollToSection('contact')}
+            className="glow-button h-14 px-10 rounded-xl bg-gradient-to-r from-blue-600 to-violet-600 text-white font-bold inline-flex items-center justify-center transition-all cursor-pointer"
+          >
+            Demander un diagnostic gratuit
+          </button>
+        </motion.div>
+      </div>
+    </section>
+  );
+};
+
 const CTASection = () => (
   <section className="py-32 relative">
     <div className="max-w-7xl mx-auto px-6">
-      <div className="bg-gradient-to-br from-blue-600/80 via-blue-700 to-accent-violet rounded-[3rem] p-12 lg:p-24 text-white flex flex-col lg:flex-row items-center gap-16 relative overflow-hidden premium-glow">
+      <div className="bg-gradient-to-br from-blue-600/80 via-blue-700 to-accent-violet rounded-[3rem] p-12 lg:p-24 text-white relative overflow-hidden premium-glow">
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white/10 rounded-full -mr-64 -mt-64 blur-[120px]" />
-        <div className="relative z-10 lg:w-3/5">
-          <h3 className="text-4xl lg:text-6xl font-black mb-8 leading-tight">Reprenez le contrôle de vos coûts IT.</h3>
+        <div className="relative z-10 text-center max-w-3xl mx-auto">
+          <h3 className="text-4xl lg:text-6xl font-black mb-8 leading-tight">Un premier échange, sans engagement.</h3>
           <p className="text-xl text-white/90 mb-12 leading-relaxed">
-            Demandez un audit gratuit. Nous analysons vos contrats, vos usages et vos dépenses pour identifier les marges d'optimisation concrètes.
+            Parlez-nous de votre situation. Nous vous dirons honnêtement si nous pouvons vous aider — et comment.
           </p>
           <button onClick={() => scrollToSection('contact')} className="h-16 px-10 rounded-2xl bg-white text-blue-700 font-bold text-xl hover:shadow-2xl transition-all hover:scale-105 cursor-pointer">
-            Demander mon audit gratuit
+            Prendre rendez-vous
           </button>
-        </div>
-        <div className="relative z-10 lg:w-2/5 grid grid-cols-2 gap-6">
-          <div className="bg-white/10 backdrop-blur-xl p-8 rounded-[2rem] border border-white/20">
-            <p className="text-4xl font-black mb-2 text-optical-blue">
-              <CountUp value="30" suffix="%" />
-            </p>
-            <p className="text-xs uppercase font-bold text-white/70 tracking-widest leading-relaxed">Économie moyenne constatée</p>
-          </div>
-          <div className="bg-white/10 backdrop-blur-xl p-8 rounded-[2rem] border border-white/20">
-            <p className="text-4xl font-black mb-2 text-optical-blue">
-              <CountUp value="48" suffix="h" />
-            </p>
-            <p className="text-xs uppercase font-bold text-white/70 tracking-widest leading-relaxed">Délai d'analyse initial</p>
-          </div>
-          <div className="bg-white/10 backdrop-blur-xl p-8 rounded-[2rem] border border-white/20 col-span-2">
-            <p className="text-lg font-bold mb-4">Taux de satisfaction client</p>
-            <div className="w-full bg-white/20 h-3 rounded-full overflow-hidden">
-              <motion.div
-                initial={{ width: 0 }}
-                whileInView={{ width: '98%' }}
-                transition={{ duration: 2, ease: "easeOut" }}
-                className="bg-gradient-to-r from-optical-blue to-white h-full shadow-[0_0_15px_rgba(255,255,255,0.8)]"
-              />
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -972,8 +982,8 @@ const ContactSection = () => (
       <div className="grid lg:grid-cols-2 gap-24">
         <div>
           <h2 className="text-optical-blue font-bold text-sm uppercase tracking-[0.3em] mb-6">Contact & Audit</h2>
-          <h3 className="text-5xl font-black text-white mb-10 leading-tight">Parlons de votre infrastructure.</h3>
-          <p className="text-slate-400 text-lg mb-12 leading-relaxed">Un audit, un conseil, une question sur vos contrats IT ? Nos consultants sont disponibles pour vous accompagner.</p>
+          <h3 className="text-5xl font-black text-white mb-10 leading-tight">Parlons de votre situation.</h3>
+          <p className="text-slate-400 text-lg mb-12 leading-relaxed">Un diagnostic, un conseil, une question sur vos contrats ? Nous sommes disponibles pour en discuter.</p>
           <div className="space-y-8">
             {[
               { icon: <PhoneCall />, label: "Ligne directe", value: "07 81 43 81 23", href: "tel:+33781438123" },
@@ -1118,12 +1128,13 @@ export default function App() {
       <Navbar />
       <main>
         <Hero />
-        <ValueProposition />
-        <Stats />
-        <Solutions />
-        <VoIPSection />
-        <OptimisationSection />
+        <CostControl />
+        <TimeLoss />
+        <RootCause />
+        <WhyAegis />
         <ImpactCalculator />
+        <EvolutionConseil />
+        <DiagnosticQuestions />
         <CTASection />
         <ContactSection />
       </main>
