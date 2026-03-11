@@ -135,7 +135,7 @@ const Hero = () => (
           Conseil & Optimisation IT
         </div>
         <h1 className="text-5xl lg:text-7xl font-black text-white leading-[1.05] mb-8">
-          Reprenez le contrôle <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-600 to-violet-500">de vos dépenses IT.</span>
+          Reprenez le contrôle <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-600 to-violet-500">de votre IT.</span>
         </h1>
         <p className="text-lg text-slate-400 leading-relaxed max-w-xl mb-12">
           Contrats opaques, prestataires jamais challengés, temps perdu en gestion d'incidents… Aegis Network vous aide à y voir clair, réduire vos coûts et vous recentrer sur votre activité.
@@ -207,12 +207,12 @@ const GainBlock = () => (
 
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {[
-          { icon: <TrendingDown size={22} />, title: "Coûts réduits", desc: "Contrats audités, comparés et renégociés. Vous ne payez que ce qui est utile.", color: "text-optical-blue" },
-          { icon: <Clock size={22} />, title: "Temps recentré", desc: "On gère vos prestataires et vos incidents. Vous vous concentrez sur votre activité.", color: "text-accent-violet" },
-          { icon: <Search size={22} />, title: "Fournisseurs challengés", desc: "Mise en concurrence systématique. Vous obtenez le juste prix, pas le tarif par défaut.", color: "text-emerald-400" },
-          { icon: <Users size={22} />, title: "Un interlocuteur unique", desc: "Fini les allers-retours entre opérateur, intégrateur et hébergeur. Un seul contact.", color: "text-optical-blue" },
-          { icon: <ShieldCheck size={22} />, title: "Contrats maîtrisés", desc: "Vous savez ce que vous payez, pourquoi, et jusqu'à quand. Plus de mauvaises surprises.", color: "text-accent-violet" },
-          { icon: <RefreshCw size={22} />, title: "Suivi dans la durée", desc: "Vos besoins changent, le marché évolue. On ajuste et on optimise en continu.", color: "text-emerald-400" }
+          { icon: <TrendingDown size={22} />, title: "Coûts réduits", desc: "Comparer, renégocier, mieux dimensionner.", color: "text-optical-blue" },
+          { icon: <Clock size={22} />, title: "Gain de temps", desc: "On pilote vos prestataires et on vous accompagne dans les échanges.", color: "text-accent-violet" },
+          { icon: <Search size={22} />, title: "Fournisseurs challengés", desc: "Analyse du marché pour trouver les offres les plus adaptées.", color: "text-emerald-400" },
+          { icon: <Users size={22} />, title: "Un interlocuteur unique", desc: "Fini les allers-retours. Un seul contact qui coordonne.", color: "text-optical-blue" },
+          { icon: <ShieldCheck size={22} />, title: "Contrats maîtrisés", desc: "Vous savez ce que vous payez, pourquoi, et jusqu'à quand.", color: "text-accent-violet" },
+          { icon: <RefreshCw size={22} />, title: "Suivi dans la durée", desc: "On ajuste et on optimise au fil du temps.", color: "text-emerald-400" }
         ].map((item, i) => (
           <motion.div
             key={i}
@@ -587,13 +587,12 @@ const CalcResult = ({ label, value, highlight = false }: { label: string; value:
 
 const ImpactCalculator = () => {
   const [hoursPerWeek, setHoursPerWeek] = useState(4);
-  const [recoveryRate, setRecoveryRate] = useState(40);
   const [hourlyRate, setHourlyRate] = useState(45);
   const [monthlyBudget, setMonthlyBudget] = useState(1500);
   const [showSources, setShowSources] = useState(false);
 
-  const hoursRecoveredMonth = Math.round(hoursPerWeek * (recoveryRate / 100) * 4.33 * 10) / 10;
-  const timeSavingMonth = Math.round(hoursRecoveredMonth * hourlyRate);
+  const hoursPerMonth = Math.round(hoursPerWeek * 4.33 * 10) / 10;
+  const timeSavingMonth = Math.round(hoursPerMonth * hourlyRate);
   const contractSavingMonth = Math.round(monthlyBudget * 0.20);
   const totalMonthly = timeSavingMonth + contractSavingMonth;
   const totalAnnual = totalMonthly * 12;
@@ -638,20 +637,12 @@ const ImpactCalculator = () => {
 
             <div className="space-y-6">
               <CalcSlider
-                label="Heures / semaine en gestion IT"
+                label="Heures par semaine consacrées à la gestion de votre informatique"
                 value={hoursPerWeek}
                 onChange={setHoursPerWeek}
                 min={1} max={20} step={1}
                 unit="h"
-                note="Appels SAV, relances prestataires, coordination, suivi d'incidents."
-              />
-              <CalcSlider
-                label="Part récupérable avec meilleur cadrage"
-                value={recoveryRate}
-                onChange={setRecoveryRate}
-                min={10} max={70} step={5}
-                unit="%"
-                note="Temps que vous pourriez réinvestir dans votre activité."
+                note="Relances prestataires, coordination, suivi, échanges opérateurs."
               />
               <CalcSlider
                 label="Coût horaire interne estimé"
@@ -662,12 +653,12 @@ const ImpactCalculator = () => {
                 note="Valeur d'une heure de votre temps ou de votre équipe."
               />
               <CalcSlider
-                label="Budget IT & télécom mensuel"
+                label="Budget IT et télécoms mensuel"
                 value={monthlyBudget}
                 onChange={setMonthlyBudget}
                 min={200} max={10000} step={100}
                 unit="€"
-                note="Total mensuel : abonnements, licences, maintenance, téléphonie."
+                note="Abonnements, licences, maintenance, téléphonie."
               />
             </div>
           </motion.div>
@@ -690,12 +681,12 @@ const ImpactCalculator = () => {
             </div>
 
             <div className="space-y-5 relative z-10">
-              <CalcResult label="Heures récupérées / mois" value={`${hoursRecoveredMonth}h`} />
-              <CalcResult label="Valeur du temps recentré" value={`+${fmt(timeSavingMonth)}€ /mois`} highlight />
+              <CalcResult label="Temps consacré à l'IT / mois" value={`${hoursPerMonth}h`} />
+              <CalcResult label="Coût du temps mobilisé" value={`${fmt(timeSavingMonth)}€ /mois`} highlight />
 
               <div className="border-t border-white/5 my-2" />
 
-              <CalcResult label="Économies contrats estimées" value={`+${fmt(contractSavingMonth)}€ /mois`} highlight />
+              <CalcResult label="Économies contrats potentielles" value={`+${fmt(contractSavingMonth)}€ /mois`} highlight />
 
               <div className="border-t border-white/10 pt-4 mt-4">
                 <div className="text-center">
@@ -739,9 +730,9 @@ const ImpactCalculator = () => {
                     <li className="flex items-start gap-2">
                       <span className="text-optical-blue font-bold shrink-0">¹</span>
                       <span>
-                        Le temps de gestion IT inclut les appels au support, les relances prestataires,
-                        le suivi de tickets et la coordination interne. La part récupérable dépend de
-                        la qualité du cadrage et de l'accompagnement mis en place.
+                        Le temps de gestion IT inclut les relances prestataires,
+                        le suivi de tickets, la coordination interne et les échanges opérateurs.
+                        Le simulateur affiche le coût total de ce temps mobilisé chaque mois.
                       </span>
                     </li>
                     <li className="flex items-start gap-2">

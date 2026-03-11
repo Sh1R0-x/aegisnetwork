@@ -147,7 +147,7 @@ Ne jamais modifier ces informations sans validation explicite.
 ## Statistiques et sources
 
 - **Chiffres sourcés** (France Num 2025, BEREC 2022, SDI 2023, Cybermalveillance 2025) intégrés dans CostControl, TimeLoss et ImpactCalculator
-- **Hypothèses du simulateur** : 4 curseurs (heures/semaine, part récupérable, coût horaire, budget IT mensuel), layout 2 colonnes, pas de mode prudent/réaliste/ambitieux, hypothèse 20 % d’économie contrats
+- **Hypothèses du simulateur** : 3 curseurs (heures/semaine en gestion IT, coût horaire interne, budget IT mensuel), layout 2 colonnes, hypothèse 20 % d'économie contrats
 - Ne jamais présenter une hypothèse du simulateur comme un fait sourcé
 
 ## Elements.tsx (UI Kit)
