@@ -166,20 +166,22 @@ const Hero = () => (
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.45, duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
-          className="flex flex-wrap gap-4"
+          className="flex flex-col gap-4 sm:items-start"
         >
-          <button onClick={() => scrollToSection('diagnostic')} className="glow-button h-14 px-8 rounded-xl bg-gradient-to-r from-blue-600 to-accent-violet text-white font-bold text-lg flex items-center justify-center gap-3 cursor-pointer">
+          <button onClick={() => scrollToSection('diagnostic')} className="glow-button h-14 px-10 rounded-xl bg-gradient-to-r from-blue-600 to-accent-violet text-white font-bold text-lg flex items-center justify-center gap-3 cursor-pointer w-full sm:w-auto">
             Faites votre diagnostic
             <Activity size={20} />
           </button>
-          <button onClick={() => scrollToSection('gains')} className="h-14 px-7 rounded-xl bg-emerald-500/15 border border-emerald-500/25 text-emerald-400 font-bold text-base flex items-center justify-center gap-2 hover:bg-emerald-500/25 hover:border-emerald-400/40 transition-all backdrop-blur-sm cursor-pointer">
-            Vos gains
-            <ArrowRight size={18} />
-          </button>
-          <button onClick={() => scrollToSection('simulateur')} className="h-14 px-7 rounded-xl bg-sky-500/15 border border-sky-500/25 text-sky-300 font-bold text-base flex items-center justify-center gap-2 hover:bg-sky-500/25 hover:border-sky-400/40 transition-all backdrop-blur-sm cursor-pointer">
-            Faites une simulation
-            <BarChart3 size={18} />
-          </button>
+          <div className="flex flex-wrap gap-3">
+            <button onClick={() => scrollToSection('gains')} className="h-11 px-6 rounded-lg bg-white/5 border border-white/10 text-slate-300 font-semibold text-sm flex items-center justify-center gap-2 hover:bg-white/10 hover:text-white transition-all backdrop-blur-sm cursor-pointer">
+              Vos gains
+              <ArrowRight size={15} />
+            </button>
+            <button onClick={() => scrollToSection('simulateur')} className="h-11 px-6 rounded-lg bg-white/5 border border-white/10 text-slate-300 font-semibold text-sm flex items-center justify-center gap-2 hover:bg-white/10 hover:text-white transition-all backdrop-blur-sm cursor-pointer">
+              Simuler vos économies
+              <BarChart3 size={15} />
+            </button>
+          </div>
         </motion.div>
       </div>
 
@@ -939,49 +941,49 @@ const EvolutionConseil = () => (
 const DIAG_QUESTIONS = [
   {
     id: 1,
-    question: "Votre environnement est-il vraiment adapté à votre activité ?",
+    question: "Votre environnement IT correspond-il à vos besoins actuels ?",
     options: [
       { id: 'A', label: "Oui, il répond bien à nos besoins", score: 20 },
-      { id: 'B', label: "Globalement oui, avec quelques limites", score: 14 },
-      { id: 'C', label: "Pas complètement, certains points nous freinent", score: 7 },
-      { id: 'D', label: "Non, il n'est clairement pas adapté", score: 0 },
+      { id: 'B', label: "Globalement, avec quelques limites", score: 14 },
+      { id: 'C', label: "Pas vraiment, certains points nous freinent", score: 7 },
+      { id: 'D', label: "Non, il n'est pas adapté", score: 0 },
     ],
   },
   {
     id: 2,
-    question: "Perdez-vous du temps à cause de votre réseau, téléphonie ou outils IT ?",
+    question: "Perdez-vous du temps à cause de vos outils, de votre réseau ou de votre téléphonie ?",
     options: [
       { id: 'A', label: "Non, très rarement", score: 20 },
-      { id: 'B', label: "Parfois, mais cela reste limité", score: 14 },
-      { id: 'C', label: "Oui, cela arrive régulièrement", score: 7 },
-      { id: 'D', label: "Oui, c'est un vrai sujet au quotidien", score: 0 },
+      { id: 'B', label: "Parfois, mais ça reste limité", score: 14 },
+      { id: 'C', label: "Oui, régulièrement", score: 7 },
+      { id: 'D', label: "Oui, c'est un vrai problème au quotidien", score: 0 },
     ],
   },
   {
     id: 3,
-    question: "Avec vos prestataires, les sujets avancent-ils clairement et rapidement ?",
+    question: "Les sujets avancent-ils bien avec vos prestataires IT ?",
     options: [
-      { id: 'A', label: "Oui, échanges clairs et sujets qui avancent", score: 20 },
+      { id: 'A', label: "Oui, les échanges sont clairs et efficaces", score: 20 },
       { id: 'B', label: "Globalement, même si certains sujets traînent", score: 14 },
       { id: 'C', label: "Pas toujours, il faut souvent relancer", score: 7 },
-      { id: 'D', label: "Non, trop lent et trop flou", score: 0 },
+      { id: 'D', label: "Non, c'est trop lent ou trop flou", score: 0 },
     ],
   },
   {
     id: 4,
-    question: "Vos contrats et services sont-ils réellement challengés par rapport à votre besoin ?",
+    question: "Vos contrats IT sont-ils régulièrement revus et challengés ?",
     options: [
       { id: 'A', label: "Oui, on revoit régulièrement ce qu'on paie", score: 20 },
       { id: 'B', label: "De temps en temps, sans méthode précise", score: 14 },
       { id: 'C', label: "Rarement, on garde l'existant par habitude", score: 7 },
-      { id: 'D', label: "Non, on ne le challenge presque jamais", score: 0 },
+      { id: 'D', label: "Non, presque jamais", score: 0 },
     ],
   },
   {
     id: 5,
-    question: "Si un incident important survient, l'impact sur votre activité resterait-il maîtrisable ?",
+    question: "En cas d'incident IT majeur, l'impact sur votre activité resterait-il gérable ?",
     options: [
-      { id: 'A', label: "Oui, impact limité et gérable", score: 20 },
+      { id: 'A', label: "Oui, l'impact serait limité", score: 20 },
       { id: 'B', label: "Probablement, avec une gêne temporaire", score: 14 },
       { id: 'C', label: "Ce serait vite problématique", score: 7 },
       { id: 'D', label: "Ce serait un blocage important", score: 0 },
@@ -1457,6 +1459,22 @@ const ContactSection = ({ diagResult, contactMode }: { diagResult: DiagResult | 
     setMode(contactMode);
   }, [contactMode]);
 
+  useEffect(() => {
+    if (diagResult) {
+      const summary = [
+        `Diagnostic Express complété — Score : ${diagResult.score}/100`,
+        `Niveau : ${diagResult.level}`,
+        diagResult.points.length > 0 ? `Points d'attention : ${diagResult.points.map(p => p.label).join(' · ')}` : '',
+        `Priorité : ${diagResult.priority}`,
+        '',
+        '---',
+        '',
+      ].filter(Boolean).join('\n');
+      setFormData(prev => ({ ...prev, message: summary }));
+      setMode('message');
+    }
+  }, [diagResult]);
+
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
@@ -1525,8 +1543,8 @@ const ContactSection = ({ diagResult, contactMode }: { diagResult: DiagResult | 
               >
                 <Activity className="w-5 h-5 text-optical-blue shrink-0 mt-0.5" />
                 <div>
-                  <p className="text-sm font-bold text-white mb-1">Diagnostic complété — {diagResult.score}/100</p>
-                  <p className="text-xs text-slate-400">{diagResult.level}. Vos résultats seront joints à votre demande.</p>
+                  <p className="text-sm font-bold text-white mb-1">Diagnostic complété — Score : {diagResult.score}/100</p>
+                  <p className="text-xs text-slate-400">{diagResult.level}. Le résumé a été ajouté à votre message.</p>
                 </div>
               </motion.div>
             )}
