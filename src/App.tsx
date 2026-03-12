@@ -75,10 +75,10 @@ const Navbar = () => {
         <div className="flex items-center gap-3">
           <AegisLogo className="w-9 h-9" />
           <div className="flex flex-col">
-            <h1 className="text-lg font-black tracking-[0.15em] text-white leading-none">
+            <h1 className="text-lg font-black tracking-[0.08em] text-white leading-none">
               AEGIS <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-violet-400">NETWORK</span>
             </h1>
-            <span className="text-[8px] uppercase tracking-[0.25em] text-slate-500 font-bold mt-0.5">Conseil & Optimisation IT</span>
+            <span className="text-[8px] uppercase tracking-[0.25em] text-slate-300 font-bold mt-0.5">Conseil & Optimisation IT</span>
           </div>
         </div>
         <div className="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-400">
@@ -143,8 +143,10 @@ const Hero = () => (
           className="text-4xl md:text-5xl lg:text-7xl font-black text-white leading-[1.05] mb-8"
         >
           Reprenez le{' '}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-600 to-violet-500">contrôle</span>
-          {' '}de votre infrastructure IT.
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-600 to-violet-500">contrôle</span>,
+          <br className="hidden lg:block" />
+          {' '}devenez plus{' '}
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-blue-400">performant</span>.
         </motion.h1>
 
         <motion.p
@@ -153,7 +155,7 @@ const Hero = () => (
           transition={{ delay: 0.3, duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
           className="text-lg text-slate-400 leading-relaxed max-w-xl mb-12"
         >
-          Contrats opaques, prestataires jamais challengés, temps perdu en gestion d'incidents. Aegis Network vous aide à y voir clair, réduire vos coûts et vous recentrer sur votre activité.
+          Contrats opaques, prestataires jamais challengés, temps perdu en gestion d'incidents. AEGIS NETWORK vous aide à y voir clair, réduire vos coûts et vous recentrer sur votre activité.
         </motion.p>
 
         <motion.div
@@ -166,8 +168,8 @@ const Hero = () => (
             Demander un diagnostic gratuit
             <Zap size={20} />
           </button>
-          <button onClick={() => scrollToSection('approche')} className="h-14 px-8 rounded-xl bg-white/5 border border-white/10 text-white font-bold text-lg flex items-center justify-center gap-2 hover:bg-white/10 transition-all backdrop-blur-sm cursor-pointer">
-            Notre approche
+          <button onClick={() => scrollToSection('gains')} className="h-14 px-8 rounded-xl bg-white/5 border border-white/10 text-white font-bold text-lg flex items-center justify-center gap-2 hover:bg-white/10 transition-all backdrop-blur-sm cursor-pointer">
+            Voir vos gains concrets
             <ArrowRight size={18} />
           </button>
         </motion.div>
@@ -255,7 +257,7 @@ const Hero = () => (
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20"
         >
           <div className="animate-float" style={{ animationDelay: '3s' }}>
-            <div className="bg-slate-900/90 backdrop-blur-xl border border-optical-blue/30 p-4 lg:p-5 rounded-xl shadow-[0_0_40px_rgba(56,189,248,0.15)] flex items-center gap-4">
+            <div className="audit-scan-card bg-slate-900/90 backdrop-blur-xl border border-optical-blue/30 p-4 lg:p-5 rounded-xl shadow-[0_0_40px_rgba(56,189,248,0.15)] flex items-center gap-4">
               <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-lg bg-blue-600/20 flex items-center justify-center text-optical-blue border border-blue-600/25">
                 <Search className="w-5 h-5 lg:w-6 lg:h-6" />
               </div>
@@ -1156,10 +1158,10 @@ const Footer = () => {
             <div className="flex items-center gap-3">
               <AegisLogo className="w-8 h-8" />
               <div className="flex flex-col">
-                <span className="text-lg font-black tracking-[0.15em] text-white leading-none">
+                <span className="text-lg font-black tracking-[0.08em] text-white leading-none">
                   AEGIS <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-violet-400">NETWORK</span>
                 </span>
-                <span className="text-[8px] uppercase tracking-[0.25em] text-slate-500 font-bold mt-0.5">Conseil & Optimisation IT</span>
+                <span className="text-[8px] uppercase tracking-[0.25em] text-slate-300 font-bold mt-0.5">Conseil & Optimisation IT</span>
               </div>
             </div>
             <div className="flex gap-8 text-xs font-bold text-slate-500 uppercase tracking-widest">

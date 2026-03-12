@@ -69,9 +69,13 @@ Le Hero est un composant critique du site. Voici sa structure complète :
 
 **Colonne gauche (texte) :**
 - Tag animé « Conseil & Optimisation IT » avec dot ping
-- Titre `text-4xl md:text-5xl lg:text-7xl`, mot « contrôle » en gradient `blue-400 → blue-600 → violet-500`
+- Titre « Reprenez le contrôle, devenez plus performant. » — `text-4xl md:text-5xl lg:text-7xl`
+  - « contrôle » en gradient `blue-400 → blue-600 → violet-500`
+  - « performant » en gradient `violet-400 → blue-400`
+  - Line break `<br>` entre les deux parties en `lg:`
+- Nom de marque en majuscules dans le body text : « AEGIS NETWORK »
 - Sous-titre `text-lg text-slate-400`, max-w-xl
-- Deux CTA : `glow-button` (diagnostic) + bouton secondaire (approche)
+- Deux CTA : `glow-button` « Demander un diagnostic gratuit » + secondaire « Voir vos gains concrets » (→ #gains)
 - Entrées Framer Motion en cascade : delay 0 → 0.15 → 0.3 → 0.45
 
 **Colonne droite (image + KPI) :**
@@ -81,10 +85,11 @@ Le Hero est un composant critique du site. Voici sa structure complète :
 - 3 cartes KPI flottantes, positionnées en absolute :
   - **Réduction Coûts** (haut-gauche) : icône TrendingDown, `-30%`, entrée `x: -20`
   - **Efficacité Réseau** (bas-droite) : icône Zap `text-emerald-400`, `+45%`, entrée `x: 20`
-  - **Audit de Performance** (centre) : icône Search, badge bleu glow, entrée `scale: 0.9`
+  - **Audit de Performance** (centre) : icône Search, badge bleu glow, entrée `scale: 0.9`, scan line CSS (`audit-scan-card`)
 
 **KPI cards :**
 - Classe CSS `.hero-kpi-card` pour shimmer (keyframe `kpi-sweep`, 6s, CSS pur)
+- Classe CSS `.audit-scan-card` pour effet scan vertical (keyframe `audit-scan`, 5s, CSS pur)
 - Glass effect : `bg-slate-900/80 backdrop-blur-xl border-white/10`
 - Tailles responsives : padding `p-4 lg:p-5`, largeur `w-40 lg:w-48` / `w-44 lg:w-52`
 - Animation float CSS (`animate-float`) avec delays échelonnés (0s, 1.5s, 3s)
@@ -104,11 +109,11 @@ Le Hero est un composant critique du site. Voici sa structure complète :
 - Image hero en `fetchPriority="high"` + preload dans index.html
 - Animations continues (float, shimmer, glows) : CSS keyframes = GPU composité
 - Entrées one-shot : Framer Motion (JS) — se déclenche une seule fois
-- `prefers-reduced-motion` : toutes les animations CSS désactivées dont `.hero-kpi-card::after`
+- `prefers-reduced-motion` : toutes les animations CSS désactivées dont `.hero-kpi-card::after`, `.audit-scan-card::after`
 
 **Fichiers concernés :**
 - `src/App.tsx` : composant Hero (~160 lignes)
-- `src/index.css` : `@keyframes kpi-sweep`, `.hero-kpi-card`, `.hero-kpi-card::after`, `@keyframes hero-glow-drift`, float, fiber-beam
+- `src/index.css` : `@keyframes kpi-sweep`, `@keyframes audit-scan`, `.hero-kpi-card`, `.audit-scan-card`, `@keyframes hero-glow-drift`, float, fiber-beam
 - `index.html` : `<link rel="preload">` pour l'image hero
 - `stitch/header/app/page.tsx` : référence design (lecture seule)
 

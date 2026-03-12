@@ -91,9 +91,9 @@ export default function Home() {
       </header>
 
       <div className="relative z-20 max-w-7xl mx-auto px-6 lg:px-20 py-32 w-full grid lg:grid-cols-[1.2fr_0.8fr] gap-12 lg:gap-20 items-center">
-        
+
         {/* Left Content */}
-        <motion.div 
+        <motion.div
           className="flex flex-col gap-8"
           variants={containerVariants}
           initial="hidden"
@@ -150,7 +150,7 @@ export default function Home() {
         {/* Right Content - Visual & KPIs */}
         <div className="relative hidden md:block h-[400px] md:h-[450px] lg:h-[550px] w-full">
           {/* Main Image Container */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
@@ -169,14 +169,14 @@ export default function Home() {
           </motion.div>
 
           {/* KPI Card 1: Costs */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
             className="absolute top-12 -left-12 bg-slate-900/80 backdrop-blur-xl border border-white/10 p-6 rounded-xl shadow-2xl flex flex-col gap-1 w-52 z-30 overflow-hidden"
           >
             {/* Light Sweep Animation */}
-            <motion.div 
+            <motion.div
               style={{ willChange: "transform" }}
               animate={{ x: ['-100%', '200%'] }}
               transition={{ duration: 2, repeat: Infinity, repeatDelay: 4, ease: "easeInOut", delay: 0.5 }}
@@ -188,24 +188,24 @@ export default function Home() {
             </div>
             <span className="relative z-10 text-4xl font-black text-white">-30%</span>
             <div className="relative z-10 w-full bg-white/5 h-1.5 rounded-full mt-3 overflow-hidden">
-              <motion.div 
+              <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: "30%" }}
                 transition={{ duration: 1.5, delay: 1, ease: "easeOut" }}
-                className="bg-blue-400 h-full rounded-full" 
+                className="bg-blue-400 h-full rounded-full"
               />
             </div>
           </motion.div>
 
           {/* KPI Card 2: Efficiency */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
             className="absolute bottom-24 -right-8 bg-slate-900/80 backdrop-blur-xl border border-white/10 p-6 rounded-xl shadow-2xl flex flex-col gap-1 w-56 z-30 overflow-hidden"
           >
             {/* Light Sweep Animation */}
-            <motion.div 
+            <motion.div
               animate={{ x: ['-100%', '200%'] }}
               transition={{ duration: 2, repeat: Infinity, repeatDelay: 4, ease: "easeInOut", delay: 2.5 }}
               className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent -skew-x-12 z-0"
@@ -216,24 +216,24 @@ export default function Home() {
             </div>
             <span className="relative z-10 text-4xl font-black text-white">+45%</span>
             <div className="relative z-10 w-full bg-white/5 h-1.5 rounded-full mt-3 overflow-hidden">
-              <motion.div 
+              <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: "45%" }}
                 transition={{ duration: 1.5, delay: 1.2, ease: "easeOut" }}
-                className="bg-emerald-500 h-full rounded-full" 
+                className="bg-emerald-500 h-full rounded-full"
               />
             </div>
           </motion.div>
 
           {/* KPI Card 3: Center Badge */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.8 }}
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-slate-900/90 backdrop-blur-2xl border border-blue-500/40 p-5 rounded-xl shadow-[0_0_50px_rgba(59,130,246,0.2)] flex items-center gap-4 z-30 w-max overflow-hidden"
           >
             {/* Scanner Animation */}
-            <motion.div 
+            <motion.div
               animate={{ y: ['-100%', '200%'] }}
               transition={{ duration: 2.5, repeat: Infinity, ease: "linear" }}
               className="absolute left-0 right-0 h-[2px] bg-blue-400/50 shadow-[0_0_15px_rgba(59,130,246,0.8)] z-0"

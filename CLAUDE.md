@@ -94,8 +94,8 @@ Ne jamais modifier ces informations sans validation explicite.
 - **Optical Blue** : `#3b82f6` — couleur primaire, accents, glows
 - **Deep Background** : `#020617` — fond principal (slate-950)
 - **Accent Violet** : `#7c3aed` — couleur secondaire, dégradés
-- **Tracking logo** : `0.15em` pour "AEGIS NETWORK"
-- **Tracking baseline** : `0.25em` pour "Conseil & Optimisation IT"
+- **Tracking logo** : `0.08em` pour "AEGIS NETWORK" (navbar + footer)
+- **Tracking baseline** : `0.25em` pour "Conseil & Optimisation IT" (text-slate-300)
 - **Typo titres** : Inter Black (900), tracking-tighter
 - **Effets** : glassmorphism, premium-glow, glow-button, fiber beams, float
 - **Ton visuel** : premium, technologique, sobre, pas cyberpunk
@@ -142,8 +142,9 @@ Ne jamais modifier ces informations sans validation explicite.
 - Hero float : amplitude réduite (8px / 8s) pour confort visuel, delays échelonnés (0s, 1.5s, 3s)
 - Hero KPI cards : entrées directionnelles Framer Motion (x:-20 gauche, x:20 droite, scale centre)
 - Hero KPI shimmer : CSS `.hero-kpi-card::after` avec keyframe `kpi-sweep` (6s, GPU composité)
-- CSS keyframes pour fiber beams, float, pulse-slow, hero-glow-drift, kpi-sweep
-- `prefers-reduced-motion` respecté (désactive toutes les animations CSS dont `.hero-kpi-card::after`)
+- Hero badge Audit : CSS `.audit-scan-card::after` avec keyframe `audit-scan` (5s, scan vertical subtil)
+- CSS keyframes pour fiber beams, float, pulse-slow, hero-glow-drift, kpi-sweep, audit-scan
+- `prefers-reduced-motion` respecté (désactive toutes les animations CSS dont `.hero-kpi-card::after`, `.audit-scan-card::after`)
 
 ## Statistiques et sources
 
