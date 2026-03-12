@@ -302,6 +302,27 @@ html {
   transform: translateY(-2px);
 }
 
+  /* Diagnostic container */
+  .diagnostic-container {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .diagnostic-container::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(
+      135deg,
+      rgba(56, 189, 248, 0.04) 0%,
+      transparent 40%,
+      transparent 60%,
+      rgba(124, 58, 237, 0.04) 100%
+    );
+    pointer-events: none;
+  }
+
 /* === Reduced motion === */
 @media (prefers-reduced-motion: reduce) {
   .animate-hero-glow-1,

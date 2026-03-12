@@ -20,10 +20,11 @@ import {
   ArrowRight,
   RefreshCw,
   AlertTriangle,
-  RotateCcw
+  RotateCcw,
+  Download,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type ChangeEvent, type FormEvent } from 'react';
 import { AegisLogo } from './components/AegisLogo';
 
 const FiberBeams = () => (
@@ -165,15 +166,19 @@ const Hero = () => (
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.45, duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
-          className="flex flex-wrap gap-5"
+          className="flex flex-wrap gap-4"
         >
-          <button onClick={() => scrollToSection('contact')} className="glow-button h-14 px-8 rounded-xl bg-gradient-to-r from-blue-600 to-accent-violet text-white font-bold text-lg flex items-center justify-center gap-3 cursor-pointer">
-            Demander un diagnostic gratuit
-            <Zap size={20} />
+          <button onClick={() => scrollToSection('diagnostic')} className="glow-button h-14 px-8 rounded-xl bg-gradient-to-r from-blue-600 to-accent-violet text-white font-bold text-lg flex items-center justify-center gap-3 cursor-pointer">
+            Faites votre diagnostic
+            <Activity size={20} />
           </button>
-          <button onClick={() => scrollToSection('gains')} className="h-14 px-8 rounded-xl bg-white/5 border border-white/10 text-white font-bold text-lg flex items-center justify-center gap-2 hover:bg-white/10 transition-all backdrop-blur-sm cursor-pointer">
-            Voir vos gains concrets
+          <button onClick={() => scrollToSection('gains')} className="h-14 px-7 rounded-xl bg-white/5 border border-white/10 text-white font-bold text-base flex items-center justify-center gap-2 hover:bg-white/10 transition-all backdrop-blur-sm cursor-pointer">
+            Vos gains
             <ArrowRight size={18} />
+          </button>
+          <button onClick={() => scrollToSection('simulateur')} className="h-14 px-7 rounded-xl bg-white/5 border border-white/10 text-white font-bold text-base flex items-center justify-center gap-2 hover:bg-white/10 transition-all backdrop-blur-sm cursor-pointer">
+            Faites une simulation
+            <BarChart3 size={18} />
           </button>
         </motion.div>
       </div>
@@ -1066,7 +1071,48 @@ const computeResult = (answers: Record<number, { id: string; score: number }>): 
   };
 };
 
-const DiagnosticExpress = () => {
+const exportDiagPDF = (result: DiagResult) => {
+  const scoreColor = result.score >= 80 ? '#34d399' : result.score >= 60 ? '#38bdf8' : result.score >= 40 ? '#fbbf24' : '#fb7185';
+  const html = `<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><title>Diagnostic Express — Aegis Network</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#fff;color:#1e293b;padding:48px}
+.header{display:flex;align-items:center;gap:12px;margin-bottom:32px;padding-bottom:24px;border-bottom:2px solid #e2e8f0}
+.header h1{font-size:20px;font-weight:900;color:#0f172a;letter-spacing:0.05em}
+.header span{display:block;font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.15em;margin-top:4px}
+.score-section{display:flex;align-items:center;gap:32px;margin:32px 0}
+.score-circle{width:100px;height:100px;border-radius:50%;border:3px solid ${scoreColor};display:flex;flex-direction:column;align-items:center;justify-content:center}
+.score-value{font-size:36px;font-weight:900;color:${scoreColor}}
+.score-label{font-size:9px;color:#94a3b8;text-transform:uppercase;letter-spacing:0.1em}
+.level{font-size:22px;font-weight:900;color:#0f172a;margin-bottom:8px}
+.interpretation{font-size:14px;color:#475569;line-height:1.6}
+h3{font-size:13px;font-weight:700;color:#0f172a;text-transform:uppercase;letter-spacing:0.1em;margin:28px 0 12px}
+.point{display:flex;align-items:flex-start;gap:10px;padding:12px 16px;border-radius:12px;margin-bottom:8px;font-size:13px;line-height:1.5}
+.point.warning{background:#fef3c7;color:#92400e}
+.point.danger{background:#fee2e2;color:#991b1b}
+.priority{padding:16px 20px;border-radius:12px;background:#eff6ff;color:#1e40af;font-size:13px;line-height:1.6}
+.footer{margin-top:40px;padding-top:20px;border-top:1px solid #e2e8f0;font-size:11px;color:#94a3b8;display:flex;justify-content:space-between}
+@media print{body{padding:24px}}
+</style></head><body>
+<div class="header"><div><h1>AEGIS NETWORK</h1><span>Diagnostic Express — Résultat</span></div></div>
+<div class="score-section"><div class="score-circle"><div class="score-value">${result.score}</div><div class="score-label">sur 100</div></div>
+<div><div class="level">${result.level}</div><div class="interpretation">${result.interpretation}</div></div></div>
+<h3>Points d'attention</h3>
+${result.points.map(p => `<div class="point ${p.type}"><span>⚠</span><span>${p.label}</span></div>`).join('')}
+<h3>Priorité recommandée</h3>
+<div class="priority">${result.priority}</div>
+<div class="footer"><span>Aegis Network — Conseil &amp; Optimisation IT</span><span>07 81 43 81 23 · contact@aegisnetwork.fr</span></div>
+</body></html>`;
+  const w = window.open('', '_blank');
+  if (w) {
+    w.document.write(html);
+    w.document.close();
+    w.print();
+  }
+};
+
+const DiagnosticExpress = ({ onComplete, onContact }: { onComplete: (r: DiagResult) => void; onContact: () => void }) => {
   const [step, setStep] = useState<'intro' | 'quiz' | 'result'>('intro');
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<number, { id: string; score: number }>>({});
@@ -1087,6 +1133,7 @@ const DiagnosticExpress = () => {
     } else {
       const r = computeResult(answers);
       setResult(r);
+      onComplete(r);
       setStep('result');
     }
   };
@@ -1128,10 +1175,12 @@ const DiagnosticExpress = () => {
   };
 
   return (
-    <section id="diagnostic" className="py-32 relative overflow-hidden">
-      <FiberBeams />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-blue-600/[0.04] blur-[150px] rounded-full pointer-events-none" />
+    <section id="diagnostic" className="py-32 relative">
+      {/* Solid background isolation — prevents FiberBeams/effects from parent sections bleeding through */}
+      <div className="absolute inset-0 bg-background-deep" />
+      <div className="absolute inset-0 bg-gradient-to-b from-blue-600/[0.03] via-transparent to-accent-violet/[0.03]" />
       <div className="max-w-4xl mx-auto px-6 relative z-10">
+        <div className="diagnostic-container rounded-3xl border border-white/[0.08] bg-slate-950/80 backdrop-blur-2xl p-8 md:p-12 shadow-[0_0_60px_-15px_rgba(56,189,248,0.08)]">
 
         {/* ── INTRO ── */}
         {step === 'intro' && (
@@ -1340,23 +1389,31 @@ const DiagnosticExpress = () => {
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button
-                onClick={() => scrollToSection('contact')}
+                onClick={onContact}
                 className="glow-button h-14 px-8 rounded-xl bg-gradient-to-r from-blue-600 to-accent-violet text-white font-bold text-base flex items-center justify-center gap-3 cursor-pointer"
               >
                 Échanger sur vos résultats
                 <ArrowRight size={18} />
               </button>
               <button
-                onClick={handleReset}
+                onClick={() => exportDiagPDF(result)}
                 className="h-14 px-8 rounded-xl bg-white/5 border border-white/10 text-white font-bold text-base flex items-center justify-center gap-2 hover:bg-white/10 transition-all cursor-pointer"
               >
+                <Download size={16} />
+                Télécharger le résumé
+              </button>
+              <button
+                onClick={handleReset}
+                className="h-14 px-8 rounded-xl bg-white/5 border border-white/10 text-slate-400 font-bold text-base flex items-center justify-center gap-2 hover:bg-white/10 hover:text-white transition-all cursor-pointer"
+              >
                 <RotateCcw size={16} />
-                Refaire le diagnostic
+                Refaire
               </button>
             </div>
           </motion.div>
         )}
 
+        </div>
       </div>
     </section>
   );
@@ -1385,79 +1442,232 @@ const CTASection = () => (
   </section>
 );
 
-const ContactSection = () => (
-  <section id="contact" className="py-32 relative bg-background-deep overflow-hidden">
-    <FiberBeams />
-    <div className="max-w-7xl mx-auto px-6 relative z-10">
-      <div className="grid lg:grid-cols-2 gap-24">
-        <div>
-          <h2 className="text-optical-blue font-bold text-sm uppercase tracking-[0.3em] mb-6">Contact & Audit</h2>
-          <h3 className="text-5xl font-black text-white mb-10 leading-tight">Parlons de votre situation.</h3>
-          <p className="text-slate-400 text-lg mb-8 leading-relaxed">Un diagnostic, un conseil, une question sur vos contrats ? Nous sommes disponibles pour en discuter.</p>
-          <div className="flex flex-wrap gap-3 mb-12">
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-600/10 border border-blue-600/20 text-sm text-slate-300">
-              <CheckCircle size={14} className="text-optical-blue" /> Premier échange gratuit
-            </span>
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-600/10 border border-blue-600/20 text-sm text-slate-300">
-              <MapPin size={14} className="text-optical-blue" /> Lyon · Ain · Isère
-            </span>
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-600/10 border border-blue-600/20 text-sm text-slate-300">
-              <Users size={14} className="text-optical-blue" /> Disponible en visio
-            </span>
-          </div>
-          <div className="space-y-8">
-            {[
-              { icon: <PhoneCall />, label: "Ligne directe", value: "07 81 43 81 23", href: "tel:+33781438123" },
-              { icon: <Mail />, label: "Email", value: "contact@aegisnetwork.fr", href: "mailto:contact@aegisnetwork.fr" },
-              { icon: <MapPin />, label: "Centre Opérationnel", value: "Lyon, France", href: undefined }
-            ].map((item, i) => (
-              <div key={i} className="flex items-center gap-6 group">
-                <div className="w-14 h-14 rounded-2xl bg-blue-600/20 flex items-center justify-center text-optical-blue border border-blue-600/20 shadow-lg group-hover:bg-blue-600 group-hover:text-white transition-all">
-                  {item.icon}
-                </div>
+const ContactSection = ({ diagResult, contactMode }: { diagResult: DiagResult | null; contactMode: 'callback' | 'message' }) => {
+  const [mode, setMode] = useState<'callback' | 'message'>(contactMode);
+  const [formData, setFormData] = useState({
+    name: '',
+    company: '',
+    email: '',
+    phone: '',
+    message: '',
+  });
+  const [submitted, setSubmitted] = useState(false);
+
+  useEffect(() => {
+    setMode(contactMode);
+  }, [contactMode]);
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+
+    const payload = {
+      type: mode,
+      name: formData.name,
+      email: formData.email,
+      ...(formData.phone ? { phone: formData.phone } : {}),
+      ...(formData.company ? { company: formData.company } : {}),
+      ...(formData.message ? { message: formData.message } : {}),
+      ...(diagResult ? {
+        diagnostic: {
+          score: diagResult.score,
+          level: diagResult.level,
+          points: diagResult.points.map(p => p.label),
+          priority: diagResult.priority,
+        }
+      } : {}),
+    };
+
+    // TODO: Replace with actual endpoint (serverless function, Formspree, etc.)
+    // Structured payload is ready — see console for preview
+    console.log('[Aegis Contact]', JSON.stringify(payload, null, 2));
+
+    const subject = encodeURIComponent(
+      mode === 'callback'
+        ? `Demande de rappel${formData.name ? ` — ${formData.name}` : ''}`
+        : `Contact${formData.name ? ` — ${formData.name}` : ''}`
+    );
+    const bodyParts = [
+      formData.name ? `Nom : ${formData.name}` : '',
+      formData.company ? `Entreprise : ${formData.company}` : '',
+      `Email : ${formData.email}`,
+      formData.phone ? `Téléphone : ${formData.phone}` : '',
+      formData.message ? `\nMessage :\n${formData.message}` : '',
+      diagResult ? `\n--- Diagnostic Express ---\nScore : ${diagResult.score}/100\nNiveau : ${diagResult.level}\nPoints : ${diagResult.points.map(p => p.label).join(', ')}\nPriorité : ${diagResult.priority}` : '',
+    ].filter(Boolean).join('\n');
+    const body = encodeURIComponent(bodyParts);
+
+    window.location.href = `mailto:contact@aegisnetwork.fr?subject=${subject}&body=${body}`;
+    setSubmitted(true);
+  };
+
+  const inputClass = "w-full h-14 px-6 rounded-2xl border border-white/10 focus:border-optical-blue focus:ring-optical-blue bg-white/5 text-white placeholder:text-slate-600 transition-all outline-none";
+
+  return (
+    <section id="contact" className="py-32 relative bg-background-deep overflow-hidden">
+      <FiberBeams />
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
+        <div className="grid lg:grid-cols-2 gap-24">
+          <div>
+            <h2 className="text-optical-blue font-bold text-sm uppercase tracking-[0.3em] mb-6">Contact & Audit</h2>
+            <h3 className="text-5xl font-black text-white mb-10 leading-tight">Parlons de votre situation.</h3>
+            <p className="text-slate-400 text-lg mb-8 leading-relaxed">Un diagnostic, un conseil, une question sur vos contrats ? Nous sommes disponibles pour en discuter.</p>
+
+            {/* Diagnostic pre-fill banner */}
+            {diagResult && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="flex items-start gap-4 p-5 rounded-2xl border border-blue-500/20 bg-blue-500/5 mb-8"
+              >
+                <Activity className="w-5 h-5 text-optical-blue shrink-0 mt-0.5" />
                 <div>
-                  <p className="text-sm text-slate-500 font-bold uppercase tracking-widest">{item.label}</p>
-                  {item.href ? (
-                    <a href={item.href} className="text-xl font-bold text-white hover:text-optical-blue transition-colors">{item.value}</a>
-                  ) : (
-                    <p className="text-xl font-bold text-white">{item.value}</p>
-                  )}
+                  <p className="text-sm font-bold text-white mb-1">Diagnostic complété — {diagResult.score}/100</p>
+                  <p className="text-xs text-slate-400">{diagResult.level}. Vos résultats seront joints à votre demande.</p>
                 </div>
-              </div>
-            ))}
+              </motion.div>
+            )}
+
+            <div className="flex flex-wrap gap-3 mb-12">
+              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-600/10 border border-blue-600/20 text-sm text-slate-300">
+                <CheckCircle size={14} className="text-optical-blue" /> Premier échange gratuit
+              </span>
+              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-600/10 border border-blue-600/20 text-sm text-slate-300">
+                <MapPin size={14} className="text-optical-blue" /> Lyon · Ain · Isère
+              </span>
+              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-600/10 border border-blue-600/20 text-sm text-slate-300">
+                <Users size={14} className="text-optical-blue" /> Disponible en visio
+              </span>
+            </div>
+            <div className="space-y-8">
+              {[
+                { icon: <PhoneCall />, label: "Ligne directe", value: "07 81 43 81 23", href: "tel:+33781438123" },
+                { icon: <Mail />, label: "Email", value: "contact@aegisnetwork.fr", href: "mailto:contact@aegisnetwork.fr" },
+                { icon: <MapPin />, label: "Centre Opérationnel", value: "Lyon, France", href: undefined }
+              ].map((item, i) => (
+                <div key={i} className="flex items-center gap-6 group">
+                  <div className="w-14 h-14 rounded-2xl bg-blue-600/20 flex items-center justify-center text-optical-blue border border-blue-600/20 shadow-lg group-hover:bg-blue-600 group-hover:text-white transition-all">
+                    {item.icon}
+                  </div>
+                  <div>
+                    <p className="text-sm text-slate-500 font-bold uppercase tracking-widest">{item.label}</p>
+                    {item.href ? (
+                      <a href={item.href} className="text-xl font-bold text-white hover:text-optical-blue transition-colors">{item.value}</a>
+                    ) : (
+                      <p className="text-xl font-bold text-white">{item.value}</p>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-        <div className="glass-card p-10 md:p-14 rounded-[3rem] border-white/10 shadow-2xl relative">
-          <div className="absolute -top-10 -right-10 w-40 h-40 bg-accent-violet/10 blur-[60px]" />
-          <form className="space-y-8 relative z-10">
-            <div className="grid md:grid-cols-2 gap-8">
-              <div className="space-y-3">
-                <label className="text-sm font-bold text-slate-300 uppercase tracking-widest ml-1">Nom Complet</label>
-                <input className="w-full h-14 px-6 rounded-2xl border border-white/10 focus:border-optical-blue focus:ring-optical-blue bg-white/5 text-white placeholder:text-slate-600 transition-all outline-none" placeholder="Jean Dupont" type="text" />
-              </div>
-              <div className="space-y-3">
-                <label className="text-sm font-bold text-slate-300 uppercase tracking-widest ml-1">Entreprise</label>
-                <input className="w-full h-14 px-6 rounded-2xl border border-white/10 focus:border-optical-blue focus:ring-optical-blue bg-white/5 text-white placeholder:text-slate-600 transition-all outline-none" placeholder="Nom de votre société" type="text" />
-              </div>
+          <div className="glass-card p-10 md:p-14 rounded-[3rem] border-white/10 shadow-2xl relative">
+            <div className="absolute -top-10 -right-10 w-40 h-40 bg-accent-violet/10 blur-[60px]" />
+
+            {/* Mode tabs */}
+            <div className="flex gap-2 mb-8 relative z-10">
+              <button
+                type="button"
+                onClick={() => setMode('callback')}
+                className={`flex-1 flex items-center justify-center gap-2 h-12 rounded-xl font-bold text-sm transition-all cursor-pointer ${
+                  mode === 'callback'
+                    ? 'bg-blue-600/20 border border-blue-600/30 text-optical-blue'
+                    : 'bg-white/5 border border-white/10 text-slate-400 hover:text-white'
+                }`}
+              >
+                <PhoneCall size={16} />
+                Être rappelé
+              </button>
+              <button
+                type="button"
+                onClick={() => setMode('message')}
+                className={`flex-1 flex items-center justify-center gap-2 h-12 rounded-xl font-bold text-sm transition-all cursor-pointer ${
+                  mode === 'message'
+                    ? 'bg-blue-600/20 border border-blue-600/30 text-optical-blue'
+                    : 'bg-white/5 border border-white/10 text-slate-400 hover:text-white'
+                }`}
+              >
+                <Mail size={16} />
+                Nous contacter
+              </button>
             </div>
-            <div className="space-y-3">
-              <label className="text-sm font-bold text-slate-300 uppercase tracking-widest ml-1">Email Professionnel</label>
-              <input className="w-full h-14 px-6 rounded-2xl border border-white/10 focus:border-optical-blue focus:ring-optical-blue bg-white/5 text-white placeholder:text-slate-600 transition-all outline-none" placeholder="jean@entreprise.fr" type="email" />
-            </div>
-            <div className="space-y-3">
-              <label className="text-sm font-bold text-slate-300 uppercase tracking-widest ml-1">Message</label>
-              <textarea className="w-full px-6 py-4 rounded-2xl border border-white/10 focus:border-optical-blue focus:ring-optical-blue bg-white/5 text-white placeholder:text-slate-600 transition-all outline-none" placeholder="Décrivez votre besoin (audit, conseil, optimisation...)" rows={4}></textarea>
-            </div>
-            <button type="button" className="glow-button w-full h-16 rounded-2xl bg-gradient-to-r from-blue-600 via-blue-600 to-accent-violet text-white font-bold text-xl uppercase tracking-widest">
-              Envoyer ma demande
-            </button>
-            <p className="text-center text-xs text-slate-500">Nous vous répondons sous 24 heures.</p>
-          </form>
+
+            {submitted ? (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="text-center py-12 relative z-10"
+              >
+                <CheckCircle className="w-16 h-16 text-emerald-400 mx-auto mb-6" />
+                <h4 className="text-2xl font-black text-white mb-3">Demande envoyée</h4>
+                <p className="text-slate-400">Nous vous répondons sous 24 heures.</p>
+              </motion.div>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
+                <AnimatePresence mode="wait">
+                  {mode === 'callback' ? (
+                    <motion.div
+                      key="callback"
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: 10 }}
+                      transition={{ duration: 0.2 }}
+                      className="space-y-6"
+                    >
+                      <div className="space-y-3">
+                        <label className="text-sm font-bold text-slate-300 uppercase tracking-widest ml-1">Téléphone</label>
+                        <input name="phone" value={formData.phone} onChange={handleChange} required className={inputClass} placeholder="06 12 34 56 78" type="tel" />
+                      </div>
+                      <div className="space-y-3">
+                        <label className="text-sm font-bold text-slate-300 uppercase tracking-widest ml-1">Email</label>
+                        <input name="email" value={formData.email} onChange={handleChange} required className={inputClass} placeholder="jean@entreprise.fr" type="email" />
+                      </div>
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="message"
+                      initial={{ opacity: 0, x: 10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -10 }}
+                      transition={{ duration: 0.2 }}
+                      className="space-y-6"
+                    >
+                      <div className="grid md:grid-cols-2 gap-6">
+                        <div className="space-y-3">
+                          <label className="text-sm font-bold text-slate-300 uppercase tracking-widest ml-1">Nom Complet</label>
+                          <input name="name" value={formData.name} onChange={handleChange} required className={inputClass} placeholder="Jean Dupont" type="text" />
+                        </div>
+                        <div className="space-y-3">
+                          <label className="text-sm font-bold text-slate-300 uppercase tracking-widest ml-1">Entreprise</label>
+                          <input name="company" value={formData.company} onChange={handleChange} className={inputClass} placeholder="Nom de votre société" type="text" />
+                        </div>
+                      </div>
+                      <div className="space-y-3">
+                        <label className="text-sm font-bold text-slate-300 uppercase tracking-widest ml-1">Email Professionnel</label>
+                        <input name="email" value={formData.email} onChange={handleChange} required className={inputClass} placeholder="jean@entreprise.fr" type="email" />
+                      </div>
+                      <div className="space-y-3">
+                        <label className="text-sm font-bold text-slate-300 uppercase tracking-widest ml-1">Message</label>
+                        <textarea name="message" value={formData.message} onChange={handleChange} className="w-full px-6 py-4 rounded-2xl border border-white/10 focus:border-optical-blue focus:ring-optical-blue bg-white/5 text-white placeholder:text-slate-600 transition-all outline-none" placeholder="Décrivez votre besoin (audit, conseil, optimisation...)" rows={4}></textarea>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+                <button type="submit" className="glow-button w-full h-16 rounded-2xl bg-gradient-to-r from-blue-600 via-blue-600 to-accent-violet text-white font-bold text-xl uppercase tracking-widest cursor-pointer">
+                  {mode === 'callback' ? 'Demander un rappel' : 'Envoyer ma demande'}
+                </button>
+                <p className="text-center text-xs text-slate-500">Nous vous répondons sous 24 heures.</p>
+              </form>
+            )}
+          </div>
         </div>
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 const LegalModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
   if (!isOpen) return null;
@@ -1544,6 +1754,18 @@ const Footer = () => {
 };
 
 export default function App() {
+  const [diagResult, setDiagResult] = useState<DiagResult | null>(null);
+  const [contactMode, setContactMode] = useState<'callback' | 'message'>('callback');
+
+  const handleDiagComplete = (result: DiagResult) => {
+    setDiagResult(result);
+  };
+
+  const handleContactFromDiag = () => {
+    setContactMode('callback');
+    scrollToSection('contact');
+  };
+
   return (
     <div className="min-h-screen bg-background-deep selection:bg-blue-600 selection:text-white">
       <Navbar />
@@ -1556,9 +1778,9 @@ export default function App() {
         <WhyAegis />
         <ImpactCalculator />
         <EvolutionConseil />
-        <DiagnosticExpress />
+        <DiagnosticExpress onComplete={handleDiagComplete} onContact={handleContactFromDiag} />
         <CTASection />
-        <ContactSection />
+        <ContactSection diagResult={diagResult} contactMode={contactMode} />
       </main>
       <Footer />
     </div>
