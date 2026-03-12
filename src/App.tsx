@@ -120,7 +120,7 @@ const Hero = () => (
     <div className="fiber-beam-hero animate-fiber-h top-[70%]" style={{ animationDelay: '5s', animationDuration: '15s' }} />
     <div className="fiber-beam-hero-v animate-fiber-v left-[55%]" style={{ animationDelay: '2s', animationDuration: '18s' }} />
 
-    <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
+    <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-[1fr_0.8fr] lg:grid-cols-[1.1fr_0.9fr] gap-12 lg:gap-20 items-center">
       {/* Left: text content with staggered entrance */}
       <div className="relative z-10">
         <motion.div
@@ -140,7 +140,7 @@ const Hero = () => (
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.15, duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
-          className="text-5xl lg:text-7xl font-black text-white leading-[1.05] mb-8"
+          className="text-4xl md:text-5xl lg:text-7xl font-black text-white leading-[1.05] mb-8"
         >
           Reprenez le{' '}
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-600 to-violet-500">contrôle</span>
@@ -174,39 +174,41 @@ const Hero = () => (
       </div>
 
       {/* Right: image + floating KPI cards */}
-      <div className="relative hidden lg:block">
+      <div className="relative hidden md:block h-[400px] md:h-[450px] lg:h-[550px]">
+        {/* Main image */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1], delay: 0.2 }}
-          className="relative rounded-2xl overflow-hidden shadow-2xl border border-white/10"
+          transition={{ duration: 0.8, ease: 'easeOut', delay: 0.2 }}
+          className="absolute inset-0 rounded-2xl overflow-hidden shadow-2xl border border-white/10"
         >
           <img
-            className="w-full h-[550px] object-cover opacity-60"
+            className="w-full h-full object-cover opacity-60"
             src="/img/photo-1551703599-6b3e8379aa8c.jfif"
             alt="Infrastructure réseau"
             fetchPriority="high"
             width={800}
             height={550}
           />
+          {/* Gradient overlays */}
           <div className="absolute inset-0 bg-gradient-to-tr from-background-deep/90 via-background-deep/30 to-blue-600/10" />
-          <div className="absolute inset-0 bg-gradient-to-t from-background-deep via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,var(--color-background-deep)_100%)] opacity-70" />
         </motion.div>
 
-        {/* KPI: Coûts IT */}
+        {/* KPI: Réduction Coûts */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.7, duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
-          className="absolute top-8 -left-10 z-20"
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.5, duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
+          className="absolute top-6 -left-4 lg:top-8 lg:-left-10 z-20"
         >
           <div className="animate-float">
-            <div className="bg-slate-900/70 backdrop-blur-md border border-white/10 p-5 rounded-xl shadow-2xl w-48">
+            <div className="hero-kpi-card bg-slate-900/80 backdrop-blur-xl border border-white/10 p-4 lg:p-5 rounded-xl shadow-2xl w-40 lg:w-48">
               <div className="flex items-center gap-2 mb-2">
                 <TrendingDown className="w-4 h-4 text-optical-blue" />
-                <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400">Coûts IT</span>
+                <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400">Réduction Coûts</span>
               </div>
-              <span className="text-3xl font-black text-white">-30%</span>
+              <span className="text-2xl lg:text-3xl font-black text-white">-30%</span>
               <div className="w-full bg-white/5 h-1.5 rounded-full mt-3 overflow-hidden">
                 <motion.div
                   initial={{ width: 0 }}
@@ -219,20 +221,20 @@ const Hero = () => (
           </div>
         </motion.div>
 
-        {/* KPI: Efficacité */}
+        {/* KPI: Efficacité Réseau */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.9, duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
-          className="absolute bottom-16 -right-6 z-20"
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.7, duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
+          className="absolute bottom-8 -right-2 lg:bottom-16 lg:-right-6 z-20"
         >
           <div className="animate-float" style={{ animationDelay: '1.5s' }}>
-            <div className="bg-slate-900/70 backdrop-blur-md border border-white/10 p-5 rounded-xl shadow-2xl w-52">
+            <div className="hero-kpi-card bg-slate-900/80 backdrop-blur-xl border border-white/10 p-4 lg:p-5 rounded-xl shadow-2xl w-44 lg:w-52">
               <div className="flex items-center gap-2 mb-2">
                 <Zap className="w-4 h-4 text-emerald-400" />
-                <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400">Efficacité</span>
+                <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400">Efficacité Réseau</span>
               </div>
-              <span className="text-3xl font-black text-white">+45%</span>
+              <span className="text-2xl lg:text-3xl font-black text-white">+45%</span>
               <div className="w-full bg-white/5 h-1.5 rounded-full mt-3 overflow-hidden">
                 <motion.div
                   initial={{ width: 0 }}
@@ -245,21 +247,21 @@ const Hero = () => (
           </div>
         </motion.div>
 
-        {/* KPI: Audit badge */}
+        {/* KPI: Audit central badge */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 1.1, duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+          transition={{ delay: 0.9, duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20"
         >
           <div className="animate-float" style={{ animationDelay: '3s' }}>
-            <div className="bg-slate-900/70 backdrop-blur-md border border-optical-blue/25 p-4 rounded-xl shadow-2xl flex items-center gap-4">
-              <div className="w-11 h-11 rounded-lg bg-blue-600/20 flex items-center justify-center text-optical-blue border border-blue-600/20">
-                <ShieldCheck className="w-5 h-5" />
+            <div className="bg-slate-900/90 backdrop-blur-xl border border-optical-blue/30 p-4 lg:p-5 rounded-xl shadow-[0_0_40px_rgba(56,189,248,0.15)] flex items-center gap-4">
+              <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-lg bg-blue-600/20 flex items-center justify-center text-optical-blue border border-blue-600/25">
+                <Search className="w-5 h-5 lg:w-6 lg:h-6" />
               </div>
               <div>
-                <div className="text-sm font-bold text-white leading-none">Audit Stratégique</div>
-                <div className="text-[10px] text-slate-400 mt-1.5 uppercase tracking-widest font-semibold">Infrastructure optimisée</div>
+                <div className="text-sm lg:text-base font-black text-white leading-none">Audit de Performance</div>
+                <div className="text-[9px] lg:text-[10px] text-optical-blue/70 mt-1.5 uppercase tracking-[0.15em] font-bold">Identifier les leviers</div>
               </div>
             </div>
           </div>

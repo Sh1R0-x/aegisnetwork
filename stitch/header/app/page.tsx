@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { motion } from 'motion/react';
-import { TrendingDown, Zap, ShieldCheck, ArrowRight, Activity } from 'lucide-react';
+import { TrendingDown, Zap, ShieldCheck, ArrowRight, Activity, Search } from 'lucide-react';
 
 export default function Home() {
   // Animation variants
@@ -90,11 +90,11 @@ export default function Home() {
         </div>
       </header>
 
-      <div className="relative z-20 max-w-7xl mx-auto px-6 lg:px-20 py-32 w-full grid lg:grid-cols-2 gap-16 items-center">
+      <div className="relative z-20 max-w-7xl mx-auto px-6 lg:px-20 py-32 w-full grid lg:grid-cols-[1.2fr_0.8fr] gap-12 lg:gap-20 items-center">
         
         {/* Left Content */}
         <motion.div 
-          className="flex flex-col gap-8 max-w-2xl"
+          className="flex flex-col gap-8"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
@@ -105,16 +105,16 @@ export default function Home() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
             </span>
-            Performance Opérationnelle
+            Conseil & Optimisation IT
           </motion.div>
 
           {/* Title & Subtitle */}
           <div className="space-y-6">
-            <motion.h1 variants={itemVariants} className="text-5xl lg:text-7xl font-black leading-[1.1] tracking-tight text-white">
-              Reprenez le <span className="text-blue-500 italic">contrôle</span> de votre infrastructure IT.
+            <motion.h1 variants={itemVariants} className="text-4xl md:text-5xl lg:text-7xl font-black leading-[1.05] tracking-tight text-white max-w-3xl">
+              Reprenez le <span className="text-blue-500">contrôle</span> de votre infrastructure IT.
             </motion.h1>
             <motion.p variants={itemVariants} className="text-lg lg:text-xl text-slate-400 max-w-xl leading-relaxed">
-              Optimisez votre réseau avec une maîtrise opérationnelle sans précédent. Réduisez vos coûts et boostez votre efficacité stratégique.
+              Contrats opaques, prestataires jamais challengés, temps perdu en gestion d'incidents. Aegis Network vous aide à y voir clair, réduire vos coûts et vous recentrer sur votre activité.
             </motion.p>
           </div>
 
@@ -148,7 +148,7 @@ export default function Home() {
         </motion.div>
 
         {/* Right Content - Visual & KPIs */}
-        <div className="relative hidden lg:block h-[600px] w-full">
+        <div className="relative hidden md:block h-[400px] md:h-[450px] lg:h-[550px] w-full">
           {/* Main Image Container */}
           <motion.div 
             initial={{ opacity: 0, scale: 0.95 }}
@@ -157,7 +157,7 @@ export default function Home() {
             className="absolute inset-0 rounded-2xl overflow-hidden border border-white/10 shadow-2xl"
           >
             <Image
-              src="https://picsum.photos/seed/datacenter/800/600?blur=2"
+              src="https://images.pexels.com/photos/2881224/pexels-photo-2881224.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
               alt="Data Center Infrastructure"
               fill
               className="object-cover mix-blend-luminosity opacity-60"
@@ -170,41 +170,56 @@ export default function Home() {
 
           {/* KPI Card 1: Costs */}
           <motion.div 
-            variants={floatVariants}
-            animate="animate"
-            className="absolute top-12 -left-12 bg-slate-900/60 backdrop-blur-md border border-white/10 p-6 rounded-xl shadow-2xl flex flex-col gap-1 w-52 z-30"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="absolute top-12 -left-12 bg-slate-900/80 backdrop-blur-xl border border-white/10 p-6 rounded-xl shadow-2xl flex flex-col gap-1 w-52 z-30 overflow-hidden"
           >
-            <div className="flex items-center gap-2 mb-2">
-              <TrendingDown className="w-4 h-4 text-orange-500" />
-              <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400">Coûts IT</span>
+            {/* Light Sweep Animation */}
+            <motion.div 
+              style={{ willChange: "transform" }}
+              animate={{ x: ['-100%', '200%'] }}
+              transition={{ duration: 2, repeat: Infinity, repeatDelay: 4, ease: "easeInOut", delay: 0.5 }}
+              className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent -skew-x-12 z-0"
+            />
+            <div className="relative z-10 flex items-center gap-2 mb-2">
+              <TrendingDown className="w-4 h-4 text-blue-400" />
+              <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400">Réduction Coûts</span>
             </div>
-            <span className="text-4xl font-black text-white">-30%</span>
-            <div className="w-full bg-white/5 h-1.5 rounded-full mt-3 overflow-hidden">
+            <span className="relative z-10 text-4xl font-black text-white">-30%</span>
+            <div className="relative z-10 w-full bg-white/5 h-1.5 rounded-full mt-3 overflow-hidden">
               <motion.div 
                 initial={{ width: 0 }}
                 animate={{ width: "30%" }}
-                transition={{ duration: 1.5, delay: 0.5, ease: "easeOut" }}
-                className="bg-orange-500 h-full rounded-full" 
+                transition={{ duration: 1.5, delay: 1, ease: "easeOut" }}
+                className="bg-blue-400 h-full rounded-full" 
               />
             </div>
           </motion.div>
 
           {/* KPI Card 2: Efficiency */}
           <motion.div 
-            variants={floatVariantsDelayed}
-            animate="animate"
-            className="absolute bottom-24 -right-8 bg-slate-900/60 backdrop-blur-md border border-white/10 p-6 rounded-xl shadow-2xl flex flex-col gap-1 w-56 z-30"
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className="absolute bottom-24 -right-8 bg-slate-900/80 backdrop-blur-xl border border-white/10 p-6 rounded-xl shadow-2xl flex flex-col gap-1 w-56 z-30 overflow-hidden"
           >
-            <div className="flex items-center gap-2 mb-2">
+            {/* Light Sweep Animation */}
+            <motion.div 
+              animate={{ x: ['-100%', '200%'] }}
+              transition={{ duration: 2, repeat: Infinity, repeatDelay: 4, ease: "easeInOut", delay: 2.5 }}
+              className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent -skew-x-12 z-0"
+            />
+            <div className="relative z-10 flex items-center gap-2 mb-2">
               <Zap className="w-4 h-4 text-emerald-500" />
-              <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400">Efficacité</span>
+              <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400">Efficacité Réseau</span>
             </div>
-            <span className="text-4xl font-black text-white">+45%</span>
-            <div className="w-full bg-white/5 h-1.5 rounded-full mt-3 overflow-hidden">
+            <span className="relative z-10 text-4xl font-black text-white">+45%</span>
+            <div className="relative z-10 w-full bg-white/5 h-1.5 rounded-full mt-3 overflow-hidden">
               <motion.div 
                 initial={{ width: 0 }}
                 animate={{ width: "45%" }}
-                transition={{ duration: 1.5, delay: 0.7, ease: "easeOut" }}
+                transition={{ duration: 1.5, delay: 1.2, ease: "easeOut" }}
                 className="bg-emerald-500 h-full rounded-full" 
               />
             </div>
@@ -212,16 +227,23 @@ export default function Home() {
 
           {/* KPI Card 3: Center Badge */}
           <motion.div 
-            variants={floatVariantsMoreDelayed}
-            animate="animate"
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-slate-900/60 backdrop-blur-md border border-blue-500/30 p-4 rounded-xl shadow-2xl flex items-center gap-4 z-30 w-max"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-slate-900/90 backdrop-blur-2xl border border-blue-500/40 p-5 rounded-xl shadow-[0_0_50px_rgba(59,130,246,0.2)] flex items-center gap-4 z-30 w-max overflow-hidden"
           >
-            <div className="w-12 h-12 rounded-lg bg-blue-500/20 flex items-center justify-center text-blue-400 border border-blue-500/20">
-              <ShieldCheck className="w-6 h-6" />
+            {/* Scanner Animation */}
+            <motion.div 
+              animate={{ y: ['-100%', '200%'] }}
+              transition={{ duration: 2.5, repeat: Infinity, ease: "linear" }}
+              className="absolute left-0 right-0 h-[2px] bg-blue-400/50 shadow-[0_0_15px_rgba(59,130,246,0.8)] z-0"
+            />
+            <div className="relative z-10 w-14 h-14 rounded-lg bg-blue-500/20 flex items-center justify-center text-blue-400 border border-blue-500/30 shadow-inner">
+              <Search className="w-7 h-7" />
             </div>
-            <div>
-              <div className="text-sm font-bold text-white leading-none">Audit Stratégique</div>
-              <div className="text-[10px] text-slate-400 mt-1.5 uppercase tracking-widest font-semibold">Certifié Aegis</div>
+            <div className="relative z-10">
+              <div className="text-base font-black text-white leading-tight">Audit de Performance</div>
+              <div className="text-[10px] text-blue-400/80 mt-1 uppercase tracking-[0.2em] font-bold">Identifier les failles</div>
             </div>
           </motion.div>
 

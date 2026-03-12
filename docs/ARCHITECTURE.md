@@ -40,7 +40,7 @@ Le site est one-page. Toutes les sections sont dans `App.tsx` :
 | ---------------------- | -------------------------------------------- |
 | `FiberBeams`           | Fond animé fibre optique (CSS keyframes)     |
 | `Navbar`               | Navigation fixe avec section active auto (IntersectionObserver) |
-| `Hero`                 | Accroche « reprendre le contrôle » + CTA + fond animé premium  |
+| `Hero`                 | Accroche « reprendre le contrôle » + image + KPI cards flottantes + CTA |
 | `GainBlock`            | « Ce que vous allez y gagner » — 6 bénéfices concrets en grille |
 | `CostControl`          | Enjeux coûts : contrats, mise en concurrence, surcoûts + stat BEREC |
 | `TimeLoss`             | Temps perdu en gestion IT : SAV, coordination, pannes + stats sourcées |
@@ -57,6 +57,60 @@ Le site est one-page. Toutes les sections sont dans `App.tsx` :
 | `Footer`               | Pied de page + ouverture mentions légales     |
 
 ## Conventions
+
+### Hero — Structure détaillée
+
+Le Hero est un composant critique du site. Voici sa structure complète :
+
+**Layout :**
+- Grille asymétrique : `md:grid-cols-[1fr_0.8fr]`, `lg:grid-cols-[1.1fr_0.9fr]`
+- Plus d'espace texte à gauche, image+KPI à droite
+- Colonne image masquée en mobile (`hidden md:block`)
+
+**Colonne gauche (texte) :**
+- Tag animé « Conseil & Optimisation IT » avec dot ping
+- Titre `text-4xl md:text-5xl lg:text-7xl`, mot « contrôle » en gradient `blue-400 → blue-600 → violet-500`
+- Sous-titre `text-lg text-slate-400`, max-w-xl
+- Deux CTA : `glow-button` (diagnostic) + bouton secondaire (approche)
+- Entrées Framer Motion en cascade : delay 0 → 0.15 → 0.3 → 0.45
+
+**Colonne droite (image + KPI) :**
+- Conteneur avec hauteur fixe : `h-[400px] md:h-[450px] lg:h-[550px]`
+- Image `photo-1551703599-6b3e8379aa8c.jfif` en absolute + `object-cover opacity-60`
+- Deux overlays : gradient directionnel `from-background-deep/90` + vignette radiale `opacity-70`
+- 3 cartes KPI flottantes, positionnées en absolute :
+  - **Réduction Coûts** (haut-gauche) : icône TrendingDown, `-30%`, entrée `x: -20`
+  - **Efficacité Réseau** (bas-droite) : icône Zap `text-emerald-400`, `+45%`, entrée `x: 20`
+  - **Audit de Performance** (centre) : icône Search, badge bleu glow, entrée `scale: 0.9`
+
+**KPI cards :**
+- Classe CSS `.hero-kpi-card` pour shimmer (keyframe `kpi-sweep`, 6s, CSS pur)
+- Glass effect : `bg-slate-900/80 backdrop-blur-xl border-white/10`
+- Tailles responsives : padding `p-4 lg:p-5`, largeur `w-40 lg:w-48` / `w-44 lg:w-52`
+- Animation float CSS (`animate-float`) avec delays échelonnés (0s, 1.5s, 3s)
+- Progress bars animées en Framer Motion (one-shot avec delay)
+
+**Fond animé :**
+- 3 orbes ambient (blur-[120px], blue + violet + blue/5) avec drift lent CSS
+- Grille tech (`hero-grid`) à opacity 2%
+- 3 fiber beams (2 horizontaux, 1 vertical) avec keyframes CSS
+
+**Responsive :**
+- Mobile (< 768px) : texte seul, pas d'image/KPI, `text-4xl`
+- Tablette (768px+) : image + KPI visibles, tailles réduites, `text-5xl`
+- Desktop (1024px+) : tailles pleines, KPI décalées hors image, `text-7xl`
+
+**Performance :**
+- Image hero en `fetchPriority="high"` + preload dans index.html
+- Animations continues (float, shimmer, glows) : CSS keyframes = GPU composité
+- Entrées one-shot : Framer Motion (JS) — se déclenche une seule fois
+- `prefers-reduced-motion` : toutes les animations CSS désactivées dont `.hero-kpi-card::after`
+
+**Fichiers concernés :**
+- `src/App.tsx` : composant Hero (~160 lignes)
+- `src/index.css` : `@keyframes kpi-sweep`, `.hero-kpi-card`, `.hero-kpi-card::after`, `@keyframes hero-glow-drift`, float, fiber-beam
+- `index.html` : `<link rel="preload">` pour l'image hero
+- `stitch/header/app/page.tsx` : référence design (lecture seule)
 
 - **Un composant = une section** dans `App.tsx` (pas de fichier séparé sauf si réutilisable)
 - **Composants réutilisables** dans `src/components/` (ex: `AegisLogo`)

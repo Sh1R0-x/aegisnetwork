@@ -139,10 +139,11 @@ Ne jamais modifier ces informations sans validation explicite.
 - Framer Motion pour les entrées en viewport (`whileInView`, `initial`)
 - Stagger délay sur les listes de features (0.1–0.15s)
 - Hero : fond animé CSS pur (orbes gradient en dérive lente, grille tech, fiber beams premium)
-- Hero float : amplitude réduite (8px / 8s) pour confort visuel
-- Hero éléments overlay : pulsation douce (6s) + rotation lente (30s)
-- CSS keyframes pour fiber beams, float, pulse-slow, hero-glow-drift
-- `prefers-reduced-motion` respecté (désactive toutes les animations CSS)
+- Hero float : amplitude réduite (8px / 8s) pour confort visuel, delays échelonnés (0s, 1.5s, 3s)
+- Hero KPI cards : entrées directionnelles Framer Motion (x:-20 gauche, x:20 droite, scale centre)
+- Hero KPI shimmer : CSS `.hero-kpi-card::after` avec keyframe `kpi-sweep` (6s, GPU composité)
+- CSS keyframes pour fiber beams, float, pulse-slow, hero-glow-drift, kpi-sweep
+- `prefers-reduced-motion` respecté (désactive toutes les animations CSS dont `.hero-kpi-card::after`)
 
 ## Statistiques et sources
 
