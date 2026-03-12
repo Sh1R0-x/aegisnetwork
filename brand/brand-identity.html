@@ -586,13 +586,12 @@
 
     <!-- Monochrome -->
     <h3 class="mb-24">Versions monochromes</h3>
+    <p class="mb-24" style="font-size: 0.85rem;">En monochrome, les nodes fibre sont retirés pour conserver un symbole net et lisible. Le « A » reste strictement identique à la version principale.</p>
     <div class="logo-showcase mb-48">
       <div class="logo-box" style="background: #fff;">
         <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" width="64" height="64">
           <path d="M15 85 L50 15 L85 85" stroke="#0F172A" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
           <path d="M35 85 H65" stroke="#0F172A" stroke-width="12" stroke-linecap="round"/>
-          <circle cx="82" cy="18" r="4" fill="#0F172A"/><circle cx="92" cy="32" r="3" fill="#0F172A" opacity="0.6"/><circle cx="72" cy="8" r="3" fill="#0F172A" opacity="0.8"/>
-          <path d="M65 35 L82 18" stroke="#0F172A" stroke-width="1.5" stroke-dasharray="4 4"/>
         </svg>
         <span class="label" style="color: #94A3B8;">Monochrome sombre</span>
       </div>
@@ -600,8 +599,6 @@
         <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" width="64" height="64">
           <path d="M15 85 L50 15 L85 85" stroke="#fff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
           <path d="M35 85 H65" stroke="#fff" stroke-width="12" stroke-linecap="round"/>
-          <circle cx="82" cy="18" r="4" fill="#fff"/><circle cx="92" cy="32" r="3" fill="#fff" opacity="0.6"/><circle cx="72" cy="8" r="3" fill="#fff" opacity="0.8"/>
-          <path d="M65 35 L82 18" stroke="#fff" stroke-width="1.5" stroke-dasharray="4 4"/>
         </svg>
         <span class="label" style="color: rgba(255,255,255,0.6);">Monochrome blanc</span>
       </div>
@@ -1113,8 +1110,9 @@
       <!-- Preview recto -->
       <div style="display:flex; gap:24px; flex-wrap:wrap; justify-content:center;">
         <div style="width:340px; height:220px; border-radius:12px; background:#F8FAFC; padding:28px; display:flex; flex-direction:column; justify-content:space-between; border: 1px solid #E2E8F0; position:relative; overflow:hidden;">
+          <div style="position:absolute; top:0; left:0; width:3px; height:100%; background:linear-gradient(180deg, #2563EB, #7C3AED); border-radius:2px;"></div>
           <div style="position:absolute; bottom:0; right:0; width:160px; height:160px; background:linear-gradient(135deg, rgba(37,99,235,0.06), rgba(124,58,237,0.04)); border-radius:100% 0 0 0;"></div>
-          <div>
+          <div style="padding-left:14px;">
             <div style="display:flex; align-items:center; gap:8px; margin-bottom:24px;">
               <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
                 <defs><linearGradient id="bcrg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#2563EB"/><stop offset="100%" stop-color="#7C3AED"/></linearGradient></defs>
@@ -1128,7 +1126,7 @@
             <p style="font-size:0.95rem; font-weight:800; color:#0F172A; margin-bottom:2px;">Ludovic ROCHET-BELLAVIA</p>
             <p style="font-size:0.65rem; font-weight:600; color:#2563EB; letter-spacing:0.02em;">Consultant réseaux &amp; téléphonie</p>
           </div>
-          <div style="position:relative; z-index:1;">
+          <div style="position:relative; z-index:1; padding-left:14px;">
             <p style="font-size:0.6rem; color:#64748B; margin-bottom:2px;">07 81 43 81 23 · contact@aegisnetwork.fr</p>
             <p style="font-size:0.6rem; color:#64748B;">aegisnetwork.fr · Lyon, France</p>
           </div>
@@ -1144,7 +1142,7 @@
           </svg>
           <div style="text-align:center;">
             <p style="font-size:0.85rem; font-weight:900; letter-spacing:0.15em; color:#fff;">AEGIS <span style="color:#3B82F6;">NETWORK</span></p>
-            <p style="font-size:0.45rem; font-weight:600; letter-spacing:0.25em; color:#64748B; text-transform:uppercase; margin-top:4px;">Conseil &amp; Optimisation IT</p>
+            <p style="font-size:0.45rem; font-weight:700; letter-spacing:0.25em; color:#64748B; text-transform:uppercase; margin-top:4px;">Conseil &amp; Optimisation IT</p>
           </div>
           <p style="font-size:0.5rem; color:#475569; letter-spacing:0.05em;">aegisnetwork.fr</p>
         </div>

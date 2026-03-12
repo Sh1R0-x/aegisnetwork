@@ -43,10 +43,10 @@ const scrollToSection = (id: string) => {
 
 const NAV_SECTIONS = [
   { id: 'gains', label: 'Vos gains' },
+  { id: 'diagnostic', label: 'Diagnostic' },
   { id: 'enjeux', label: 'Vos enjeux' },
   { id: 'approche', label: 'Notre approche' },
   { id: 'simulateur', label: 'Simulateur' },
-  { id: 'diagnostic', label: 'Diagnostic' },
   { id: 'contact', label: 'Contact' },
 ];
 
@@ -172,11 +172,11 @@ const Hero = () => (
             Faites votre diagnostic
             <Activity size={20} />
           </button>
-          <button onClick={() => scrollToSection('gains')} className="h-14 px-7 rounded-xl bg-white/5 border border-white/10 text-white font-bold text-base flex items-center justify-center gap-2 hover:bg-white/10 transition-all backdrop-blur-sm cursor-pointer">
+          <button onClick={() => scrollToSection('gains')} className="h-14 px-7 rounded-xl bg-emerald-500/15 border border-emerald-500/25 text-emerald-400 font-bold text-base flex items-center justify-center gap-2 hover:bg-emerald-500/25 hover:border-emerald-400/40 transition-all backdrop-blur-sm cursor-pointer">
             Vos gains
             <ArrowRight size={18} />
           </button>
-          <button onClick={() => scrollToSection('simulateur')} className="h-14 px-7 rounded-xl bg-white/5 border border-white/10 text-white font-bold text-base flex items-center justify-center gap-2 hover:bg-white/10 transition-all backdrop-blur-sm cursor-pointer">
+          <button onClick={() => scrollToSection('simulateur')} className="h-14 px-7 rounded-xl bg-sky-500/15 border border-sky-500/25 text-sky-300 font-bold text-base flex items-center justify-center gap-2 hover:bg-sky-500/25 hover:border-sky-400/40 transition-all backdrop-blur-sm cursor-pointer">
             Faites une simulation
             <BarChart3 size={18} />
           </button>
@@ -1196,16 +1196,16 @@ const DiagnosticExpress = ({ onComplete, onContact }: { onComplete: (r: DiagResu
             </div>
             <h3 className="text-4xl lg:text-5xl font-black text-white mb-6 leading-tight">
               Où en est votre{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-violet-400">maîtrise IT</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-violet-400">IT</span>
               {' '}?
             </h3>
             <p className="text-slate-400 text-lg leading-relaxed max-w-2xl mx-auto mb-10">
-              5 questions, 2 minutes. Un état des lieux immédiat sur la performance, les frictions et le niveau de contrôle de votre environnement.
+              5 questions · 1 minute. Un premier état des lieux concret, gratuit et sans engagement.
             </p>
 
             <div className="flex flex-wrap justify-center gap-6 mb-10 text-sm text-slate-400">
               {[
-                { icon: Clock, text: '2 min' },
+                { icon: Clock, text: '1 min' },
                 { icon: CheckCircle, text: 'Gratuit' },
                 { icon: Target, text: 'Résultat immédiat' },
               ].map(({ icon: Icon, text }) => (
@@ -1772,13 +1772,13 @@ export default function App() {
       <main>
         <Hero />
         <GainBlock />
+        <DiagnosticExpress onComplete={handleDiagComplete} onContact={handleContactFromDiag} />
         <CostControl />
         <TimeLoss />
         <RootCause />
         <WhyAegis />
         <ImpactCalculator />
         <EvolutionConseil />
-        <DiagnosticExpress onComplete={handleDiagComplete} onContact={handleContactFromDiag} />
         <CTASection />
         <ContactSection diagResult={diagResult} contactMode={contactMode} />
       </main>
