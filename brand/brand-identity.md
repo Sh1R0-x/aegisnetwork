@@ -81,7 +81,7 @@ Le logo Aegis Network est un « A » stylisé en forme de bouclier/chevron, évo
 
 ### Lockup (icône + wordmark)
 
-- Wordmark : `AEGIS NETWORK` — Inter Black (900), letter-spacing: 0.15em
+- Wordmark : `AEGIS NETWORK` — Inter Black (900), letter-spacing: 0.08em
 - "NETWORK" en gradient (blue → violet) sur écran, ou en Aegis Blue en print
 - Baseline : "Conseil & Optimisation IT" — Inter Bold, 0.25em tracking, uppercase
 
@@ -178,7 +178,7 @@ Police exclusive d'Aegis Network. Conçue pour les écrans, excellente lisibilit
 
 | Élément | Letter-spacing |
 |---|---|
-| Wordmark "AEGIS NETWORK" | 0.15em |
+| Wordmark "AEGIS NETWORK" | 0.08em |
 | Baseline "Conseil & Optimisation IT" | 0.25em |
 | Surtitres de section | 0.3em |
 | Micro-labels | 0.2em |

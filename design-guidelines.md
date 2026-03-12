@@ -7,12 +7,12 @@ This document provides the technical and design specifications for the AEGIS NET
 ### Logo
 - **Component**: `AegisLogo.tsx`
 - **Design**: Custom SVG with a "photon node" structure.
-- **Effects**: 
+- **Effects**:
   - `radialGradient` for the core glow.
   - `filter: drop-shadow` for the outer aura.
   - Animated nodes using `motion` (pulsing opacity and scale).
-- **Tracking (Letter Spacing)**: `0.15em` for the main title "AEGIS NETWORK".
-- **Tagline**: "High-Performance Connectivity" with `0.25em` tracking.
+- **Tracking (Letter Spacing)**: `0.08em` for the main title "AEGIS NETWORK".
+- **Tagline**: "Conseil & Optimisation IT" with `0.25em` tracking.
 
 ### Typography
 - **Primary Font**: **Inter** (Sans-serif).
@@ -39,7 +39,7 @@ The app uses `motion/react` (Framer Motion) for all animations.
 - **Entrance Animations**: Most sections use `initial={{ opacity: 0, y: 20 }}` and `whileInView={{ opacity: 1, y: 0 }}`.
 - **Floating Effect**: The Hero image uses a custom `animate-float` CSS animation (defined in `index.css`).
 - **Fiber Beams**: Background "data beams" are implemented in the `FiberBeams` component using CSS keyframes (`fiber-h` and `fiber-v`).
-- **Glow Effects**: 
+- **Glow Effects**:
   - `premium-glow`: A custom utility for subtle border glows.
   - `glow-button`: A gradient-based button with a hover scale and shadow intensity increase.
 

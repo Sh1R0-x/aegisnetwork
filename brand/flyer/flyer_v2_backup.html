@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flyer — Aegis Network</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    /* ================================================================
+       AEGIS NETWORK — Flyer premium A5 / A4
+       Dark theme · Glass cards · Brand-aligned
+       ================================================================ */
+    :root {
+      --aegis-blue: #2563EB;
+      --optical-blue: #3B82F6;
+      --deep-violet: #7C3AED;
+      --sky-accent: #38BDF8;
+      --navy: #1E40AF;
+      --bg-deep: #020617;
+      --slate-900: #0F172A;
+      --slate-800: #1E293B;
+      --slate-700: #334155;
+      --slate-500: #64748B;
+      --slate-400: #94A3B8;
+      --slate-200: #E2E8F0;
+      --slate-100: #F1F5F9;
+      --slate-50: #F8FAFC;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      background: #1a1a2e;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 28px 16px 60px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ============================================
+       SCREEN CONTROLS
+       ============================================ */
+    .controls {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 24px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .controls button {
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 8px 22px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.06);
+      color: var(--slate-200);
+      cursor: pointer;
+      transition: all 0.15s;
+      user-select: none;
+    }
+    .controls button:hover { border-color: var(--optical-blue); color: var(--optical-blue); }
+    .controls button.active {
+      background: var(--aegis-blue);
+      color: white;
+      border-color: var(--aegis-blue);
+    }
+    .controls .btn-print {
+      background: linear-gradient(135deg, var(--aegis-blue), var(--deep-violet));
+      color: white;
+      border: none;
+    }
+    .controls .btn-print:hover { opacity: 0.9; }
+    .controls .hint {
+      font-size: 11px;
+      color: var(--slate-500);
+      width: 100%;
+      text-align: center;
+      margin-top: 2px;
+    }
+
+    /* ============================================
+       FLYER SHELL
+       ============================================ */
+    .flyer {
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 12px 60px rgba(0,0,0,0.5), 0 0 80px rgba(37,99,235,0.08);
+      display: flex;
+      flex-direction: column;
+      background: var(--bg-deep);
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    /* A5: 148 x 210 mm */
+    .flyer.format-a5 { width: 148mm; height: 210mm; }
+    /* A4: 210 x 297 mm */
+    .flyer.format-a4 { width: 210mm; height: 297mm; }
+
+    /* ============================================
+       BACKGROUND LAYERS
+       ============================================ */
+    .bg-halo-1 {
+      position: absolute;
+      top: -25mm; left: -15mm;
+      width: 80mm; height: 80mm;
+      background: radial-gradient(circle, rgba(37,99,235,0.18), transparent 70%);
+      border-radius: 50%;
+      pointer-events: none; z-index: 0;
+    }
+    .bg-halo-2 {
+      position: absolute;
+      bottom: -10mm; right: -20mm;
+      width: 70mm; height: 70mm;
+      background: radial-gradient(circle, rgba(124,58,237,0.10), transparent 70%);
+      border-radius: 50%;
+      pointer-events: none; z-index: 0;
+    }
+    .bg-halo-3 {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100mm; height: 60mm;
+      background: radial-gradient(ellipse, rgba(37,99,235,0.04), transparent 70%);
+      pointer-events: none; z-index: 0;
+    }
+
+    /* Network mesh */
+    .network-bg {
+      position: absolute;
+      inset: 0;
+      opacity: 0.035;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Grid texture */
+    .grid-texture {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+      background-size: 8mm 8mm;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Top accent bar */
+    .accent-bar {
+      height: 1.2mm;
+      background: linear-gradient(90deg, var(--aegis-blue), var(--deep-violet), var(--aegis-blue));
+      flex-shrink: 0;
+      position: relative;
+      z-index: 2;
+    }
+    .accent-bar::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: inherit;
+      filter: blur(3px);
+      opacity: 0.6;
+    }
+
+    /* ============================================
+       CONTENT WRAPPER
+       ============================================ */
+    .flyer-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 6mm 8mm 5mm;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ============================================
+       HERO ZONE
+       ============================================ */
+    .hero-zone {
+      margin-bottom: 4.5mm;
+    }
+
+    .flyer-header {
+      display: flex;
+      align-items: center;
+      gap: 2.5mm;
+      margin-bottom: 4mm;
+    }
+    .flyer-logo { width: 7.5mm; height: 7.5mm; flex-shrink: 0; }
+    .flyer-brand { display: flex; flex-direction: column; }
+    .flyer-brand-name {
+      font-size: 8pt;
+      font-weight: 900;
+      letter-spacing: 0.15em;
+      color: #fff;
+      text-transform: uppercase;
+      line-height: 1.2;
+    }
+    .flyer-brand-baseline {
+      font-size: 5pt;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      color: var(--optical-blue);
+      text-transform: uppercase;
+      line-height: 1.3;
+    }
+
+    .flyer-headline h1 {
+      font-size: 20pt;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      color: #fff;
+      margin-bottom: 2.5mm;
+    }
+    .flyer-headline .gradient-text {
+      background: linear-gradient(135deg, var(--optical-blue), var(--sky-accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .flyer-subtitle {
+      font-size: 7pt;
+      font-weight: 500;
+      line-height: 1.5;
+      color: var(--slate-400);
+    }
+
+    /* Separator */
+    .separator {
+      height: 1px;
+      background: linear-gradient(90deg, var(--aegis-blue), var(--deep-violet), transparent);
+      margin: 0 0 4mm 0;
+      position: relative;
+    }
+    .separator::after {
+      content: '';
+      position: absolute;
+      left: 0; top: -1px;
+      width: 40%;
+      height: 3px;
+      background: linear-gradient(90deg, rgba(37,99,235,0.4), transparent);
+      filter: blur(2px);
+    }
+
+    /* ============================================
+       SECTION LABELS (pills)
+       ============================================ */
+    .section-label {
+      display: inline-block;
+      font-size: 5pt;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--optical-blue);
+      background: rgba(59,130,246,0.08);
+      border: 1px solid rgba(59,130,246,0.15);
+      padding: 0.8mm 2.5mm;
+      border-radius: 1mm;
+      margin-bottom: 2mm;
+    }
+
+    /* ============================================
+       PROBLEMS — glass card
+       ============================================ */
+    .problems-card {
+      background: rgba(15,23,42,0.6);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 3mm;
+      padding: 3mm 3.5mm;
+      margin-bottom: 3.5mm;
+      backdrop-filter: blur(8px);
+    }
+    .problems-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5mm;
+    }
+    .problem-item {
+      display: flex;
+      align-items: center;
+      gap: 1.5mm;
+      padding: 1.2mm 1.5mm;
+    }
+    .problem-icon {
+      width: 3.2mm;
+      height: 3.2mm;
+      flex-shrink: 0;
+      color: var(--optical-blue);
+    }
+    .problem-text {
+      font-size: 6.2pt;
+      font-weight: 500;
+      line-height: 1.25;
+      color: var(--slate-200);
+    }
+
+    /* ============================================
+       TWO-COLUMN: Services + Benefits
+       ============================================ */
+    .two-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3.5mm;
+      margin-bottom: 3.5mm;
+      flex: 1;
+    }
+    .column-card {
+      background: rgba(15,23,42,0.5);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 3mm;
+      padding: 3mm 3mm 2mm;
+      display: flex;
+      flex-direction: column;
+    }
+    .column-card .section-label { flex-shrink: 0; }
+    .column-card-inner {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    /* Services */
+    .service-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.5mm;
+      margin-bottom: 1.8mm;
+    }
+    .service-icon-bg {
+      width: 3.5mm;
+      height: 3.5mm;
+      background: linear-gradient(135deg, var(--aegis-blue), var(--deep-violet));
+      border-radius: 0.8mm;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 0.2mm;
+    }
+    .service-icon-bg svg {
+      width: 2.2mm;
+      height: 2.2mm;
+      color: white;
+    }
+    .service-text {
+      font-size: 6.5pt;
+      font-weight: 700;
+      line-height: 1.2;
+      color: #fff;
+    }
+    .service-desc {
+      font-size: 5.5pt;
+      font-weight: 400;
+      color: var(--slate-400);
+      line-height: 1.25;
+      margin-top: 0.2mm;
+    }
+
+    /* Benefits */
+    .benefit-item {
+      display: flex;
+      align-items: center;
+      gap: 1.5mm;
+      margin-bottom: 1.5mm;
+    }
+    .benefit-check {
+      width: 2.8mm;
+      height: 2.8mm;
+      background: linear-gradient(135deg, var(--aegis-blue), var(--deep-violet));
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .benefit-check svg { width: 1.8mm; height: 1.8mm; }
+    .benefit-text {
+      font-size: 6.2pt;
+      font-weight: 500;
+      line-height: 1.3;
+      color: var(--slate-200);
+    }
+
+    /* ============================================
+       CTA ZONE
+       ============================================ */
+    .cta-zone {
+      background: linear-gradient(135deg, rgba(37,99,235,0.12), rgba(124,58,237,0.06));
+      border: 1px solid rgba(59,130,246,0.2);
+      border-radius: 3mm;
+      padding: 3.5mm 4mm;
+      position: relative;
+      overflow: hidden;
+      margin-top: auto;
+    }
+    .cta-zone::before {
+      content: '';
+      position: absolute;
+      top: -12mm; right: -8mm;
+      width: 30mm; height: 30mm;
+      background: radial-gradient(circle, rgba(37,99,235,0.15), transparent 70%);
+      pointer-events: none;
+    }
+    .cta-headline {
+      font-size: 9pt;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5mm;
+      position: relative;
+    }
+    .cta-sub {
+      font-size: 5.8pt;
+      font-weight: 500;
+      color: var(--slate-400);
+      margin-bottom: 2.5mm;
+      position: relative;
+    }
+
+    .cta-contacts {
+      display: flex;
+      gap: 3mm;
+      flex-wrap: wrap;
+      align-items: center;
+      position: relative;
+    }
+    .contact-pill {
+      display: flex;
+      align-items: center;
+      gap: 1mm;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 1.5mm;
+      padding: 1mm 2mm;
+    }
+    .contact-pill svg {
+      width: 2.5mm;
+      height: 2.5mm;
+      color: var(--optical-blue);
+      flex-shrink: 0;
+    }
+    .contact-pill span {
+      font-size: 6pt;
+      font-weight: 600;
+      color: #fff;
+    }
+    .contact-pill .muted { color: var(--slate-400); }
+
+    .cta-web {
+      display: flex;
+      align-items: center;
+      gap: 1mm;
+      margin-top: 1.5mm;
+      position: relative;
+    }
+    .cta-web svg {
+      width: 2.2mm;
+      height: 2.2mm;
+      color: var(--optical-blue);
+    }
+    .cta-web span {
+      font-size: 5.5pt;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      color: var(--optical-blue);
+    }
+
+    /* Bottom accent */
+    .accent-bar-bottom {
+      height: 0.8mm;
+      background: linear-gradient(90deg, transparent, var(--aegis-blue), var(--deep-violet), transparent);
+      flex-shrink: 0;
+    }
+
+    /* ============================================
+       A4 OVERRIDES
+       ============================================ */
+    .format-a4 .flyer-content { padding: 12mm 14mm 8mm; }
+    .format-a4 .bg-halo-1 { width: 120mm; height: 120mm; top: -35mm; left: -25mm; }
+    .format-a4 .bg-halo-2 { width: 100mm; height: 100mm; }
+    .format-a4 .flyer-logo { width: 11mm; height: 11mm; }
+    .format-a4 .flyer-brand-name { font-size: 11pt; }
+    .format-a4 .flyer-brand-baseline { font-size: 6.5pt; }
+    .format-a4 .flyer-header { margin-bottom: 8mm; gap: 3.5mm; }
+    .format-a4 .hero-zone { margin-bottom: 8mm; }
+    .format-a4 .flyer-headline h1 { font-size: 30pt; margin-bottom: 4mm; }
+    .format-a4 .flyer-subtitle { font-size: 10pt; line-height: 1.55; }
+    .format-a4 .separator { margin-bottom: 8mm; }
+    .format-a4 .section-label { font-size: 6.5pt; padding: 1.2mm 3.5mm; margin-bottom: 3mm; }
+    .format-a4 .problems-card { padding: 5mm 6mm; margin-bottom: 8mm; border-radius: 4mm; }
+    .format-a4 .problems-grid { gap: 3mm; }
+    .format-a4 .problem-icon { width: 4.5mm; height: 4.5mm; }
+    .format-a4 .problem-text { font-size: 9pt; }
+    .format-a4 .two-columns { gap: 6mm; margin-bottom: 8mm; }
+    .format-a4 .column-card { padding: 5mm 5mm 4mm; border-radius: 4mm; }
+    .format-a4 .service-item { margin-bottom: 3.5mm; gap: 2.5mm; }
+    .format-a4 .service-icon-bg { width: 5mm; height: 5mm; border-radius: 1.2mm; }
+    .format-a4 .service-icon-bg svg { width: 3mm; height: 3mm; }
+    .format-a4 .service-text { font-size: 9pt; }
+    .format-a4 .service-desc { font-size: 7.5pt; }
+    .format-a4 .benefit-item { margin-bottom: 3mm; gap: 2.5mm; }
+    .format-a4 .benefit-check { width: 4.5mm; height: 4.5mm; }
+    .format-a4 .benefit-check svg { width: 2.8mm; height: 2.8mm; }
+    .format-a4 .benefit-text { font-size: 9pt; }
+    .format-a4 .cta-zone { padding: 7mm 8mm; border-radius: 4mm; }
+    .format-a4 .cta-headline { font-size: 13pt; margin-bottom: 1mm; }
+    .format-a4 .cta-sub { font-size: 8pt; margin-bottom: 4mm; }
+    .format-a4 .contact-pill { padding: 1.5mm 3mm; gap: 1.5mm; border-radius: 2mm; }
+    .format-a4 .contact-pill svg { width: 3.5mm; height: 3.5mm; }
+    .format-a4 .contact-pill span { font-size: 8.5pt; }
+    .format-a4 .cta-contacts { gap: 4mm; }
+    .format-a4 .cta-web { margin-top: 2.5mm; }
+    .format-a4 .cta-web svg { width: 3mm; height: 3mm; }
+    .format-a4 .cta-web span { font-size: 7pt; }
+
+    /* ============================================
+       PRINT
+       ============================================ */
+    @page { size: 148mm 210mm; margin: 0; }
+
+    @media print {
+      body { background: none !important; padding: 0; margin: 0; }
+      .controls { display: none !important; }
+      .flyer {
+        box-shadow: none;
+        margin: 0;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+    }
+  </style>
+  <style id="page-style"></style>
+</head>
+<body>
+
+  <!-- ========== Controls ========== -->
+  <div class="controls" id="controls">
+    <button class="active" id="btn-a5" onclick="setFormat('a5')">A5 Portrait</button>
+    <button id="btn-a4" onclick="setFormat('a4')">A4 Portrait</button>
+    <button class="btn-print" onclick="window.print()">&#11015; Exporter en PDF</button>
+    <div class="hint">PDF : Fichier > Imprimer > Enregistrer au format PDF — format <span id="hint-format">A5</span>, marges Aucune, graphismes d'arrière-plan activés</div>
+  </div>
+
+  <!-- ========== FLYER ========== -->
+  <div class="flyer format-a5" id="flyer">
+
+    <!-- Top accent glow-bar -->
+    <div class="accent-bar"></div>
+
+    <!-- Background layers -->
+    <div class="bg-halo-1"></div>
+    <div class="bg-halo-2"></div>
+    <div class="bg-halo-3"></div>
+    <div class="grid-texture"></div>
+
+    <!-- Network mesh background -->
+    <svg class="network-bg" viewBox="0 0 600 850" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+      <circle cx="80" cy="60" r="4" fill="#3B82F6"/>
+      <circle cx="220" cy="35" r="3" fill="#2563EB"/>
+      <circle cx="400" cy="80" r="5" fill="#7C3AED"/>
+      <circle cx="520" cy="45" r="3" fill="#3B82F6"/>
+      <circle cx="150" cy="200" r="3.5" fill="#2563EB"/>
+      <circle cx="350" cy="180" r="4" fill="#3B82F6"/>
+      <circle cx="500" cy="220" r="3" fill="#7C3AED"/>
+      <circle cx="60" cy="380" r="3" fill="#3B82F6"/>
+      <circle cx="250" cy="400" r="4" fill="#2563EB"/>
+      <circle cx="450" cy="370" r="3.5" fill="#7C3AED"/>
+      <circle cx="540" cy="420" r="3" fill="#3B82F6"/>
+      <circle cx="120" cy="550" r="4" fill="#2563EB"/>
+      <circle cx="320" cy="580" r="3" fill="#3B82F6"/>
+      <circle cx="480" cy="560" r="3.5" fill="#7C3AED"/>
+      <circle cx="200" cy="720" r="3" fill="#3B82F6"/>
+      <circle cx="400" cy="740" r="4" fill="#2563EB"/>
+      <circle cx="100" cy="800" r="3" fill="#7C3AED"/>
+      <circle cx="520" cy="780" r="3.5" fill="#3B82F6"/>
+      <line x1="80" y1="60" x2="220" y2="35" stroke="#3B82F6" stroke-width="0.8"/>
+      <line x1="220" y1="35" x2="400" y2="80" stroke="#2563EB" stroke-width="0.6"/>
+      <line x1="400" y1="80" x2="520" y2="45" stroke="#7C3AED" stroke-width="0.5"/>
+      <line x1="80" y1="60" x2="150" y2="200" stroke="#2563EB" stroke-width="0.6"/>
+      <line x1="220" y1="35" x2="350" y2="180" stroke="#3B82F6" stroke-width="0.5"/>
+      <line x1="400" y1="80" x2="350" y2="180" stroke="#2563EB" stroke-width="0.7"/>
+      <line x1="350" y1="180" x2="500" y2="220" stroke="#7C3AED" stroke-width="0.5"/>
+      <line x1="150" y1="200" x2="250" y2="400" stroke="#3B82F6" stroke-width="0.5"/>
+      <line x1="150" y1="200" x2="60" y2="380" stroke="#2563EB" stroke-width="0.4"/>
+      <line x1="350" y1="180" x2="450" y2="370" stroke="#3B82F6" stroke-width="0.6"/>
+      <line x1="500" y1="220" x2="540" y2="420" stroke="#7C3AED" stroke-width="0.5"/>
+      <line x1="250" y1="400" x2="450" y2="370" stroke="#2563EB" stroke-width="0.5"/>
+      <line x1="60" y1="380" x2="120" y2="550" stroke="#3B82F6" stroke-width="0.4"/>
+      <line x1="250" y1="400" x2="320" y2="580" stroke="#2563EB" stroke-width="0.5"/>
+      <line x1="450" y1="370" x2="480" y2="560" stroke="#7C3AED" stroke-width="0.5"/>
+      <line x1="540" y1="420" x2="480" y2="560" stroke="#3B82F6" stroke-width="0.4"/>
+      <line x1="120" y1="550" x2="200" y2="720" stroke="#2563EB" stroke-width="0.5"/>
+      <line x1="320" y1="580" x2="400" y2="740" stroke="#3B82F6" stroke-width="0.5"/>
+      <line x1="480" y1="560" x2="520" y2="780" stroke="#7C3AED" stroke-width="0.4"/>
+      <line x1="200" y1="720" x2="400" y2="740" stroke="#2563EB" stroke-width="0.5"/>
+      <line x1="200" y1="720" x2="100" y2="800" stroke="#3B82F6" stroke-width="0.4"/>
+      <line x1="400" y1="740" x2="520" y2="780" stroke="#7C3AED" stroke-width="0.5"/>
+    </svg>
+
+    <!-- ===== CONTENT ===== -->
+    <div class="flyer-content">
+
+      <!-- ===== HERO ZONE ===== -->
+      <div class="hero-zone">
+        <div class="flyer-header">
+          <svg class="flyer-logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="lg" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#2563EB"/>
+                <stop offset="100%" stop-color="#7C3AED"/>
+              </linearGradient>
+            </defs>
+            <path d="M15 85 L50 15 L85 85" stroke="url(#lg)" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="82" cy="18" r="4" fill="#60A5FA"/>
+            <circle cx="92" cy="32" r="3" fill="#60A5FA" opacity="0.6"/>
+            <circle cx="72" cy="8" r="3" fill="#7C3AED" opacity="0.8"/>
+            <path d="M65 35 L82 18" stroke="url(#lg)" stroke-width="1.5" stroke-dasharray="4 4"/>
+          </svg>
+          <div class="flyer-brand">
+            <div class="flyer-brand-name">Aegis Network</div>
+            <div class="flyer-brand-baseline">Conseil &amp; Optimisation IT</div>
+          </div>
+        </div>
+
+        <div class="flyer-headline">
+          <h1>Reprenez le contrôle<br>de votre <span class="gradient-text">infrastructure IT</span></h1>
+        </div>
+
+        <div class="flyer-subtitle">
+          Audit, conseil et pilotage pour les TPE et PME qui veulent une connectivité fiable, des coûts maîtrisés et un interlocuteur technique de confiance.
+        </div>
+      </div>
+
+      <div class="separator"></div>
+
+      <!-- ===== PROBLEMS ===== -->
+      <div class="section-label">Situations fréquentes</div>
+      <div class="problems-card">
+        <div class="problems-grid">
+          <div class="problem-item">
+            <svg class="problem-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <span class="problem-text">Prestataires difficiles à piloter</span>
+          </div>
+          <div class="problem-item">
+            <svg class="problem-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <span class="problem-text">Incidents réseau qui traînent</span>
+          </div>
+          <div class="problem-item">
+            <svg class="problem-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            <span class="problem-text">Factures télécom en hausse</span>
+          </div>
+          <div class="problem-item">
+            <svg class="problem-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            <span class="problem-text">Changements d'infra mal cadrés</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== TWO COLUMNS ===== -->
+      <div class="two-columns">
+        <div class="column-card">
+          <div class="section-label">Notre accompagnement</div>
+          <div class="column-card-inner">
+          <div class="service-item">
+            <div class="service-icon-bg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+            <div><div class="service-text">Audit &amp; cadrage</div><div class="service-desc">Analyse de l'existant, détection des surcoûts</div></div>
+          </div>
+          <div class="service-item">
+            <div class="service-icon-bg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg></div>
+            <div><div class="service-text">Conseil réseau &amp; téléphonie</div><div class="service-desc">Recommandations adaptées</div></div>
+          </div>
+          <div class="service-item">
+            <div class="service-icon-bg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+            <div><div class="service-text">Pilotage des changements</div><div class="service-desc">Migrations, déploiements, transitions</div></div>
+          </div>
+          <div class="service-item">
+            <div class="service-icon-bg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+            <div><div class="service-text">Coordination prestataires</div><div class="service-desc">Un seul interlocuteur</div></div>
+          </div>
+          <div class="service-item">
+            <div class="service-icon-bg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg></div>
+            <div><div class="service-text">Optimisation &amp; suivi</div><div class="service-desc">Fiabilisation continue</div></div>
+          </div>
+          </div>
+        </div>
+
+        <div class="column-card">
+          <div class="section-label">Résultats concrets</div>
+          <div class="column-card-inner">
+          <div class="benefit-item"><div class="benefit-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6.5l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="benefit-text">Moins de temps perdu</span></div>
+          <div class="benefit-item"><div class="benefit-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6.5l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="benefit-text">Coûts justifiés et maîtrisés</span></div>
+          <div class="benefit-item"><div class="benefit-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6.5l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="benefit-text">Décisions mieux cadrées</span></div>
+          <div class="benefit-item"><div class="benefit-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6.5l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="benefit-text">Incidents résolus plus vite</span></div>
+          <div class="benefit-item"><div class="benefit-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6.5l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="benefit-text">Continuité d'activité protégée</span></div>
+          <div class="benefit-item"><div class="benefit-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6.5l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="benefit-text">Un interlocuteur clair et réactif</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== CTA ZONE ===== -->
+      <div class="cta-zone">
+        <div class="cta-headline">Faites le point sur votre infrastructure</div>
+        <div class="cta-sub">Premier échange offert — sans engagement</div>
+        <div class="cta-contacts">
+          <div class="contact-pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <span>06 52 95 00 10</span>
+          </div>
+          <div class="contact-pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            <span>contact@aegisnetwork.fr</span>
+          </div>
+          <div class="contact-pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span class="muted">Lyon, France</span>
+          </div>
+        </div>
+        <div class="cta-web">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+          <span>aegisnetwork.fr</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bottom accent -->
+    <div class="accent-bar-bottom"></div>
+  </div>
+
+  <script>
+    function setFormat(f) {
+      var fl = document.getElementById('flyer');
+      fl.className = 'flyer format-' + f;
+      document.getElementById('btn-a5').classList.toggle('active', f === 'a5');
+      document.getElementById('btn-a4').classList.toggle('active', f === 'a4');
+      var ps = document.getElementById('page-style');
+      ps.textContent = f === 'a5'
+        ? '@page { size: 148mm 210mm; margin: 0; }'
+        : '@page { size: 210mm 297mm; margin: 0; }';
+      document.getElementById('hint-format').textContent = f.toUpperCase();
+    }
+    setFormat('a5');
+  </script>
+
+</body>
+</html>
