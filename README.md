@@ -17,23 +17,24 @@ Site vitrine one-page pour Aegis Network — conseil, audit et optimisation en i
 ## Structure du repo
 
 ```
-index.html              Point d'entrée Vite (dev)
+index.html              Point d'entrée Vite (dev) + preload hero
 .htaccess              Réécriture Apache (dist/ + HTTPS)
 src/
-  main.tsx              Bootstrap React
-  App.tsx               Composant racine (toutes les sections)
-  index.css             Tailwind + CSS custom (animations, glass, glow)
+  main.tsx              Bootstrap React (StrictMode)
+  App.tsx               Composant racine (~1950 lignes, toutes les sections)
+  index.css             Tailwind @theme + 15 keyframes + classes custom
   components/           Composants réutilisables
-    AegisLogo.tsx       Logo SVG animé
+    AegisLogo.tsx       Logo SVG animé (gradient + nœuds réseau)
 public/
-  favicon.svg           Favicon
-  img/                  Images locales (Unsplash)
-dist/                   Build de production (versionné)
+  favicon.svg           Favicon (shield Aegis)
+  img/                  5 images locales (copies Unsplash)
+dist/                   Build de production (versionné, déployé sur OVH)
+brand/                  Assets de marque (logo, carte de visite, flyer, brochure)
 stitch/                 Source Google Stitch (lecture seule)
   design-guidelines.md  Charte graphique de référence
+  elements/Elements.tsx UI Kit Stitch
 docs/                   Documentation technique
 .claude/rules/          Règles pour assistants IA
-.vscode/                Réglages VS Code partagés
 ```
 
 ## Démarrage rapide
@@ -96,20 +97,12 @@ Les mises à jour design viennent de Google Stitch → dossier `stitch/`. Pour i
 
 | Document | Contenu |
 |----------|---------|
-| [CLAUDE.md](CLAUDE.md) | Règles du projet |
-| [AGENTS.md](AGENTS.md) | Règles d'exécution pour agents IA || [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Architecture technique |
-| [docs/DEPLOYMENT_OVH_STARTER.md](docs/DEPLOYMENT_OVH_STARTER.md) | Déploiement OVH |
+| [CLAUDE.md](CLAUDE.md) | Règles projet, identité, contraintes |
+| [AGENTS.md](AGENTS.md) | Règles d'exécution pour agents IA |
+| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Architecture technique détaillée |
+| [docs/DEPLOYMENT_OVH_STARTER.md](docs/DEPLOYMENT_OVH_STARTER.md) | Guide de déploiement OVH |
 | [docs/WORKFLOW_COLLABORATION.md](docs/WORKFLOW_COLLABORATION.md) | Workflow multi-agents |
-| [docs/MCP.md](docs/MCP.md) | Serveurs MCP || [design-guidelines.md](design-guidelines.md) | Charte graphique complète |
-| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Architecture et choix techniques |
-| [docs/DEPLOYMENT_OVH_STARTER.md](docs/DEPLOYMENT_OVH_STARTER.md) | Guide de déploiement |
-| [docs/WORKFLOW_COLLABORATION.md](docs/WORKFLOW_COLLABORATION.md) | Workflow multi-outils |
-| [docs/NEXT_STEPS.md](docs/NEXT_STEPS.md) | Prochaines étapes |
+| [docs/MCP.md](docs/MCP.md) | Serveurs MCP configurés |
+| [design-guidelines.md](design-guidelines.md) | Charte graphique complète |
 
-## Documentation utile
 
-- [AGENTS.md](AGENTS.md) : règles d'exécution pour agents et MCP
-- [CLAUDE.md](CLAUDE.md) : contraintes projet et style
-- [docs/WORKFLOW_COLLABORATION.md](docs/WORKFLOW_COLLABORATION.md) : workflow commun entre outils
-- [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) : choix techniques
-- [docs/DEPLOYMENT_OVH_STARTER.md](docs/DEPLOYMENT_OVH_STARTER.md) : déploiement OVH

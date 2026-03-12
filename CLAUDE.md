@@ -50,26 +50,51 @@ Aegis Network est un **consultant / accompagnateur / chef de projet IT** indépe
 ## Structure
 
 ```
-index.html          ← point d'entrée Vite (dev)
+index.html          ← point d'entrée Vite (dev) + preload hero
 .htaccess           ← réécriture Apache pour servir dist/ sur OVH
 src/
   main.tsx          ← bootstrap React
-  App.tsx           ← composant racine, toutes les sections
-  index.css         ← Tailwind + custom CSS (animations, glass, glow)
+  App.tsx           ← composant racine, ~1950 lignes, toutes les sections
+  index.css         ← Tailwind @theme + 15 keyframes + classes custom
   components/       ← composants réutilisables (AegisLogo, etc.)
 public/
-  favicon.svg       ← favicon
-  img/              ← images locales (Unsplash downloads)
+  favicon.svg       ← favicon (shield Aegis)
+  img/              ← 5 images locales (copies Unsplash, .jfif)
 dist/               ← build de production (versionné, déployé sur OVH)
 stitch/             ← source Google Stitch (référence design, lecture seule)
+brand/              ← assets de marque (logo, carte de visite, flyer, brochure)
 docs/               ← documentation technique
+.claude/rules/      ← règles pour agents IA
 ```
 
 ## Sections du site (App.tsx)
 
 Navbar → Hero → GainBlock → CostControl → TimeLoss → RootCause → WhyAegis → ImpactCalculator → EvolutionConseil → DiagnosticExpress → CTASection → ContactSection → Footer (+ LegalModal)
 
-Flux narratif : gains concrets → coûts → temps perdu → diagnostic de fond → légitimité/approche → simulateur → évolution → diagnostic express interactif → action
+Flux narratif : gains concrets → coûts → temps perdu → diagnostic de fond → légitimité/approche → simulateur → évolution → diagnostic express interactif → CTA → contact
+
+### DiagnosticExpress
+
+Module interactif en 3 phases : intro → quiz (5 questions) → résultat (score /100, 3 axes, alertes, priorité).
+Scoring : A=20, B=14, C=7, D=0. Niveaux : Bien tenu (80+), Perfectible (60–79), Trop subi (40–59), À risque (0–39).
+Export PDF via `exportDiagPDF()` (HTML + print). CTA résultat → scroll vers contact.
+Zéro mention sécurité/cyber — uniquement performance, maîtrise, frictions, pilotage.
+
+### ContactSection (formulaire dual-mode)
+
+Deux modes : « Être rappelé » (callback : téléphone + email) / « Nous contacter » (message : nom, entreprise, email, message).
+Pré-remplissage automatique du message après diagnostic (résumé structuré).
+Soumission : `console.log()` + fallback `mailto:` (`TODO:` vrai backend).
+
+### Flèches de guidage (arrows)
+
+Flèches SVG rouges animées, visibles desktop uniquement après diagnostic.
+Positionnement **element-anchored** : chaque flèche est dans un wrapper `<div className="relative">` autour de sa cible.
+- Arrow 1 : `top-[68%] -translate-y-1/2` sur le grid nom/entreprise (message) ou le champ téléphone (callback)
+- Arrow 2 : `top-1/2 -translate-y-1/2` sur le bouton submit
+- Offset horizontal : `-left-20 sm:-left-[5.5rem]` (padding card 56px + marge)
+- SVG IDs distincts (`gf`/`ag1`, `gf2`/`ag2`) pour éviter les conflits
+- Animation : `motion.div` pulsation horizontale `x: [0, 6, 0]` (1.6s, infini)
 
 ## Informations de contact
 
@@ -149,7 +174,7 @@ Ne jamais modifier ces informations sans validation explicite.
 ## Statistiques et sources
 
 - **Chiffres sourcés** (France Num 2025, BEREC 2022, SDI 2023, Cybermalveillance 2025) intégrés dans CostControl, TimeLoss et ImpactCalculator
-- **Hypothèses du simulateur** : 3 curseurs (heures/semaine en gestion IT, coût horaire interne, budget IT mensuel), layout 2 colonnes, hypothèse 20 % d'économie contrats
+- **ImpactCalculator** : 3 curseurs (heures/semaine en gestion IT, coût horaire interne, budget IT mensuel), layout 2 colonnes, hypothèse 20 % d'économie contrats
 - Ne jamais présenter une hypothèse du simulateur comme un fait sourcé
 
 ## Elements.tsx (UI Kit)
