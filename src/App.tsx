@@ -109,81 +109,162 @@ const Navbar = () => {
 
 const Hero = () => (
   <section className="relative pt-28 pb-24 lg:pt-36 lg:pb-40 overflow-hidden">
-    {/* Animated gradient orbs */}
+    {/* Ambient glows */}
     <div className="absolute top-[-15%] left-[-10%] w-[45%] h-[45%] bg-blue-600/15 blur-[120px] rounded-full pointer-events-none animate-hero-glow-1" />
     <div className="absolute bottom-[-15%] right-[-10%] w-[45%] h-[45%] bg-accent-violet/10 blur-[120px] rounded-full pointer-events-none animate-hero-glow-2" />
     <div className="absolute top-[20%] left-[35%] w-[25%] h-[25%] bg-blue-500/5 blur-[100px] rounded-full pointer-events-none animate-hero-glow-3" />
-    {/* Subtle tech grid */}
+    {/* Tech grid */}
     <div className="absolute inset-0 hero-grid opacity-[0.02] pointer-events-none" />
-    {/* Hero fiber beams */}
+    {/* Fiber beams */}
     <div className="fiber-beam-hero animate-fiber-h top-[30%]" style={{ animationDelay: '0s', animationDuration: '12s' }} />
     <div className="fiber-beam-hero animate-fiber-h top-[70%]" style={{ animationDelay: '5s', animationDuration: '15s' }} />
     <div className="fiber-beam-hero-v animate-fiber-v left-[55%]" style={{ animationDelay: '2s', animationDuration: '18s' }} />
 
     <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
-      <motion.div
-        initial={{ opacity: 0, x: -30 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
-        className="relative z-10"
-      >
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-600/20 border border-blue-600/30 text-optical-blue text-xs font-bold uppercase tracking-widest mb-8">
+      {/* Left: text content with staggered entrance */}
+      <div className="relative z-10">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-600/20 border border-blue-600/30 text-optical-blue text-xs font-bold uppercase tracking-widest mb-8"
+        >
           <span className="relative flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-optical-blue opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-optical-blue"></span>
           </span>
           Conseil & Optimisation IT
-        </div>
-        <h1 className="text-5xl lg:text-7xl font-black text-white leading-[1.05] mb-8">
-          Reprenez le contrôle <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-600 to-violet-500">de votre IT.</span>
-        </h1>
-        <p className="text-lg text-slate-400 leading-relaxed max-w-xl mb-12">
-          Contrats opaques, prestataires jamais challengés, temps perdu en gestion d'incidents… Aegis Network vous aide à y voir clair, réduire vos coûts et vous recentrer sur votre activité.
-        </p>
-        <div className="flex flex-wrap gap-5">
+        </motion.div>
+
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.15, duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+          className="text-5xl lg:text-7xl font-black text-white leading-[1.05] mb-8"
+        >
+          Reprenez le{' '}
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-600 to-violet-500">contrôle</span>
+          {' '}de votre infrastructure IT.
+        </motion.h1>
+
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3, duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+          className="text-lg text-slate-400 leading-relaxed max-w-xl mb-12"
+        >
+          Contrats opaques, prestataires jamais challengés, temps perdu en gestion d'incidents. Aegis Network vous aide à y voir clair, réduire vos coûts et vous recentrer sur votre activité.
+        </motion.p>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.45, duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+          className="flex flex-wrap gap-5"
+        >
           <button onClick={() => scrollToSection('contact')} className="glow-button h-14 px-8 rounded-xl bg-gradient-to-r from-blue-600 to-accent-violet text-white font-bold text-lg flex items-center justify-center gap-3 cursor-pointer">
             Demander un diagnostic gratuit
             <Zap size={20} />
           </button>
-          <button onClick={() => scrollToSection('enjeux')} className="h-14 px-8 rounded-xl bg-white/5 border border-white/10 text-white font-bold text-lg flex items-center justify-center hover:bg-white/10 transition-all backdrop-blur-sm cursor-pointer">
-            Comprendre nos axes
+          <button onClick={() => scrollToSection('approche')} className="h-14 px-8 rounded-xl bg-white/5 border border-white/10 text-white font-bold text-lg flex items-center justify-center gap-2 hover:bg-white/10 transition-all backdrop-blur-sm cursor-pointer">
+            Notre approche
+            <ArrowRight size={18} />
           </button>
-        </div>
-      </motion.div>
+        </motion.div>
+      </div>
 
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1] }}
-        className="relative animate-float"
-      >
-        <div className="relative z-10 rounded-[2.5rem] overflow-hidden shadow-2xl border border-white/10 premium-glow bg-slate-900">
+      {/* Right: image + floating KPI cards */}
+      <div className="relative hidden lg:block">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1], delay: 0.2 }}
+          className="relative rounded-2xl overflow-hidden shadow-2xl border border-white/10"
+        >
           <img
-            className="w-full h-[550px] object-cover opacity-80"
+            className="w-full h-[550px] object-cover opacity-60"
             src="/img/photo-1551703599-6b3e8379aa8c.jfif"
             alt="Infrastructure réseau"
             fetchPriority="high"
             width={800}
             height={550}
           />
+          <div className="absolute inset-0 bg-gradient-to-tr from-background-deep/90 via-background-deep/30 to-blue-600/10" />
           <div className="absolute inset-0 bg-gradient-to-t from-background-deep via-transparent to-transparent" />
+        </motion.div>
 
-          <div className="absolute inset-0 flex items-center justify-center">
-            <motion.div
-              animate={{
-                scale: [1, 1.05, 1],
-                opacity: [0.2, 0.4, 0.2]
-              }}
-              transition={{ duration: 6, repeat: Infinity }}
-              className="w-64 h-64 border-2 border-optical-blue/30 rounded-full blur-sm"
-            />
-
+        {/* KPI: Coûts IT */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.7, duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+          className="absolute top-8 -left-10 z-20"
+        >
+          <div className="animate-float">
+            <div className="bg-slate-900/70 backdrop-blur-md border border-white/10 p-5 rounded-xl shadow-2xl w-48">
+              <div className="flex items-center gap-2 mb-2">
+                <TrendingDown className="w-4 h-4 text-optical-blue" />
+                <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400">Coûts IT</span>
+              </div>
+              <span className="text-3xl font-black text-white">-30%</span>
+              <div className="w-full bg-white/5 h-1.5 rounded-full mt-3 overflow-hidden">
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: '70%' }}
+                  transition={{ duration: 1.5, delay: 1, ease: 'easeOut' }}
+                  className="bg-optical-blue h-full rounded-full"
+                />
+              </div>
+            </div>
           </div>
-        </div>
-        <div className="absolute -top-12 -right-12 w-64 h-64 bg-blue-600/30 rounded-full blur-[100px] animate-pulse-slow" />
+        </motion.div>
 
+        {/* KPI: Efficacité */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.9, duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+          className="absolute bottom-16 -right-6 z-20"
+        >
+          <div className="animate-float" style={{ animationDelay: '1.5s' }}>
+            <div className="bg-slate-900/70 backdrop-blur-md border border-white/10 p-5 rounded-xl shadow-2xl w-52">
+              <div className="flex items-center gap-2 mb-2">
+                <Zap className="w-4 h-4 text-emerald-400" />
+                <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400">Efficacité</span>
+              </div>
+              <span className="text-3xl font-black text-white">+45%</span>
+              <div className="w-full bg-white/5 h-1.5 rounded-full mt-3 overflow-hidden">
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: '45%' }}
+                  transition={{ duration: 1.5, delay: 1.2, ease: 'easeOut' }}
+                  className="bg-emerald-400 h-full rounded-full"
+                />
+              </div>
+            </div>
+          </div>
+        </motion.div>
 
-      </motion.div>
+        {/* KPI: Audit badge */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 1.1, duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20"
+        >
+          <div className="animate-float" style={{ animationDelay: '3s' }}>
+            <div className="bg-slate-900/70 backdrop-blur-md border border-optical-blue/25 p-4 rounded-xl shadow-2xl flex items-center gap-4">
+              <div className="w-11 h-11 rounded-lg bg-blue-600/20 flex items-center justify-center text-optical-blue border border-blue-600/20">
+                <ShieldCheck className="w-5 h-5" />
+              </div>
+              <div>
+                <div className="text-sm font-bold text-white leading-none">Audit Stratégique</div>
+                <div className="text-[10px] text-slate-400 mt-1.5 uppercase tracking-widest font-semibold">Infrastructure optimisée</div>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      </div>
     </div>
   </section>
 );
