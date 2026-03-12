@@ -50,7 +50,7 @@ Le site est one-page. Toutes les sections sont dans `App.tsx` :
 | `CalcSlider`           | Sous-composant slider pour le simulateur      |
 | `CalcResult`           | Sous-composant ligne de résultat              |
 | `EvolutionConseil`     | Accompagnement durable : revue, veille, pilotage évolutions |
-| `DiagnosticQuestions`  | Auto-diagnostic : 6 questions dirigeant + CTA |
+| `DiagnosticExpress`    | Diagnostic interactif : 5 questions, scoring /100, résultat avec points d'attention + priorité |
 | `CTASection`           | Appel à l'action : premier échange gratuit, déplacements Lyon/Ain/Isère, visio |
 | `ContactSection`       | Formulaire de contact + badges (gratuit, zone, visio) |
 | `LegalModal`           | Mentions légales (modal depuis le footer)     |
@@ -116,6 +116,38 @@ Le Hero est un composant critique du site. Voici sa structure complète :
 - `src/index.css` : `@keyframes kpi-sweep`, `@keyframes audit-scan`, `.hero-kpi-card`, `.audit-scan-card`, `@keyframes hero-glow-drift`, float, fiber-beam
 - `index.html` : `<link rel="preload">` pour l'image hero
 - `stitch/header/app/page.tsx` : référence design (lecture seule)
+
+### DiagnosticExpress — Structure détaillée
+
+Module interactif de diagnostic en 3 phases : intro → quiz → résultat.
+
+**Flow :**
+- Phase intro : badge, titre, description, 3 badges (2 min, Gratuit, Résultat immédiat), CTA "Lancer"
+- Phase quiz : 5 questions une par une, 4 réponses par question en grille 2×2
+- Phase résultat : score /100, niveau, interprétation, points d'attention, priorité, CTAs
+
+**Scoring :**
+- A = 20, B = 14, C = 7, D = 0 → total /100
+- 80–100 : Bien tenu | 60–79 : Perfectible | 40–59 : Trop subi | 0–39 : À risque
+- Points d'attention dynamiques basés sur les réponses faibles (Q2+Q3, Q4, Q5, Q1)
+
+**Thèmes des questions :**
+1. Adaptation de l'environnement à l'activité
+2. Temps perdu (réseau, téléphonie, outils)
+3. Relation prestataires (clarté, rapidité)
+4. Challenge des contrats et services
+5. Impact d'un incident sur l'activité
+
+**UX :**
+- Barre de progression animée (gradient blue→violet)
+- AnimatePresence pour transitions entre questions (slide horizontal)
+- Cards réponse : border-2, selected state blue glow, CheckCircle
+- Résultat : score circulaire coloré par niveau, cards warning/danger, priorité blue
+
+**Contrainte métier :**
+- Zéro mention sécurité/cyber — uniquement performance, maîtrise, frictions, pilotage
+- Pas de rapport PDF, pas de dashboard, pas de faux KPIs
+- CTA résultat → contact (pas de formulaire de lead)
 
 - **Un composant = une section** dans `App.tsx` (pas de fichier séparé sauf si réutilisable)
 - **Composants réutilisables** dans `src/components/` (ex: `AegisLogo`)

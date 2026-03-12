@@ -67,9 +67,9 @@ docs/               ← documentation technique
 
 ## Sections du site (App.tsx)
 
-Navbar → Hero → GainBlock → CostControl → TimeLoss → RootCause → WhyAegis → ImpactCalculator → EvolutionConseil → DiagnosticQuestions → CTASection → ContactSection → Footer (+ LegalModal)
+Navbar → Hero → GainBlock → CostControl → TimeLoss → RootCause → WhyAegis → ImpactCalculator → EvolutionConseil → DiagnosticExpress → CTASection → ContactSection → Footer (+ LegalModal)
 
-Flux narratif : gains concrets → coûts → temps perdu → diagnostic de fond → légitimité/approche → simulateur → évolution → auto-diagnostic → action
+Flux narratif : gains concrets → coûts → temps perdu → diagnostic de fond → légitimité/approche → simulateur → évolution → diagnostic express interactif → action
 
 ## Informations de contact
 

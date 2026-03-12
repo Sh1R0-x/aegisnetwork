@@ -18,7 +18,9 @@ import {
   CheckCircle,
   Lightbulb,
   ArrowRight,
-  RefreshCw
+  RefreshCw,
+  AlertTriangle,
+  RotateCcw
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useEffect, useState } from 'react';
@@ -43,6 +45,7 @@ const NAV_SECTIONS = [
   { id: 'enjeux', label: 'Vos enjeux' },
   { id: 'approche', label: 'Notre approche' },
   { id: 'simulateur', label: 'Simulateur' },
+  { id: 'diagnostic', label: 'Diagnostic' },
   { id: 'contact', label: 'Contact' },
 ];
 
@@ -928,68 +931,432 @@ const EvolutionConseil = () => (
   </section>
 );
 
-const DiagnosticQuestions = () => {
-  const questions = [
-    "Savez-vous exactement ce que vous payez chaque mois en IT et télécom ?",
-    "Avez-vous comparé vos contrats avec les offres actuelles du marché ?",
-    "Avez-vous un interlocuteur unique pour tout ce qui touche à votre infrastructure ?",
-    "Connaissez-vous la date de fin de chacun de vos engagements ?",
-    "En cas de panne, savez-vous qui appeler et quoi exiger ?",
-    "Avez-vous déjà estimé le temps que votre équipe passe à gérer des problèmes IT ?"
-  ];
+const DIAG_QUESTIONS = [
+  {
+    id: 1,
+    question: "Votre environnement est-il vraiment adapté à votre activité ?",
+    options: [
+      { id: 'A', label: "Oui, il répond bien à nos besoins", score: 20 },
+      { id: 'B', label: "Globalement oui, avec quelques limites", score: 14 },
+      { id: 'C', label: "Pas complètement, certains points nous freinent", score: 7 },
+      { id: 'D', label: "Non, il n'est clairement pas adapté", score: 0 },
+    ],
+  },
+  {
+    id: 2,
+    question: "Perdez-vous du temps à cause de votre réseau, téléphonie ou outils IT ?",
+    options: [
+      { id: 'A', label: "Non, très rarement", score: 20 },
+      { id: 'B', label: "Parfois, mais cela reste limité", score: 14 },
+      { id: 'C', label: "Oui, cela arrive régulièrement", score: 7 },
+      { id: 'D', label: "Oui, c'est un vrai sujet au quotidien", score: 0 },
+    ],
+  },
+  {
+    id: 3,
+    question: "Avec vos prestataires, les sujets avancent-ils clairement et rapidement ?",
+    options: [
+      { id: 'A', label: "Oui, échanges clairs et sujets qui avancent", score: 20 },
+      { id: 'B', label: "Globalement, même si certains sujets traînent", score: 14 },
+      { id: 'C', label: "Pas toujours, il faut souvent relancer", score: 7 },
+      { id: 'D', label: "Non, trop lent et trop flou", score: 0 },
+    ],
+  },
+  {
+    id: 4,
+    question: "Vos contrats et services sont-ils réellement challengés par rapport à votre besoin ?",
+    options: [
+      { id: 'A', label: "Oui, on revoit régulièrement ce qu'on paie", score: 20 },
+      { id: 'B', label: "De temps en temps, sans méthode précise", score: 14 },
+      { id: 'C', label: "Rarement, on garde l'existant par habitude", score: 7 },
+      { id: 'D', label: "Non, on ne le challenge presque jamais", score: 0 },
+    ],
+  },
+  {
+    id: 5,
+    question: "Si un incident important survient, l'impact sur votre activité resterait-il maîtrisable ?",
+    options: [
+      { id: 'A', label: "Oui, impact limité et gérable", score: 20 },
+      { id: 'B', label: "Probablement, avec une gêne temporaire", score: 14 },
+      { id: 'C', label: "Ce serait vite problématique", score: 7 },
+      { id: 'D', label: "Ce serait un blocage important", score: 0 },
+    ],
+  },
+];
+
+interface DiagResult {
+  score: number;
+  level: string;
+  interpretation: string;
+  points: { label: string; type: 'warning' | 'danger' }[];
+  priority: string;
+}
+
+const computeResult = (answers: Record<number, { id: string; score: number }>): DiagResult => {
+  const score = Object.values(answers).reduce((sum, a) => sum + a.score, 0);
+
+  const q2 = answers[2]?.score ?? 20;
+  const q3 = answers[3]?.score ?? 20;
+  const q4 = answers[4]?.score ?? 20;
+  const q5 = answers[5]?.score ?? 20;
+  const q1 = answers[1]?.score ?? 20;
+
+  const points: { label: string; type: 'warning' | 'danger' }[] = [];
+
+  if (q2 + q3 <= 14) {
+    points.push({ label: "Frictions fréquentes et temps perdu en relances ou résolution incomplète", type: q2 + q3 <= 7 ? 'danger' : 'warning' });
+  }
+  if (q4 <= 7) {
+    points.push({ label: "Contrats et services insuffisamment challengés par rapport au besoin réel", type: q4 === 0 ? 'danger' : 'warning' });
+  }
+  if (q5 <= 7) {
+    points.push({ label: "Exposition opérationnelle élevée en cas d'incident", type: q5 === 0 ? 'danger' : 'warning' });
+  }
+  if (q1 <= 7) {
+    points.push({ label: "Décalage entre l'environnement actuel et l'activité réelle", type: q1 === 0 ? 'danger' : 'warning' });
+  }
+
+  // Keep max 2 points
+  const finalPoints = points.slice(0, 2);
+
+  if (score >= 80) {
+    return {
+      score,
+      level: "Environnement bien tenu",
+      interpretation: "Votre environnement semble globalement bien cadré. Quelques optimisations restent possibles, mais la base paraît saine.",
+      points: finalPoints.length > 0 ? finalPoints : [
+        { label: "Quelques marges d'optimisation", type: 'warning' },
+      ],
+      priority: "Continuer à challenger l'existant avant qu'il ne dérive avec le temps.",
+    };
+  }
+  if (score >= 60) {
+    return {
+      score,
+      level: "Base correcte, encore perfectible",
+      interpretation: "L'ensemble tient, mais plusieurs signaux montrent une maîtrise encore partielle.",
+      points: finalPoints.length > 0 ? finalPoints : [
+        { label: "Frictions ponctuelles", type: 'warning' },
+        { label: "Services ou contrats pas assez revus", type: 'warning' },
+      ],
+      priority: "Remettre à plat les zones qui font perdre du temps ou qui ne sont plus alignées avec votre besoin.",
+    };
+  }
+  if (score >= 40) {
+    return {
+      score,
+      level: "Fonctionnement trop subi",
+      interpretation: "Le quotidien tient, mais avec trop de limites, de dépendances ou de pertes de temps évitables.",
+      points: finalPoints.length > 0 ? finalPoints : [
+        { label: "Trop de relances ou de lenteurs", type: 'warning' },
+        { label: "Existant insuffisamment challengé", type: 'danger' },
+      ],
+      priority: "Reprendre la main sur l'existant avant d'ajouter de nouveaux outils ou coûts.",
+    };
+  }
+  return {
+    score,
+    level: "Environnement à risque",
+    interpretation: "Votre environnement semble freiner clairement l'activité ou exposer l'entreprise à un impact disproportionné.",
+    points: finalPoints.length > 0 ? finalPoints : [
+      { label: "Impact métier mal absorbé", type: 'danger' },
+      { label: "Décalage fort entre besoin réel et existant", type: 'danger' },
+    ],
+    priority: "Identifier rapidement les points de blocage, les dépendances critiques et les priorités d'optimisation.",
+  };
+};
+
+const DiagnosticExpress = () => {
+  const [step, setStep] = useState<'intro' | 'quiz' | 'result'>('intro');
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [answers, setAnswers] = useState<Record<number, { id: string; score: number }>>({});
+  const [result, setResult] = useState<DiagResult | null>(null);
+
+  const currentQ = DIAG_QUESTIONS[currentIndex];
+  const selected = answers[currentQ?.id];
+  const progress = Math.round(((currentIndex + 1) / DIAG_QUESTIONS.length) * 100);
+
+  const handleSelect = (optId: string, score: number) => {
+    setAnswers(prev => ({ ...prev, [currentQ.id]: { id: optId, score } }));
+  };
+
+  const handleNext = () => {
+    if (!selected) return;
+    if (currentIndex < DIAG_QUESTIONS.length - 1) {
+      setCurrentIndex(prev => prev + 1);
+    } else {
+      const r = computeResult(answers);
+      setResult(r);
+      setStep('result');
+    }
+  };
+
+  const handlePrev = () => {
+    if (currentIndex > 0) {
+      setCurrentIndex(prev => prev - 1);
+    } else {
+      setStep('intro');
+    }
+  };
+
+  const handleReset = () => {
+    setStep('intro');
+    setCurrentIndex(0);
+    setAnswers({});
+    setResult(null);
+  };
+
+  const scoreColor = (score: number) => {
+    if (score >= 80) return 'text-emerald-400';
+    if (score >= 60) return 'text-blue-400';
+    if (score >= 40) return 'text-amber-400';
+    return 'text-rose-400';
+  };
+
+  const scoreBorder = (score: number) => {
+    if (score >= 80) return 'border-emerald-500/40';
+    if (score >= 60) return 'border-blue-500/40';
+    if (score >= 40) return 'border-amber-500/40';
+    return 'border-rose-500/40';
+  };
+
+  const scoreGlow = (score: number) => {
+    if (score >= 80) return 'shadow-[0_0_40px_rgba(16,185,129,0.15)]';
+    if (score >= 60) return 'shadow-[0_0_40px_rgba(56,189,248,0.15)]';
+    if (score >= 40) return 'shadow-[0_0_40px_rgba(245,158,11,0.15)]';
+    return 'shadow-[0_0_40px_rgba(244,63,94,0.15)]';
+  };
 
   return (
     <section id="diagnostic" className="py-32 relative overflow-hidden">
       <FiberBeams />
-      <div className="max-w-4xl mx-auto px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-optical-blue font-bold text-sm uppercase tracking-[0.3em] mb-4">Auto-diagnostic</h2>
-          <h3 className="text-4xl lg:text-5xl font-black text-white mb-6 leading-tight">
-            Ces questions vous{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-violet-400">parlent ?</span>
-          </h3>
-          <p className="text-slate-400 text-lg leading-relaxed">
-            Prenez 30 secondes. Si vous répondez « non » à au moins deux de ces questions, un diagnostic pourrait vous faire gagner du temps, et de l'argent.
-          </p>
-        </motion.div>
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-blue-600/[0.04] blur-[150px] rounded-full pointer-events-none" />
+      <div className="max-w-4xl mx-auto px-6 relative z-10">
 
-        <div className="space-y-4 mb-12">
-          {questions.map((q, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ delay: i * 0.08, duration: 0.4 }}
-              viewport={{ once: true }}
-              className="glass-card rounded-2xl p-6 border-white/5 hover:border-optical-blue/20 transition-all flex items-start gap-4"
-            >
-              <div className="shrink-0 w-8 h-8 rounded-lg bg-blue-600/15 flex items-center justify-center text-optical-blue text-sm font-bold">
-                {i + 1}
-              </div>
-              <p className="text-slate-300 font-medium leading-relaxed">{q}</p>
-            </motion.div>
-          ))}
-        </div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center"
-        >
-          <p className="text-slate-400 mb-8">Deux « non » ou plus ? Parlons-en.</p>
-          <button
-            onClick={() => scrollToSection('contact')}
-            className="glow-button h-14 px-10 rounded-xl bg-gradient-to-r from-blue-600 to-violet-600 text-white font-bold inline-flex items-center justify-center transition-all cursor-pointer"
+        {/* ── INTRO ── */}
+        {step === 'intro' && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center"
           >
-            Demander un diagnostic gratuit
-          </button>
-        </motion.div>
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-600/15 border border-blue-600/25 text-optical-blue text-xs font-bold uppercase tracking-widest mb-8">
+              <Activity className="w-3.5 h-3.5" />
+              Diagnostic Express
+            </div>
+            <h3 className="text-4xl lg:text-5xl font-black text-white mb-6 leading-tight">
+              Où en est votre{' '}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-violet-400">maîtrise IT</span>
+              {' '}?
+            </h3>
+            <p className="text-slate-400 text-lg leading-relaxed max-w-2xl mx-auto mb-10">
+              5 questions, 2 minutes. Un état des lieux immédiat sur la performance, les frictions et le niveau de contrôle de votre environnement.
+            </p>
+
+            <div className="flex flex-wrap justify-center gap-6 mb-10 text-sm text-slate-400">
+              {[
+                { icon: Clock, text: '2 min' },
+                { icon: CheckCircle, text: 'Gratuit' },
+                { icon: Target, text: 'Résultat immédiat' },
+              ].map(({ icon: Icon, text }) => (
+                <div key={text} className="flex items-center gap-2">
+                  <Icon className="w-4 h-4 text-optical-blue" />
+                  <span className="font-medium">{text}</span>
+                </div>
+              ))}
+            </div>
+
+            <button
+              onClick={() => setStep('quiz')}
+              className="glow-button h-14 px-10 rounded-xl bg-gradient-to-r from-blue-600 to-accent-violet text-white font-bold text-lg inline-flex items-center justify-center gap-3 cursor-pointer"
+            >
+              Lancer le diagnostic
+              <ArrowRight size={20} />
+            </button>
+          </motion.div>
+        )}
+
+        {/* ── QUIZ ── */}
+        {step === 'quiz' && currentQ && (
+          <div>
+            {/* Progress */}
+            <div className="mb-10">
+              <div className="flex justify-between items-center mb-3">
+                <span className="text-optical-blue text-xs font-bold uppercase tracking-widest">
+                  Question {currentIndex + 1} / {DIAG_QUESTIONS.length}
+                </span>
+                <span className="text-xs font-bold text-slate-500">{progress}%</span>
+              </div>
+              <div className="h-1.5 w-full bg-slate-800/80 rounded-full overflow-hidden">
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: `${progress}%` }}
+                  transition={{ duration: 0.4, ease: 'easeOut' }}
+                  className="h-full bg-gradient-to-r from-blue-500 to-violet-500 rounded-full"
+                />
+              </div>
+            </div>
+
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentQ.id}
+                initial={{ opacity: 0, x: 30 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -30 }}
+                transition={{ duration: 0.25 }}
+              >
+                {/* Question */}
+                <h3 className="text-2xl md:text-3xl font-black text-white leading-tight mb-10">
+                  {currentQ.question}
+                </h3>
+
+                {/* Options grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-10">
+                  {currentQ.options.map((opt) => {
+                    const isSelected = selected?.id === opt.id;
+                    return (
+                      <button
+                        key={opt.id}
+                        onClick={() => handleSelect(opt.id, opt.score)}
+                        className={`relative flex items-start gap-4 p-5 rounded-2xl border-2 text-left transition-all duration-200 cursor-pointer group ${
+                          isSelected
+                            ? 'border-blue-500 bg-blue-500/10 shadow-[0_0_25px_-8px_rgba(37,99,235,0.3)]'
+                            : 'border-white/5 bg-slate-900/50 hover:border-slate-600 hover:bg-slate-800/50'
+                        }`}
+                      >
+                        <span className={`shrink-0 flex items-center justify-center h-8 w-8 rounded-lg font-black text-sm transition-colors ${
+                          isSelected ? 'bg-blue-500 text-white' : 'bg-slate-800 text-slate-400 group-hover:bg-slate-700 group-hover:text-white'
+                        }`}>
+                          {opt.id}
+                        </span>
+                        <span className={`text-base font-semibold leading-snug transition-colors ${
+                          isSelected ? 'text-white' : 'text-slate-300 group-hover:text-white'
+                        }`}>
+                          {opt.label}
+                        </span>
+                        {isSelected && (
+                          <CheckCircle className="absolute top-4 right-4 w-5 h-5 text-blue-400" />
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+              </motion.div>
+            </AnimatePresence>
+
+            {/* Navigation */}
+            <div className="flex items-center justify-between pt-6 border-t border-white/5">
+              <button
+                onClick={handlePrev}
+                className="text-slate-500 hover:text-white transition-colors font-semibold text-sm flex items-center gap-2 cursor-pointer"
+              >
+                <ArrowRight className="w-4 h-4 rotate-180" />
+                Précédent
+              </button>
+              <button
+                onClick={handleNext}
+                disabled={!selected}
+                className={`flex items-center justify-center gap-2 rounded-xl h-12 px-8 text-sm font-bold transition-all cursor-pointer ${
+                  selected
+                    ? 'bg-blue-600 text-white shadow-[0_0_15px_-3px_rgba(37,99,235,0.4)] hover:bg-blue-500'
+                    : 'bg-slate-800 text-slate-500 cursor-not-allowed'
+                }`}
+              >
+                {currentIndex < DIAG_QUESTIONS.length - 1 ? 'Suivant' : 'Voir le résultat'}
+                <ArrowRight className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* ── RESULT ── */}
+        {step === 'result' && result && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            {/* Header */}
+            <div className="text-center mb-10">
+              <span className="text-optical-blue text-xs font-bold uppercase tracking-widest">Votre diagnostic</span>
+            </div>
+
+            {/* Score card */}
+            <div className="glass-card rounded-3xl p-8 md:p-10 mb-8 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-72 h-72 bg-blue-600/5 rounded-full blur-[100px] pointer-events-none" />
+
+              <div className="flex flex-col md:flex-row items-center gap-10 relative z-10">
+                {/* Score circle */}
+                <div className={`shrink-0 flex flex-col items-center justify-center w-40 h-40 rounded-full border-[3px] ${scoreBorder(result.score)} bg-slate-950/80 ${scoreGlow(result.score)}`}>
+                  <span className={`text-6xl font-black ${scoreColor(result.score)}`}>{result.score}</span>
+                  <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-1">sur 100</span>
+                </div>
+
+                {/* Level + interpretation */}
+                <div className="flex-1 text-center md:text-left">
+                  <h3 className="text-2xl md:text-3xl font-black text-white mb-3">{result.level}</h3>
+                  <p className="text-slate-400 text-base leading-relaxed">{result.interpretation}</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Points d'attention */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+              {result.points.map((pt, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 + i * 0.1 }}
+                  className={`flex items-start gap-4 p-5 rounded-2xl border ${
+                    pt.type === 'danger'
+                      ? 'border-rose-500/20 bg-rose-500/5'
+                      : 'border-amber-500/20 bg-amber-500/5'
+                  }`}
+                >
+                  <AlertTriangle className={`w-5 h-5 shrink-0 mt-0.5 ${
+                    pt.type === 'danger' ? 'text-rose-400' : 'text-amber-400'
+                  }`} />
+                  <span className="text-sm font-medium text-slate-300 leading-relaxed">{pt.label}</span>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Priority */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+              className="flex items-start gap-4 p-6 rounded-2xl border border-blue-500/20 bg-blue-500/5 mb-10"
+            >
+              <Lightbulb className="w-5 h-5 text-blue-400 shrink-0 mt-0.5" />
+              <div>
+                <h4 className="text-sm font-bold text-white mb-1">Priorité recommandée</h4>
+                <p className="text-sm text-slate-400 leading-relaxed">{result.priority}</p>
+              </div>
+            </motion.div>
+
+            {/* CTAs */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <button
+                onClick={() => scrollToSection('contact')}
+                className="glow-button h-14 px-8 rounded-xl bg-gradient-to-r from-blue-600 to-accent-violet text-white font-bold text-base flex items-center justify-center gap-3 cursor-pointer"
+              >
+                Échanger sur vos résultats
+                <ArrowRight size={18} />
+              </button>
+              <button
+                onClick={handleReset}
+                className="h-14 px-8 rounded-xl bg-white/5 border border-white/10 text-white font-bold text-base flex items-center justify-center gap-2 hover:bg-white/10 transition-all cursor-pointer"
+              >
+                <RotateCcw size={16} />
+                Refaire le diagnostic
+              </button>
+            </div>
+          </motion.div>
+        )}
+
       </div>
     </section>
   );
@@ -1189,7 +1556,7 @@ export default function App() {
         <WhyAegis />
         <ImpactCalculator />
         <EvolutionConseil />
-        <DiagnosticQuestions />
+        <DiagnosticExpress />
         <CTASection />
         <ContactSection />
       </main>
