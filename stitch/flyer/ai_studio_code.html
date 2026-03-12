@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AEGIS NETWORK - Flyer A5</title>
+  
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'aegis-blue': '#2563EB',
+            'optical-blue': '#3B82F6',
+            'deep-violet': '#7C3AED',
+            'bg-deep': '#020617',
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Print Configuration */
+    @page {
+      size: 148mm 210mm; /* A5 Portrait */
+      margin: 0;
+    }
+    
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #e2e8f0; /* Light background for screen preview */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* The actual A5 Flyer Canvas */
+    .flyer-canvas {
+      width: 148mm;
+      height: 210mm;
+      background-color: #020617;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      display: flex;
+      flex-direction: column;
+      box-sizing: border-box;
+      padding: 10mm;
+    }
+
+    @media print {
+      body {
+        background-color: #020617;
+        display: block;
+      }
+      .flyer-canvas {
+        box-shadow: none;
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    /* Graphic Elements */
+    .bg-glow-1 {
+      position: absolute;
+      top: -10%;
+      right: -20%;
+      width: 70%;
+      height: 50%;
+      background: radial-gradient(circle, rgba(37, 99, 235, 0.25) 0%, transparent 70%);
+      border-radius: 50%;
+      filter: blur(40px);
+      z-index: 0;
+    }
+    
+    .bg-glow-2 {
+      position: absolute;
+      bottom: -10%;
+      left: -20%;
+      width: 70%;
+      height: 50%;
+      background: radial-gradient(circle, rgba(124, 58, 237, 0.2) 0%, transparent 70%);
+      border-radius: 50%;
+      filter: blur(40px);
+      z-index: 0;
+    }
+
+    .text-gradient {
+      background: linear-gradient(135deg, #3B82F6 0%, #7C3AED 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .aegis-gradient-bg {
+      background: linear-gradient(135deg, #2563EB 0%, #7C3AED 100%);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- BEGIN: A5 Flyer Canvas -->
+  <main class="flyer-canvas">
+    
+    <!-- Background Mesh/Network Pattern -->
+    <svg class="absolute inset-0 w-full h-full opacity-[0.04] z-0" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="network-pattern" width="40" height="40" patternUnits="userSpaceOnUse">
+          <circle cx="20" cy="20" r="1.5" fill="#ffffff"/>
+          <path d="M20 20 L40 0 M20 20 L0 40 M20 20 L40 40 M20 20 L0 0" stroke="#ffffff" stroke-width="0.5" opacity="0.5"/>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#network-pattern)"/>
+    </svg>
+
+    <!-- Ambient Glows -->
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+
+    <!-- 1. HEADER & HERO SECTION -->
+    <header class="relative z-10 flex justify-between items-start mb-6">
+      <div class="flex items-center gap-3">
+        <!-- Logo -->
+        <svg class="w-9 h-9" fill="none" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="logo-g" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#2563EB" />
+              <stop offset="100%" stop-color="#7C3AED" />
+            </linearGradient>
+          </defs>
+          <path d="M15 85 L50 15 L85 85" stroke="url(#logo-g)" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="82" cy="18" r="4" fill="#60A5FA"/>
+          <circle cx="92" cy="32" r="3" fill="#60A5FA" opacity="0.6"/>
+          <circle cx="72" cy="8" r="3" fill="#7C3AED" opacity="0.8"/>
+          <path d="M65 35 L82 18" stroke="url(#logo-g)" stroke-width="1.5" stroke-dasharray="4 4"/>
+        </svg>
+        <div>
+          <h1 class="text-white font-black text-[18px] leading-none tracking-widest">AEGIS <span class="text-optical-blue">NETWORK</span></h1>
+          <p class="text-[7.5px] font-bold uppercase tracking-[0.25em] text-slate-400 mt-1">Conseil & Optimisation IT</p>
+        </div>
+      </div>
+    </header>
+
+    <section class="relative z-10 mb-6">
+      <h2 class="text-[26px] font-black text-white leading-[1.1] tracking-tight mb-3 text-balance">
+        Reprenez le contrôle de votre <span class="text-gradient">infrastructure IT.</span>
+      </h2>
+      <p class="text-[11px] text-slate-300 font-medium leading-relaxed max-w-[95%]">
+        Conseil, audit et pilotage pour TPE & PME. Ne laissez plus la technique freiner votre développement et gaspiller votre budget.
+      </p>
+    </section>
+
+    <!-- 2 & 4. PROBLEMS & RESULTS (2-Column Grid) -->
+    <div class="relative z-10 grid grid-cols-2 gap-4 mb-5">
+      
+      <!-- Typical Problems -->
+      <div class="bg-slate-900/50 border border-slate-800 rounded-xl p-4">
+        <h3 class="text-[9px] font-bold uppercase tracking-widest text-slate-400 mb-3 flex items-center gap-2">
+          <svg class="w-3 h-3 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+          Vos défis
+        </h3>
+        <ul class="space-y-2.5">
+          <li class="flex items-start gap-2 text-[10px] text-slate-300 leading-tight">
+            <span class="text-slate-500 font-bold mt-[1px]">✕</span>
+            Prestataires télécoms difficiles à piloter
+          </li>
+          <li class="flex items-start gap-2 text-[10px] text-slate-300 leading-tight">
+            <span class="text-slate-500 font-bold mt-[1px]">✕</span>
+            Hausses de coûts inexpliquées
+          </li>
+          <li class="flex items-start gap-2 text-[10px] text-slate-300 leading-tight">
+            <span class="text-slate-500 font-bold mt-[1px]">✕</span>
+            Incidents récurrents sans suivi
+          </li>
+          <li class="flex items-start gap-2 text-[10px] text-slate-300 leading-tight">
+            <span class="text-slate-500 font-bold mt-[1px]">✕</span>
+            Évolutions sans cap technique
+          </li>
+        </ul>
+      </div>
+
+      <!-- Concrete Results -->
+      <div class="bg-blue-950/20 border border-blue-900/40 rounded-xl p-4">
+        <h3 class="text-[9px] font-bold uppercase tracking-widest text-optical-blue mb-3 flex items-center gap-2">
+          <svg class="w-3 h-3 text-optical-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          Vos bénéfices
+        </h3>
+        <ul class="space-y-2.5">
+          <li class="flex items-start gap-2 text-[10px] text-slate-200 leading-tight">
+            <span class="text-optical-blue font-bold mt-[1px]">✓</span>
+            Gain de temps immédiat
+          </li>
+          <li class="flex items-start gap-2 text-[10px] text-slate-200 leading-tight">
+            <span class="text-optical-blue font-bold mt-[1px]">✓</span>
+            Coûts maîtrisés et justifiés
+          </li>
+          <li class="flex items-start gap-2 text-[10px] text-slate-200 leading-tight">
+            <span class="text-optical-blue font-bold mt-[1px]">✓</span>
+            Décisions claires et éclairées
+          </li>
+          <li class="flex items-start gap-2 text-[10px] text-slate-200 leading-tight">
+            <span class="text-optical-blue font-bold mt-[1px]">✓</span>
+            Continuité d'activité assurée
+          </li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- 3. WHAT WE DO (Services) -->
+    <div class="relative z-10 mb-auto">
+      <div class="rounded-xl p-[1px] aegis-gradient-bg shadow-lg shadow-blue-900/20">
+        <div class="bg-[#020617] rounded-xl p-5">
+          <h3 class="text-[10px] font-bold uppercase tracking-widest text-white mb-4 text-center">Notre Expertise</h3>
+          
+          <div class="grid grid-cols-2 gap-y-4 gap-x-4">
+            <!-- Item 1 -->
+            <div class="flex items-center gap-3">
+              <div class="w-7 h-7 rounded-lg aegis-gradient-bg flex items-center justify-center shrink-0">
+                <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+              </div>
+              <span class="text-[11px] font-semibold text-slate-100 leading-tight">Audit & Cadrage</span>
+            </div>
+            <!-- Item 2 -->
+            <div class="flex items-center gap-3">
+              <div class="w-7 h-7 rounded-lg aegis-gradient-bg flex items-center justify-center shrink-0">
+                <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>
+              </div>
+              <span class="text-[11px] font-semibold text-slate-100 leading-tight">Conseil Réseau & Téléphonie</span>
+            </div>
+            <!-- Item 3 -->
+            <div class="flex items-center gap-3">
+              <div class="w-7 h-7 rounded-lg aegis-gradient-bg flex items-center justify-center shrink-0">
+                <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+              </div>
+              <span class="text-[11px] font-semibold text-slate-100 leading-tight">Pilotage de projets</span>
+            </div>
+            <!-- Item 4 -->
+            <div class="flex items-center gap-3">
+              <div class="w-7 h-7 rounded-lg aegis-gradient-bg flex items-center justify-center shrink-0">
+                <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+              </div>
+              <span class="text-[11px] font-semibold text-slate-100 leading-tight">Coordination prestataires</span>
+            </div>
+            <!-- Item 5 -->
+            <div class="flex items-center gap-3">
+              <div class="w-7 h-7 rounded-lg aegis-gradient-bg flex items-center justify-center shrink-0">
+                <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+              </div>
+              <span class="text-[11px] font-semibold text-slate-100 leading-tight">Optimisation & Suivi</span>
+            </div>
+            <!-- Item 6 -->
+            <div class="flex items-center gap-3">
+              <div class="w-7 h-7 rounded-lg aegis-gradient-bg flex items-center justify-center shrink-0">
+                <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+              </div>
+              <span class="text-[11px] font-semibold text-slate-100 leading-tight">Sécurité & Résilience</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. CONTACT SECTION -->
+    <footer class="relative z-10 mt-5">
+      <div class="bg-white rounded-xl p-5 shadow-2xl">
+        
+        <div class="flex justify-between items-end border-b border-slate-200 pb-3 mb-3">
+          <div>
+            <h3 class="text-[12px] font-black uppercase tracking-widest text-slate-900">Contact & Intervention</h3>
+            <p class="text-[9px] font-bold text-aegis-blue mt-1.5 flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.243-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+              Lyon • Auvergne-Rhône-Alpes • Suisse Romande
+            </p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-3 gap-3">
+          <div>
+            <p class="text-[8px] font-bold uppercase text-slate-400 tracking-wider mb-0.5">Téléphone</p>
+            <p class="text-[12px] font-black text-slate-900">06 52 95 00 10</p>
+          </div>
+          <div>
+            <p class="text-[8px] font-bold uppercase text-slate-400 tracking-wider mb-0.5">Email</p>
+            <p class="text-[12px] font-black text-slate-900">contact@aegisnetwork.fr</p>
+          </div>
+          <div>
+            <p class="text-[8px] font-bold uppercase text-slate-400 tracking-wider mb-0.5">Site Web</p>
+            <p class="text-[12px] font-black text-aegis-blue">www.aegisnetwork.fr</p>
+          </div>
+        </div>
+
+      </div>
+    </footer>
+
+  </main>
+
+</body>
+</html>

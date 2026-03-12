@@ -318,7 +318,7 @@ Utiliser des placeholders `TODO:` si non confirmé :
 
 ## Coordonnées de référence
 
-- **Téléphone** : 07 81 43 81 23
+- **Téléphone** : 06 52 95 00 10
 - **Email** : contact@aegisnetwork.fr
 - **Site** : aegisnetwork.fr
 - **Localisation** : Lyon, France

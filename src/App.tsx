@@ -22,6 +22,9 @@ import {
   AlertTriangle,
   RotateCcw,
   Download,
+  Calculator,
+  Sparkles,
+  Menu,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useEffect, useState, type ChangeEvent, type FormEvent } from 'react';
@@ -52,6 +55,7 @@ const NAV_SECTIONS = [
 
 const Navbar = () => {
   const [activeSection, setActiveSection] = useState('');
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -73,6 +77,12 @@ const Navbar = () => {
     return () => observer.disconnect();
   }, []);
 
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [mobileOpen]);
+
   return (
     <nav className="fixed top-0 w-full z-50 bg-background-deep/80 backdrop-blur-md border-b border-white/5">
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
@@ -85,7 +95,9 @@ const Navbar = () => {
             <span className="text-[8px] uppercase tracking-[0.25em] text-slate-300 font-bold mt-0.5">Conseil & Optimisation IT</span>
           </div>
         </div>
-        <div className="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-400">
+
+        {/* Desktop nav */}
+        <div className="hidden md:flex items-center gap-8 text-[15px] font-semibold text-slate-300">
           {NAV_SECTIONS.map(({ id, label }) => (
             <button
               key={id}
@@ -100,13 +112,60 @@ const Navbar = () => {
             </button>
           ))}
         </div>
-        <button
-          onClick={() => scrollToSection('contact')}
-          className="glow-button flex items-center justify-center rounded-lg h-10 px-6 bg-gradient-to-r from-blue-600 to-accent-violet text-white text-sm font-bold cursor-pointer"
-        >
-          Contactez-nous
-        </button>
+
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => scrollToSection('contact')}
+            className="glow-button hidden sm:flex items-center justify-center rounded-lg h-10 px-6 bg-gradient-to-r from-blue-600 to-accent-violet text-white text-sm font-bold cursor-pointer"
+          >
+            Contactez-nous
+          </button>
+
+          {/* Mobile burger */}
+          <button
+            onClick={() => setMobileOpen(!mobileOpen)}
+            className="md:hidden flex items-center justify-center w-10 h-10 rounded-lg text-slate-300 hover:text-white hover:bg-white/10 transition-all cursor-pointer"
+            aria-label="Menu de navigation"
+          >
+            {mobileOpen ? <X size={22} /> : <Menu size={22} />}
+          </button>
+        </div>
       </div>
+
+      {/* Mobile overlay nav */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.2 }}
+            className="md:hidden absolute top-16 inset-x-0 bg-background-deep/95 backdrop-blur-xl border-b border-white/5 shadow-2xl"
+          >
+            <div className="flex flex-col px-6 py-6 gap-2">
+              {NAV_SECTIONS.map(({ id, label }) => (
+                <button
+                  key={id}
+                  onClick={() => { scrollToSection(id); setMobileOpen(false); }}
+                  className={`text-left py-3 px-4 rounded-xl text-base font-semibold transition-all cursor-pointer ${
+                    activeSection === id
+                      ? 'text-optical-blue bg-blue-600/10'
+                      : 'text-slate-300 hover:text-white hover:bg-white/5'
+                  }`}
+                >
+                  {label}
+                </button>
+              ))}
+              <button
+                onClick={() => { scrollToSection('contact'); setMobileOpen(false); }}
+                className="mt-4 glow-button flex items-center justify-center rounded-xl h-12 bg-gradient-to-r from-blue-600 to-accent-violet text-white font-bold text-base cursor-pointer"
+              >
+                Contactez-nous
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 };
@@ -173,13 +232,13 @@ const Hero = () => (
             <Activity size={20} />
           </button>
           <div className="flex flex-wrap gap-3">
-            <button onClick={() => scrollToSection('gains')} className="h-11 px-6 rounded-lg bg-white/5 border border-white/10 text-slate-300 font-semibold text-sm flex items-center justify-center gap-2 hover:bg-white/10 hover:text-white transition-all backdrop-blur-sm cursor-pointer">
-              Vos gains
-              <ArrowRight size={15} />
+            <button onClick={() => scrollToSection('gains')} className="h-11 px-6 rounded-lg bg-emerald-500/10 border border-emerald-500/25 text-emerald-300 font-semibold text-sm flex items-center justify-center gap-2 hover:bg-emerald-500/20 hover:text-emerald-200 transition-all backdrop-blur-sm cursor-pointer">
+              <Sparkles size={15} />
+              Ce qu'on vous apporte
             </button>
-            <button onClick={() => scrollToSection('simulateur')} className="h-11 px-6 rounded-lg bg-white/5 border border-white/10 text-slate-300 font-semibold text-sm flex items-center justify-center gap-2 hover:bg-white/10 hover:text-white transition-all backdrop-blur-sm cursor-pointer">
-              Simuler vos économies
-              <BarChart3 size={15} />
+            <button onClick={() => scrollToSection('simulateur')} className="h-11 px-6 rounded-lg bg-sky-500/10 border border-sky-500/25 text-sky-300 font-semibold text-sm flex items-center justify-center gap-2 hover:bg-sky-500/20 hover:text-sky-200 transition-all backdrop-blur-sm cursor-pointer">
+              <Calculator size={15} />
+              Estimer vos économies
             </button>
           </div>
         </motion.div>
@@ -997,6 +1056,7 @@ interface DiagResult {
   interpretation: string;
   points: { label: string; type: 'warning' | 'danger' }[];
   priority: string;
+  axes: { label: string; score: number; detail: string }[];
 }
 
 const computeResult = (answers: Record<number, { id: string; score: number }>): DiagResult => {
@@ -1026,15 +1086,30 @@ const computeResult = (answers: Record<number, { id: string; score: number }>): 
   // Keep max 2 points
   const finalPoints = points.slice(0, 2);
 
+  // Business-aligned axes (normalized to 0–100)
+  const axePilotage = Math.round(((q1 + q4) / 40) * 100);
+  const axeFluidite = Math.round(((q2 + q3) / 40) * 100);
+  const axeExposition = Math.round((q5 / 20) * 100);
+
+  const axeDetail = (val: number) =>
+    val >= 75 ? 'Bien cadré' : val >= 50 ? 'À consolider' : val >= 25 ? 'Fragile' : 'Critique';
+
+  const axes = [
+    { label: 'Pilotage', score: axePilotage, detail: axeDetail(axePilotage) },
+    { label: 'Fluidité opérationnelle', score: axeFluidite, detail: axeDetail(axeFluidite) },
+    { label: 'Maîtrise des risques', score: axeExposition, detail: axeDetail(axeExposition) },
+  ];
+
   if (score >= 80) {
     return {
       score,
       level: "Environnement bien tenu",
-      interpretation: "Votre environnement semble globalement bien cadré. Quelques optimisations restent possibles, mais la base paraît saine.",
+      interpretation: "Votre base semble saine. C'est justement le bon moment pour identifier ce qui peut encore être simplifié, automatisé ou sécurisé davantage afin de gagner en efficacité sur le long terme.",
       points: finalPoints.length > 0 ? finalPoints : [
-        { label: "Quelques marges d'optimisation", type: 'warning' },
+        { label: "Marges d'optimisation : renégociation de contrats, consolidation d'outils ou automatisation de tâches récurrentes", type: 'warning' },
       ],
-      priority: "Continuer à challenger l'existant avant qu'il ne dérive avec le temps.",
+      priority: "Profiter de cette stabilité pour challenger vos contrats, réduire les coûts inutiles et anticiper l'évolution de vos besoins.",
+      axes,
     };
   }
   if (score >= 60) {
@@ -1047,6 +1122,7 @@ const computeResult = (answers: Record<number, { id: string; score: number }>): 
         { label: "Services ou contrats pas assez revus", type: 'warning' },
       ],
       priority: "Remettre à plat les zones qui font perdre du temps ou qui ne sont plus alignées avec votre besoin.",
+      axes,
     };
   }
   if (score >= 40) {
@@ -1059,6 +1135,7 @@ const computeResult = (answers: Record<number, { id: string; score: number }>): 
         { label: "Existant insuffisamment challengé", type: 'danger' },
       ],
       priority: "Reprendre la main sur l'existant avant d'ajouter de nouveaux outils ou coûts.",
+      axes,
     };
   }
   return {
@@ -1070,6 +1147,7 @@ const computeResult = (answers: Record<number, { id: string; score: number }>): 
       { label: "Décalage fort entre besoin réel et existant", type: 'danger' },
     ],
     priority: "Identifier rapidement les points de blocage, les dépendances critiques et les priorités d'optimisation.",
+    axes,
   };
 };
 
@@ -1094,17 +1172,28 @@ h3{font-size:13px;font-weight:700;color:#0f172a;text-transform:uppercase;letter-
 .point.warning{background:#fef3c7;color:#92400e}
 .point.danger{background:#fee2e2;color:#991b1b}
 .priority{padding:16px 20px;border-radius:12px;background:#eff6ff;color:#1e40af;font-size:13px;line-height:1.6}
+.axes{display:flex;gap:16px;margin:24px 0}
+.axe{flex:1;padding:14px 16px;border-radius:12px;background:#f8fafc;border:1px solid #e2e8f0}
+.axe-label{font-size:12px;font-weight:700;color:#0f172a;margin-bottom:6px}
+.axe-bar{height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden;margin-bottom:4px}
+.axe-fill{height:100%;border-radius:3px}
+.axe-detail{font-size:11px;color:#64748b}
 .footer{margin-top:40px;padding-top:20px;border-top:1px solid #e2e8f0;font-size:11px;color:#94a3b8;display:flex;justify-content:space-between}
 @media print{body{padding:24px}}
 </style></head><body>
 <div class="header"><div><h1>AEGIS NETWORK</h1><span>Diagnostic Express — Résultat</span></div></div>
 <div class="score-section"><div class="score-circle"><div class="score-value">${result.score}</div><div class="score-label">sur 100</div></div>
 <div><div class="level">${result.level}</div><div class="interpretation">${result.interpretation}</div></div></div>
+<h3>Évaluation par axe</h3>
+<div class="axes">${result.axes.map(a => {
+  const color = a.score >= 75 ? '#10b981' : a.score >= 50 ? '#3b82f6' : a.score >= 25 ? '#f59e0b' : '#f43f5e';
+  return `<div class="axe"><div class="axe-label">${a.label}</div><div class="axe-bar"><div class="axe-fill" style="width:${a.score}%;background:${color}"></div></div><div class="axe-detail">${a.detail}</div></div>`;
+}).join('')}</div>
 <h3>Points d'attention</h3>
 ${result.points.map(p => `<div class="point ${p.type}"><span>⚠</span><span>${p.label}</span></div>`).join('')}
 <h3>Priorité recommandée</h3>
 <div class="priority">${result.priority}</div>
-<div class="footer"><span>Aegis Network — Conseil &amp; Optimisation IT</span><span>07 81 43 81 23 · contact@aegisnetwork.fr</span></div>
+<div class="footer"><span>Aegis Network — Conseil &amp; Optimisation IT</span><span>06 52 95 00 10 · contact@aegisnetwork.fr</span></div>
 </body></html>`;
   const w = window.open('', '_blank');
   if (w) {
@@ -1352,6 +1441,36 @@ const DiagnosticExpress = ({ onComplete, onContact }: { onComplete: (r: DiagResu
               </div>
             </div>
 
+            {/* Axes d'évaluation */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+              {result.axes.map((axe, i) => {
+                const barColor = axe.score >= 75 ? 'bg-emerald-500' : axe.score >= 50 ? 'bg-blue-500' : axe.score >= 25 ? 'bg-amber-500' : 'bg-rose-500';
+                const textColor = axe.score >= 75 ? 'text-emerald-400' : axe.score >= 50 ? 'text-blue-400' : axe.score >= 25 ? 'text-amber-400' : 'text-rose-400';
+                return (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.15 + i * 0.1 }}
+                    className="glass-card rounded-2xl p-5 border border-white/[0.06]"
+                  >
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="text-sm font-bold text-white">{axe.label}</span>
+                      <span className={`text-xs font-bold ${textColor}`}>{axe.detail}</span>
+                    </div>
+                    <div className="h-1.5 w-full bg-slate-800/80 rounded-full overflow-hidden">
+                      <motion.div
+                        initial={{ width: 0 }}
+                        animate={{ width: `${axe.score}%` }}
+                        transition={{ duration: 0.6, delay: 0.3 + i * 0.1, ease: 'easeOut' }}
+                        className={`h-full rounded-full ${barColor}`}
+                      />
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
+
             {/* Points d'attention */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
               {result.points.map((pt, i) => (
@@ -1462,8 +1581,9 @@ const ContactSection = ({ diagResult, contactMode }: { diagResult: DiagResult | 
   useEffect(() => {
     if (diagResult) {
       const summary = [
-        `Diagnostic Express complété — Score : ${diagResult.score}/100`,
+        `Diagnostic Express — Score : ${diagResult.score}/100`,
         `Niveau : ${diagResult.level}`,
+        `Axes : ${diagResult.axes.map(a => `${a.label} (${a.detail})`).join(' · ')}`,
         diagResult.points.length > 0 ? `Points d'attention : ${diagResult.points.map(p => p.label).join(' · ')}` : '',
         `Priorité : ${diagResult.priority}`,
         '',
@@ -1514,7 +1634,7 @@ const ContactSection = ({ diagResult, contactMode }: { diagResult: DiagResult | 
       `Email : ${formData.email}`,
       formData.phone ? `Téléphone : ${formData.phone}` : '',
       formData.message ? `\nMessage :\n${formData.message}` : '',
-      diagResult ? `\n--- Diagnostic Express ---\nScore : ${diagResult.score}/100\nNiveau : ${diagResult.level}\nPoints : ${diagResult.points.map(p => p.label).join(', ')}\nPriorité : ${diagResult.priority}` : '',
+      diagResult ? `\n--- Diagnostic Express ---\nScore : ${diagResult.score}/100\nNiveau : ${diagResult.level}\nAxes : ${diagResult.axes.map(a => `${a.label} (${a.detail})`).join(', ')}\nPoints : ${diagResult.points.map(p => p.label).join(', ')}\nPriorité : ${diagResult.priority}` : '',
     ].filter(Boolean).join('\n');
     const body = encodeURIComponent(bodyParts);
 
@@ -1562,7 +1682,7 @@ const ContactSection = ({ diagResult, contactMode }: { diagResult: DiagResult | 
             </div>
             <div className="space-y-8">
               {[
-                { icon: <PhoneCall />, label: "Ligne directe", value: "07 81 43 81 23", href: "tel:+33781438123" },
+                { icon: <PhoneCall />, label: "Ligne directe", value: "06 52 95 00 10", href: "tel:+33652950010" },
                 { icon: <Mail />, label: "Email", value: "contact@aegisnetwork.fr", href: "mailto:contact@aegisnetwork.fr" },
                 { icon: <MapPin />, label: "Centre Opérationnel", value: "Lyon, France", href: undefined }
               ].map((item, i) => (
@@ -1635,9 +1755,18 @@ const ContactSection = ({ diagResult, contactMode }: { diagResult: DiagResult | 
                       transition={{ duration: 0.2 }}
                       className="space-y-6"
                     >
-                      <div className="space-y-3">
-                        <label className="text-sm font-bold text-slate-300 uppercase tracking-widest ml-1">Téléphone</label>
-                        <input name="phone" value={formData.phone} onChange={handleChange} required className={inputClass} placeholder="06 12 34 56 78" type="tel" />
+                      <div className="relative">
+                        {diagResult && !submitted && (
+                          <motion.div initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.4 }} className="absolute -left-20 sm:-left-[5.5rem] top-[68%] -translate-y-1/2 z-20 hidden md:block">
+                            <motion.div animate={{ x: [0, 6, 0] }} transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}>
+                              <svg width="36" height="28" viewBox="0 0 36 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><filter id="gf" x="-30%" y="-50%" width="160%" height="200%"><feGaussianBlur stdDeviation="2" result="b"/><feColorMatrix in="b" type="matrix" values="1 0 0 0 0 0 .18 0 0 0 0 0 0 0 0 0 0 0 .7 0" result="g"/><feMerge><feMergeNode in="g"/><feMergeNode in="SourceGraphic"/></feMerge></filter><linearGradient id="ag1" x1="2" y1="14" x2="34" y2="14" gradientUnits="userSpaceOnUse"><stop stopColor="#FF5A5A"/><stop offset="1" stopColor="#FF2D2D"/></linearGradient></defs><g filter="url(#gf)"><path d="M2 7a3 3 0 0 1 3-3h14V1.5a2 2 0 0 1 3.1-1.67l12.5 11.5a2 2 0 0 1 0 3.34l-12.5 11.5A2 2 0 0 1 19 24.5V22H5a3 3 0 0 1-3-3V7Z" fill="url(#ag1)"/><path d="M6 14h11" stroke="white" strokeOpacity=".4" strokeWidth="2" strokeLinecap="round"><animate attributeName="stroke-opacity" values=".2;.5;.2" dur="1.6s" repeatCount="indefinite"/></path></g></svg>
+                            </motion.div>
+                          </motion.div>
+                        )}
+                        <div className="space-y-3">
+                          <label className="text-sm font-bold text-slate-300 uppercase tracking-widest ml-1">Téléphone</label>
+                          <input name="phone" value={formData.phone} onChange={handleChange} required className={inputClass} placeholder="06 12 34 56 78" type="tel" />
+                        </div>
                       </div>
                       <div className="space-y-3">
                         <label className="text-sm font-bold text-slate-300 uppercase tracking-widest ml-1">Email</label>
@@ -1653,14 +1782,23 @@ const ContactSection = ({ diagResult, contactMode }: { diagResult: DiagResult | 
                       transition={{ duration: 0.2 }}
                       className="space-y-6"
                     >
-                      <div className="grid md:grid-cols-2 gap-6">
-                        <div className="space-y-3">
-                          <label className="text-sm font-bold text-slate-300 uppercase tracking-widest ml-1">Nom Complet</label>
-                          <input name="name" value={formData.name} onChange={handleChange} required className={inputClass} placeholder="Jean Dupont" type="text" />
-                        </div>
-                        <div className="space-y-3">
-                          <label className="text-sm font-bold text-slate-300 uppercase tracking-widest ml-1">Entreprise</label>
-                          <input name="company" value={formData.company} onChange={handleChange} className={inputClass} placeholder="Nom de votre société" type="text" />
+                      <div className="relative">
+                        {diagResult && !submitted && (
+                          <motion.div initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.4 }} className="absolute -left-20 sm:-left-[5.5rem] top-[68%] -translate-y-1/2 z-20 hidden md:block">
+                            <motion.div animate={{ x: [0, 6, 0] }} transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}>
+                              <svg width="36" height="28" viewBox="0 0 36 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><filter id="gf" x="-30%" y="-50%" width="160%" height="200%"><feGaussianBlur stdDeviation="2" result="b"/><feColorMatrix in="b" type="matrix" values="1 0 0 0 0 0 .18 0 0 0 0 0 0 0 0 0 0 0 .7 0" result="g"/><feMerge><feMergeNode in="g"/><feMergeNode in="SourceGraphic"/></feMerge></filter><linearGradient id="ag1" x1="2" y1="14" x2="34" y2="14" gradientUnits="userSpaceOnUse"><stop stopColor="#FF5A5A"/><stop offset="1" stopColor="#FF2D2D"/></linearGradient></defs><g filter="url(#gf)"><path d="M2 7a3 3 0 0 1 3-3h14V1.5a2 2 0 0 1 3.1-1.67l12.5 11.5a2 2 0 0 1 0 3.34l-12.5 11.5A2 2 0 0 1 19 24.5V22H5a3 3 0 0 1-3-3V7Z" fill="url(#ag1)"/><path d="M6 14h11" stroke="white" strokeOpacity=".4" strokeWidth="2" strokeLinecap="round"><animate attributeName="stroke-opacity" values=".2;.5;.2" dur="1.6s" repeatCount="indefinite"/></path></g></svg>
+                            </motion.div>
+                          </motion.div>
+                        )}
+                        <div className="grid md:grid-cols-2 gap-6">
+                          <div className="space-y-3">
+                            <label className="text-sm font-bold text-slate-300 uppercase tracking-widest ml-1">Nom Complet</label>
+                            <input name="name" value={formData.name} onChange={handleChange} required className={inputClass} placeholder="Jean Dupont" type="text" />
+                          </div>
+                          <div className="space-y-3">
+                            <label className="text-sm font-bold text-slate-300 uppercase tracking-widest ml-1">Entreprise</label>
+                            <input name="company" value={formData.company} onChange={handleChange} className={inputClass} placeholder="Nom de votre société" type="text" />
+                          </div>
                         </div>
                       </div>
                       <div className="space-y-3">
@@ -1674,9 +1812,18 @@ const ContactSection = ({ diagResult, contactMode }: { diagResult: DiagResult | 
                     </motion.div>
                   )}
                 </AnimatePresence>
-                <button type="submit" className="glow-button w-full h-16 rounded-2xl bg-gradient-to-r from-blue-600 via-blue-600 to-accent-violet text-white font-bold text-xl uppercase tracking-widest cursor-pointer">
-                  {mode === 'callback' ? 'Demander un rappel' : 'Envoyer ma demande'}
-                </button>
+                <div className="relative">
+                  {diagResult && !submitted && (
+                    <motion.div initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.7 }} className="absolute -left-20 sm:-left-[5.5rem] top-1/2 -translate-y-1/2 z-20 hidden md:block">
+                      <motion.div animate={{ x: [0, 6, 0] }} transition={{ duration: 1.6, delay: 0.3, repeat: Infinity, ease: 'easeInOut' }}>
+                        <svg width="36" height="28" viewBox="0 0 36 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><filter id="gf2" x="-30%" y="-50%" width="160%" height="200%"><feGaussianBlur stdDeviation="2" result="b"/><feColorMatrix in="b" type="matrix" values="1 0 0 0 0 0 .18 0 0 0 0 0 0 0 0 0 0 0 .7 0" result="g"/><feMerge><feMergeNode in="g"/><feMergeNode in="SourceGraphic"/></feMerge></filter><linearGradient id="ag2" x1="2" y1="14" x2="34" y2="14" gradientUnits="userSpaceOnUse"><stop stopColor="#FF5A5A"/><stop offset="1" stopColor="#FF2D2D"/></linearGradient></defs><g filter="url(#gf2)"><path d="M2 7a3 3 0 0 1 3-3h14V1.5a2 2 0 0 1 3.1-1.67l12.5 11.5a2 2 0 0 1 0 3.34l-12.5 11.5A2 2 0 0 1 19 24.5V22H5a3 3 0 0 1-3-3V7Z" fill="url(#ag2)"/><path d="M6 14h11" stroke="white" strokeOpacity=".4" strokeWidth="2" strokeLinecap="round"><animate attributeName="stroke-opacity" values=".2;.5;.2" dur="1.6s" repeatCount="indefinite"/></path></g></svg>
+                      </motion.div>
+                    </motion.div>
+                  )}
+                  <button type="submit" className="glow-button w-full h-16 rounded-2xl bg-gradient-to-r from-blue-600 via-blue-600 to-accent-violet text-white font-bold text-xl uppercase tracking-widest cursor-pointer">
+                    {mode === 'callback' ? 'Demander un rappel' : 'Envoyer ma demande'}
+                  </button>
+                </div>
                 <p className="text-center text-xs text-slate-500">Nous vous répondons sous 24 heures.</p>
               </form>
             )}
@@ -1709,7 +1856,7 @@ const LegalModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
             <h3 className="text-white font-bold mb-2">Éditeur du site</h3>
             <p>Aegis Network. Conseil et optimisation en infrastructures IT et télécommunications</p>
             <p>Contact : <a href="mailto:contact@aegisnetwork.fr" className="text-optical-blue hover:underline">contact@aegisnetwork.fr</a></p>
-            <p>Téléphone : <a href="tel:+33781438123" className="text-optical-blue hover:underline">07 81 43 81 23</a></p>
+            <p>Téléphone : <a href="tel:+33652950010" className="text-optical-blue hover:underline">06 52 95 00 10</a></p>
             <p>Centre opérationnel : Lyon, France</p>
             <p className="mt-2 text-yellow-500/80 text-xs">TODO: compléter : forme juridique, SIRET/RCS, capital social, nom du directeur de publication</p>
           </div>

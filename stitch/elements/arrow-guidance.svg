@@ -1,0 +1,26 @@
+<svg width="260" height="90" viewBox="0 0 260 90" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Animated guidance arrow">
+  <defs>
+    <filter id="glow" x="-20%" y="-50%" width="140%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0  0 0.18 0 0 0  0 0 0 0 0  0 0 0 0.85 0" result="glowColor"/>
+      <feMerge>
+        <feMergeNode in="glowColor"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <linearGradient id="arrowGrad" x1="16" y1="45" x2="226" y2="45" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FF5A5A"/>
+      <stop offset="1" stop-color="#FF2D2D"/>
+    </linearGradient>
+  </defs>
+
+  <g filter="url(#glow)">
+    <g>
+      <animateTransform attributeName="transform" type="translate" values="0 0; 12 0; 0 0" dur="1.6s" repeatCount="indefinite"/>
+      <path d="M18 29C18 24.5817 21.5817 21 26 21H144V10.5C144 7.38514 147.516 5.58107 150.039 7.39254L227.08 42.8925C229.251 44.449 229.251 47.551 227.08 49.1075L150.039 84.6075C147.516 86.4189 144 84.6149 144 81.5V71H26C21.5817 71 18 67.4183 18 63V29Z" fill="url(#arrowGrad)"/>
+      <path d="M31 45H124" stroke="white" stroke-opacity="0.45" stroke-width="4" stroke-linecap="round">
+        <animate attributeName="stroke-opacity" values="0.2;0.5;0.2" dur="1.6s" repeatCount="indefinite"/>
+      </path>
+    </g>
+  </g>
+</svg>

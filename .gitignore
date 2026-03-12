@@ -34,4 +34,20 @@ build/
 
 # Temp
 tmp/
+
+# Playwright MCP screenshots (debug artifacts)
+.playwright-mcp/
+
+# Brand deliverables (livraison hors périmètre site)
+livraison_definitive/
+
+# Sub-project build artifacts (brand/brochure, stitch/*)
+brand/brochure/node_modules/
+brand/brochure/.next/
+brand/brochure/package-lock.json
+stitch/**/node_modules/
+stitch/**/.next/
+
+# Stray images at root (temporary exports, QA screenshots)
+/*.png
 temp/

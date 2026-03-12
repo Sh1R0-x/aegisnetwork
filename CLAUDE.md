@@ -73,7 +73,7 @@ Flux narratif : gains concrets → coûts → temps perdu → diagnostic de fond
 
 ## Informations de contact
 
-- Téléphone : 07 81 43 81 23
+- Téléphone : 06 52 95 00 10
 - Email : contact@aegisnetwork.fr
 - Localisation : Lyon, France
 

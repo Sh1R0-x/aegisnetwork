@@ -5,9 +5,8 @@
       <stop offset="100%" stop-color="#7C3AED"/>
     </linearGradient>
   </defs>
-  <!-- Stylized A / Shield mark -->
+  <!-- Aegis Network — Logo maître (source de vérité) -->
   <path d="M15 85 L50 15 L85 85" stroke="url(#aegis-gradient)" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M35 85 H65" stroke="url(#aegis-gradient)" stroke-width="12" stroke-linecap="round"/>
   <!-- Fiber nodes -->
   <circle cx="82" cy="18" r="4" fill="#60A5FA"/>
   <circle cx="92" cy="32" r="3" fill="#60A5FA" opacity="0.6"/>

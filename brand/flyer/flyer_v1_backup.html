@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flyer — Aegis Network</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    /* ================================================================
+       AEGIS NETWORK — Flyer professionnel A5 / A4
+       Print-ready • Fond clair (conforme charte print)
+       ================================================================ */
+
+    :root {
+      --aegis-blue: #2563EB;
+      --optical-blue: #3B82F6;
+      --deep-violet: #7C3AED;
+      --sky-accent: #38BDF8;
+      --bg-deep: #020617;
+      --slate-900: #0F172A;
+      --slate-800: #1E293B;
+      --slate-700: #334155;
+      --slate-500: #64748B;
+      --slate-400: #94A3B8;
+      --slate-200: #E2E8F0;
+      --slate-100: #F1F5F9;
+      --slate-50: #F8FAFC;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      background: #d1d5db;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 16px 60px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ============================================
+       SCREEN CONTROLS (hidden on print)
+       ============================================ */
+    .controls {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .controls button {
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 8px 20px;
+      border-radius: 8px;
+      border: 1px solid #d1d5db;
+      background: white;
+      color: var(--slate-700);
+      cursor: pointer;
+      transition: all 0.15s;
+      user-select: none;
+    }
+    .controls button:hover { border-color: var(--aegis-blue); color: var(--aegis-blue); }
+    .controls button.active {
+      background: var(--aegis-blue);
+      color: white;
+      border-color: var(--aegis-blue);
+    }
+    .controls .btn-print {
+      background: var(--slate-900);
+      color: white;
+      border-color: var(--slate-900);
+    }
+    .controls .btn-print:hover { background: var(--aegis-blue); border-color: var(--aegis-blue); }
+    .controls .hint {
+      font-size: 11px;
+      color: var(--slate-500);
+      width: 100%;
+      text-align: center;
+      margin-top: 2px;
+    }
+
+    /* ============================================
+       FLYER SHELL
+       ============================================ */
+    .flyer {
+      background: #FFFFFF;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.18);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* A5: 148 × 210 mm */
+    .flyer.format-a5 {
+      width: 148mm;
+      height: 210mm;
+    }
+    /* A4: 210 × 297 mm */
+    .flyer.format-a4 {
+      width: 210mm;
+      height: 297mm;
+    }
+
+    /* Gradient accent bars */
+    .accent-bar-top {
+      height: 3.5mm;
+      background: linear-gradient(90deg, var(--aegis-blue), var(--deep-violet));
+      flex-shrink: 0;
+    }
+    .accent-bar-bottom {
+      height: 3.5mm;
+      background: linear-gradient(90deg, var(--deep-violet), var(--aegis-blue));
+      flex-shrink: 0;
+    }
+
+    /* Content area */
+    .flyer-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 7mm 10mm 6mm;
+      position: relative;
+    }
+
+    /* ============================================
+       NETWORK MESH DECORATION
+       ============================================ */
+    .network-deco {
+      position: absolute;
+      top: -5mm;
+      right: -3mm;
+      width: 55mm;
+      height: 55mm;
+      opacity: 0.055;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ============================================
+       HEADER: Logo lockup
+       ============================================ */
+    .flyer-header {
+      display: flex;
+      align-items: center;
+      gap: 2.5mm;
+      margin-bottom: 5mm;
+      position: relative;
+      z-index: 1;
+    }
+    .flyer-logo { width: 8mm; height: 8mm; flex-shrink: 0; }
+    .flyer-brand { display: flex; flex-direction: column; }
+    .flyer-brand-name {
+      font-size: 9.5pt;
+      font-weight: 900;
+      letter-spacing: 0.15em;
+      color: var(--slate-900);
+      text-transform: uppercase;
+      line-height: 1.2;
+    }
+    .flyer-brand-baseline {
+      font-size: 5.5pt;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      color: var(--aegis-blue);
+      text-transform: uppercase;
+      line-height: 1.3;
+    }
+
+    /* ============================================
+       HEADLINE
+       ============================================ */
+    .flyer-headline {
+      margin-bottom: 2.5mm;
+      position: relative;
+      z-index: 1;
+    }
+    .flyer-headline h1 {
+      font-size: 18.5pt;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.12;
+      color: var(--slate-900);
+    }
+    .flyer-headline h1 .gradient-text {
+      background: linear-gradient(135deg, var(--aegis-blue), var(--deep-violet));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .flyer-subtitle {
+      font-size: 7.5pt;
+      font-weight: 500;
+      line-height: 1.45;
+      color: var(--slate-500);
+      margin-bottom: 3.5mm;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Gradient separator */
+    .gradient-line {
+      height: 1.5px;
+      background: linear-gradient(90deg, var(--aegis-blue), var(--deep-violet), transparent);
+      margin-bottom: 4mm;
+      border-radius: 1px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ============================================
+       SECTION LABELS
+       ============================================ */
+    .section-label {
+      font-size: 6pt;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--aegis-blue);
+      margin-bottom: 2mm;
+    }
+
+    /* ============================================
+       PROBLEMS GRID
+       ============================================ */
+    .problems-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5mm;
+      margin-bottom: 4mm;
+    }
+    .problem-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.5mm;
+      padding: 1.8mm 2.2mm;
+      background: var(--slate-50);
+      border-radius: 1.5mm;
+      border-left: 1.8px solid var(--aegis-blue);
+    }
+    .problem-dot {
+      width: 1.3mm;
+      height: 1.3mm;
+      background: var(--aegis-blue);
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 1mm;
+    }
+    .problem-text {
+      font-size: 6.5pt;
+      font-weight: 500;
+      line-height: 1.3;
+      color: var(--slate-900);
+    }
+
+    /* ============================================
+       TWO-COLUMN: Services + Benefits
+       ============================================ */
+    .two-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4mm;
+      margin-bottom: 4mm;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Services */
+    .service-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.2mm;
+      margin-bottom: 1.5mm;
+    }
+    .service-marker {
+      font-size: 7pt;
+      color: var(--aegis-blue);
+      font-weight: 700;
+      flex-shrink: 0;
+      line-height: 1.3;
+    }
+    .service-text {
+      font-size: 7pt;
+      font-weight: 700;
+      line-height: 1.25;
+      color: var(--slate-900);
+    }
+    .service-desc {
+      font-size: 6pt;
+      font-weight: 400;
+      color: var(--slate-500);
+      line-height: 1.25;
+      margin-top: 0.3mm;
+    }
+
+    /* Benefits */
+    .benefit-item {
+      display: flex;
+      align-items: center;
+      gap: 1.5mm;
+      margin-bottom: 1.5mm;
+    }
+    .benefit-check {
+      width: 3mm;
+      height: 3mm;
+      background: linear-gradient(135deg, var(--aegis-blue), var(--deep-violet));
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .benefit-check svg { width: 2mm; height: 2mm; }
+    .benefit-text {
+      font-size: 6.5pt;
+      font-weight: 500;
+      line-height: 1.3;
+      color: var(--slate-900);
+    }
+
+    /* ============================================
+       CTA BLOCK (dark, full-width at bottom)
+       ============================================ */
+    .cta-block {
+      background: linear-gradient(135deg, var(--slate-900) 0%, #0F1729 100%);
+      border-radius: 3mm;
+      padding: 4.5mm 5.5mm;
+      margin-top: auto;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+    .cta-block::before {
+      content: '';
+      position: absolute;
+      top: -40%;
+      right: -15%;
+      width: 35mm;
+      height: 35mm;
+      background: radial-gradient(circle, rgba(37,99,235,0.15), transparent 70%);
+      pointer-events: none;
+    }
+    .cta-block::after {
+      content: '';
+      position: absolute;
+      bottom: -30%;
+      left: -10%;
+      width: 25mm;
+      height: 25mm;
+      background: radial-gradient(circle, rgba(124,58,237,0.08), transparent 70%);
+      pointer-events: none;
+    }
+    .cta-title {
+      font-size: 9.5pt;
+      font-weight: 800;
+      color: white;
+      margin-bottom: 0.8mm;
+      letter-spacing: -0.02em;
+      position: relative;
+    }
+    .cta-sub {
+      font-size: 6.5pt;
+      font-weight: 400;
+      color: var(--slate-400);
+      margin-bottom: 3mm;
+      position: relative;
+    }
+    .cta-contacts {
+      display: flex;
+      gap: 4mm;
+      flex-wrap: wrap;
+      position: relative;
+    }
+    .cta-contact-item {
+      display: flex;
+      align-items: center;
+      gap: 1.2mm;
+    }
+    .cta-contact-icon {
+      width: 3mm;
+      height: 3mm;
+      color: var(--optical-blue);
+      flex-shrink: 0;
+    }
+    .cta-contact-text {
+      font-size: 7pt;
+      font-weight: 600;
+      color: white;
+    }
+    .cta-contact-text.subtle {
+      color: var(--slate-400);
+    }
+    .cta-web {
+      display: flex;
+      align-items: center;
+      gap: 1.2mm;
+      margin-top: 1.5mm;
+    }
+    .cta-web-text {
+      font-size: 6pt;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      color: var(--optical-blue);
+      position: relative;
+    }
+
+    /* ============================================
+       A4 OVERRIDES — larger type, more breathing room
+       A4 has ~87mm more vertical space than A5.
+       Strategy: generous padding, bigger gaps, larger cards.
+       ============================================ */
+    .format-a4 .flyer-content {
+      padding: 14mm 18mm 12mm;
+      justify-content: space-between;
+    }
+    .format-a4 .network-deco { width: 90mm; height: 90mm; top: -10mm; right: -6mm; }
+    .format-a4 .flyer-logo { width: 13mm; height: 13mm; }
+    .format-a4 .flyer-brand-name { font-size: 13pt; }
+    .format-a4 .flyer-brand-baseline { font-size: 7.5pt; }
+    .format-a4 .flyer-header { margin-bottom: 14mm; gap: 4mm; }
+    .format-a4 .flyer-headline h1 { font-size: 28pt; }
+    .format-a4 .flyer-headline { margin-bottom: 5mm; }
+    .format-a4 .flyer-subtitle { font-size: 11pt; margin-bottom: 6mm; line-height: 1.55; }
+    .format-a4 .gradient-line { margin-bottom: 10mm; }
+    .format-a4 .section-label { font-size: 8pt; margin-bottom: 4mm; letter-spacing: 0.25em; }
+    .format-a4 .problems-grid { gap: 4mm; margin-bottom: 12mm; }
+    .format-a4 .problem-item { padding: 4mm 5mm; gap: 2.5mm; border-radius: 2.5mm; border-left-width: 3px; }
+    .format-a4 .problem-dot { width: 2mm; height: 2mm; margin-top: 1.5mm; }
+    .format-a4 .problem-text { font-size: 9.5pt; line-height: 1.4; }
+    .format-a4 .two-columns { gap: 10mm; margin-bottom: 0; }
+    .format-a4 .service-item { margin-bottom: 4mm; gap: 2.5mm; }
+    .format-a4 .service-marker { font-size: 10pt; }
+    .format-a4 .service-text { font-size: 10pt; }
+    .format-a4 .service-desc { font-size: 8pt; margin-top: 0.5mm; }
+    .format-a4 .benefit-item { margin-bottom: 4mm; gap: 2.5mm; }
+    .format-a4 .benefit-check { width: 5mm; height: 5mm; }
+    .format-a4 .benefit-check svg { width: 3mm; height: 3mm; }
+    .format-a4 .benefit-text { font-size: 9.5pt; }
+    .format-a4 .cta-block { padding: 10mm 12mm; border-radius: 4mm; }
+    .format-a4 .cta-title { font-size: 14pt; margin-bottom: 2mm; }
+    .format-a4 .cta-sub { font-size: 9pt; margin-bottom: 5mm; }
+    .format-a4 .cta-contacts { gap: 8mm; }
+    .format-a4 .cta-contact-icon { width: 4.5mm; height: 4.5mm; }
+    .format-a4 .cta-contact-text { font-size: 10pt; }
+    .format-a4 .cta-web { margin-top: 3mm; }
+    .format-a4 .cta-web-text { font-size: 8pt; }
+
+    /* ============================================
+       PRINT
+       ============================================ */
+    @page { size: 148mm 210mm; margin: 0; }
+
+    @media print {
+      body { background: none; padding: 0; margin: 0; }
+      .controls { display: none !important; }
+      .flyer { box-shadow: none; margin: 0; }
+    }
+  </style>
+  <style id="page-style"></style>
+</head>
+
+<body>
+
+  <!-- ========== Screen controls ========== -->
+  <div class="controls" id="controls">
+    <button class="active" id="btn-a5" onclick="setFormat('a5')">A5 Portrait</button>
+    <button id="btn-a4" onclick="setFormat('a4')">A4 Portrait</button>
+    <button class="btn-print" onclick="window.print()">⬇ Exporter en PDF</button>
+    <div class="hint">Pour le PDF : Fichier → Imprimer → « Enregistrer au format PDF » — format <span id="hint-format">A5</span>, marges « Aucune »</div>
+  </div>
+
+  <!-- ========== FLYER ========== -->
+  <div class="flyer format-a5" id="flyer">
+
+    <!-- Top gradient bar -->
+    <div class="accent-bar-top"></div>
+
+    <div class="flyer-content">
+
+      <!-- Subtle network mesh decoration (top-right) -->
+      <svg class="network-deco" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="40" cy="30" r="4" fill="#2563EB"/>
+        <circle cx="120" cy="12" r="3" fill="#3B82F6"/>
+        <circle cx="175" cy="55" r="5" fill="#7C3AED"/>
+        <circle cx="80" cy="85" r="3.5" fill="#2563EB"/>
+        <circle cx="155" cy="115" r="4" fill="#3B82F6"/>
+        <circle cx="25" cy="125" r="3" fill="#7C3AED"/>
+        <circle cx="100" cy="155" r="2.5" fill="#2563EB"/>
+        <circle cx="170" cy="170" r="3" fill="#3B82F6"/>
+        <line x1="40" y1="30" x2="120" y2="12" stroke="#2563EB" stroke-width="0.7"/>
+        <line x1="120" y1="12" x2="175" y2="55" stroke="#3B82F6" stroke-width="0.7"/>
+        <line x1="175" y1="55" x2="155" y2="115" stroke="#7C3AED" stroke-width="0.7"/>
+        <line x1="40" y1="30" x2="80" y2="85" stroke="#2563EB" stroke-width="0.7"/>
+        <line x1="80" y1="85" x2="155" y2="115" stroke="#3B82F6" stroke-width="0.7"/>
+        <line x1="80" y1="85" x2="25" y2="125" stroke="#7C3AED" stroke-width="0.5"/>
+        <line x1="155" y1="115" x2="170" y2="170" stroke="#2563EB" stroke-width="0.5"/>
+        <line x1="25" y1="125" x2="100" y2="155" stroke="#2563EB" stroke-width="0.5"/>
+        <line x1="100" y1="155" x2="170" y2="170" stroke="#3B82F6" stroke-width="0.5"/>
+      </svg>
+
+      <!-- ===== HEADER: Logo lockup ===== -->
+      <div class="flyer-header">
+        <!-- Logo icon (dark monochrome — print-ready) -->
+        <svg class="flyer-logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="lg" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#2563EB"/>
+              <stop offset="100%" stop-color="#7C3AED"/>
+            </linearGradient>
+          </defs>
+          <path d="M15 85 L50 15 L85 85" stroke="url(#lg)" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="82" cy="18" r="4" fill="#2563EB"/>
+          <circle cx="92" cy="32" r="3" fill="#3B82F6" opacity="0.6"/>
+          <circle cx="72" cy="8" r="3" fill="#7C3AED" opacity="0.8"/>
+          <path d="M65 35 L82 18" stroke="url(#lg)" stroke-width="1.5" stroke-dasharray="4 4"/>
+        </svg>
+        <div class="flyer-brand">
+          <div class="flyer-brand-name">Aegis Network</div>
+          <div class="flyer-brand-baseline">Conseil & Optimisation IT</div>
+        </div>
+      </div>
+
+      <!-- ===== HEADLINE ===== -->
+      <div class="flyer-headline">
+        <h1>Reprenez le contrôle<br>de votre <span class="gradient-text">infrastructure IT</span></h1>
+      </div>
+
+      <div class="flyer-subtitle">
+        Audit, conseil et pilotage pour les TPE et PME qui veulent une connectivité fiable, des coûts maîtrisés et un interlocuteur technique de confiance.
+      </div>
+
+      <div class="gradient-line"></div>
+
+      <!-- ===== PROBLEMS ===== -->
+      <div class="section-label">Ces situations vous parlent ?</div>
+      <div class="problems-grid">
+        <div class="problem-item">
+          <div class="problem-dot"></div>
+          <div class="problem-text">Prestataires difficiles à piloter</div>
+        </div>
+        <div class="problem-item">
+          <div class="problem-dot"></div>
+          <div class="problem-text">Incidents réseau sans suivi réel</div>
+        </div>
+        <div class="problem-item">
+          <div class="problem-dot"></div>
+          <div class="problem-text">Factures télécom en hausse sans raison</div>
+        </div>
+        <div class="problem-item">
+          <div class="problem-dot"></div>
+          <div class="problem-text">Changements d'infra sans pilote technique</div>
+        </div>
+      </div>
+
+      <!-- ===== SERVICES + BENEFITS (2 columns) ===== -->
+      <div class="two-columns">
+
+        <!-- Col 1: Services -->
+        <div>
+          <div class="section-label">Ce que nous faisons</div>
+          <div class="service-item">
+            <div class="service-marker">▸</div>
+            <div>
+              <div class="service-text">Audit & cadrage</div>
+              <div class="service-desc">Analyse de l'existant, détection des surcoûts</div>
+            </div>
+          </div>
+          <div class="service-item">
+            <div class="service-marker">▸</div>
+            <div>
+              <div class="service-text">Conseil réseau & téléphonie</div>
+              <div class="service-desc">Recommandations adaptées à votre contexte</div>
+            </div>
+          </div>
+          <div class="service-item">
+            <div class="service-marker">▸</div>
+            <div>
+              <div class="service-text">Pilotage des changements</div>
+              <div class="service-desc">Migrations, déploiements, transitions</div>
+            </div>
+          </div>
+          <div class="service-item">
+            <div class="service-marker">▸</div>
+            <div>
+              <div class="service-text">Coordination prestataires</div>
+              <div class="service-desc">Un seul interlocuteur pour vos fournisseurs</div>
+            </div>
+          </div>
+          <div class="service-item">
+            <div class="service-marker">▸</div>
+            <div>
+              <div class="service-text">Optimisation & suivi</div>
+              <div class="service-desc">Fiabilisation continue, ajustements</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Col 2: Benefits -->
+        <div>
+          <div class="section-label">Résultats concrets</div>
+          <div class="benefit-item">
+            <div class="benefit-check">
+              <svg viewBox="0 0 12 12" fill="none"><path d="M3 6.5l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="benefit-text">Moins de temps perdu</div>
+          </div>
+          <div class="benefit-item">
+            <div class="benefit-check">
+              <svg viewBox="0 0 12 12" fill="none"><path d="M3 6.5l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="benefit-text">Coûts justifiés et maîtrisés</div>
+          </div>
+          <div class="benefit-item">
+            <div class="benefit-check">
+              <svg viewBox="0 0 12 12" fill="none"><path d="M3 6.5l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="benefit-text">Décisions mieux cadrées</div>
+          </div>
+          <div class="benefit-item">
+            <div class="benefit-check">
+              <svg viewBox="0 0 12 12" fill="none"><path d="M3 6.5l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="benefit-text">Incidents résolus plus vite</div>
+          </div>
+          <div class="benefit-item">
+            <div class="benefit-check">
+              <svg viewBox="0 0 12 12" fill="none"><path d="M3 6.5l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="benefit-text">Continuité d'activité protégée</div>
+          </div>
+          <div class="benefit-item">
+            <div class="benefit-check">
+              <svg viewBox="0 0 12 12" fill="none"><path d="M3 6.5l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="benefit-text">Un interlocuteur clair et réactif</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ===== CTA BLOCK ===== -->
+      <div class="cta-block">
+        <div class="cta-title">Faites le point sur votre infrastructure</div>
+        <div class="cta-sub">Premier échange offert et sans engagement</div>
+        <div class="cta-contacts">
+          <div class="cta-contact-item">
+            <svg class="cta-contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+            </svg>
+            <div class="cta-contact-text">06 52 95 00 10</div>
+          </div>
+          <div class="cta-contact-item">
+            <svg class="cta-contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="20" height="16" x="2" y="4" rx="2"/>
+              <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+            </svg>
+            <div class="cta-contact-text">contact@aegisnetwork.fr</div>
+          </div>
+          <div class="cta-contact-item">
+            <svg class="cta-contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+            <div class="cta-contact-text subtle">Lyon, France</div>
+          </div>
+        </div>
+        <div class="cta-web">
+          <svg class="cta-contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:2.5mm;height:2.5mm;">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/>
+            <path d="M2 12h20"/>
+          </svg>
+          <div class="cta-web-text">aegisnetwork.fr</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bottom gradient bar -->
+    <div class="accent-bar-bottom"></div>
+  </div>
+
+  <script>
+    function setFormat(format) {
+      var flyer = document.getElementById('flyer');
+      flyer.className = 'flyer format-' + format;
+
+      // Update active button
+      document.getElementById('btn-a5').classList.toggle('active', format === 'a5');
+      document.getElementById('btn-a4').classList.toggle('active', format === 'a4');
+
+      // Update @page for print
+      var ps = document.getElementById('page-style');
+      if (format === 'a5') {
+        ps.textContent = '@page { size: 148mm 210mm; margin: 0; }';
+      } else {
+        ps.textContent = '@page { size: 210mm 297mm; margin: 0; }';
+      }
+
+      // Update hint text
+      document.getElementById('hint-format').textContent = format.toUpperCase();
+    }
+
+    // Init A5
+    setFormat('a5');
+  </script>
+
+</body>
+</html>
