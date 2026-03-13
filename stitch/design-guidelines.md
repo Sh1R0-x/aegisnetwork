@@ -11,7 +11,7 @@ This document provides the technical and design specifications for the AEGIS NET
   - `radialGradient` for the core glow.
   - `filter: drop-shadow` for the outer aura.
   - Animated nodes using `motion` (pulsing opacity and scale).
-- **Tracking (Letter Spacing)**: `0.15em` for the main title "AEGIS NETWORK".
+- **Tracking (Letter Spacing)**: `0.06em` for the main title "AEGIS NETWORK" (with `word-spacing: 0.2em` for increased inter-word gap).
 - **Tagline**: "High-Performance Connectivity" with `0.25em` tracking.
 
 ### Typography

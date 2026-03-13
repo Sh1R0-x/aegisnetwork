@@ -6,7 +6,7 @@
  * - Image layers: canvas presence, canvas pixel data (not empty), bounds
  * - Groups: child count
  * - Resolution, color mode
- * 
+ *
  * Reports any layer that has a canvas but is visually empty (all transparent pixels).
  */
 

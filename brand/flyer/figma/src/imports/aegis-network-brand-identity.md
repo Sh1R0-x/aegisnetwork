@@ -178,7 +178,7 @@ Police exclusive d'Aegis Network. Conçue pour les écrans, excellente lisibilit
 
 | Élément | Letter-spacing |
 |---|---|
-| Wordmark "AEGIS NETWORK" | 0.06em |
+| Wordmark "AEGIS NETWORK" | 0.06em (+ word-spacing: 0.2em) |
 | Baseline "Conseil & Optimisation IT" | 0.25em |
 | Surtitres de section | 0.3em |
 | Micro-labels | 0.2em |

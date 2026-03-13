@@ -1,6 +1,6 @@
 /**
  * verify-psds.mjs — Verify PSD files contain real pixel data
- * 
+ *
  * Since ag-psd readPsd has compatibility issues with @napi-rs/canvas,
  * we verify by:
  * 1. Checking file sizes (must be substantial, not just metadata)
@@ -58,16 +58,16 @@ let totalIssues = 0;
 for (const fp of allFiles) {
   const name = path.basename(fp);
   const sizeKB = Math.round(fs.statSync(fp).size / 1024);
-  
+
   // Size check
   const sizeOk = sizeKB > 10; // > 10KB means it has real data
-  
+
   // Try reading structure
   let layers = 0;
   let textLayers = 0;
   let imageLayers = 0;
   let readError = null;
-  
+
   try {
     const psd = readPsd(fs.readFileSync(fp), { skipLayerImageData: true, skipCompositeImageData: true });
     function countLayers(children) {
@@ -82,10 +82,10 @@ for (const fp of allFiles) {
   } catch (e) {
     readError = e.message.substring(0, 80);
   }
-  
+
   const status = sizeOk ? '✓' : '✗';
   console.log(`${status} ${name.padEnd(35)} ${String(sizeKB).padStart(6)} KB | ${layers} layers (${textLayers} text, ${imageLayers} image)${readError ? ` | Read warn: ${readError}` : ''}`);
-  
+
   if (!sizeOk) totalIssues++;
 }
 

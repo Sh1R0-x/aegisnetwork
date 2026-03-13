@@ -302,19 +302,23 @@
     .margin-label-top { top: -20px; left: 50%; transform: translateX(-50%); }
     .margin-label-right { right: -48px; top: 50%; transform: translateY(-50%); }
 
-    /* Print styles — A4 portrait PDF-ready */
+    /* Print styles — A4 portrait PDF-ready (dark theme) */
     @page {
       size: A4 portrait;
-      margin: 20mm 18mm 24mm 18mm;
+      margin: 0;
     }
 
     @media print {
-      body { background: #fff; color: #1E293B; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-      .container { max-width: 100%; padding: 0; }
-      .cover { min-height: auto; padding: 60px 0; page-break-after: always; }
-      .cover::before, .cover::after { display: none; }
-      .section { padding: 32px 0; border-color: #E2E8F0; }
-      .section { page-break-before: auto; }
+      body {
+        background: var(--bg-deep);
+        color: var(--slate-200);
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        color-adjust: exact;
+      }
+      .container { max-width: 100%; padding: 0 48px; }
+      .cover { min-height: auto; padding: 80px 48px; page-break-after: always; }
+      .section { padding: 48px 0; page-break-before: auto; }
       /* Prevent orphaned headings */
       h2, h3, h4 { page-break-after: avoid; }
       .card, .logo-showcase, .dodont-grid, .card-grid, table { page-break-inside: avoid; }
@@ -325,20 +329,8 @@
       #universe { page-break-before: always; }
       #applications { page-break-before: always; }
       #rules { page-break-before: always; }
-      h1, h2, h3 { color: #0F172A; }
-      p, .lead, .small { color: #334155; }
-      h4 { color: var(--aegis-blue); }
-      .card { background: #F8FAFC; border-color: #E2E8F0; backdrop-filter: none; }
-      .swatch-info { background: #F8FAFC; }
-      .swatch-name { color: #0F172A; }
-      .logo-box { border-color: #E2E8F0; }
-      .component-preview { background: #F8FAFC; border-color: #E2E8F0; }
-      .rules-table th { border-color: #E2E8F0; color: #64748B; }
-      .rules-table td { border-color: #F1F5F9; color: #334155; }
-      .toc li { border-color: #E2E8F0; }
-      .toc a { color: #0F172A; }
-      .margin-demo { background: #F8FAFC; border-color: #E2E8F0; }
-      .cover-meta { border-color: #E2E8F0; color: #94A3B8; }
+      /* Keep dark theme — no color overrides */
+      .card { backdrop-filter: none; }
       /* Avoid empty trailing pages */
       .section:last-child { padding-bottom: 0; margin-bottom: 0; }
     }
@@ -1120,7 +1112,7 @@
                 <path d="M65 35 L82 18" stroke="url(#bcrg)" stroke-width="1.5" stroke-dasharray="4 4"/>
               </svg>
               <div>
-                <span style="font-size:0.65rem; font-weight:900; letter-spacing:0.06em; word-spacing: 0.2em; color:#0F172A;">AEGIS </span><span style="font-size:0.65rem; font-weight:900; letter-spacing:0.06em; word-spacing: 0.2em; color:#2563EB;">NETWORK</span>
+                <span style="font-size:0.65rem; font-weight:900; letter-spacing:0.06em; word-spacing:0.2em; color:#0F172A;">AEGIS </span><span style="font-size:0.65rem; font-weight:900; letter-spacing:0.06em; color:#2563EB;">NETWORK</span>
               </div>
             </div>
             <p style="font-size:0.95rem; font-weight:800; color:#0F172A; margin-bottom:2px;">Ludovic ROCHET-BELLAVIA</p>
@@ -1147,7 +1139,7 @@
             <path d="M65 35 L82 18" stroke="url(#bcvg)" stroke-width="1.5" stroke-dasharray="4 4"/>
           </svg>
           <div style="text-align:center;">
-            <p style="font-size:0.85rem; font-weight:900; letter-spacing:0.06em; word-spacing: 0.2em; color:#fff;">AEGIS <span style="color:#3B82F6;">NETWORK</span></p>
+            <p style="font-size:0.85rem; font-weight:900; letter-spacing:0.06em; word-spacing:0.2em; color:#fff;">AEGIS <span style="color:#3B82F6;">NETWORK</span></p>
             <p style="font-size:0.45rem; font-weight:700; letter-spacing:0.25em; color:#64748B; text-transform:uppercase; margin-top:4px;">Conseil &amp; Optimisation IT</p>
           </div>
           <p style="font-size:0.5rem; color:#475569; letter-spacing:0.05em;">aegisnetwork.fr</p>

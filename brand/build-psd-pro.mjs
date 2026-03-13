@@ -205,11 +205,12 @@ function horizontalGradientBar(w, h) {
 /** Map weight keyword to CSS numeric weight and PostScript font name */
 function fontSpec(weight) {
   switch (weight) {
-    case 'black':    return { css: 900, ps: 'Inter-Black' };
-    case 'bold':     return { css: 700, ps: 'Inter-Bold' };
-    case 'semibold': return { css: 600, ps: 'Inter-SemiBold' };
-    case 'medium':   return { css: 500, ps: 'Inter-Medium' };
-    default:         return { css: 500, ps: 'Inter-Medium' }; // No Inter-Regular static installed
+    case 'black':     return { css: 900, ps: 'Inter-Black' };
+    case 'extrabold': return { css: 800, ps: 'Inter-ExtraBold' };
+    case 'bold':      return { css: 700, ps: 'Inter-Bold' };
+    case 'semibold':  return { css: 600, ps: 'Inter-SemiBold' };
+    case 'medium':    return { css: 500, ps: 'Inter-Medium' };
+    default:          return { css: 500, ps: 'Inter-Medium' }; // No Inter-Regular static installed
   }
 }
 
@@ -285,22 +286,25 @@ function textLayer(name, text, x, y, opts = {}) {
   // Render pixel preview
   const preview = renderTextPreview(text, fontSize, color, { weight, tracking, leading });
 
-  // Calculate bounds from transform position
+  // Calculate bounds from position
   const tx = transform ? transform[4] : x;
   const ty = transform ? transform[5] : y;
-  // The transform Y is the text baseline-ish position; shift up for top-aligned preview
-  const topShift = Math.round(fontSize * 0.15);
+
+  // Align transform Y to baseline: canvas preview is top-aligned,
+  // but Photoshop text transform Y is the baseline position.
+  // Ascent ≈ 75% of fontSize for Inter.
+  const baselineY = ty + Math.round(fontSize * 0.75);
 
   return {
     name,
     canvas: preview,
-    top: ty - topShift,
+    top: ty,
     left: tx,
-    bottom: ty - topShift + preview.height,
+    bottom: ty + preview.height,
     right: tx + preview.width,
     text: {
       text,
-      transform: transform || [1, 0, 0, 1, x, y],
+      transform: transform || [1, 0, 0, 1, x, y + Math.round(fontSize * 0.75)],
       antiAlias: 'smooth',
       style: {
         font: { name: font === 'Arial' ? 'ArialMT' : fontName },
@@ -310,6 +314,98 @@ function textLayer(name, text, x, y, opts = {}) {
         ...(leading ? { leading } : {}),
         autoLeading: !leading,
       },
+      paragraphStyle: {
+        justification,
+      },
+    },
+  };
+}
+
+/**
+ * Create a dual-color text layer using styleRuns.
+ * Used for "AEGIS NETWORK" where AEGIS is one color and NETWORK another.
+ */
+function dualColorTextLayer(name, text1, text2, x, y, opts = {}) {
+  const {
+    font = 'Inter',
+    fontSize = 24,
+    color1 = C.slate900,
+    color2 = C.aegisBlue,
+    tracking = 0,
+    weight = 'black',
+    justification = 'left',
+    wordSpacing = ' ',
+  } = opts;
+
+  const { ps: fontName, css: cssWeight } = fontSpec(weight);
+  const fullText = text1 + wordSpacing + text2;
+  const letterSpacing = tracking * fontSize;
+
+  // Render preview with dual colors
+  const mc = createCanvas(1, 1).getContext('2d');
+  mc.font = `${cssWeight} ${fontSize}px Inter, sans-serif`;
+
+  let totalW = 0;
+  for (let i = 0; i < fullText.length; i++) {
+    totalW += mc.measureText(fullText[i]).width;
+    if (i < fullText.length - 1) totalW += letterSpacing;
+  }
+
+  const padX = 2, padY = 2;
+  const lineH = Math.round(fontSize * 1.25);
+  const cvW = Math.ceil(totalW) + padX * 2 + 2;
+  const cvH = lineH + padY * 2 + 2;
+
+  const canvas = createCanvas(cvW, cvH);
+  const ctx = canvas.getContext('2d');
+  ctx.font = `${cssWeight} ${fontSize}px Inter, sans-serif`;
+  ctx.textBaseline = 'top';
+  ctx.antialias = 'subpixel';
+
+  let cx = padX;
+  for (let i = 0; i < fullText.length; i++) {
+    ctx.fillStyle = i < text1.length
+      ? `rgb(${color1.r},${color1.g},${color1.b})`
+      : `rgb(${color2.r},${color2.g},${color2.b})`;
+    ctx.fillText(fullText[i], cx, padY);
+    cx += ctx.measureText(fullText[i]).width;
+    if (i < fullText.length - 1) cx += letterSpacing;
+  }
+
+  const baselineY = y + Math.round(fontSize * 0.75);
+
+  return {
+    name,
+    canvas,
+    top: y,
+    left: x,
+    bottom: y + canvas.height,
+    right: x + canvas.width,
+    text: {
+      text: fullText,
+      transform: [1, 0, 0, 1, x, baselineY],
+      antiAlias: 'smooth',
+      style: {
+        font: { name: fontName },
+        fontSize,
+        fillColor: color1,
+        tracking: Math.round(tracking * 1000),
+        autoLeading: true,
+      },
+      styleRuns: [
+        {
+          length: text1.length,
+          style: { font: { name: fontName }, fontSize, fillColor: color1, tracking: Math.round(tracking * 1000) },
+        },
+        {
+          length: wordSpacing.length,
+          style: { font: { name: fontName }, fontSize, fillColor: color1, tracking: Math.round(tracking * 1000) },
+        },
+        {
+          length: text2.length,
+          style: { font: { name: fontName }, fontSize, fillColor: color2, tracking: Math.round(tracking * 1000) },
+        },
+      ],
       paragraphStyle: {
         justification,
       },

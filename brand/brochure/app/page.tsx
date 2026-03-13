@@ -87,7 +87,7 @@ function PageOne() {
             <AegisIcon size="5.5mm" />
           </div>
           <div style={{ display: "flex", flexDirection: "column" }}>
-            <span style={{ fontSize: "15pt", fontWeight: 900, letterSpacing: "0.08em", textTransform: "uppercase", lineHeight: 1 }}>
+            <span style={{ fontSize: "15pt", fontWeight: 900, letterSpacing: "0.06em", textTransform: "uppercase", lineHeight: 1 }}>
               AEGIS NETWORK
             </span>
             <span style={{ fontSize: "7.5pt", color: "#94a3b8", fontWeight: 600, letterSpacing: "0.25em", textTransform: "uppercase", marginTop: "1.2mm" }}>
@@ -431,7 +431,7 @@ function PageTwo() {
             >
               <AegisIcon size="3mm" />
             </div>
-            <span style={{ fontSize: "7pt", fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase" }}>
+            <span style={{ fontSize: "7pt", fontWeight: 800, letterSpacing: "0.06em", textTransform: "uppercase" }}>
               AEGIS NETWORK
             </span>
           </div>
