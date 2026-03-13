@@ -89,7 +89,7 @@ const Navbar = () => {
         <div className="flex items-center gap-3">
           <AegisLogo className="w-9 h-9" />
           <div className="flex flex-col">
-            <h1 className="text-lg font-black tracking-[0.08em] text-white leading-none">
+            <h1 className="text-lg font-black tracking-[0.06em] text-white leading-none" style={{ wordSpacing: '0.2em' }}>
               AEGIS <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-violet-400">NETWORK</span>
             </h1>
             <span className="text-[8px] uppercase tracking-[0.25em] text-slate-300 font-bold mt-0.5">Conseil & Optimisation IT</span>
@@ -102,7 +102,7 @@ const Navbar = () => {
             <button
               key={id}
               onClick={() => scrollToSection(id)}
-              className={`py-1 border-b-2 transition-all duration-300 cursor-pointer ${
+              className={`py-1 border-b-2 transition-colors duration-300 cursor-pointer ${
                 activeSection === id
                   ? 'text-optical-blue border-optical-blue'
                   : 'border-transparent hover:text-optical-blue hover:border-optical-blue/50'
@@ -124,7 +124,7 @@ const Navbar = () => {
           {/* Mobile burger */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="md:hidden flex items-center justify-center w-10 h-10 rounded-lg text-slate-300 hover:text-white hover:bg-white/10 transition-all cursor-pointer"
+            className="md:hidden flex items-center justify-center w-10 h-10 rounded-lg text-slate-300 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
             aria-label="Menu de navigation"
           >
             {mobileOpen ? <X size={22} /> : <Menu size={22} />}
@@ -147,7 +147,7 @@ const Navbar = () => {
                 <button
                   key={id}
                   onClick={() => { scrollToSection(id); setMobileOpen(false); }}
-                  className={`text-left py-3 px-4 rounded-xl text-base font-semibold transition-all cursor-pointer ${
+                  className={`text-left py-3 px-4 rounded-xl text-base font-semibold transition-colors cursor-pointer ${
                     activeSection === id
                       ? 'text-optical-blue bg-blue-600/10'
                       : 'text-slate-300 hover:text-white hover:bg-white/5'
@@ -232,11 +232,11 @@ const Hero = () => (
             <Activity size={20} />
           </button>
           <div className="flex flex-wrap gap-3">
-            <button onClick={() => scrollToSection('gains')} className="h-11 px-6 rounded-lg bg-emerald-500/10 border border-emerald-500/25 text-emerald-300 font-semibold text-sm flex items-center justify-center gap-2 hover:bg-emerald-500/20 hover:text-emerald-200 transition-all backdrop-blur-sm cursor-pointer">
+            <button onClick={() => scrollToSection('gains')} className="h-11 px-6 rounded-lg bg-emerald-500/10 border border-emerald-500/25 text-emerald-300 font-semibold text-sm flex items-center justify-center gap-2 hover:bg-emerald-500/20 hover:text-emerald-200 transition-colors backdrop-blur-sm cursor-pointer">
               <Sparkles size={15} />
               Ce qu'on vous apporte
             </button>
-            <button onClick={() => scrollToSection('simulateur')} className="h-11 px-6 rounded-lg bg-sky-500/10 border border-sky-500/25 text-sky-300 font-semibold text-sm flex items-center justify-center gap-2 hover:bg-sky-500/20 hover:text-sky-200 transition-all backdrop-blur-sm cursor-pointer">
+            <button onClick={() => scrollToSection('simulateur')} className="h-11 px-6 rounded-lg bg-sky-500/10 border border-sky-500/25 text-sky-300 font-semibold text-sm flex items-center justify-center gap-2 hover:bg-sky-500/20 hover:text-sky-200 transition-colors backdrop-blur-sm cursor-pointer">
               <Calculator size={15} />
               Estimer vos économies
             </button>
@@ -248,8 +248,8 @@ const Hero = () => (
       <div className="relative hidden md:block h-[400px] md:h-[450px] lg:h-[550px]">
         {/* Main image */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
           transition={{ duration: 0.8, ease: 'easeOut', delay: 0.2 }}
           className="absolute inset-0 rounded-2xl overflow-hidden shadow-2xl border border-white/10"
         >
@@ -258,6 +258,7 @@ const Hero = () => (
             src="/img/photo-1551703599-6b3e8379aa8c.jfif"
             alt="Infrastructure réseau"
             fetchPriority="high"
+            decoding="async"
             width={800}
             height={550}
           />
@@ -268,9 +269,9 @@ const Hero = () => (
 
         {/* KPI: Réduction Coûts */}
         <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.5, duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.6, duration: 0.8, ease: 'easeOut' }}
           className="absolute top-6 -left-4 lg:top-8 lg:-left-10 z-20"
         >
           <div className="animate-float">
@@ -294,9 +295,9 @@ const Hero = () => (
 
         {/* KPI: Efficacité Réseau */}
         <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.7, duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.0, duration: 0.8, ease: 'easeOut' }}
           className="absolute bottom-8 -right-2 lg:bottom-16 lg:-right-6 z-20"
         >
           <div className="animate-float" style={{ animationDelay: '1.5s' }}>
@@ -320,9 +321,9 @@ const Hero = () => (
 
         {/* KPI: Audit central badge */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.9, duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.3, duration: 0.8, ease: 'easeOut' }}
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20"
         >
           <div className="animate-float" style={{ animationDelay: '3s' }}>
@@ -442,9 +443,9 @@ const CostControl = () => (
         ].map((card, i) => (
           <motion.div
             key={i}
-            initial={{ opacity: 0, y: 25, scale: 0.97 }}
-            whileInView={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ delay: i * 0.12, duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: i * 0.15, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
             viewport={{ once: true }}
             className={`glass-card cause-card p-10 rounded-3xl ${card.border}`}
           >
@@ -1573,6 +1574,9 @@ const ContactSection = ({ diagResult, contactMode }: { diagResult: DiagResult | 
     message: '',
   });
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [honeypot, setHoneypot] = useState('');
 
   useEffect(() => {
     setMode(contactMode);
@@ -1599,8 +1603,12 @@ const ContactSection = ({ diagResult, contactMode }: { diagResult: DiagResult | 
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    if (submitting) return;
+
+    setSubmitting(true);
+    setSubmitError(null);
 
     const payload = {
       type: mode,
@@ -1617,32 +1625,35 @@ const ContactSection = ({ diagResult, contactMode }: { diagResult: DiagResult | 
           priority: diagResult.priority,
         }
       } : {}),
+      _honeypot: honeypot,
     };
 
-    // TODO: Replace with actual endpoint (serverless function, Formspree, etc.)
-    // Structured payload is ready — see console for preview
-    console.log('[Aegis Contact]', JSON.stringify(payload, null, 2));
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
 
-    const subject = encodeURIComponent(
-      mode === 'callback'
-        ? `Demande de rappel${formData.name ? ` — ${formData.name}` : ''}`
-        : `Contact${formData.name ? ` — ${formData.name}` : ''}`
-    );
-    const bodyParts = [
-      formData.name ? `Nom : ${formData.name}` : '',
-      formData.company ? `Entreprise : ${formData.company}` : '',
-      `Email : ${formData.email}`,
-      formData.phone ? `Téléphone : ${formData.phone}` : '',
-      formData.message ? `\nMessage :\n${formData.message}` : '',
-      diagResult ? `\n--- Diagnostic Express ---\nScore : ${diagResult.score}/100\nNiveau : ${diagResult.level}\nAxes : ${diagResult.axes.map(a => `${a.label} (${a.detail})`).join(', ')}\nPoints : ${diagResult.points.map(p => p.label).join(', ')}\nPriorité : ${diagResult.priority}` : '',
-    ].filter(Boolean).join('\n');
-    const body = encodeURIComponent(bodyParts);
+      const result = await res.json();
 
-    window.location.href = `mailto:contact@aegisnetwork.fr?subject=${subject}&body=${body}`;
-    setSubmitted(true);
+      if (!res.ok || !result.success) {
+        throw new Error(result.message || 'Une erreur est survenue.');
+      }
+
+      setSubmitted(true);
+    } catch (err) {
+      setSubmitError(
+        err instanceof Error && err.message
+          ? err.message
+          : 'Une erreur est survenue. Veuillez réessayer ou nous contacter directement.'
+      );
+    } finally {
+      setSubmitting(false);
+    }
   };
 
-  const inputClass = "w-full h-14 px-6 rounded-2xl border border-white/10 focus:border-optical-blue focus:ring-optical-blue bg-white/5 text-white placeholder:text-slate-600 transition-all outline-none";
+  const inputClass = "w-full h-14 px-6 rounded-2xl border border-white/10 focus:border-optical-blue focus:ring-optical-blue bg-white/5 text-white placeholder:text-slate-600 transition-[border-color,box-shadow] duration-200 outline-none";
 
   return (
     <section id="contact" className="py-32 relative bg-background-deep overflow-hidden">
@@ -1687,7 +1698,7 @@ const ContactSection = ({ diagResult, contactMode }: { diagResult: DiagResult | 
                 { icon: <MapPin />, label: "Centre Opérationnel", value: "Lyon, France", href: undefined }
               ].map((item, i) => (
                 <div key={i} className="flex items-center gap-6 group">
-                  <div className="w-14 h-14 rounded-2xl bg-blue-600/20 flex items-center justify-center text-optical-blue border border-blue-600/20 shadow-lg group-hover:bg-blue-600 group-hover:text-white transition-all">
+                  <div className="w-14 h-14 rounded-2xl bg-blue-600/20 flex items-center justify-center text-optical-blue border border-blue-600/20 shadow-lg group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
                     {item.icon}
                   </div>
                   <div>
@@ -1702,7 +1713,7 @@ const ContactSection = ({ diagResult, contactMode }: { diagResult: DiagResult | 
               ))}
             </div>
           </div>
-          <div className="glass-card p-10 md:p-14 rounded-[3rem] border-white/10 shadow-2xl relative">
+          <div className="glass-card px-10 pt-10 pb-6 md:px-14 md:pt-14 md:pb-8 rounded-[3rem] border-white/10 shadow-2xl relative lg:self-start">
             <div className="absolute -top-10 -right-10 w-40 h-40 bg-accent-violet/10 blur-[60px]" />
 
             {/* Mode tabs */}
@@ -1710,7 +1721,7 @@ const ContactSection = ({ diagResult, contactMode }: { diagResult: DiagResult | 
               <button
                 type="button"
                 onClick={() => setMode('callback')}
-                className={`flex-1 flex items-center justify-center gap-2 h-12 rounded-xl font-bold text-sm transition-all cursor-pointer ${
+                className={`flex-1 flex items-center justify-center gap-2 h-12 rounded-xl font-bold text-sm transition-colors cursor-pointer ${
                   mode === 'callback'
                     ? 'bg-blue-600/20 border border-blue-600/30 text-optical-blue'
                     : 'bg-white/5 border border-white/10 text-slate-400 hover:text-white'
@@ -1722,7 +1733,7 @@ const ContactSection = ({ diagResult, contactMode }: { diagResult: DiagResult | 
               <button
                 type="button"
                 onClick={() => setMode('message')}
-                className={`flex-1 flex items-center justify-center gap-2 h-12 rounded-xl font-bold text-sm transition-all cursor-pointer ${
+                className={`flex-1 flex items-center justify-center gap-2 h-12 rounded-xl font-bold text-sm transition-colors cursor-pointer ${
                   mode === 'message'
                     ? 'bg-blue-600/20 border border-blue-600/30 text-optical-blue'
                     : 'bg-white/5 border border-white/10 text-slate-400 hover:text-white'
@@ -1745,6 +1756,10 @@ const ContactSection = ({ diagResult, contactMode }: { diagResult: DiagResult | 
               </motion.div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
+                {/* Honeypot anti-spam — invisible pour les humains */}
+                <div className="absolute opacity-0 -z-10 h-0 overflow-hidden" aria-hidden="true">
+                  <input type="text" name="website" value={honeypot} onChange={(e) => setHoneypot(e.target.value)} tabIndex={-1} autoComplete="off" />
+                </div>
                 <AnimatePresence mode="wait">
                   {mode === 'callback' ? (
                     <motion.div
@@ -1807,7 +1822,7 @@ const ContactSection = ({ diagResult, contactMode }: { diagResult: DiagResult | 
                       </div>
                       <div className="space-y-3">
                         <label className="text-sm font-bold text-slate-300 uppercase tracking-widest ml-1">Message</label>
-                        <textarea name="message" value={formData.message} onChange={handleChange} className="w-full px-6 py-4 rounded-2xl border border-white/10 focus:border-optical-blue focus:ring-optical-blue bg-white/5 text-white placeholder:text-slate-600 transition-all outline-none" placeholder="Décrivez votre besoin (audit, conseil, optimisation...)" rows={4}></textarea>
+                        <textarea name="message" value={formData.message} onChange={handleChange} className="w-full px-6 py-4 rounded-2xl border border-white/10 focus:border-optical-blue focus:ring-optical-blue bg-white/5 text-white placeholder:text-slate-600 transition-[border-color,box-shadow] duration-200 outline-none" placeholder="Décrivez votre besoin (audit, conseil, optimisation...)" rows={4}></textarea>
                       </div>
                     </motion.div>
                   )}
@@ -1820,10 +1835,13 @@ const ContactSection = ({ diagResult, contactMode }: { diagResult: DiagResult | 
                       </motion.div>
                     </motion.div>
                   )}
-                  <button type="submit" className="glow-button w-full h-16 rounded-2xl bg-gradient-to-r from-blue-600 via-blue-600 to-accent-violet text-white font-bold text-xl uppercase tracking-widest cursor-pointer">
-                    {mode === 'callback' ? 'Demander un rappel' : 'Envoyer ma demande'}
+                  <button type="submit" disabled={submitting} className="glow-button w-full h-16 rounded-2xl bg-gradient-to-r from-blue-600 via-blue-600 to-accent-violet text-white font-bold text-xl uppercase tracking-widest cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed">
+                    {submitting ? 'Envoi en cours…' : (mode === 'callback' ? 'Demander un rappel' : 'Envoyer ma demande')}
                   </button>
                 </div>
+                {submitError && (
+                  <p className="text-center text-sm text-red-400">{submitError}</p>
+                )}
                 <p className="text-center text-xs text-slate-500">Nous vous répondons sous 24 heures.</p>
               </form>
             )}
@@ -1900,7 +1918,7 @@ const Footer = () => {
             <div className="flex items-center gap-3">
               <AegisLogo className="w-8 h-8" />
               <div className="flex flex-col">
-                <span className="text-lg font-black tracking-[0.08em] text-white leading-none">
+                <span className="text-lg font-black tracking-[0.06em] text-white leading-none" style={{ wordSpacing: '0.2em' }}>
                   AEGIS <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-violet-400">NETWORK</span>
                 </span>
                 <span className="text-[8px] uppercase tracking-[0.25em] text-slate-300 font-bold mt-0.5">Conseil & Optimisation IT</span>

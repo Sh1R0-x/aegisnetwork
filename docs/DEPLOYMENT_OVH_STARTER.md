@@ -73,3 +73,14 @@ www/
 - OVH Starter sert des fichiers statiques uniquement — pas de Node.js côté serveur
 - Le build Vite produit des assets avec hash pour le cache busting
 - Le `.htaccess` gère la réécriture vers `dist/` et la redirection HTTPS
+
+## Serveur API (formulaire de contact)
+
+Le formulaire de contact nécessite un serveur Node.js (Express + Nodemailer) pour l'envoi d'e-mails via SMTP OVH. OVH Starter ne supporte pas Node.js.
+
+**Options de déploiement pour l'API :**
+
+1. **Hébergement Node.js séparé** (Render, Railway, OVH VPS…) : l'API tourne sur un serveur dédié, le site statique reste sur OVH Starter
+2. **Migration vers un hébergement Node.js** : Express sert à la fois l'API et les fichiers statiques `dist/`
+
+Voir `docs/EMAIL_SMTP.md` pour la configuration complète du serveur API et de l'envoi SMTP.

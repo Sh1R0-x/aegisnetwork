@@ -46,17 +46,29 @@ Aegis Network est un **consultant / accompagnateur / chef de projet IT** indépe
 - **Inter** (Google Fonts) comme typographie principale
 - Build : `npm run build` → dossier `dist/`
 - Hébergement : `dist/` est versionné et déployé sur OVH Starter via `.htaccess` (réécriture vers `dist/`)
+- **Serveur API** : Express + Nodemailer (envoi SMTP via OVH)
+- Runtime serveur : `tsx` (exécution TypeScript directe)
 
 ## Structure
 
 ```
 index.html          ← point d'entrée Vite (dev) + preload hero
 .htaccess           ← réécriture Apache pour servir dist/ sur OVH
+.env.example        ← variables d'environnement (SMTP, serveur)
 src/
   main.tsx          ← bootstrap React
   App.tsx           ← composant racine, ~1950 lignes, toutes les sections
   index.css         ← Tailwind @theme + 15 keyframes + classes custom
   components/       ← composants réutilisables (AegisLogo, etc.)
+server/
+  index.ts          ← Point d'entrée Express (API + static serving)
+  tsconfig.json     ← Config TypeScript serveur (séparée du frontend)
+  lib/
+    mailer.ts       ← Transporter Nodemailer + envoi SMTP
+    templates.ts    ← Templates HTML/texte des e-mails
+    validation.ts   ← Validation et sanitisation serveur
+  routes/
+    contact.ts      ← Route POST /api/contact
 public/
   favicon.svg       ← favicon (shield Aegis)
   img/              ← 5 images locales (copies Unsplash, .jfif)
@@ -84,7 +96,10 @@ Zéro mention sécurité/cyber — uniquement performance, maîtrise, frictions,
 
 Deux modes : « Être rappelé » (callback : téléphone + email) / « Nous contacter » (message : nom, entreprise, email, message).
 Pré-remplissage automatique du message après diagnostic (résumé structuré).
-Soumission : `console.log()` + fallback `mailto:` (`TODO:` vrai backend).
+Soumission via `POST /api/contact` (serveur Express + Nodemailer).
+Double envoi : notification interne à contact@aegisnetwork.fr + accusé de réception au visiteur.
+Protection anti-spam : honeypot + rate limiting (5 req / 15 min par IP).
+États gérés : loading (`submitting`), erreur (`submitError`), succès (`submitted`).
 
 ### Flèches de guidage (arrows)
 
@@ -119,7 +134,7 @@ Ne jamais modifier ces informations sans validation explicite.
 - **Optical Blue** : `#3b82f6` — couleur primaire, accents, glows
 - **Deep Background** : `#020617` — fond principal (slate-950)
 - **Accent Violet** : `#7c3aed` — couleur secondaire, dégradés
-- **Tracking logo** : `0.08em` pour "AEGIS NETWORK" (navbar + footer)
+- **Tracking logo** : `0.06em` pour "AEGIS NETWORK" (+ word-spacing 0.2em) (navbar + footer)
 - **Tracking baseline** : `0.25em` pour "Conseil & Optimisation IT" (text-slate-300)
 - **Typo titres** : Inter Black (900), tracking-tighter
 - **Effets** : glassmorphism, premium-glow, glow-button, fiber beams, float

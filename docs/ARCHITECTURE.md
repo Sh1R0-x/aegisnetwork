@@ -13,18 +13,30 @@
 | Bundler       | Vite                               | 6        |
 | Typographie   | Inter (Google Fonts)               | —        |
 | Hébergement   | OVH Starter (dossier `dist/`)      | —        |
+| Serveur API   | Express + Nodemailer (SMTP OVH)    | —        |
+| Runtime srv   | tsx (TypeScript direct)             | 4        |
 
 ## Structure du projet
 
 ```
 index.html              ← Point d'entrée Vite (dev) + preload hero
 .htaccess              ← Réécriture Apache (dist/ + HTTPS)
+.env.example           ← Variables d'environnement (SMTP, serveur)
 src/
   main.tsx              ← Bootstrap React (StrictMode)
   App.tsx               ← Composant racine — ~1950 lignes, toutes les sections
   index.css             ← Tailwind @theme + 15 keyframes + classes custom
   components/
     AegisLogo.tsx       ← Logo SVG animé (gradient + nœuds réseau)
+server/
+  index.ts              ← Point d'entrée Express (API + static serving)
+  tsconfig.json         ← Config TypeScript serveur (séparée du frontend)
+  lib/
+    mailer.ts           ← Transporter Nodemailer + envoi SMTP
+    templates.ts        ← Templates HTML/texte des e-mails
+    validation.ts       ← Validation et sanitisation serveur
+  routes/
+    contact.ts          ← Route POST /api/contact
 public/
   favicon.svg           ← Favicon Aegis (shield)
   img/                  ← 5 images locales (copies Unsplash, .jfif)
