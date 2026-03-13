@@ -89,9 +89,9 @@ const Navbar = () => {
         <div className="flex items-center gap-3">
           <AegisLogo className="w-9 h-9" />
           <div className="flex flex-col">
-            <h1 className="text-lg font-black tracking-[0.06em] text-white leading-none whitespace-nowrap" style={{ wordSpacing: '0.2em' }}>
+            <span className="text-lg font-black tracking-[0.06em] text-white leading-none whitespace-nowrap" style={{ wordSpacing: '0.2em' }}>
               AEGIS <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-violet-400">NETWORK</span>
-            </h1>
+            </span>
             <span className="text-[8px] uppercase tracking-[0.25em] text-slate-300 font-bold mt-0.5">Conseil & Optimisation IT</span>
           </div>
         </div>

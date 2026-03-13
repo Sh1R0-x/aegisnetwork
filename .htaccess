@@ -4,6 +4,10 @@ RewriteEngine On
 RewriteCond %{HTTPS} off
 RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
 
+# Redirection www -> non-www
+RewriteCond %{HTTP_HOST} ^www\.aegisnetwork\.fr$ [NC]
+RewriteRule ^(.*)$ https://aegisnetwork.fr/$1 [R=301,L]
+
 # Servir depuis dist/
 RewriteCond %{REQUEST_URI} !^/dist/
 RewriteRule ^(.*)$ /dist/$1 [L]
