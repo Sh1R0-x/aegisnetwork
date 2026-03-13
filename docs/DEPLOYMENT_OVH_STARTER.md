@@ -1,86 +1,104 @@
 # Déploiement OVH Starter — Aegis Network
 
+## Objectif
+
+Déployer le frontend statique buildé dans `dist/` sur OVH Starter, sans build côté hébergeur.
+
+Le dépôt versionne volontairement `dist/` et conserve `.htaccess` à la racine pour :
+
+- forcer HTTPS
+- servir le contenu depuis `dist/`
+
 ## Prérequis
 
-- Node.js 18+ installé localement
-- Accès FTP ou File Manager OVH
+- Node.js 18+ en local
+- accès OVH au dossier web (`www/`) ou à la synchronisation Git/FTP
 
-## Build
+## Build local
 
 ```bash
-npm install          # Installer les dépendances (1ère fois ou après mise à jour)
-npm run build        # Génère le dossier dist/
+npm install
+npm run build
 ```
 
-Le dossier `dist/` contient un site statique complet (HTML + JS + CSS bundlés).
+Le build produit :
 
-## Déploiement
+- `dist/index.html`
+- `dist/assets/index-*.js`
+- `dist/assets/index-*.css`
+- `dist/favicon.svg`
+- `dist/img/*.webp`
 
-### Stratégie actuelle
+## Déploiement du statique
 
-Le dépôt GitHub contient à la fois les sources et le dossier `dist/` (build de production). Le `.htaccess` à la racine redirige toutes les requêtes vers `dist/`.
+### Via Git
 
-Le déploiement consiste à synchroniser le dépôt entier sur OVH. Aucune étape de build côté serveur n'est nécessaire.
+1. exécuter `npm run build`
+2. committer `dist/` avec le reste du dépôt
+3. pousser sur `origin/main`
+4. déclencher la synchronisation OVH si nécessaire
 
-### Via Git (recommandé)
+### Via FTP ou File Manager
 
-1. `npm run build` en local
-2. `git add -A && git commit && git push origin main`
-3. Déclencher le déploiement depuis OVH (pull ou sync)
+1. exécuter `npm run build`
+2. envoyer `.htaccess` à la racine du dossier web
+3. envoyer le dossier `dist/`
+4. vérifier que les URLs publiques pointent bien sur le même domaine final
 
-### Via FTP
+## Structure attendue
 
-1. Lancer `npm run build` en local
-2. Se connecter au FTP OVH
-3. Uploader le dépôt complet (incluant `dist/` et `.htaccess`)
-4. Vérifier que `.htaccess` est bien à la racine `www/`
-
-## Vérification
-
-Après déploiement, vérifier :
-
-- [ ] La page se charge correctement
-- [ ] Les animations fonctionnent
-- [ ] Les images s'affichent
-- [ ] Le favicon apparaît
-- [ ] La navigation par ancres fonctionne
-- [ ] Le site est responsive (mobile / tablette / desktop)
-
-## Structure attendue sur OVH
-
-```
+```text
 www/
-  .htaccess             ← Réécriture vers dist/ + redirection HTTPS
-  dist/
-    index.html          ← Fichier principal (buildé)
-    assets/
-      index-XXXX.js     ← Bundle JS
-      index-XXXX.css    ← Bundle CSS
-    favicon.svg
-    img/
-      photo-*.jfif
+|-- .htaccess
+`-- dist/
+    |-- index.html
+    |-- favicon.svg
+    |-- assets/
+    `-- img/
 ```
 
-## HTTPS
+## Limitation importante
 
-- Le `.htaccess` inclut une redirection HTTP → HTTPS (301)
-- Toutes les URLs externes (fonts, images Unsplash) sont déjà en HTTPS
-- Aucun mixed content
-- **Action manuelle requise** : activer le certificat SSL/TLS depuis l'espace client OVH
+OVH Starter ne sait servir que des fichiers statiques. Il ne peut pas exécuter l'API Express du dépôt.
 
-## Notes
+Le code frontend appelle actuellement `/api/contact` en same-origin. En conséquence :
 
-- OVH Starter sert des fichiers statiques uniquement — pas de Node.js côté serveur
-- Le build Vite produit des assets avec hash pour le cache busting
-- Le `.htaccess` gère la réécriture vers `dist/` et la redirection HTTPS
+- le site statique seul fonctionne pour l'affichage
+- le formulaire de contact ne fonctionne pas sur un simple dépôt OVH Starter sans routage API complémentaire
 
-## Serveur API (formulaire de contact)
+## Scénarios de production cohérents
 
-Le formulaire de contact nécessite un serveur Node.js (Express + Nodemailer) pour l'envoi d'e-mails via SMTP OVH. OVH Starter ne supporte pas Node.js.
+### 1. Hébergement Node.js unique
 
-**Options de déploiement pour l'API :**
+Le backend Express sert `dist/` et `/api/contact` sur le même domaine.
 
-1. **Hébergement Node.js séparé** (Render, Railway, OVH VPS…) : l'API tourne sur un serveur dédié, le site statique reste sur OVH Starter
-2. **Migration vers un hébergement Node.js** : Express sert à la fois l'API et les fichiers statiques `dist/`
+C'est le montage le plus simple avec l'état actuel du code.
 
-Voir `docs/EMAIL_SMTP.md` pour la configuration complète du serveur API et de l'envoi SMTP.
+### 2. OVH Starter + reverse proxy same-origin
+
+Le site statique reste sur OVH Starter, mais `/api/*` est proxyfié sur le même domaine vers un backend Node.js séparé.
+
+Ce scénario exige un routage infra supplémentaire hors de ce dépôt.
+
+### 3. OVH Starter seul
+
+Non suffisant si le formulaire doit rester opérationnel.
+
+## Vérifications après déploiement
+
+- [ ] la page d'accueil charge sans erreur
+- [ ] `dist/assets/*` est bien servi en production
+- [ ] les images `dist/img/*.webp` sont accessibles
+- [ ] le favicon apparaît
+- [ ] la redirection HTTP vers HTTPS fonctionne
+- [ ] la navigation one-page fonctionne
+- [ ] le responsive mobile et desktop reste correct
+- [ ] le formulaire est testé dans le scénario d'hébergement réellement retenu
+
+## À retenir
+
+- OVH Starter couvre le site statique
+- le formulaire exige un backend Node.js accessible en production
+- sans reverse proxy same-origin ou hébergement Node unique, `/api/contact` restera indisponible
+
+Voir [docs/EMAIL_SMTP.md](docs/EMAIL_SMTP.md) pour la configuration du backend mail et [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) pour la structure technique du projet.

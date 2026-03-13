@@ -89,7 +89,7 @@ const Navbar = () => {
         <div className="flex items-center gap-3">
           <AegisLogo className="w-9 h-9" />
           <div className="flex flex-col">
-            <h1 className="text-lg font-black tracking-[0.06em] text-white leading-none" style={{ wordSpacing: '0.2em' }}>
+            <h1 className="text-lg font-black tracking-[0.06em] text-white leading-none whitespace-nowrap" style={{ wordSpacing: '0.2em' }}>
               AEGIS <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-violet-400">NETWORK</span>
             </h1>
             <span className="text-[8px] uppercase tracking-[0.25em] text-slate-300 font-bold mt-0.5">Conseil & Optimisation IT</span>
@@ -576,7 +576,7 @@ const TimeLoss = () => (
 );
 
 const RootCause = () => (
-  <section className="py-32 relative bg-background-deep">
+  <section className="py-32 relative bg-background-deep overflow-hidden">
     <div className="max-w-7xl mx-auto px-6">
       <div className="flex flex-col lg:flex-row gap-20 items-center">
         <div className="lg:w-1/2 order-2 lg:order-1">
@@ -784,7 +784,7 @@ const ImpactCalculator = () => {
   const fmt = (n: number) => n.toLocaleString('fr-FR');
 
   return (
-    <section id="simulateur" className="py-32 relative bg-background-deep">
+    <section id="simulateur" className="py-32 relative bg-background-deep overflow-hidden">
       <div className="max-w-6xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -948,12 +948,12 @@ const ImpactCalculator = () => {
 };
 
 const EvolutionConseil = () => (
-  <section className="py-32 relative bg-background-deep">
+  <section className="py-32 relative bg-background-deep overflow-hidden">
     <div className="max-w-7xl mx-auto px-6">
       <div className="grid lg:grid-cols-2 gap-20 items-center">
-        <div>
+        <div className="min-w-0">
           <h2 className="text-optical-blue font-bold text-sm uppercase tracking-[0.3em] mb-6">Accompagnement durable</h2>
-          <h3 className="text-5xl font-black text-white mb-8 leading-tight">Un accompagnement qui évolue avec votre activité.</h3>
+          <h3 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-8 leading-tight">Un accompagnement qui évolue avec votre activité.</h3>
           <p className="text-slate-400 text-lg mb-10 leading-relaxed">
             Un audit ponctuel, c'est bien. Un suivi régulier, c'est mieux. Vos besoins changent, le marché évolue, vos contrats arrivent à échéance. Nous restons à vos côtés pour ajuster, anticiper et optimiser dans la durée.
           </p>
@@ -999,7 +999,7 @@ const EvolutionConseil = () => (
           whileInView={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
           viewport={{ once: true }}
-          className="relative"
+          className="relative min-w-0"
         >
           <div className="glass-card rounded-[3rem] p-6 shadow-2xl border-white/10 premium-glow">
             <img
@@ -1214,7 +1214,7 @@ h3{font-size:13px;font-weight:700;color:#0f172a;text-transform:uppercase;letter-
 ${result.points.map(p => `<div class="point ${p.type}"><span>⚠</span><span>${p.label}</span></div>`).join('')}
 <h3>Priorité recommandée</h3>
 <div class="priority">${result.priority}</div>
-<div class="footer"><span>Aegis Network — Conseil &amp; Optimisation IT</span><span>06 52 95 00 10 · contact@aegisnetwork.fr</span></div>
+<div class="footer"><span>Aegis Network — Conseil &amp; Optimisation IT</span><span>04 82 53 26 99 · contact@aegisnetwork.fr</span></div>
 </body></html>`;
   const w = window.open('', '_blank');
   if (w) {
@@ -1287,7 +1287,7 @@ const DiagnosticExpress = ({ onComplete, onContact }: { onComplete: (r: DiagResu
   };
 
   return (
-    <section id="diagnostic" className="py-32 relative">
+    <section id="diagnostic" className="py-32 relative overflow-hidden">
       {/* Solid background isolation — prevents FiberBeams/effects from parent sections bleeding through */}
       <div className="absolute inset-0 bg-background-deep" />
       <div className="absolute inset-0 bg-gradient-to-b from-blue-600/[0.03] via-transparent to-accent-violet/[0.03]" />
@@ -1330,7 +1330,7 @@ const DiagnosticExpress = ({ onComplete, onContact }: { onComplete: (r: DiagResu
 
             <button
               onClick={() => setStep('quiz')}
-              className="glow-button h-14 px-10 rounded-xl bg-gradient-to-r from-blue-600 to-accent-violet text-white font-bold text-lg inline-flex items-center justify-center gap-3 cursor-pointer"
+              className="glow-button h-14 px-6 sm:px-10 rounded-xl bg-gradient-to-r from-blue-600 to-accent-violet text-white font-bold text-base sm:text-lg inline-flex items-center justify-center gap-3 cursor-pointer whitespace-nowrap"
             >
               Lancer le diagnostic
               <ArrowRight size={20} />
@@ -1562,9 +1562,9 @@ const DiagnosticExpress = ({ onComplete, onContact }: { onComplete: (r: DiagResu
 };
 
 const CTASection = () => (
-  <section className="py-32 relative">
+  <section className="py-32 relative overflow-hidden">
     <div className="max-w-7xl mx-auto px-6">
-      <div className="bg-gradient-to-br from-blue-600/80 via-blue-700 to-accent-violet rounded-[3rem] p-12 lg:p-24 text-white relative overflow-hidden premium-glow">
+      <div className="bg-gradient-to-br from-blue-600/80 via-blue-700 to-accent-violet rounded-[2rem] sm:rounded-[3rem] p-6 sm:p-8 md:p-12 lg:p-24 text-white relative overflow-hidden premium-glow">
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white/10 rounded-full -mr-64 -mt-64 blur-[120px]" />
         <div className="relative z-10 text-center max-w-3xl mx-auto">
           <h3 className="text-4xl lg:text-6xl font-black mb-8 leading-tight">Un premier échange, gratuit et sans engagement.</h3>
@@ -1575,7 +1575,7 @@ const CTASection = () => (
             <span className="flex items-center gap-2"><MapPin size={16} /> Déplacements Lyon, Ain, Isère</span>
             <span className="flex items-center gap-2"><Users size={16} /> Aussi en visio</span>
           </div>
-          <button onClick={() => scrollToSection('contact')} className="h-16 px-10 rounded-2xl bg-white text-blue-700 font-bold text-xl hover:shadow-2xl transition-all hover:scale-105 cursor-pointer">
+          <button onClick={() => scrollToSection('contact')} className="h-12 sm:h-14 md:h-16 px-4 sm:px-6 md:px-10 rounded-2xl bg-white text-blue-700 font-bold text-sm sm:text-base md:text-xl hover:shadow-2xl transition-all hover:scale-105 cursor-pointer">
             Prendre rendez-vous
           </button>
         </div>
@@ -1713,7 +1713,7 @@ const ContactSection = ({ diagResult, contactMode }: { diagResult: DiagResult | 
             </div>
             <div className="space-y-8">
               {[
-                { icon: <PhoneCall />, label: "Ligne directe", value: "06 52 95 00 10", href: "tel:+33652950010" },
+                { icon: <PhoneCall />, label: "Ligne directe", value: "04 82 53 26 99", href: "tel:+33482532699" },
                 { icon: <Mail />, label: "Email", value: "contact@aegisnetwork.fr", href: "mailto:contact@aegisnetwork.fr" },
                 { icon: <MapPin />, label: "Centre Opérationnel", value: "Lyon, France", href: undefined }
               ].map((item, i) => (
@@ -1724,16 +1724,16 @@ const ContactSection = ({ diagResult, contactMode }: { diagResult: DiagResult | 
                   <div>
                     <p className="text-sm text-slate-500 font-bold uppercase tracking-widest">{item.label}</p>
                     {item.href ? (
-                      <a href={item.href} className="text-xl font-bold text-white hover:text-optical-blue transition-colors">{item.value}</a>
+                      <a href={item.href} className="text-lg sm:text-xl font-bold text-white hover:text-optical-blue transition-colors break-all">{item.value}</a>
                     ) : (
-                      <p className="text-xl font-bold text-white">{item.value}</p>
+                      <p className="text-lg sm:text-xl font-bold text-white">{item.value}</p>
                     )}
                   </div>
                 </div>
               ))}
             </div>
           </div>
-          <div className="glass-card px-10 pt-10 pb-6 md:px-14 md:pt-14 md:pb-8 rounded-[3rem] border-white/10 shadow-2xl relative lg:self-start">
+          <div className="glass-card px-6 pt-8 pb-6 sm:px-10 sm:pt-10 md:px-14 md:pt-14 md:pb-8 rounded-[2rem] sm:rounded-[3rem] border-white/10 shadow-2xl relative lg:self-start">
             <div className="absolute -top-10 -right-10 w-40 h-40 bg-accent-violet/10 blur-[60px]" />
 
             {/* Mode tabs */}
@@ -1748,7 +1748,8 @@ const ContactSection = ({ diagResult, contactMode }: { diagResult: DiagResult | 
                 }`}
               >
                 <PhoneCall size={16} />
-                Être rappelé
+                <span className="hidden sm:inline">Être rappelé</span>
+                <span className="sm:hidden">Rappel</span>
               </button>
               <button
                 type="button"
@@ -1760,7 +1761,8 @@ const ContactSection = ({ diagResult, contactMode }: { diagResult: DiagResult | 
                 }`}
               >
                 <Mail size={16} />
-                Nous contacter
+                <span className="hidden sm:inline">Nous contacter</span>
+                <span className="sm:hidden">Message</span>
               </button>
             </div>
 
@@ -1855,7 +1857,7 @@ const ContactSection = ({ diagResult, contactMode }: { diagResult: DiagResult | 
                       </motion.div>
                     </motion.div>
                   )}
-                  <button type="submit" disabled={submitting} className="glow-button w-full h-16 rounded-2xl bg-gradient-to-r from-blue-600 via-blue-600 to-accent-violet text-white font-bold text-xl uppercase tracking-widest cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed">
+                  <button type="submit" disabled={submitting} className="glow-button w-full h-14 sm:h-16 rounded-2xl bg-gradient-to-r from-blue-600 via-blue-600 to-accent-violet text-white font-bold text-sm sm:text-xl uppercase tracking-wider sm:tracking-widest cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed">
                     {submitting ? 'Envoi en cours…' : (mode === 'callback' ? 'Demander un rappel' : 'Envoyer ma demande')}
                   </button>
                 </div>
@@ -1894,7 +1896,7 @@ const LegalModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
             <h3 className="text-white font-bold mb-2">Éditeur du site</h3>
             <p>Aegis Network. Conseil et optimisation en infrastructures IT et télécommunications</p>
             <p>Contact : <a href="mailto:contact@aegisnetwork.fr" className="text-optical-blue hover:underline">contact@aegisnetwork.fr</a></p>
-            <p>Téléphone : <a href="tel:+33652950010" className="text-optical-blue hover:underline">06 52 95 00 10</a></p>
+            <p>Téléphone : <a href="tel:+33482532699" className="text-optical-blue hover:underline">04 82 53 26 99</a></p>
             <p>Centre opérationnel : Lyon, France</p>
             <p className="mt-2 text-yellow-500/80 text-xs">TODO: compléter : forme juridique, SIRET/RCS, capital social, nom du directeur de publication</p>
           </div>

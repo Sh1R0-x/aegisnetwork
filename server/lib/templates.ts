@@ -124,7 +124,7 @@ export function buildAcknowledgment(data: ContactPayload) {
     'Conseil & Optimisation IT',
     '',
     'contact@aegisnetwork.fr',
-    '06 52 95 00 10',
+    '04 82 53 26 99',
   ].join('\n');
 
   // ── Version HTML ──────────────────────────────────────────────────────
@@ -145,7 +145,7 @@ export function buildAcknowledgment(data: ContactPayload) {
     <p style="margin:0 0 4px">Cordialement,</p>
     <p style="margin:0;font-weight:700;color:#0f172a">AEGIS NETWORK</p>
     <div style="margin-top:24px;padding-top:16px;border-top:1px solid #e2e8f0;font-size:12px;color:#94a3b8">
-      <p style="margin:0"><a href="mailto:contact@aegisnetwork.fr" style="color:#3b82f6;text-decoration:none">contact@aegisnetwork.fr</a> · 06 52 95 00 10</p>
+      <p style="margin:0"><a href="mailto:contact@aegisnetwork.fr" style="color:#3b82f6;text-decoration:none">contact@aegisnetwork.fr</a> · 04 82 53 26 99</p>
     </div>
   </div>
 </body>

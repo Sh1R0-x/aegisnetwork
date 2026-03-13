@@ -252,7 +252,7 @@ Quand `diagResult` change (via `useEffect`) :
 ### Layout
 - Grid `lg:grid-cols-2` : colonne gauche (infos contact + badges), colonne droite (formulaire glass-card)
 - Badges contextuels : « Premier échange gratuit », « Lyon · Ain · Isère », « Disponible en visio »
-- Informations : téléphone (06 52 95 00 10), email, localisation Lyon
+- Informations : téléphone (04 82 53 26 99), email, localisation Lyon
 
 ---
 

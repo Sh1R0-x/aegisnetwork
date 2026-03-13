@@ -552,7 +552,7 @@ async function buildBusinessCardPSDs() {
         opened: true,
         children: [
           { name: 'Icône téléphone', canvas: phoneIcn, top: contactBaseY, left: BLEED + SAFE + 30, bottom: contactBaseY + iconSz, right: BLEED + SAFE + 30 + iconSz },
-          textLayer('Téléphone', '06 52 95 00 10', BLEED + SAFE + 30 + iconSz + 10, contactBaseY + 4, { fontSize: 15, color: C.slate700, weight: 'medium' }),
+          textLayer('Téléphone', '04 82 53 26 99', BLEED + SAFE + 30 + iconSz + 10, contactBaseY + 4, { fontSize: 15, color: C.slate700, weight: 'medium' }),
           { name: 'Icône email', canvas: mailIcn, top: contactBaseY + 40, left: BLEED + SAFE + 30, bottom: contactBaseY + 40 + iconSz, right: BLEED + SAFE + 30 + iconSz },
           textLayer('Email', 'contact@aegisnetwork.fr', BLEED + SAFE + 30 + iconSz + 10, contactBaseY + 44, { fontSize: 15, color: C.slate700, weight: 'medium' }),
           { name: 'Icône web', canvas: globeIcn, top: contactBaseY + 80, left: BLEED + SAFE + 30, bottom: contactBaseY + 80 + iconSz, right: BLEED + SAFE + 30 + iconSz },
@@ -591,7 +591,7 @@ async function buildBusinessCardPSDs() {
         opened: true,
         children: [
           { name: 'Icône téléphone', canvas: phoneIcn, top: contactBaseY, left: BLEED + SAFE, bottom: contactBaseY + iconSz, right: BLEED + SAFE + iconSz },
-          textLayer('Téléphone', '06 52 95 00 10', BLEED + SAFE + iconSz + 10, contactBaseY + 4, { fontSize: 15, color: C.slate700, weight: 'medium' }),
+          textLayer('Téléphone', '04 82 53 26 99', BLEED + SAFE + iconSz + 10, contactBaseY + 4, { fontSize: 15, color: C.slate700, weight: 'medium' }),
           { name: 'Icône email', canvas: mailIcn, top: contactBaseY + 40, left: BLEED + SAFE, bottom: contactBaseY + 40 + iconSz, right: BLEED + SAFE + iconSz },
           textLayer('Email', 'contact@aegisnetwork.fr', BLEED + SAFE + iconSz + 10, contactBaseY + 44, { fontSize: 15, color: C.slate700, weight: 'medium' }),
           { name: 'Icône web', canvas: globeIcn, top: contactBaseY + 80, left: BLEED + SAFE, bottom: contactBaseY + 80 + iconSz, right: BLEED + SAFE + iconSz },
@@ -668,7 +668,7 @@ async function buildEmailSignaturePSDs() {
         opened: true,
         children: [
           { name: 'Icône téléphone', canvas: phoneIcnLight, top: 135, left: infoX, bottom: 135 + iconSz, right: infoX + iconSz },
-          textLayer('Téléphone', '06 52 95 00 10', infoX + iconSz + 12, 140, { fontSize: 22, color: C.slate900, weight: 'medium' }),
+          textLayer('Téléphone', '04 82 53 26 99', infoX + iconSz + 12, 140, { fontSize: 22, color: C.slate900, weight: 'medium' }),
           { name: 'Icône email', canvas: mailIcnLight, top: 180, left: infoX, bottom: 180 + iconSz, right: infoX + iconSz },
           textLayer('Email', 'contact@aegisnetwork.fr', infoX + iconSz + 12, 185, { fontSize: 22, color: C.aegisBlue, weight: 'medium' }),
           { name: 'Icône web', canvas: globeIcnLight, top: 225, left: infoX, bottom: 225 + iconSz, right: infoX + iconSz },
@@ -706,7 +706,7 @@ async function buildEmailSignaturePSDs() {
         opened: true,
         children: [
           { name: 'Icône téléphone', canvas: phoneIcnDark, top: 135, left: infoX, bottom: 135 + iconSz, right: infoX + iconSz },
-          textLayer('Téléphone', '06 52 95 00 10', infoX + iconSz + 12, 140, { fontSize: 22, color: C.slate200, weight: 'medium' }),
+          textLayer('Téléphone', '04 82 53 26 99', infoX + iconSz + 12, 140, { fontSize: 22, color: C.slate200, weight: 'medium' }),
           { name: 'Icône email', canvas: mailIcnDark, top: 180, left: infoX, bottom: 180 + iconSz, right: infoX + iconSz },
           textLayer('Email', 'contact@aegisnetwork.fr', infoX + iconSz + 12, 185, { fontSize: 22, color: C.opticalBlue, weight: 'medium' }),
           { name: 'Icône web', canvas: globeIcnDark, top: 225, left: infoX, bottom: 225 + iconSz, right: infoX + iconSz },
@@ -882,7 +882,7 @@ async function buildFlyerPSD() {
             opened: true,
             children: [
               textLayer('Label téléphone', 'TÉLÉPHONE', PAD + 40, Y_FOOTER + 190, { fontSize: 14, color: C.slate400, weight: 'bold', tracking: 0.1 }),
-              textLayer('Numéro', '06 52 95 00 10', PAD + 40, Y_FOOTER + 218, { fontSize: 26, color: C.slate900, weight: 'black' }),
+              textLayer('Numéro', '04 82 53 26 99', PAD + 40, Y_FOOTER + 218, { fontSize: 26, color: C.slate900, weight: 'black' }),
               textLayer('Label email', 'EMAIL', PAD + 40 + footerW / 3, Y_FOOTER + 190, { fontSize: 14, color: C.slate400, weight: 'bold', tracking: 0.1 }),
               textLayer('Adresse email', 'contact@aegisnetwork.fr', PAD + 40 + footerW / 3, Y_FOOTER + 218, { fontSize: 22, color: C.slate900, weight: 'bold' }),
               textLayer('Label web', 'SITE WEB', PAD + 40 + (footerW / 3) * 2, Y_FOOTER + 190, { fontSize: 14, color: C.slate400, weight: 'bold', tracking: 0.1 }),
@@ -1037,7 +1037,7 @@ async function buildFlyerPSD() {
             opened: true,
             children: [
               textLayer('Label téléphone', 'TÉLÉPHONE', PAD4 + 50, Y_FOOTER4 + 240, { fontSize: 16, color: C.slate400, weight: 'bold', tracking: 0.1 }),
-              textLayer('Numéro', '06 52 95 00 10', PAD4 + 50, Y_FOOTER4 + 275, { fontSize: 32, color: C.slate900, weight: 'black' }),
+              textLayer('Numéro', '04 82 53 26 99', PAD4 + 50, Y_FOOTER4 + 275, { fontSize: 32, color: C.slate900, weight: 'black' }),
               textLayer('Label email', 'EMAIL', PAD4 + 50 + footerW4 / 3, Y_FOOTER4 + 240, { fontSize: 16, color: C.slate400, weight: 'bold', tracking: 0.1 }),
               textLayer('Adresse email', 'contact@aegisnetwork.fr', PAD4 + 50 + footerW4 / 3, Y_FOOTER4 + 275, { fontSize: 28, color: C.slate900, weight: 'bold' }),
               textLayer('Label web', 'SITE WEB', PAD4 + 50 + (footerW4 / 3) * 2, Y_FOOTER4 + 240, { fontSize: 16, color: C.slate400, weight: 'bold', tracking: 0.1 }),
@@ -1187,7 +1187,7 @@ async function buildBrochurePSD() {
           textLayer('Titre contact', 'Parlons de votre infrastructure.', PAD + 60, H - PAD - 360, { fontSize: 36, color: C.white, weight: 'black' }),
           textLayer('Accroche', 'Premier échange gratuit et sans engagement.', PAD + 60, H - PAD - 310, { fontSize: 22, color: C.slate400, weight: 'medium' }),
           { name: 'Icône téléphone', canvas: phoneIcn, top: H - PAD - 250, left: PAD + 60, bottom: H - PAD - 214, right: PAD + 96 },
-          textLayer('Téléphone', '06 52 95 00 10', PAD + 110, H - PAD - 246, { fontSize: 24, color: C.slate200, weight: 'bold' }),
+          textLayer('Téléphone', '04 82 53 26 99', PAD + 110, H - PAD - 246, { fontSize: 24, color: C.slate200, weight: 'bold' }),
           { name: 'Icône email', canvas: mailIcn, top: H - PAD - 200, left: PAD + 60, bottom: H - PAD - 164, right: PAD + 96 },
           textLayer('Email', 'contact@aegisnetwork.fr', PAD + 110, H - PAD - 196, { fontSize: 24, color: C.opticalBlue, weight: 'bold' }),
           { name: 'Icône web', canvas: globeIcn, top: H - PAD - 150, left: PAD + 60, bottom: H - PAD - 114, right: PAD + 96 },

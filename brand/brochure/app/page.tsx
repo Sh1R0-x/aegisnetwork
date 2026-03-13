@@ -404,7 +404,7 @@ function PageTwo() {
             Premier échange gratuit et sans engagement. Parlons de vos enjeux.
           </p>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: "3mm" }}>
-            <ContactItem icon={<Phone style={{ width: "3.5mm", height: "3.5mm" }} />} text="06 52 95 00 10" />
+            <ContactItem icon={<Phone style={{ width: "3.5mm", height: "3.5mm" }} />} text="04 82 53 26 99" />
             <ContactItem icon={<Mail style={{ width: "3.5mm", height: "3.5mm" }} />} text="contact@aegisnetwork.fr" />
             <ContactItem icon={<Globe style={{ width: "3.5mm", height: "3.5mm" }} />} text="aegisnetwork.fr" />
             <ContactItem icon={<MapPin style={{ width: "3.5mm", height: "3.5mm" }} />} text="Lyon, France" />

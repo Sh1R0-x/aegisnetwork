@@ -534,7 +534,7 @@ def build_business_card_recto():
     font_contact = load_font(400, 5.5)
     contact_y = H - PADDING - 100
     contact_lines = [
-        ("06 52 95 00 10", "Tel"),
+        ("04 82 53 26 99", "Tel"),
         ("contact@aegisnetwork.fr", "Email"),
         ("aegisnetwork.fr", "Web"),
     ]
@@ -665,7 +665,7 @@ def build_email_signature():
     # 8. Contact info
     font_c = load_font(400, 5.5)
     ci_y = ty_base + name_img.height + title_img.height + 30 + wm.height + 16
-    for text, label in [("06 52 95 00 10", "Tel"), ("contact@aegisnetwork.fr", "Email")]:
+    for text, label in [("04 82 53 26 99", "Tel"), ("contact@aegisnetwork.fr", "Email")]:
         ci = render_text_layer(text, font_c, COL["slate_300"])
         layers.append({"name": f"Contact - {label}", "image": ci, "x": tx, "y": ci_y})
         ci_y += ci.height + 6

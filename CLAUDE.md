@@ -113,7 +113,7 @@ Positionnement **element-anchored** : chaque flèche est dans un wrapper `<div c
 
 ## Informations de contact
 
-- Téléphone : 06 52 95 00 10
+- Téléphone : 04 82 53 26 99
 - Email : contact@aegisnetwork.fr
 - Localisation : Lyon, France
 

@@ -1,112 +1,110 @@
 # Aegis Network
 
-Site vitrine one-page pour Aegis Network — conseil, audit et optimisation en infrastructures IT et télécommunications pour TPE et PME.
+Site vitrine one-page d'Aegis Network, dédié au conseil, à l'audit et à l'optimisation des infrastructures IT et télécom pour TPE et PME.
 
-> **Source de vérité** : GitHub `Sh1R0-x/aegisnetwork`, branche `main`.
+Le dépôt contient deux briques distinctes :
 
-## Stack technique
+- un frontend React statique buildé dans `dist/`
+- un backend Express/Nodemailer pour le formulaire de contact
 
-- **React 19** + **TypeScript**
-- **Tailwind CSS 4** (plugin Vite)
-- **Framer Motion** (`motion`) pour les animations
-- **Lucide React** pour les icônes
-- **Vite 6** comme bundler
-- **Inter** (Google Fonts) comme typographie principale
-- Design source : **Google Stitch** (dossier `stitch/`)
+`main` est la branche de production et `origin/main` la référence du dépôt.
 
-## Structure du repo
+## Périmètre
 
-```
-index.html              Point d'entrée Vite (dev) + preload hero
-.htaccess              Réécriture Apache (dist/ + HTTPS)
-src/
-  main.tsx              Bootstrap React (StrictMode)
-  App.tsx               Composant racine (~1950 lignes, toutes les sections)
-  index.css             Tailwind @theme + 15 keyframes + classes custom
-  components/           Composants réutilisables
-    AegisLogo.tsx       Logo SVG animé (gradient + nœuds réseau)
-server/
-  index.ts              Point d'entrée Express (API + static serving)
-  lib/                  Mailer, templates, validation
-  routes/               Route POST /api/contact
-public/
-  favicon.svg           Favicon (shield Aegis)
-  img/                  Images optimisées (WebP, compressées)
-dist/                   Build de production (versionné, déployé sur OVH)
-brand/                  Assets de marque (logo, carte de visite, flyer, brochure)
-stitch/                 Source Google Stitch (lecture seule)
-  design-guidelines.md  Charte graphique de référence
-  elements/Elements.tsx UI Kit Stitch
-docs/                   Documentation technique
-.claude/rules/          Règles pour assistants IA
-```
+- `src/` : application React 19 + TypeScript
+- `server/` : API Express `POST /api/contact`
+- `public/` : favicon et images optimisées
+- `dist/` : build de production versionné
+- `brand/` : supports de marque et scripts associés
+- `stitch/` : source design Google Stitch en lecture seule
 
-## Démarrage rapide
+## Stack
+
+- React 19
+- TypeScript 5
+- Tailwind CSS 4
+- Vite 6
+- Motion
+- Lucide React
+- Express 4
+- Nodemailer
+
+## Démarrage local
+
+Installer les dépendances :
 
 ```bash
 npm install
+```
+
+Lancer le frontend :
+
+```bash
 npm run dev
 ```
 
-Le site est accessible sur `http://localhost:3000`.
+Le site de développement est servi sur `http://localhost:3000`.
 
-## Build pour production
+Lancer l'API locale si le formulaire doit être testé :
 
 ```bash
+npm run server:dev
+```
+
+L'API écoute sur `http://localhost:3001`. En développement, Vite proxifie `/api/*` vers ce serveur.
+
+## Vérifications locales
+
+```bash
+npm run lint
 npm run build
 ```
 
-Le dossier `dist/` contient le site statique prêt à déployer sur OVH Starter.
+- `npm run lint` vérifie la cohérence TypeScript du frontend
+- `npm run build` génère `dist/` et valide le build de production
 
-## Déploiement OVH Starter
+## Déploiement
 
-Le dépôt contient les sources et le dossier `dist/` (build). Le `.htaccess` redirige les requêtes vers `dist/` et force HTTPS.
+Le dépôt versionne volontairement `dist/` car le site statique est synchronisé vers l'hébergement OVH Starter. Le `.htaccess` force HTTPS et redirige les requêtes vers `dist/`.
 
-```bash
-npm run build              # Génère dist/
-git add -A && git commit && git push origin main
+Point important : le frontend appelle actuellement `/api/contact` en same-origin. Un déploiement statique OVH Starter seul ne suffit donc pas pour faire fonctionner le formulaire de contact.
+
+Deux modes de production sont cohérents avec l'état actuel du code :
+
+1. un hébergement Node.js qui sert à la fois `dist/` et l'API Express
+2. un site statique sur OVH Starter avec un reverse proxy same-origin pour `/api/*` vers un backend Node.js séparé
+
+Sans l'un de ces deux montages, le site s'affiche mais le formulaire ne peut pas envoyer d'e-mails.
+
+## Variables d'environnement
+
+Le dépôt fournit un exemple dans [`.env.example`](.env.example).
+
+Règles à respecter :
+
+- ne jamais commiter de `.env`
+- ne jamais commiter `SMTP_PASS`
+- garder les secrets uniquement côté serveur
+
+## Structure utile
+
+```text
+.
+|-- .htaccess
+|-- public/
+|-- src/
+|-- server/
+|-- dist/
+|-- brand/
+|-- stitch/
+`-- docs/
 ```
-
-Ensuite déclencher le déploiement OVH (sync du repo). Voir [docs/DEPLOYMENT_OVH_STARTER.md](docs/DEPLOYMENT_OVH_STARTER.md).
-
-## Prévisualiser le build
-
-```bash
-npm run preview
-```
-
-## Vérifier le workspace
-
-```powershell
-code c:\Dev\Aegisnetwork
-git rev-parse --show-toplevel   # doit retourner C:/Dev/Aegisnetwork
-git status --short --branch
-git remote -v                   # doit pointer vers Sh1R0-x/aegisnetwork.git
-```
-
-## Modifier le site
-
-1. Lire `CLAUDE.md` et `design-guidelines.md` avant toute modification
-2. `git status --short --branch`
-3. Modifier les fichiers dans `src/`
-4. Tester avec `npm run dev`
-5. `npm run build`
-6. `git add -A && git commit -m "Description" && git push origin main`
-
-## Workflow Google Stitch
-
-Les mises à jour design viennent de Google Stitch → dossier `stitch/`. Pour intégrer une update : comparer `stitch/src/` avec `src/`, appliquer les deltas. Ne jamais modifier `stitch/` directement.
 
 ## Documentation
 
-| Document | Contenu |
-|----------|---------|
-| [CLAUDE.md](CLAUDE.md) | Règles projet, identité, contraintes |
-| [AGENTS.md](AGENTS.md) | Règles d'exécution pour agents IA |
-| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Architecture technique détaillée |
-| [docs/DEPLOYMENT_OVH_STARTER.md](docs/DEPLOYMENT_OVH_STARTER.md) | Guide de déploiement OVH |
-| [docs/WORKFLOW_COLLABORATION.md](docs/WORKFLOW_COLLABORATION.md) | Workflow multi-agents |
-| [docs/MCP.md](docs/MCP.md) | Serveurs MCP configurés |
-| [design-guidelines.md](design-guidelines.md) | Charte graphique complète |
-
+- [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) : vue technique détaillée
+- [docs/DEPLOYMENT_OVH_STARTER.md](docs/DEPLOYMENT_OVH_STARTER.md) : déploiement du statique sur OVH Starter
+- [docs/EMAIL_SMTP.md](docs/EMAIL_SMTP.md) : configuration du backend mail et contraintes SMTP
+- [design-guidelines.md](design-guidelines.md) : charte graphique
+- [brand/README.md](brand/README.md) : périmètre des supports de marque
 

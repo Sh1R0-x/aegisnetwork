@@ -788,7 +788,7 @@ async function buildBusinessCardPSD() {
           top: H - BLEED - SAFE - 100, left: contentLeft,
           bottom: H - BLEED - SAFE - 100 + iconSize, right: contentLeft + iconSize,
         },
-        textLayer('Téléphone', '06 52 95 00 10', contentLeft + iconSize + 10, H - BLEED - SAFE - 96, {
+        textLayer('Téléphone', '04 82 53 26 99', contentLeft + iconSize + 10, H - BLEED - SAFE - 96, {
           fontSize: 15, color: C.slate700, weight: 'medium',
         }),
         // Email
@@ -915,7 +915,7 @@ async function buildBusinessCardPSD() {
           top: H - BLEED - SAFE - 100, left: BLEED + SAFE,
           bottom: H - BLEED - SAFE - 100 + iconSize, right: BLEED + SAFE + iconSize,
         },
-        textLayer('Téléphone', '06 52 95 00 10', BLEED + SAFE + iconSize + 10, H - BLEED - SAFE - 96, {
+        textLayer('Téléphone', '04 82 53 26 99', BLEED + SAFE + iconSize + 10, H - BLEED - SAFE - 96, {
           fontSize: 15, color: C.slate700, weight: 'medium',
         }),
         {
@@ -1045,7 +1045,7 @@ async function buildEmailSignaturePSD() {
             top: 135, left: 40 + logoSize + 56,
             bottom: 135 + iconSize, right: 40 + logoSize + 56 + iconSize,
           },
-          textLayer('Téléphone', '06 52 95 00 10', 40 + logoSize + 56 + iconSize + 12, 140, {
+          textLayer('Téléphone', '04 82 53 26 99', 40 + logoSize + 56 + iconSize + 12, 140, {
             fontSize: 22, color: C.slate900, weight: 'medium',
           }),
           {
@@ -1130,7 +1130,7 @@ async function buildEmailSignaturePSD() {
             top: 135, left: 40 + logoSize + 56,
             bottom: 135 + iconSize, right: 40 + logoSize + 56 + iconSize,
           },
-          textLayer('Téléphone', '06 52 95 00 10', 40 + logoSize + 56 + iconSize + 12, 140, {
+          textLayer('Téléphone', '04 82 53 26 99', 40 + logoSize + 56 + iconSize + 12, 140, {
             fontSize: 22, color: C.slate200, weight: 'medium',
           }),
           {
@@ -1438,7 +1438,7 @@ async function buildFlyerPSD() {
               textLayer('Label téléphone', 'TÉLÉPHONE', PAD + 40, Y_FOOTER + 190, {
                 fontSize: 14, color: C.slate400, weight: 'bold', tracking: 0.1,
               }),
-              textLayer('Numéro', '06 52 95 00 10', PAD + 40, Y_FOOTER + 218, {
+              textLayer('Numéro', '04 82 53 26 99', PAD + 40, Y_FOOTER + 218, {
                 fontSize: 26, color: C.slate900, weight: 'black',
               }),
             ],
@@ -1621,7 +1621,7 @@ async function buildFlyerPSD() {
             name: 'Téléphone', opened: true,
             children: [
               textLayer('Label téléphone', 'TÉLÉPHONE', A4_PAD + 50, A4_Y_FOOTER + 230, { fontSize: 16, color: C.slate400, weight: 'bold', tracking: 0.1 }),
-              textLayer('Numéro', '06 52 95 00 10', A4_PAD + 50, A4_Y_FOOTER + 260, { fontSize: 32, color: C.slate900, weight: 'black' }),
+              textLayer('Numéro', '04 82 53 26 99', A4_PAD + 50, A4_Y_FOOTER + 260, { fontSize: 32, color: C.slate900, weight: 'black' }),
             ],
           },
           {
@@ -1925,7 +1925,7 @@ async function buildBrochurePSD() {
             top: H - PAD - 250, left: PAD + 60,
             bottom: H - PAD - 214, right: PAD + 96,
           },
-          textLayer('Téléphone', '06 52 95 00 10', PAD + 110, H - PAD - 246, {
+          textLayer('Téléphone', '04 82 53 26 99', PAD + 110, H - PAD - 246, {
             fontSize: 24, color: C.slate200, weight: 'bold',
           }),
           {
@@ -2075,7 +2075,7 @@ async function buildBrochurePSD() {
           textLayer('CTA sous-titre', 'Premier échange gratuit et sans engagement.\nParlons de vos enjeux concrets.', (W - 600) / 2, Y_CTA + 180, { fontSize: 22, color: C.slate300, weight: 'medium', justification: 'center', leading: 34 }),
           // Contact info
           { name: 'Icône téléphone', canvas: phoneIcon, top: Y_CTA + 280, left: PAD + 120, bottom: Y_CTA + 316, right: PAD + 156 },
-          textLayer('Téléphone CTA', '06 52 95 00 10', PAD + 170, Y_CTA + 284, { fontSize: 24, color: C.white, weight: 'bold' }),
+          textLayer('Téléphone CTA', '04 82 53 26 99', PAD + 170, Y_CTA + 284, { fontSize: 24, color: C.white, weight: 'bold' }),
           { name: 'Icône email', canvas: mailIcon, top: Y_CTA + 280, left: W / 2 - 80, bottom: Y_CTA + 316, right: W / 2 - 44 },
           textLayer('Email CTA', 'contact@aegisnetwork.fr', W / 2 - 30, Y_CTA + 284, { fontSize: 24, color: C.opticalBlue, weight: 'bold' }),
           { name: 'Icône globe', canvas: globeIcon, top: Y_CTA + 280, left: W - PAD - 380, bottom: Y_CTA + 316, right: W - PAD - 344 },

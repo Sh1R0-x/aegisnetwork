@@ -19,6 +19,9 @@ Desktop.ini
 # Agent local settings
 .claude/settings.local.json
 
+# Local virtual environments
+.venv/
+
 # Node
 node_modules/
 build/
@@ -55,4 +58,7 @@ stitch/img/*.jfif
 
 # Stray images at root (temporary exports, QA screenshots)
 /*.png
+/*.jpg
+/*.jpeg
+/*.webp
 temp/
