@@ -170,7 +170,10 @@ const Navbar = () => {
   );
 };
 
-const Hero = () => (
+const Hero = () => {
+  const [heroReady, setHeroReady] = useState(false);
+
+  return (
   <section className="relative pt-28 pb-24 lg:pt-36 lg:pb-40 overflow-hidden">
     {/* Ambient glows */}
     <div className="absolute top-[-15%] left-[-10%] w-[45%] h-[45%] bg-blue-600/15 blur-[120px] rounded-full pointer-events-none animate-hero-glow-1" />
@@ -246,21 +249,31 @@ const Hero = () => (
 
       {/* Right: image + floating KPI cards */}
       <div className="relative hidden md:block h-[400px] md:h-[450px] lg:h-[550px]">
-        {/* Main image */}
+        {/* Main image — fade-in gated on decode() to prevent paint stall */}
         <motion.div
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, ease: 'easeOut', delay: 0.2 }}
+          animate={heroReady ? { opacity: 1 } : { opacity: 0 }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
           className="absolute inset-0 rounded-2xl overflow-hidden shadow-2xl border border-white/10"
         >
           <img
             className="w-full h-full object-cover opacity-60"
-            src="/img/photo-1551703599-6b3e8379aa8c.jfif"
+            src="/img/hero-network.webp"
             alt="Infrastructure réseau"
             fetchPriority="high"
-            decoding="async"
-            width={800}
-            height={550}
+            width={1600}
+            height={1064}
+            onLoad={(e) => {
+              const img = e.currentTarget;
+              if (img.decode) {
+                img.decode().then(
+                  () => setHeroReady(true),
+                  () => setHeroReady(true)
+                );
+              } else {
+                setHeroReady(true);
+              }
+            }}
           />
           {/* Gradient overlays */}
           <div className="absolute inset-0 bg-gradient-to-tr from-background-deep/90 via-background-deep/30 to-blue-600/10" />
@@ -270,8 +283,8 @@ const Hero = () => (
         {/* KPI: Réduction Coûts */}
         <motion.div
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.6, duration: 0.8, ease: 'easeOut' }}
+          animate={heroReady ? { opacity: 1 } : { opacity: 0 }}
+          transition={{ delay: 0.3, duration: 0.8, ease: 'easeOut' }}
           className="absolute top-6 -left-4 lg:top-8 lg:-left-10 z-20"
         >
           <div className="animate-float">
@@ -296,8 +309,8 @@ const Hero = () => (
         {/* KPI: Efficacité Réseau */}
         <motion.div
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.0, duration: 0.8, ease: 'easeOut' }}
+          animate={heroReady ? { opacity: 1 } : { opacity: 0 }}
+          transition={{ delay: 0.6, duration: 0.8, ease: 'easeOut' }}
           className="absolute bottom-8 -right-2 lg:bottom-16 lg:-right-6 z-20"
         >
           <div className="animate-float" style={{ animationDelay: '1.5s' }}>
@@ -322,8 +335,8 @@ const Hero = () => (
         {/* KPI: Audit central badge */}
         <motion.div
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.3, duration: 0.8, ease: 'easeOut' }}
+          animate={heroReady ? { opacity: 1 } : { opacity: 0 }}
+          transition={{ delay: 0.8, duration: 0.8, ease: 'easeOut' }}
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20"
         >
           <div className="animate-float" style={{ animationDelay: '3s' }}>
@@ -341,7 +354,8 @@ const Hero = () => (
       </div>
     </div>
   </section>
-);
+  );
+};
 
 const GainBlock = () => (
   <section id="gains" className="py-24 relative overflow-hidden">
@@ -477,9 +491,12 @@ const TimeLoss = () => (
     <div className="absolute inset-0 opacity-20">
       <img
         className="w-full h-full object-cover mix-blend-screen"
-        src="/img/photo-1550751827-4bd374c3f58b.jfif"
+        src="/img/timeloss-bg.webp"
         alt="Réseau de données"
         loading="lazy"
+        decoding="async"
+        width={1600}
+        height={1068}
       />
       <div className="absolute inset-0 bg-gradient-to-r from-background-deep via-background-deep/60 to-transparent" />
     </div>
@@ -987,9 +1004,12 @@ const EvolutionConseil = () => (
           <div className="glass-card rounded-[3rem] p-6 shadow-2xl border-white/10 premium-glow">
             <img
               className="rounded-[2rem] w-full h-auto"
-              src="/img/photo-1516321318423-f06f85e504b3.jfif"
+              src="/img/why-aegis.webp"
               alt="Accompagnement professionnel"
               loading="lazy"
+              decoding="async"
+              width={1200}
+              height={800}
             />
           </div>
         </motion.div>
