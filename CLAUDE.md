@@ -71,7 +71,7 @@ server/
     contact.ts      ← Route POST /api/contact
 public/
   favicon.svg       ← favicon (shield Aegis)
-  img/              ← 5 images locales (copies Unsplash, .jfif)
+  img/              ← images optimisées (WebP, compressées)
 dist/               ← build de production (versionné, déployé sur OVH)
 stitch/             ← source Google Stitch (référence design, lecture seule)
 brand/              ← assets de marque (logo, carte de visite, flyer, brochure)
@@ -201,8 +201,9 @@ Ne jamais modifier ces informations sans validation explicite.
 
 ## Images
 
-- Stockées localement dans `public/img/` (copies Unsplash)
-- Référencées en `/img/filename.jfif` (pas de CDN externe)
+- Stockées localement dans `public/img/` (WebP, compressées depuis Unsplash)
+- Référencées en `/img/filename.webp` (pas de CDN externe)
+- Image hero : preload + decode-gated fade-in (`heroReady` state)
 - `loading="lazy"` sur toutes les images sauf Hero
 
 ## Workflow Google Stitch

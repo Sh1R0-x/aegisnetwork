@@ -1,6 +1,6 @@
 # Architecture — Aegis Network
 
-> Dernière mise à jour : 12 mars 2026
+> Dernière mise à jour : 16 juillet 2025
 
 ## Stack technique
 
@@ -39,7 +39,7 @@ server/
     contact.ts          ← Route POST /api/contact
 public/
   favicon.svg           ← Favicon Aegis (shield)
-  img/                  ← 5 images locales (copies Unsplash, .jfif)
+  img/                  ← Images optimisées (WebP, compressées)
 dist/                   ← Build de production (versionné, déployé)
 stitch/                 ← Source Google Stitch (référence design, lecture seule)
   elements/Elements.tsx ← UI Kit Stitch (BentoGrid, ROICalculator, etc.)
@@ -110,7 +110,7 @@ Le site est **one-page**. Toutes les sections sont dans `src/App.tsx` (~1950 lig
 
 ### Colonne droite (image + KPI)
 - Conteneur hauteur fixe : `h-[400px] md:h-[450px] lg:h-[550px]`
-- Image `photo-1551703599-6b3e8379aa8c.jfif` en absolute + `object-cover opacity-60`
+- Image `hero-network.webp` en absolute + `object-cover opacity-60`, decode-gated fade-in
 - Deux overlays : gradient directionnel + vignette radiale
 - **3 cartes KPI flottantes** positionnées en absolute :
 
@@ -133,7 +133,8 @@ Le site est **one-page**. Toutes les sections sont dans `src/App.tsx` (~1950 lig
 - 3 fiber beams premium (2 horizontaux, 1 vertical) — keyframes CSS
 
 ### Performance Hero
-- Image hero : `fetchPriority="high"` + `<link rel="preload">` dans `index.html`
+- Image hero : WebP compressée (91 KB), `fetchPriority="high"` + `<link rel="preload">` dans `index.html`, decode-gated fade-in (`heroReady` state)
+- Toutes les images converties en WebP (réduction ~97 % vs JFIF d'origine)
 - Animations continues (float, shimmer, glows) : CSS keyframes = GPU composité
 - Entrées one-shot : Framer Motion (JS) — une seule exécution
 - `prefers-reduced-motion` : toutes les animations CSS désactivées
@@ -505,11 +506,9 @@ const [submitted, setSubmitted] = useState(false);
 
 | Fichier | Usage |
 |---------|-------|
-| `public/img/photo-1551703599-6b3e8379aa8c.jfif` | Hero background |
-| `public/img/photo-1544197150-b99a580bb7a8.jfif` | Section approche |
-| `public/img/photo-1451187580459-43490279c0fa.jfif` | Disponible |
-| `public/img/photo-1516321318423-f06f85e504b3.jfif` | Disponible |
-| `public/img/photo-1550751827-4bd374c3f58b.jfif` | Disponible |
+| `public/img/hero-network.webp` | Hero background (91 KB) |
+| `public/img/timeloss-bg.webp` | Section TimeLoss (212 KB) |
+| `public/img/why-aegis.webp` | Section WhyAegis (48 KB) |
 | `public/favicon.svg` | Favicon shield Aegis |
 
 ### Ressources externes (CDN)

@@ -25,9 +25,13 @@ src/
   index.css             Tailwind @theme + 15 keyframes + classes custom
   components/           Composants réutilisables
     AegisLogo.tsx       Logo SVG animé (gradient + nœuds réseau)
+server/
+  index.ts              Point d'entrée Express (API + static serving)
+  lib/                  Mailer, templates, validation
+  routes/               Route POST /api/contact
 public/
   favicon.svg           Favicon (shield Aegis)
-  img/                  5 images locales (copies Unsplash)
+  img/                  Images optimisées (WebP, compressées)
 dist/                   Build de production (versionné, déployé sur OVH)
 brand/                  Assets de marque (logo, carte de visite, flyer, brochure)
 stitch/                 Source Google Stitch (lecture seule)

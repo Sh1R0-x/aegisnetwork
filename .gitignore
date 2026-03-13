@@ -41,12 +41,17 @@ tmp/
 # Brand deliverables (livraison hors périmètre site)
 livraison_definitive/
 
-# Sub-project build artifacts (brand/brochure, stitch/*)
+# Sub-project build artifacts (brand/brochure, stitch/*, brand/flyer/figma)
 brand/brochure/node_modules/
 brand/brochure/.next/
 brand/brochure/package-lock.json
+brand/flyer/figma/
 stitch/**/node_modules/
 stitch/**/.next/
+
+# Original Unsplash JFIF sources (replaced by optimized WebP)
+public/img/*.jfif
+stitch/img/*.jfif
 
 # Stray images at root (temporary exports, QA screenshots)
 /*.png

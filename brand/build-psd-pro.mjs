@@ -712,10 +712,14 @@ async function buildBusinessCardPSD() {
   const logoDarkCanvas = await svgToCanvas(aegisLogoSvg('#0F172A', '#0F172A', '#0F172A'), logoSize, logoSize);
   const logoLargeVerso = await svgToCanvas(aegisLogoSvg(), 160, 160);
 
-  // Contact icons
+  // Contact icons — render at higher res for quality
   const phoneIcon = await iconCanvas('phone', iconSize, '#334155');
   const mailIcon = await iconCanvas('mail', iconSize, '#334155');
   const globeIcon = await iconCanvas('globe', iconSize, '#334155');
+
+  // Layout constants for recto
+  const leftMargin = BLEED + SAFE + 20; // After accent bar
+  const contentLeft = leftMargin + 10;  // Content indented from bar
 
   // ── RECTO (fond clair) ──
   console.log('  Building business-card.psd (recto + verso) ...');
@@ -748,11 +752,14 @@ async function buildBusinessCardPSD() {
         {
           name: 'Symbole Aegis',
           canvas: logoDarkCanvas,
-          top: BLEED + SAFE, left: BLEED + SAFE + 20,
-          bottom: BLEED + SAFE + logoSize, right: BLEED + SAFE + 20 + logoSize,
+          top: BLEED + SAFE, left: contentLeft,
+          bottom: BLEED + SAFE + logoSize, right: contentLeft + logoSize,
         },
-        textLayer('AEGIS NETWORK', 'AEGIS NETWORK', BLEED + SAFE + 20 + logoSize + 16, BLEED + SAFE + 34, {
-          fontSize: 18, color: C.slate900, weight: 'black', tracking: 0.06,
+        // AEGIS (noir) + NETWORK (bleu) — dual color
+        dualColorTextLayer('AEGIS NETWORK', 'AEGIS', 'NETWORK',
+          contentLeft + logoSize + 16, BLEED + SAFE + 34, {
+          fontSize: 18, color1: C.slate900, color2: C.aegisBlue,
+          weight: 'black', tracking: 0.06,
         }),
       ],
     },
@@ -761,10 +768,10 @@ async function buildBusinessCardPSD() {
       name: 'Identité',
       opened: true,
       children: [
-        textLayer('Nom', 'Ludovic ROCHET-BELLAVIA', BLEED + SAFE + 30, BLEED + SAFE + logoSize + 40, {
-          fontSize: 28, color: C.slate900, weight: 'black', tracking: -0.01,
+        textLayer('Nom', 'Ludovic ROCHET-BELLAVIA', contentLeft, BLEED + SAFE + logoSize + 40, {
+          fontSize: 28, color: C.slate900, weight: 'extrabold', tracking: -0.01,
         }),
-        textLayer('Fonction', 'Consultant réseaux & téléphonie', BLEED + SAFE + 30, BLEED + SAFE + logoSize + 72, {
+        textLayer('Fonction', 'Consultant réseaux & téléphonie', contentLeft, BLEED + SAFE + logoSize + 76, {
           fontSize: 16, color: C.aegisBlue, weight: 'semibold', tracking: 0.02,
         }),
       ],
@@ -778,30 +785,30 @@ async function buildBusinessCardPSD() {
         {
           name: 'Icône téléphone',
           canvas: phoneIcon,
-          top: H - BLEED - SAFE - 120, left: BLEED + SAFE + 30,
-          bottom: H - BLEED - SAFE - 120 + iconSize, right: BLEED + SAFE + 30 + iconSize,
+          top: H - BLEED - SAFE - 100, left: contentLeft,
+          bottom: H - BLEED - SAFE - 100 + iconSize, right: contentLeft + iconSize,
         },
-        textLayer('Téléphone', '06 52 95 00 10', BLEED + SAFE + 30 + iconSize + 10, H - BLEED - SAFE - 116, {
+        textLayer('Téléphone', '06 52 95 00 10', contentLeft + iconSize + 10, H - BLEED - SAFE - 96, {
           fontSize: 15, color: C.slate700, weight: 'medium',
         }),
         // Email
         {
           name: 'Icône email',
           canvas: mailIcon,
-          top: H - BLEED - SAFE - 80, left: BLEED + SAFE + 30,
-          bottom: H - BLEED - SAFE - 80 + iconSize, right: BLEED + SAFE + 30 + iconSize,
+          top: H - BLEED - SAFE - 60, left: contentLeft,
+          bottom: H - BLEED - SAFE - 60 + iconSize, right: contentLeft + iconSize,
         },
-        textLayer('Email', 'contact@aegisnetwork.fr', BLEED + SAFE + 30 + iconSize + 10, H - BLEED - SAFE - 76, {
+        textLayer('Email', 'contact@aegisnetwork.fr', contentLeft + iconSize + 10, H - BLEED - SAFE - 56, {
           fontSize: 15, color: C.slate700, weight: 'medium',
         }),
-        // Website
+        // Website (bottom-right)
         {
           name: 'Icône web',
           canvas: globeIcon,
-          top: H - BLEED - SAFE - 40, left: W - BLEED - SAFE - 200,
-          bottom: H - BLEED - SAFE - 40 + iconSize, right: W - BLEED - SAFE - 200 + iconSize,
+          top: H - BLEED - SAFE - 34, left: W - BLEED - SAFE - 220,
+          bottom: H - BLEED - SAFE - 34 + iconSize, right: W - BLEED - SAFE - 220 + iconSize,
         },
-        textLayer('Site web', 'aegisnetwork.fr', W - BLEED - SAFE - 200 + iconSize + 10, H - BLEED - SAFE - 36, {
+        textLayer('Site web', 'aegisnetwork.fr', W - BLEED - SAFE - 220 + iconSize + 10, H - BLEED - SAFE - 30, {
           fontSize: 15, color: C.slate700, weight: 'medium',
         }),
       ],
@@ -841,19 +848,19 @@ async function buildBusinessCardPSD() {
           top: (H - 160) / 2 - 50, left: (W - 160) / 2,
           bottom: (H - 160) / 2 - 50 + 160, right: (W - 160) / 2 + 160,
         },
-        textLayer('AEGIS NETWORK', 'AEGIS NETWORK', W / 2 - 120, H / 2 + 50, {
-          fontSize: 24, color: C.white, weight: 'black', tracking: 0.06,
-          justification: 'center',
+        // AEGIS (blanc) + NETWORK (bleu optique) — dual color
+        dualColorTextLayer('AEGIS NETWORK', 'AEGIS', 'NETWORK',
+          W / 2 - 120, H / 2 + 50, {
+          fontSize: 24, color1: C.white, color2: C.opticalBlue,
+          weight: 'black', tracking: 0.06,
         }),
         textLayer('Baseline', 'CONSEIL & OPTIMISATION IT', W / 2 - 120, H / 2 + 82, {
           fontSize: 10, color: C.slate400, weight: 'bold', tracking: 0.25,
-          justification: 'center',
         }),
       ],
     },
     textLayer('URL', 'aegisnetwork.fr', W / 2 - 50, H - BLEED - SAFE - 30, {
       fontSize: 11, color: C.slate700, weight: 'medium', tracking: 0.05,
-      justification: 'center',
     }),
   ];
 
@@ -879,8 +886,10 @@ async function buildBusinessCardPSD() {
           top: BLEED + SAFE + 16, left: BLEED + SAFE,
           bottom: BLEED + SAFE + 16 + logoSize, right: BLEED + SAFE + logoSize,
         },
-        textLayer('AEGIS NETWORK', 'AEGIS NETWORK', BLEED + SAFE + logoSize + 16, BLEED + SAFE + 44, {
-          fontSize: 18, color: C.slate900, weight: 'black', tracking: 0.06,
+        dualColorTextLayer('AEGIS NETWORK', 'AEGIS', 'NETWORK',
+          BLEED + SAFE + logoSize + 16, BLEED + SAFE + 44, {
+          fontSize: 18, color1: C.slate900, color2: C.aegisBlue,
+          weight: 'black', tracking: 0.06,
         }),
       ],
     },
@@ -889,7 +898,7 @@ async function buildBusinessCardPSD() {
       opened: true,
       children: [
         textLayer('Nom', 'Ludovic ROCHET-BELLAVIA', BLEED + SAFE, BLEED + SAFE + logoSize + 50, {
-          fontSize: 28, color: C.slate900, weight: 'black', tracking: -0.01,
+          fontSize: 28, color: C.slate900, weight: 'extrabold', tracking: -0.01,
         }),
         textLayer('Fonction', 'Consultant réseaux & téléphonie', BLEED + SAFE, BLEED + SAFE + logoSize + 82, {
           fontSize: 16, color: C.aegisBlue, weight: 'semibold', tracking: 0.02,
@@ -903,35 +912,35 @@ async function buildBusinessCardPSD() {
         {
           name: 'Icône téléphone',
           canvas: phoneIcon,
-          top: H - BLEED - SAFE - 120, left: BLEED + SAFE,
-          bottom: H - BLEED - SAFE - 120 + iconSize, right: BLEED + SAFE + iconSize,
+          top: H - BLEED - SAFE - 100, left: BLEED + SAFE,
+          bottom: H - BLEED - SAFE - 100 + iconSize, right: BLEED + SAFE + iconSize,
         },
-        textLayer('Téléphone', '06 52 95 00 10', BLEED + SAFE + iconSize + 10, H - BLEED - SAFE - 116, {
+        textLayer('Téléphone', '06 52 95 00 10', BLEED + SAFE + iconSize + 10, H - BLEED - SAFE - 96, {
           fontSize: 15, color: C.slate700, weight: 'medium',
         }),
         {
           name: 'Icône email',
           canvas: mailIcon,
-          top: H - BLEED - SAFE - 80, left: BLEED + SAFE,
-          bottom: H - BLEED - SAFE - 80 + iconSize, right: BLEED + SAFE + iconSize,
+          top: H - BLEED - SAFE - 60, left: BLEED + SAFE,
+          bottom: H - BLEED - SAFE - 60 + iconSize, right: BLEED + SAFE + iconSize,
         },
-        textLayer('Email', 'contact@aegisnetwork.fr', BLEED + SAFE + iconSize + 10, H - BLEED - SAFE - 76, {
+        textLayer('Email', 'contact@aegisnetwork.fr', BLEED + SAFE + iconSize + 10, H - BLEED - SAFE - 56, {
           fontSize: 15, color: C.slate700, weight: 'medium',
         }),
         {
           name: 'Icône web',
           canvas: globeIcon,
-          top: H - BLEED - SAFE - 40, left: W - BLEED - SAFE - 200,
-          bottom: H - BLEED - SAFE - 40 + iconSize, right: W - BLEED - SAFE - 200 + iconSize,
+          top: H - BLEED - SAFE - 34, left: W - BLEED - SAFE - 220,
+          bottom: H - BLEED - SAFE - 34 + iconSize, right: W - BLEED - SAFE - 220 + iconSize,
         },
-        textLayer('Site web', 'aegisnetwork.fr', W - BLEED - SAFE - 200 + iconSize + 10, H - BLEED - SAFE - 36, {
+        textLayer('Site web', 'aegisnetwork.fr', W - BLEED - SAFE - 220 + iconSize + 10, H - BLEED - SAFE - 30, {
           fontSize: 15, color: C.slate700, weight: 'medium',
         }),
       ],
     },
   ];
 
-  // Save combined business card PSD (all variations)
+  // Save business card PSDs
   savePsd(path.join(OUT_PSD_DOCS, 'business-card-recto.psd'), {
     width: W, height: H,
     children: [
