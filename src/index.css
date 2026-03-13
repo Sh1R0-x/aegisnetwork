@@ -57,24 +57,26 @@
 }
 
 @keyframes fiber-move-h {
-  0% { left: -20%; opacity: 0; }
+  0% { transform: translateX(-300px); opacity: 0; }
   20% { opacity: 1; }
   80% { opacity: 1; }
-  100% { left: 120%; opacity: 0; }
+  100% { transform: translateX(100vw); opacity: 0; }
 }
 
 @keyframes fiber-move-v {
-  0% { top: -20%; opacity: 0; }
+  0% { transform: translateY(-300px); opacity: 0; }
   20% { opacity: 1; }
   80% { opacity: 1; }
-  100% { top: 120%; opacity: 0; }
+  100% { transform: translateY(100vh); opacity: 0; }
 }
 
 .animate-fiber-h {
+  left: 0;
   animation: fiber-move-h 10s linear infinite;
 }
 
 .animate-fiber-v {
+  top: 0;
   animation: fiber-move-v 15s linear infinite;
 }
 
@@ -261,8 +263,7 @@ html {
   box-shadow:
     0 0 25px -5px rgba(56, 189, 248, 0.12),
     inset 0 1px 0 rgba(56, 189, 248, 0.06);
-  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.5s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  will-change: transform;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .gain-card:hover {
@@ -293,8 +294,7 @@ html {
 }
 
 .cause-card {
-  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.5s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  will-change: transform;
+  transition: border-color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .cause-card:hover {
