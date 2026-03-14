@@ -158,8 +158,8 @@ Ne jamais modifier ces informations sans validation explicite.
 
 ## SEO
 
-- **Title** : `Audit & Optimisation IT pour PME à Lyon | Aegis Network`
-- **Meta description** : focus audit, optimisation, réduction coûts, local Lyon, diagnostic gratuit
+- **Title** : `Conseil, audit & optimisation IT / télécom pour PME à Lyon | Aegis Network`
+- **Meta description** : focus TPE-PME Lyon, réduction coûts IT/télécom, pilotage prestataires, audit et accompagnement pragmatiques
 - **Canonical** : `https://aegisnetwork.fr/`
 - **Open Graph** : og:title, og:description, og:url, og:type, og:locale, og:site_name
 - **Structured data** (JSON-LD dans `index.html`) :
