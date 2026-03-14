@@ -81,9 +81,9 @@ docs/               ← documentation technique
 
 ## Sections du site (App.tsx)
 
-Navbar → Hero → GainBlock → CostControl → TimeLoss → RootCause → WhyAegis → ImpactCalculator → EvolutionConseil → DiagnosticExpress → CTASection → ContactSection → Footer (+ LegalModal)
+Navbar → Hero → GainBlock → DiagnosticExpress → CostControl → TimeLoss → RootCause → WhyAegis → ImpactCalculator → EvolutionConseil → FAQSection → CTASection → ContactSection → Footer (+ LegalModal)
 
-Flux narratif : gains concrets → coûts → temps perdu → diagnostic de fond → légitimité/approche → simulateur → évolution → diagnostic express interactif → CTA → contact
+Flux narratif : gains concrets → diagnostic express → coûts → temps perdu → diagnostic de fond → légitimité/approche → simulateur → évolution → FAQ → CTA → contact
 
 ### DiagnosticExpress
 
@@ -100,6 +100,12 @@ Soumission via `POST /api/contact` (serveur Express + Nodemailer).
 Double envoi : notification interne à contact@aegisnetwork.fr + accusé de réception au visiteur.
 Protection anti-spam : honeypot + rate limiting (5 req / 15 min par IP).
 États gérés : loading (`submitting`), erreur (`submitError`), succès (`submitted`).
+
+### FAQSection
+
+5 questions/réponses en accordion animé (Framer Motion).
+Questions alignées sur le positionnement : différenciation vs prestataire classique, cible TPE-PME, coût audit, gains concrets, zone d'intervention.
+Structured data FAQPage JSON-LD dupliquée dans `index.html` pour indexation Google.
 
 ### Flèches de guidage (arrows)
 
@@ -149,6 +155,19 @@ Ne jamais modifier ces informations sans validation explicite.
 - Axes : optimisation, pilotage, réduction des coûts, productivité, accompagnement
 - Aegis Network est présenté comme consultant/chef de projet, jamais comme opérateur ou fournisseur
 - Ne jamais inventer d'informations légales, d'adresse ou de téléphone
+
+## SEO
+
+- **Title** : `Audit & Optimisation IT pour PME à Lyon | Aegis Network`
+- **Meta description** : focus audit, optimisation, réduction coûts, local Lyon, diagnostic gratuit
+- **Canonical** : `https://aegisnetwork.fr/`
+- **Open Graph** : og:title, og:description, og:url, og:type, og:locale, og:site_name
+- **Structured data** (JSON-LD dans `index.html`) :
+  - `ProfessionalService` : identité, services, zone géographique, contact
+  - `FAQPage` : 5 questions/réponses alignées positionnement
+- **robots.txt** + **sitemap.xml** dans `public/`
+- **Un seul H1** (hero) — H2 orientés intentions SEO business
+- **FAQ** : section accordion avec 5 questions (différenciation, cible, coût, gains, zone)
 
 ## Mentions légales
 

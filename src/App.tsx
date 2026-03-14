@@ -259,7 +259,7 @@ const Hero = () => {
           <img
             className="w-full h-full object-cover opacity-60"
             src="/img/hero-network.webp"
-            alt="Infrastructure réseau"
+            alt="Audit réseau et infrastructure IT pour PME — Aegis Network Lyon"
             fetchPriority="high"
             width={1600}
             height={1064}
@@ -369,10 +369,10 @@ const GainBlock = () => (
         viewport={{ once: true }}
         className="text-center max-w-3xl mx-auto mb-16"
       >
-        <h2 className="text-optical-blue font-bold text-sm uppercase tracking-[0.3em] mb-4">Résultats concrets</h2>
+        <h2 className="text-optical-blue font-bold text-sm uppercase tracking-[0.3em] mb-4">Ce que vous allez y gagner</h2>
         <h3 className="text-4xl lg:text-5xl font-black text-white mb-6 leading-tight">
-          Ce que vous allez{' '}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-violet-400">y gagner.</span>
+          Audit IT, pilotage, coûts{' '}
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-violet-400">maîtrisés.</span>
         </h3>
         <p className="text-slate-400 text-lg leading-relaxed">
           Un accompagnement Aegis, c'est du temps récupéré, des coûts maîtrisés et une infrastructure qui travaille pour vous, pas l'inverse.
@@ -421,7 +421,7 @@ const CostControl = () => (
         viewport={{ once: true }}
         className="text-center max-w-3xl mx-auto mb-20"
       >
-        <h2 className="text-optical-blue font-bold text-sm uppercase tracking-[0.3em] mb-4">Vos enjeux</h2>
+        <h2 className="text-optical-blue font-bold text-sm uppercase tracking-[0.3em] mb-4">Optimisation des coûts IT & télécom</h2>
         <h3 className="text-4xl lg:text-5xl font-black text-white mb-6 leading-tight">
           Vos contrats IT méritent un{' '}
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-violet-400">regard neuf.</span>
@@ -492,7 +492,7 @@ const TimeLoss = () => (
       <img
         className="w-full h-full object-cover mix-blend-screen"
         src="/img/timeloss-bg.webp"
-        alt="Réseau de données"
+        alt="Gestion du temps IT en entreprise — coordination prestataires"
         loading="lazy"
         decoding="async"
         width={1600}
@@ -503,7 +503,7 @@ const TimeLoss = () => (
     <div className="max-w-7xl mx-auto px-6 relative z-10">
       <div className="grid lg:grid-cols-2 gap-24 items-center">
         <div>
-          <h2 className="text-accent-violet font-bold text-sm uppercase tracking-[0.3em] mb-6">Temps perdu</h2>
+          <h2 className="text-accent-violet font-bold text-sm uppercase tracking-[0.3em] mb-6">Temps perdu en gestion IT</h2>
           <h3 className="text-5xl lg:text-6xl font-black mb-10 leading-[1.1] text-white">
             Le temps passé à gérer vos prestataires{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-blue-500">a un coût.</span>
@@ -627,7 +627,7 @@ const RootCause = () => (
           </div>
         </div>
         <div className="lg:w-1/2 order-1 lg:order-2">
-          <h2 className="text-optical-blue font-bold text-sm uppercase tracking-[0.3em] mb-6">Le vrai problème</h2>
+          <h2 className="text-optical-blue font-bold text-sm uppercase tracking-[0.3em] mb-6">Diagnostic IT indépendant</h2>
           <h3 className="text-5xl font-black text-white mb-8 leading-tight">On colmate. Rarement on diagnostique.</h3>
           <p className="text-slate-400 text-lg mb-10 leading-relaxed">
             Beaucoup d'entreprises enchaînent les correctifs sans jamais prendre le recul nécessaire. On change de fournisseur, on ajoute une ligne, on monte en débit. Mais personne ne regarde la cause réelle du problème.
@@ -662,7 +662,7 @@ const WhyAegis = () => (
     <FiberBeams />
     <div className="max-w-7xl mx-auto px-6">
       <div className="text-center max-w-3xl mx-auto mb-20">
-        <h2 className="text-optical-blue font-bold text-sm uppercase tracking-[0.3em] mb-4">Notre approche</h2>
+        <h2 className="text-optical-blue font-bold text-sm uppercase tracking-[0.3em] mb-4">Conseil IT indépendant à Lyon</h2>
         <h3 className="text-4xl lg:text-5xl font-black text-white mb-6 leading-tight">
           Un consultant indépendant.{' '}
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-violet-400">Pas un revendeur.</span>
@@ -793,7 +793,7 @@ const ImpactCalculator = () => {
           transition={{ duration: 0.6 }}
           className="text-center max-w-3xl mx-auto mb-12"
         >
-          <h2 className="text-optical-blue font-bold text-sm uppercase tracking-[0.3em] mb-4">Simulateur</h2>
+          <h2 className="text-optical-blue font-bold text-sm uppercase tracking-[0.3em] mb-4">Simulateur d'économies IT</h2>
           <h3 className="text-4xl lg:text-5xl font-black text-white mb-6 leading-tight">
             Estimez vos gains{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-violet-400">concrets.</span>
@@ -952,7 +952,7 @@ const EvolutionConseil = () => (
     <div className="max-w-7xl mx-auto px-6">
       <div className="grid lg:grid-cols-2 gap-20 items-center">
         <div className="min-w-0">
-          <h2 className="text-optical-blue font-bold text-sm uppercase tracking-[0.3em] mb-6">Accompagnement durable</h2>
+          <h2 className="text-optical-blue font-bold text-sm uppercase tracking-[0.3em] mb-6">Pilotage IT & télécom dans la durée</h2>
           <h3 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-8 leading-tight">Un accompagnement qui évolue avec votre activité.</h3>
           <p className="text-slate-400 text-lg mb-10 leading-relaxed">
             Un audit ponctuel, c'est bien. Un suivi régulier, c'est mieux. Vos besoins changent, le marché évolue, vos contrats arrivent à échéance. Nous restons à vos côtés pour ajuster, anticiper et optimiser dans la durée.
@@ -1005,7 +1005,7 @@ const EvolutionConseil = () => (
             <img
               className="rounded-[2rem] w-full h-auto"
               src="/img/why-aegis.webp"
-              alt="Accompagnement professionnel"
+              alt="Accompagnement IT durable pour entreprises — conseil et pilotage"
               loading="lazy"
               decoding="async"
               width={1200}
@@ -1561,6 +1561,90 @@ const DiagnosticExpress = ({ onComplete, onContact }: { onComplete: (r: DiagResu
   );
 };
 
+const FAQ_ITEMS = [
+  {
+    q: "Quelle est la différence entre Aegis Network et un prestataire informatique classique\u00a0?",
+    a: "Un prestataire classique vend des solutions ou des abonnements. Aegis Network est un consultant indépendant qui audite votre existant, challenge vos contrats et coordonne vos prestataires dans votre intérêt — sans commission fournisseur."
+  },
+  {
+    q: "À quels types d'entreprises s'adresse Aegis Network\u00a0?",
+    a: "Principalement aux TPE et PME de la région lyonnaise qui veulent reprendre le contrôle sur leur IT, leur réseau ou leur téléphonie, réduire leurs coûts et gagner en performance sans embaucher un DSI à temps plein."
+  },
+  {
+    q: "Combien coûte un audit IT avec Aegis Network\u00a0?",
+    a: "Le premier échange est gratuit et sans engagement. Il permet d'évaluer votre situation et de déterminer si un accompagnement est pertinent. Le périmètre et le budget sont ensuite définis ensemble, en toute transparence."
+  },
+  {
+    q: "Quels gains concrets peut-on attendre d'un audit\u00a0?",
+    a: "En moyenne, les entreprises accompagnées constatent une réduction de 15 à 30\u00a0% sur leurs contrats IT et télécom, un gain de temps significatif sur la gestion des prestataires, et une meilleure visibilité sur leurs dépenses."
+  },
+  {
+    q: "Aegis Network intervient-il uniquement à Lyon\u00a0?",
+    a: "L'accompagnement est basé à Lyon et couvre principalement la région Auvergne-Rhône-Alpes (Lyon, Ain, Isère). Les échanges en visio permettent également un suivi à distance sur tout le territoire."
+  },
+];
+
+const FAQSection = () => {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  return (
+    <section className="py-32 relative bg-background-deep overflow-hidden">
+      <div className="max-w-3xl mx-auto px-6">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-optical-blue font-bold text-sm uppercase tracking-[0.3em] mb-4">Questions fréquentes</h2>
+          <h3 className="text-4xl lg:text-5xl font-black text-white mb-6 leading-tight">
+            Ce que nos interlocuteurs nous{' '}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-violet-400">demandent.</span>
+          </h3>
+        </motion.div>
+
+        <div className="space-y-4">
+          {FAQ_ITEMS.map((item, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.08, duration: 0.4 }}
+              viewport={{ once: true }}
+              className="glass-card rounded-2xl border-white/5 overflow-hidden"
+            >
+              <button
+                onClick={() => setOpenIndex(openIndex === i ? null : i)}
+                className="w-full flex items-center justify-between p-6 text-left cursor-pointer"
+              >
+                <span className="font-bold text-white text-base pr-4">{item.q}</span>
+                <ChevronDown
+                  size={20}
+                  className={`text-slate-400 shrink-0 transition-transform duration-300 ${openIndex === i ? 'rotate-180' : ''}`}
+                />
+              </button>
+              <AnimatePresence>
+                {openIndex === i && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="overflow-hidden"
+                  >
+                    <p className="px-6 pb-6 text-slate-400 leading-relaxed">{item.a}</p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
 const CTASection = () => (
   <section className="py-32 relative overflow-hidden">
     <div className="max-w-7xl mx-auto px-6">
@@ -1681,7 +1765,7 @@ const ContactSection = ({ diagResult, contactMode }: { diagResult: DiagResult | 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="grid lg:grid-cols-2 gap-24">
           <div>
-            <h2 className="text-optical-blue font-bold text-sm uppercase tracking-[0.3em] mb-6">Contact & Audit</h2>
+            <h2 className="text-optical-blue font-bold text-sm uppercase tracking-[0.3em] mb-6">Contact — Audit IT gratuit</h2>
             <h3 className="text-5xl font-black text-white mb-10 leading-tight">Parlons de votre situation.</h3>
             <p className="text-slate-400 text-lg mb-8 leading-relaxed">Un diagnostic, un conseil, une question sur vos contrats ? Nous sommes disponibles pour en discuter.</p>
 
@@ -1984,6 +2068,7 @@ export default function App() {
         <WhyAegis />
         <ImpactCalculator />
         <EvolutionConseil />
+        <FAQSection />
         <CTASection />
         <ContactSection diagResult={diagResult} contactMode={contactMode} />
       </main>
