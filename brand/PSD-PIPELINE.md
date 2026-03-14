@@ -1,151 +1,129 @@
 # Pipeline PSD — Aegis Network
 
-## Vue d'ensemble
+## État actuel
 
-Tous les PSD sont générés par **`brand/build-psd-pro.mjs`** — le seul script autorisé.
+Le pipeline historique basé sur `ag-psd` n'est **pas** suffisamment fiable pour livrer des PSD de travail Photoshop stables :
 
-Les calques de texte sont **éditables** dans Photoshop (pas rastérisés). Chaque calque texte contient à la fois les métadonnées texte (police, taille, couleur, tracking) ET un aperçu pixel pré-rendu pour affichage immédiat à l'ouverture.
+- avertissement Photoshop à l'édition des textes ;
+- rendu texte recalculé différemment à l'ouverture ;
+- structure parfois incomplète selon les exports ;
+- sorties écrites hors repo dans `~/Documents/...`, donc peu reproductibles ;
+- script principal `brand/build-psd-pro.mjs` en contradiction avec l'objectif "PSD vraiment exploitables".
 
-## Prérequis
+La **business card** utilise désormais un pipeline **Photoshop natif** via JSX + automatisation COM PowerShell.
 
-- **Node.js** 18+
-- **Dépendances** : `ag-psd`, `@napi-rs/canvas`, `sharp`
-- **Polices** : Inter (Medium, SemiBold, Bold, ExtraBold, Black) installées dans le système
+## Source de vérité
+
+Ordre à appliquer en cas de conflit :
+
+1. `CLAUDE.md`
+2. `README.md`
+3. `AEGIS_NETWORK_BASE_REFERENTIEL_V3.md`
+4. `design-guidelines.md`
+5. `brand/brand-identity.md`
+6. previews HTML du dossier `brand/`
+
+Références publiques actuelles pour les supports :
+
+- Téléphone : `04 82 53 26 99`
+- Email : `contact@aegisnetwork.fr`
+- Site : `https://aegisnetwork.fr/`
+- Localisation éditoriale : `Lyon, France`
+
+## Pipeline autorisé
+
+### Business card
+
+Commande :
 
 ```bash
-npm install ag-psd @napi-rs/canvas sharp
+cd C:\Dev\Aegisnetwork
+node brand/build-business-card-photoshop.mjs
 ```
 
-## Générer les PSD
+Entrées :
 
-```bash
-cd c:\Dev\Aegisnetwork
-node brand/build-psd-pro.mjs
-```
+- `brand/business-card.html` : preview visuel de référence
+- `brand/business-card.config.json` : contenu métier et coordonnées
+- `brand/assets/*.svg` : logos sources
+- `brand/photoshop/build-business-card.jsx` : construction Photoshop native
 
-**Sortie** : `~/Documents/AEGIS_NETWORK_DESIGNER/01_PSD_EDITABLE/`
+Sorties :
 
-## Exporter les SVG sources
+- `brand/.generated/business-card/psd/business-card-recto.psd`
+- `brand/.generated/business-card/psd/business-card-recto-alt.psd`
+- `brand/.generated/business-card/psd/business-card-verso.psd`
+- `brand/.generated/business-card/psd/business-card-recto.png`
+- `brand/.generated/business-card/psd/business-card-recto-alt.png`
+- `brand/.generated/business-card/psd/business-card-verso.png`
 
-```bash
-node brand/export-svg-sources.mjs
-```
+## Pourquoi ce pipeline est retenu
 
-**Sortie** : `~/Documents/AEGIS_NETWORK_DESIGNER/03_SOURCES_SVG/`
+Il contourne la limite principale de `ag-psd` : les calques texte sont créés par Photoshop lui-même.
 
-## Vérifier les PSD
+Conséquences :
 
-```bash
-node brand/verify-psds.mjs
-```
+- textes réellement éditables dans Photoshop ;
+- plus d'avertissement structurel lié à la réécriture du texte par `ag-psd` ;
+- résolution native `300 PPI` ;
+- groupes et calques nommés lisiblement ;
+- génération reproductible dans le repo ;
+- vérification possible via PNG exportés depuis Photoshop.
 
-Vérifie pour chaque fichier :
-- Taille de fichier substantielle (pixel data présent)
-- Nombre et type de calques (texte / image)
-- Structure lisible sans erreur
+## Ce qui reste en legacy
 
-> **Note** : `brand/deep-diagnose.mjs` peut être utilisé pour un diagnostic approfondi calque par calque. Cependant, `readPsd` d'ag-psd a des problèmes de compatibilité avec `@napi-rs/canvas` pour le décodage des pixels — les résultats pixel-level ne sont fiables qu'après vérification dans Photoshop.
+Scripts encore présents pour audit ou génération ancienne :
 
-## Liste des fichiers générés
+- `brand/build-psd-pro.mjs`
+- `brand/build-psd-v2.mjs`
+- `brand/build-designer-package.mjs`
+- `brand/archive/rebuild-psds.py`
+- `brand/apply-tracking-fix.mjs`
+- `brand/verify-psds.mjs`
+- `brand/deep-diagnose.mjs`
+- `brand/diagnose-psd.mjs`
+- `brand/verify-psd-layers.mjs`
 
-### Logos (`01_PSD_EDITABLE/logos/`)
-| Fichier | Description |
-|---------|-------------|
-| `logo-master-fond-sombre.psd` | Logo complet sur fond #020617 |
-| `logo-master-fond-clair.psd` | Logo complet sur fond blanc |
-| `symbol-all-variants.psd` | Symbole triangle dans 4 variantes (dégradé, blanc, bleu, monochrome) |
-| `decorative-elements.psd` | Éléments décoratifs (orbes, grilles, motifs réseau) |
+Règle :
 
-### Documents (`01_PSD_EDITABLE/documents/`)
-| Fichier | Dimensions | Description |
-|---------|-----------|-------------|
-| `business-card-recto.psd` | 1075×720px | Carte de visite recto (version accent gauche) |
-| `business-card-recto-alt.psd` | 1075×720px | Version alternative (accent haut) |
-| `business-card-verso.psd` | 1075×720px | Carte de visite verso (photo + QR) |
-| `email-signature-light.psd` | 640×220px | Signature email fond clair |
-| `email-signature-dark.psd` | 640×220px | Signature email fond sombre |
-| `flyer-A5.psd` | 1748×2480px | Flyer A5 |
-| `flyer-A4.psd` | 2480×3508px | Flyer A4 (format étendu) |
-| `brochure-page1.psd` | 2480×3508px | Brochure page 1 — Impact & Bénéfices |
-| `brochure-page2.psd` | 2480×3508px | Brochure page 2 — Méthodologie & Cas pratiques |
+- ne pas les considérer comme source de vérité pour des PSD de travail ;
+- ne pas régénérer les business cards avec ces scripts ;
+- les conserver seulement pour audit, comparaison ou migration progressive des autres supports.
 
-### SVG Sources (`03_SOURCES_SVG/`)
-| Dossier | Contenu |
-|---------|---------|
-| `logos/` | 6 variantes SVG du symbole Aegis (gradient, blanc, bleu × complet/clean) |
-| `icons/` | 15 icônes Lucide-style au format SVG |
+## Vérification obligatoire
 
-## Architecture technique
+Après chaque génération business card :
 
-### Résolution : 72 DPI
+1. vérifier que les 3 PSD et les 3 PNG ont été régénérés dans `brand/.generated/business-card/psd/` ;
+2. ouvrir les PNG exportés et comparer avec `brand/business-card.html` ;
+3. ouvrir au moins `business-card-recto.psd` dans Photoshop ;
+4. confirmer :
+   - texte visible immédiatement ;
+   - texte éditable sans warning anormal ;
+   - groupes `Fond`, `Logo`, `Identite`, `Contact` ;
+   - pas de calque vide parasite ;
+   - logo et icônes présents ;
+   - coordonnées publiques à jour.
 
-Tous les PSD sont en **72 DPI** (1 pt = 1 px). Les coordonnées et tailles de police sont directement en pixels.
+## Limites connues
 
-Pour l'impression, ajuster la résolution dans Photoshop (Image → Taille de l'image → 300 DPI).
+- Les textes sont natifs Photoshop, mais les logos, icônes et effets de fond sont actuellement importés en calques raster séparés.
+- Si un besoin impose des logos / icônes 100% vectoriels ou des Smart Objects Illustrator, il faudra une étape de production supplémentaire côté Adobe.
+- Le pipeline Photoshop natif est aujourd'hui implémenté pour la business card uniquement ; les autres supports restent à migrer.
+- L'automatisation repose sur Photoshop installé localement avec support COM Windows.
 
-### Calques texte
+## Outils et dépendances
 
-Chaque calque texte contient :
-1. **Métadonnées texte** (`text.text`, `text.style`, `text.transform`) → éditable dans Photoshop
-2. **Aperçu pixel** (`canvas`) → visible immédiatement à l'ouverture
-3. **Bornes** (`top`, `left`, `bottom`, `right`) → positionnement correct
+Nécessaires :
 
-L'option `invalidateTextLayers` n'est **pas** utilisée (Photoshop recevrait l'instruction d'ignorer notre aperçu).
+- `Photoshop` installé localement ;
+- `PowerShell` avec COM Adobe Photoshop ;
+- dépendances Node déjà présentes : `sharp`, `@napi-rs/canvas`.
 
-### Polices
+Non nécessaires à ce stade :
 
-| Poids | Fichier | Usage |
-|-------|---------|-------|
-| 500 (Medium) | Inter-Medium.ttf | Texte courant |
-| 600 (SemiBold) | Inter-SemiBold.ttf | Labels, sous-titres |
-| 700 (Bold) | Inter-Bold.ttf | Baselines, accents |
-| 800 (ExtraBold) | Inter-ExtraBold.ttf | Titres secondaires |
-| 900 (Black) | Inter-Black.ttf | Titres principaux, logo |
+- nouveau MCP ;
+- nouvelle librairie PSD ;
+- Playwright ou Chrome DevTools dans la génération elle-même.
 
-> **Important** : Seules les polices **statiques** Inter sont enregistrées. Le fichier variable (`Inter-VariableFont_opsz,wght.ttf`) est **exclu** volontairement : ses axes `opsz` et `wght` provoquent des avertissements « représentation de police modifiée » dans Photoshop.
-
-> **Note** : Inter-Regular (400) n'est pas installé en statique. Le poids par défaut est Medium (500).
-
-## Comportement dans Photoshop
-
-### Ce qui fonctionne
-- Texte visible immédiatement à l'ouverture
-- Calques texte éditables (double-clic)
-- Polices, tailles, couleurs, tracking conformes
-- Groupes de calques nommés et organisés
-- Éléments décoratifs sur calques séparés
-
-### Avertissement connu
-Photoshop peut afficher "_La modification ou le rendu du calque de texte changera sa disposition_" lors de la première édition d'un calque texte. C'est normal — l'aperçu pixel ne correspond pas pixel-pour-pixel au moteur de rendu de Photoshop. Le texte sera recalculé avec les bonnes métadonnées.
-
-### Point critique : chargement asynchrone des images
-
-`@napi-rs/canvas` requiert un `await` sur `image.onload` après `image.src = buffer` avant d'appeler `drawImage`. Sans cet await, les pixels ne sont pas disponibles et le canvas reste transparent. C'est le bug principal qui rendait tous les éléments SVG (logos, icônes, décoratifs) invisibles dans les versions précédentes.
-
-```js
-// ✗ BROKEN — pixels non disponibles
-const img = new CanvasImage();
-img.src = pngBuf;
-ctx.drawImage(img, 0, 0); // canvas transparent!
-
-// ✓ CORRECT — await onload
-const img = new CanvasImage();
-img.src = pngBuf;
-await new Promise(r => { img.onload = r; });
-ctx.drawImage(img, 0, 0); // pixels présents
-```
-
-## Scripts archivés
-
-| Fichier | Statut | Raison |
-|---------|--------|--------|
-| `brand/archive/rebuild-psds.py` | Archivé | Script Python/Pillow — texte rastérisé uniquement |
-
-## Maintenance
-
-Pour modifier un PSD :
-1. Éditer `brand/build-psd-pro.mjs` (section du builder concerné)
-2. Régénérer : `node brand/build-psd-pro.mjs`
-3. Vérifier : `node brand/verify-psds.mjs`
-4. Ouvrir un échantillon dans Photoshop pour vérification visuelle
-5. Commit + push
+Playwright peut rester utile uniquement pour comparer un preview HTML à un export PNG pendant les contrôles.

@@ -43,6 +43,7 @@ tmp/
 
 # Brand deliverables (livraison hors périmètre site)
 livraison_definitive/
+brand/.generated/
 
 # Sub-project build artifacts (brand/brochure, stitch/*, brand/flyer/figma)
 brand/brochure/node_modules/

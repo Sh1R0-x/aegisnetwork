@@ -1,6 +1,8 @@
 # MANIFEST — Aegis Network Designer Package
 
-> Régénéré après correctif pipeline (async onload + static fonts) — `build-psd-pro.mjs`
+> Document historique du package legacy généré par `build-psd-pro.mjs`.
+> Ne plus utiliser ce manifest comme source de vérité pour des PSD de travail Photoshop.
+> Pour la business card, la référence actuelle est `brand/PSD-PIPELINE.md` + `brand/build-business-card-photoshop.mjs`.
 
 ## Structure du package
 

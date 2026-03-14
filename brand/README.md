@@ -21,6 +21,19 @@ brand/
 
 ## Utilisation
 
+### Pipeline PSD
+
+Pour des PSD de travail Photoshop fiables, la business card ne passe plus par `ag-psd`.
+
+Commande autorisée :
+
+```bash
+cd C:\Dev\Aegisnetwork
+node brand/build-business-card-photoshop.mjs
+```
+
+Le pipeline écrit ses sorties dans `brand/.generated/business-card/psd/` et exporte aussi des PNG de contrôle. Voir `brand/PSD-PIPELINE.md`.
+
 ### Charte graphique
 
 Ouvrir `brand-identity.html` dans un navigateur pour la consulter. Pour exporter en PDF :
@@ -65,3 +78,4 @@ Pour le site web, le composant React `src/components/AegisLogo.tsx` reste la ver
 - Les couleurs CMYK sont des approximations. Pour un tirage offset professionnel, faire valider les couleurs sur un nuancier Pantone.
 - La police Inter est chargée depuis Google Fonts pour le web. Pour les documents Office, utiliser Segoe UI ou Arial comme substitut.
 - Les coordonnées utilisées (téléphone, email, localisation) sont celles du site public.
+- Les coordonnées publiques actuelles à utiliser sur les supports sont `04 82 53 26 99`, `contact@aegisnetwork.fr`, `https://aegisnetwork.fr/`, `Lyon, France`.
