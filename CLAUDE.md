@@ -5,7 +5,7 @@
 - Site vitrine one-page pour Aegis Network
 - Cible : TPE et PME, dirigeants et responsables IT
 - Activité : **conseil, audit et optimisation** en infrastructures IT et télécommunications
-- Design source : généré et mis à jour via **Google Stitch** (dossier `stitch/`)
+- Les sources design externes et les livrables brand vivent dans `C:\Users\Ludovic\Documents\AEGIS NETWORK`
 
 ## Positionnement métier
 
@@ -73,8 +73,6 @@ public/
   favicon.svg       ← favicon (shield Aegis)
   img/              ← images optimisées (WebP, compressées)
 dist/               ← build de production (versionné, déployé sur OVH)
-stitch/             ← source Google Stitch (référence design, lecture seule)
-brand/              ← assets de marque (logo, carte de visite, flyer, brochure)
 docs/               ← documentation technique
 .claude/rules/      ← règles pour agents IA
 ```
@@ -135,7 +133,11 @@ Ne jamais modifier ces informations sans validation explicite.
 - Encoding : UTF-8, LF
 - Code lisible, pas de minification manuelle
 
-## Charte graphique (source : design-guidelines.md)
+## Charte graphique
+
+Source de vérité :
+
+- `C:\Users\Ludovic\Documents\AEGIS NETWORK\00_INDEX_ET_DOCS\REFERENTIELS\design-guidelines.md`
 
 - **Optical Blue** : `#3b82f6` — couleur primaire, accents, glows
 - **Deep Background** : `#020617` — fond principal (slate-950)
@@ -183,7 +185,7 @@ Ne jamais modifier ces informations sans validation explicite.
 - Ne pas ajouter de CMS ou de formulaire backend fonctionnel
 - Ne pas ajouter de cookie banner sans besoin réel
 - Ne pas ajouter d'analytics sans validation explicite
-- Ne pas modifier le dossier `stitch/` (lecture seule, source Stitch)
+- Ne pas réintroduire de dossier `brand/` ou `stitch/` dans ce repo
 - Ne pas ajouter de dépendances lourdes sans justification
 
 ## Stratégie de navigation
@@ -211,12 +213,10 @@ Ne jamais modifier ces informations sans validation explicite.
 - **ImpactCalculator** : 3 curseurs (heures/semaine en gestion IT, coût horaire interne, budget IT mensuel), layout 2 colonnes, hypothèse 20 % d'économie contrats
 - Ne jamais présenter une hypothèse du simulateur comme un fait sourcé
 
-## Elements.tsx (UI Kit)
+## Références design externes
 
-- Situé dans `stitch/elements/Elements.tsx` (lecture seule, source Stitch)
-- Contient des composants réutilisables : BentoGrid, PricingToggle, StatusDashboard, ProcessTimeline, FeatureComparison, HoverCards, Testimonials, ROICalculator, NetworkMap, MagneticCTA, GraphicElements
-- Le `ImpactCalculator` de App.tsx est adapté depuis `Element8ROICalculator` de Elements.tsx
-- Si un composant existe dans Elements.tsx, privilégier la réutilisation plutôt que la recréation
+- Les snapshots Google Stitch et anciennes sources design sont archivés hors repo dans `C:\Users\Ludovic\Documents\AEGIS NETWORK\99_ARCHIVE_A_VERIFIER`
+- Le point d'entrée officiel pour les chemins et règles designer est `C:\Users\Ludovic\Documents\AEGIS NETWORK\00_INDEX_ET_DOCS\PATHS_AND_RULES.md`
 
 ## Images
 
@@ -225,19 +225,18 @@ Ne jamais modifier ces informations sans validation explicite.
 - Image hero : preload + decode-gated fade-in (`heroReady` state)
 - `loading="lazy"` sur toutes les images sauf Hero
 
-## Workflow Google Stitch
+## Workflow design externe
 
-- Les mises à jour design viennent de Google Stitch → dossier `stitch/`
-- Pour intégrer une update Stitch : comparer `stitch/src/` avec `src/`, appliquer les deltas
-- `stitch/design-guidelines.md` est la référence graphique à jour
-- Ne jamais modifier `stitch/` directement — c'est une copie de la source Stitch
+- Les mises à jour design et supports brand sont stockés hors repo dans `C:\Users\Ludovic\Documents\AEGIS NETWORK`
+- Pour intégrer une update design au site : comparer la source externe au code `src/`, puis appliquer les deltas dans le repo
+- Les archives Stitch sont conservées dans `99_ARCHIVE_A_VERIFIER\STITCH_SITE_SOURCE`
 
 ## Workflow de collaboration (Claude / Copilot / Codex)
 
 - Toujours travailler depuis la racine du repo (`c:\Dev\Aegisnetwork`)
 - Toujours lire la doc projet (`CLAUDE.md`, `README.md`, `AGENTS.md`) avant modification
 - Toujours vérifier `git status` avant toute intervention
-- Ne pas modifier de fichiers en dehors du repo
+- Ne modifier des fichiers hors repo que si la tâche vise explicitement `C:\Users\Ludovic\Documents\AEGIS NETWORK`
 - Mettre à jour la documentation après tout changement structurant
 - Privilégier des patchs minimaux et ciblés
 - Signaler clairement les hypothèses prises

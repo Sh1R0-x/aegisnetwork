@@ -1,8 +1,0 @@
-<svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <!-- Aegis Network — Monochrome Aegis Blue -->
-  <path d="M15 85 L50 15 L85 85" stroke="#2563EB" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
-  <circle cx="82" cy="18" r="4" fill="#2563EB"/>
-  <circle cx="92" cy="32" r="3" fill="#2563EB" opacity="0.6"/>
-  <circle cx="72" cy="8" r="3" fill="#2563EB" opacity="0.8"/>
-  <path d="M65 35 L82 18" stroke="#2563EB" stroke-width="1.5" stroke-dasharray="4 4"/>
-</svg>

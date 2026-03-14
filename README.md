@@ -2,21 +2,36 @@
 
 Site vitrine one-page d'Aegis Network, dédié au conseil, à l'audit et à l'optimisation des infrastructures IT et télécom pour TPE et PME.
 
-Le dépôt contient deux briques distinctes :
-
-- un frontend React statique buildé dans `dist/`
-- un backend Express/Nodemailer pour le formulaire de contact
-
 `main` est la branche de production et `origin/main` la référence du dépôt.
 
-## Périmètre
+## Périmètre du dépôt
+
+Ce dépôt contient uniquement ce qui est nécessaire au site et à son déploiement :
 
 - `src/` : application React 19 + TypeScript
 - `server/` : API Express `POST /api/contact`
-- `public/` : favicon et images optimisées
+- `public/` : assets strictement utilisés par le site en production
 - `dist/` : build de production versionné
-- `brand/` : supports de marque et scripts associés
-- `stitch/` : source design Google Stitch en lecture seule
+- `docs/` : documentation technique du site
+
+Les livrables de marque, PSD, supports imprimés, sources Google Stitch, previews et pipelines designer ne vivent plus dans ce repo.
+
+## Ressources design externes
+
+Le dossier officiel pour tous les éléments brand/design/livrables est :
+
+- `C:\Users\Ludovic\Documents\AEGIS NETWORK`
+
+Le point d'entrée documentaire à utiliser est :
+
+- `C:\Users\Ludovic\Documents\AEGIS NETWORK\00_INDEX_ET_DOCS\PATHS_AND_RULES.md`
+
+Le repo ne doit plus contenir :
+
+- PSD, PSB, AI, exports designer
+- previews HTML de supports non runtime
+- anciens packages `brand/` ou `stitch/`
+- archives graphiques et snapshots Google Stitch
 
 ## Stack
 
@@ -31,15 +46,8 @@ Le dépôt contient deux briques distinctes :
 
 ## Démarrage local
 
-Installer les dépendances :
-
 ```bash
 npm install
-```
-
-Lancer le frontend :
-
-```bash
 npm run dev
 ```
 
@@ -95,8 +103,6 @@ Règles à respecter :
 |-- src/
 |-- server/
 |-- dist/
-|-- brand/
-|-- stitch/
 `-- docs/
 ```
 
@@ -105,6 +111,4 @@ Règles à respecter :
 - [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) : vue technique détaillée
 - [docs/DEPLOYMENT_OVH_STARTER.md](docs/DEPLOYMENT_OVH_STARTER.md) : déploiement du statique sur OVH Starter
 - [docs/EMAIL_SMTP.md](docs/EMAIL_SMTP.md) : configuration du backend mail et contraintes SMTP
-- [design-guidelines.md](design-guidelines.md) : charte graphique
-- [brand/README.md](brand/README.md) : périmètre des supports de marque
-
+- [docs/EXTERNAL_DESIGN_ASSETS.md](docs/EXTERNAL_DESIGN_ASSETS.md) : emplacement officiel des assets design externes

@@ -42,13 +42,14 @@ git commit -m "description concise"
 git push origin main
 ```
 
-## Workflow Stitch (mises à jour design)
+## Workflow design externe
 
-1. Exporter depuis Google Stitch → copier dans `stitch/`
-2. Comparer `stitch/src/App.tsx` avec `src/App.tsx`
-3. Appliquer les changements visuels dans `src/`
-4. Vérifier avec `npm run dev`
-5. Builder, committer, pousser
+1. Exporter depuis Google Stitch ou un outil design vers `C:\Users\Ludovic\Documents\AEGIS NETWORK`
+2. Utiliser `00_INDEX_ET_DOCS\PATHS_AND_RULES.md` pour ranger la source au bon endroit
+3. Comparer la source design externe au code du site dans `src/`
+4. Appliquer les changements visuels dans `src/`
+5. Vérifier avec `npm run dev`
+6. Builder, committer, pousser
 
 ## Conventions de commit
 
@@ -63,7 +64,7 @@ git push origin main
 - `main` est la branche de production
 - GitHub est la source de vérité
 - Toujours lire `CLAUDE.md` et `AGENTS.md` avant une modification structurante
-- Ne jamais modifier `stitch/` directement
+- Ne pas réintroduire de dossier `brand/` ou `stitch/` dans ce repo
 - Mettre à jour la doc après tout changement d'architecture
 
 ## Reprise après modifications d'un autre agent

@@ -41,13 +41,13 @@ public/
   favicon.svg           ← Favicon Aegis (shield)
   img/                  ← Images optimisées (WebP, compressées)
 dist/                   ← Build de production (versionné, déployé)
-stitch/                 ← Source Google Stitch (référence design, lecture seule)
-  elements/Elements.tsx ← UI Kit Stitch (BentoGrid, ROICalculator, etc.)
-  design-guidelines.md  ← Charte graphique de référence
-brand/                  ← Assets de marque (logo, carte de visite, flyer, brochure)
 docs/                   ← Documentation technique
 .claude/rules/          ← Règles pour agents IA (content.md, frontend.md)
 ```
+
+Les assets brand, snapshots Stitch, PSD et livrables designer ont été externalisés vers :
+
+- `C:\Users\Ludovic\Documents\AEGIS NETWORK`
 
 ---
 
@@ -544,10 +544,10 @@ const [submitted, setSubmitted] = useState(false);
 
 ### 1. Lire la documentation
 ```
-CLAUDE.md          → Règles projet, identité, contraintes
-AGENTS.md          → Règles d'exécution pour agents IA
+CLAUDE.md             → Règles projet, identité, contraintes
+AGENTS.md             → Règles d'exécution pour agents IA
 docs/ARCHITECTURE.md  → Ce fichier
-design-guidelines.md  → Charte graphique détaillée
+docs/EXTERNAL_DESIGN_ASSETS.md → chemins officiels vers les assets design externes
 ```
 
 ### 2. Vérifier l'état du repo
@@ -574,7 +574,7 @@ npm run dev        # serveur dev sur http://localhost:3000
 - Travailler par patchs minimaux et ciblés
 - Tester avec `npm run dev` après chaque changement
 - Vérifier le build : `npm run build`
-- Ne pas toucher à `stitch/` (lecture seule, source design)
+- Ne pas réintroduire de dossier `brand/` ou `stitch/` dans le repo site
 
 ### 6. Committer et déployer
 ```bash
@@ -607,12 +607,15 @@ Voir [DEPLOYMENT_OVH_STARTER.md](DEPLOYMENT_OVH_STARTER.md) pour le guide de dé
 
 ---
 
-## Workflow Stitch
+## Workflow design externe
 
-Google Stitch génère les mises à jour design dans `stitch/`. Pour intégrer :
+Les mises à jour design et les archives Google Stitch vivent hors repo dans :
 
-1. Comparer `stitch/src/` avec `src/`
-2. Appliquer les deltas manuellement
-3. Ne jamais modifier `stitch/` directement
-4. `stitch/design-guidelines.md` est la référence graphique
-5. `stitch/elements/Elements.tsx` contient des composants UI réutilisables (lecture seule)
+- `C:\Users\Ludovic\Documents\AEGIS NETWORK`
+
+Pour intégrer une évolution visuelle au site :
+
+1. Ouvrir la source externe concernée
+2. Comparer cette source au code `src/`
+3. Appliquer les deltas manuellement dans le repo
+4. Laisser les PSD, previews et snapshots hors de GitHub

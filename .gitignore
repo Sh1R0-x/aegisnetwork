@@ -41,21 +41,25 @@ tmp/
 # Playwright MCP screenshots (debug artifacts)
 .playwright-mcp/
 
-# Brand deliverables (livraison hors périmètre site)
+# Designer / brand assets are external to this repo
+/brand/
+/stitch/
+/AEGIS_NETWORK_BASE_REFERENTIEL_V3.md
+/design-guidelines.md
+/metadata.json
 livraison_definitive/
-brand/.generated/
 
-# Sub-project build artifacts (brand/brochure, stitch/*, brand/flyer/figma)
-brand/brochure/node_modules/
-brand/brochure/.next/
-brand/brochure/package-lock.json
-brand/flyer/figma/
-stitch/**/node_modules/
-stitch/**/.next/
+# Heavy design-source formats never belong in the site repo
+*.psd
+*.psb
+*.ai
+*.indd
+*.afdesign
+*.sketch
+*.xcf
 
 # Original Unsplash JFIF sources (replaced by optimized WebP)
 public/img/*.jfif
-stitch/img/*.jfif
 
 # Stray images at root (temporary exports, QA screenshots)
 /*.png

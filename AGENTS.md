@@ -3,6 +3,7 @@
 ## Références à lire
 
 - Lire `README.md`, `CLAUDE.md` et `docs/WORKFLOW_COLLABORATION.md` avant toute modification structurante.
+- Si la tâche touche au brand/design/livrables, lire aussi `C:\Users\Ludovic\Documents\AEGIS NETWORK\00_INDEX_ET_DOCS\PATHS_AND_RULES.md`.
 
 ## MCP à privilégier
 
@@ -14,7 +15,8 @@
 
 - Toujours partir de la racine réelle du repo : `C:\Dev\Aegisnetwork`.
 - Vérifier `git status --short --branch` avant d'agir.
-- Rester strictement dans ce dépôt ; aucun fichier hors scope ou hors repo.
+- Par défaut, rester dans ce dépôt.
+- Exception : si la tâche concerne les assets brand/design/livrables, le seul emplacement externe autorisé est `C:\Users\Ludovic\Documents\AEGIS NETWORK`.
 - Travailler par patchs minimaux et ciblés ; pas de refonte implicite.
 - Stack : React 19 + TypeScript + Tailwind CSS 4 + Vite 6, build statique déployé sur OVH Starter.
 - Mettre à jour la documentation après tout changement structurant.
@@ -39,6 +41,6 @@
 ## Sources de vérité
 
 - `CLAUDE.md` : règles projet, stack, charte, contacts
-- `design-guidelines.md` : charte graphique détaillée
-- `stitch/` : source design Google Stitch (lecture seule)
 - GitHub `origin/main` : état de référence du code
+- `C:\Users\Ludovic\Documents\AEGIS NETWORK\00_INDEX_ET_DOCS\PATHS_AND_RULES.md` : chemins officiels brand/design
+- `C:\Users\Ludovic\Documents\AEGIS NETWORK\00_INDEX_ET_DOCS\REFERENTIELS\design-guidelines.md` : charte graphique détaillée
