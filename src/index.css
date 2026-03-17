@@ -73,11 +73,13 @@
 .animate-fiber-h {
   left: 0;
   animation: fiber-move-h 10s linear infinite;
+  will-change: transform, opacity;
 }
 
 .animate-fiber-v {
   top: 0;
   animation: fiber-move-v 15s linear infinite;
+  will-change: transform, opacity;
 }
 
 @keyframes pulse-slow {

@@ -13,6 +13,14 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     sourcemap: false,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'framer-motion': ['motion'],
+          'react-vendor': ['react', 'react-dom'],
+        },
+      },
+    },
   },
   server: {
     port: 3000,

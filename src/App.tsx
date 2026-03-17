@@ -369,11 +369,11 @@ const GainBlock = () => (
         viewport={{ once: true }}
         className="text-center max-w-3xl mx-auto mb-16"
       >
-        <h2 className="text-optical-blue font-bold text-sm uppercase tracking-[0.3em] mb-4">Ce que vous allez y gagner</h2>
-        <h3 className="text-4xl lg:text-5xl font-black text-white mb-6 leading-tight">
+        <p className="text-optical-blue font-bold text-sm uppercase tracking-[0.3em] mb-4">Ce que vous allez y gagner</p>
+        <h2 className="text-4xl lg:text-5xl font-black text-white mb-6 leading-tight">
           Audit IT, pilotage, coûts{' '}
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-violet-400">maîtrisés.</span>
-        </h3>
+        </h2>
         <p className="text-slate-400 text-lg leading-relaxed">
           Un accompagnement Aegis, c'est du temps récupéré, des coûts maîtrisés et une infrastructure qui travaille pour vous, pas l'inverse.
         </p>
@@ -421,11 +421,11 @@ const CostControl = () => (
         viewport={{ once: true }}
         className="text-center max-w-3xl mx-auto mb-20"
       >
-        <h2 className="text-optical-blue font-bold text-sm uppercase tracking-[0.3em] mb-4">Optimisation des coûts IT & télécom</h2>
-        <h3 className="text-4xl lg:text-5xl font-black text-white mb-6 leading-tight">
+        <p className="text-optical-blue font-bold text-sm uppercase tracking-[0.3em] mb-4">Optimisation des coûts IT & télécom</p>
+        <h2 className="text-4xl lg:text-5xl font-black text-white mb-6 leading-tight">
           Vos contrats IT méritent un{' '}
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-violet-400">regard neuf.</span>
-        </h3>
+        </h2>
         <p className="text-slate-400 text-lg leading-relaxed">
           La plupart des TPE et PME conservent des abonnements inadaptés, surdimensionnés ou jamais renégociés. C'est précisément là que nous intervenons.
         </p>
@@ -503,11 +503,11 @@ const TimeLoss = () => (
     <div className="max-w-7xl mx-auto px-6 relative z-10">
       <div className="grid lg:grid-cols-2 gap-24 items-center">
         <div>
-          <h2 className="text-accent-violet font-bold text-sm uppercase tracking-[0.3em] mb-6">Temps perdu en gestion IT</h2>
-          <h3 className="text-5xl lg:text-6xl font-black mb-10 leading-[1.1] text-white">
+          <p className="text-accent-violet font-bold text-sm uppercase tracking-[0.3em] mb-6">Temps perdu en gestion IT</p>
+          <h2 className="text-5xl lg:text-6xl font-black mb-10 leading-[1.1] text-white">
             Le temps passé à gérer vos prestataires{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-blue-500">a un coût.</span>
-          </h3>
+          </h2>
           <div className="space-y-10">
             {[
               {
@@ -538,7 +538,7 @@ const TimeLoss = () => (
                   {item.icon}
                 </div>
                 <div>
-                  <h4 className="text-xl font-bold mb-2 text-white">{item.title}</h4>
+                  <h3 className="text-xl font-bold mb-2 text-white">{item.title}</h3>
                   <p className="text-slate-400 leading-relaxed">{item.desc}</p>
                 </div>
               </motion.div>
@@ -627,8 +627,8 @@ const RootCause = () => (
           </div>
         </div>
         <div className="lg:w-1/2 order-1 lg:order-2">
-          <h2 className="text-optical-blue font-bold text-sm uppercase tracking-[0.3em] mb-6">Diagnostic IT indépendant</h2>
-          <h3 className="text-5xl font-black text-white mb-8 leading-tight">On colmate. Rarement on diagnostique.</h3>
+          <p className="text-optical-blue font-bold text-sm uppercase tracking-[0.3em] mb-6">Diagnostic IT indépendant</p>
+          <h2 className="text-5xl font-black text-white mb-8 leading-tight">On colmate. Rarement on diagnostique.</h2>
           <p className="text-slate-400 text-lg mb-10 leading-relaxed">
             Beaucoup d'entreprises enchaînent les correctifs sans jamais prendre le recul nécessaire. On change de fournisseur, on ajoute une ligne, on monte en débit. Mais personne ne regarde la cause réelle du problème.
           </p>
@@ -662,11 +662,11 @@ const WhyAegis = () => (
     <FiberBeams />
     <div className="max-w-7xl mx-auto px-6">
       <div className="text-center max-w-3xl mx-auto mb-20">
-        <h2 className="text-optical-blue font-bold text-sm uppercase tracking-[0.3em] mb-4">Conseil IT indépendant à Lyon</h2>
-        <h3 className="text-4xl lg:text-5xl font-black text-white mb-6 leading-tight">
+        <p className="text-optical-blue font-bold text-sm uppercase tracking-[0.3em] mb-4">Conseil IT indépendant à Lyon</p>
+        <h2 className="text-4xl lg:text-5xl font-black text-white mb-6 leading-tight">
           Un consultant indépendant.{' '}
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-violet-400">Pas un revendeur.</span>
-        </h3>
+        </h2>
         <p className="text-slate-400 text-lg leading-relaxed">
           Aegis Network n'est pas un opérateur, pas un intégrateur, pas un revendeur. Nous sommes un interlocuteur unique qui travaille exclusivement dans votre intérêt.
         </p>
@@ -793,11 +793,11 @@ const ImpactCalculator = () => {
           transition={{ duration: 0.6 }}
           className="text-center max-w-3xl mx-auto mb-12"
         >
-          <h2 className="text-optical-blue font-bold text-sm uppercase tracking-[0.3em] mb-4">Simulateur d'économies IT</h2>
-          <h3 className="text-4xl lg:text-5xl font-black text-white mb-6 leading-tight">
+          <p className="text-optical-blue font-bold text-sm uppercase tracking-[0.3em] mb-4">Simulateur d'économies IT</p>
+          <h2 className="text-4xl lg:text-5xl font-black text-white mb-6 leading-tight">
             Estimez vos gains{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-violet-400">concrets.</span>
-          </h3>
+          </h2>
           <p className="text-slate-400 text-lg leading-relaxed">
             Ajustez les curseurs selon votre situation. Les résultats sont des estimations, pas des promesses.
           </p>
@@ -816,7 +816,7 @@ const ImpactCalculator = () => {
               <div className="w-10 h-10 rounded-xl bg-blue-600/15 flex items-center justify-center">
                 <BarChart3 size={18} className="text-optical-blue" />
               </div>
-              <h4 className="font-bold text-white">Vos paramètres</h4>
+              <h3 className="font-bold text-white">Vos paramètres</h3>
             </div>
 
             <div className="space-y-6">
@@ -861,7 +861,7 @@ const ImpactCalculator = () => {
               <div className="w-10 h-10 rounded-xl bg-emerald-600/15 flex items-center justify-center">
                 <TrendingUp size={18} className="text-emerald-400" />
               </div>
-              <h4 className="font-bold text-white">Résultats estimés</h4>
+              <h3 className="font-bold text-white">Résultats estimés</h3>
             </div>
 
             <div className="space-y-5 relative z-10">
@@ -952,8 +952,8 @@ const EvolutionConseil = () => (
     <div className="max-w-7xl mx-auto px-6">
       <div className="grid lg:grid-cols-2 gap-20 items-center">
         <div className="min-w-0">
-          <h2 className="text-optical-blue font-bold text-sm uppercase tracking-[0.3em] mb-6">Pilotage IT & télécom dans la durée</h2>
-          <h3 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-8 leading-tight">Un accompagnement qui évolue avec votre activité.</h3>
+          <p className="text-optical-blue font-bold text-sm uppercase tracking-[0.3em] mb-6">Pilotage IT & télécom dans la durée</p>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-8 leading-tight">Un accompagnement qui évolue avec votre activité.</h2>
           <p className="text-slate-400 text-lg mb-10 leading-relaxed">
             Un audit ponctuel, c'est bien. Un suivi régulier, c'est mieux. Vos besoins changent, le marché évolue, vos contrats arrivent à échéance. Nous restons à vos côtés pour ajuster, anticiper et optimiser dans la durée.
           </p>
@@ -987,7 +987,7 @@ const EvolutionConseil = () => (
                   {item.icon}
                 </div>
                 <div>
-                  <h4 className="text-xl font-bold mb-2 text-white">{item.title}</h4>
+                  <h3 className="text-xl font-bold mb-2 text-white">{item.title}</h3>
                   <p className="text-slate-400 leading-relaxed">{item.desc}</p>
                 </div>
               </motion.div>
@@ -1306,11 +1306,11 @@ const DiagnosticExpress = ({ onComplete, onContact }: { onComplete: (r: DiagResu
               <Activity className="w-3.5 h-3.5" />
               Diagnostic Express
             </div>
-            <h3 className="text-4xl lg:text-5xl font-black text-white mb-6 leading-tight">
+            <h2 className="text-4xl lg:text-5xl font-black text-white mb-6 leading-tight">
               Où en est votre{' '}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-violet-400">IT</span>
               {' '}?
-            </h3>
+            </h2>
             <p className="text-slate-400 text-lg leading-relaxed max-w-2xl mx-auto mb-10">
               5 questions · 1 minute. Un premier état des lieux concret, gratuit et sans engagement.
             </p>
@@ -1523,7 +1523,7 @@ const DiagnosticExpress = ({ onComplete, onContact }: { onComplete: (r: DiagResu
             >
               <Lightbulb className="w-5 h-5 text-blue-400 shrink-0 mt-0.5" />
               <div>
-                <h4 className="text-sm font-bold text-white mb-1">Priorité recommandée</h4>
+                <h3 className="text-sm font-bold text-white mb-1">Priorité recommandée</h3>
                 <p className="text-sm text-slate-400 leading-relaxed">{result.priority}</p>
               </div>
             </motion.div>
@@ -1597,11 +1597,11 @@ const FAQSection = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-optical-blue font-bold text-sm uppercase tracking-[0.3em] mb-4">Questions fréquentes</h2>
-          <h3 className="text-4xl lg:text-5xl font-black text-white mb-6 leading-tight">
+          <p className="text-optical-blue font-bold text-sm uppercase tracking-[0.3em] mb-4">Questions fréquentes</p>
+          <h2 className="text-4xl lg:text-5xl font-black text-white mb-6 leading-tight">
             Ce que nos interlocuteurs nous{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-violet-400">demandent.</span>
-          </h3>
+          </h2>
         </motion.div>
 
         <div className="space-y-4">
@@ -1651,7 +1651,7 @@ const CTASection = () => (
       <div className="bg-gradient-to-br from-blue-600/80 via-blue-700 to-accent-violet rounded-[2rem] sm:rounded-[3rem] p-6 sm:p-8 md:p-12 lg:p-24 text-white relative overflow-hidden premium-glow">
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white/10 rounded-full -mr-64 -mt-64 blur-[120px]" />
         <div className="relative z-10 text-center max-w-3xl mx-auto">
-          <h3 className="text-4xl lg:text-6xl font-black mb-8 leading-tight">Un premier échange, gratuit et sans engagement.</h3>
+          <h2 className="text-4xl lg:text-6xl font-black mb-8 leading-tight">Un premier échange, gratuit et sans engagement.</h2>
           <p className="text-xl text-white/90 mb-6 leading-relaxed">
             Parlez-nous de votre situation. Nous vous dirons honnêtement si nous pouvons vous aider, et comment.
           </p>
@@ -1765,8 +1765,8 @@ const ContactSection = ({ diagResult, contactMode }: { diagResult: DiagResult | 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="grid lg:grid-cols-2 gap-24">
           <div>
-            <h2 className="text-optical-blue font-bold text-sm uppercase tracking-[0.3em] mb-6">Contact — Audit IT gratuit</h2>
-            <h3 className="text-5xl font-black text-white mb-10 leading-tight">Parlons de votre situation.</h3>
+            <p className="text-optical-blue font-bold text-sm uppercase tracking-[0.3em] mb-6">Contact — Audit IT gratuit</p>
+            <h2 className="text-5xl font-black text-white mb-10 leading-tight">Parlons de votre situation.</h2>
             <p className="text-slate-400 text-lg mb-8 leading-relaxed">Un diagnostic, un conseil, une question sur vos contrats ? Nous sommes disponibles pour en discuter.</p>
 
             {/* Diagnostic pre-fill banner */}
@@ -1857,7 +1857,7 @@ const ContactSection = ({ diagResult, contactMode }: { diagResult: DiagResult | 
                 className="text-center py-12 relative z-10"
               >
                 <CheckCircle className="w-16 h-16 text-emerald-400 mx-auto mb-6" />
-                <h4 className="text-2xl font-black text-white mb-3">Demande envoyée</h4>
+                <h3 className="text-2xl font-black text-white mb-3">Demande envoyée</h3>
                 <p className="text-slate-400">Nous vous répondons sous 24 heures.</p>
               </motion.div>
             ) : (
