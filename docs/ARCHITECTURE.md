@@ -1,6 +1,6 @@
 # Architecture — Aegis Network
 
-> Dernière mise à jour : 16 juillet 2025
+> Dernière mise à jour : 17 mars 2026
 
 ## Stack technique
 
@@ -117,7 +117,6 @@ Le site est **one-page**. Toutes les sections sont dans `src/App.tsx` (~1950 lig
 | Carte | Position | Icône | Valeur | Entrée Framer |
 |-------|----------|-------|--------|---------------|
 | Temps perdu / mois | haut-gauche | Clock (amber) | 15h | fade-in |
-| Temps perdu / mois | haut-gauche | Clock (amber) | 15h | fade-in |
 | Conseil indépendant | bas-droite | ShieldCheck (emerald) | badge qualitative | fade-in |
 | Audit de Performance | centre | Search | badge glow | `scale: 0.9` |
 
@@ -170,10 +169,10 @@ Le site est **one-page**. Toutes les sections sont dans `src/App.tsx` (~1950 lig
 | 0–39 | Environnement à risque | Rose |
 
 ### Thèmes des questions
-1. Adaptation de l'environnement à l'activité
-2. Temps perdu (réseau, téléphonie, outils)
-3. Relation prestataires (clarté, rapidité)
-4. Challenge des contrats et services
+1. Adéquation de l'environnement à l'activité (outils, réseau, téléphonie)
+2. Temps perdu (réseau, téléphonie, outils, quotidien)
+3. Relation prestataires (clarté, rapidité, relances)
+4. Lisibilité sur les dépenses IT/télécom et challenge des contrats
 5. Impact d'un incident sur l'activité
 
 ### Calcul du résultat (`computeResult()`, lignes 1166–1244)
@@ -205,6 +204,13 @@ Le site est **one-page**. Toutes les sections sont dans `src/App.tsx` (~1950 lig
 ### Contrainte métier
 - Zéro mention sécurité/cyber — uniquement performance, maîtrise, frictions, pilotage
 - CTA résultat → formulaire contact (pas de lead capture indépendante)
+
+### Notes sur les résultats du simulateur
+- **Valeur du temps mobilisé** (opportunité) = heures/mois × coût horaire
+- **Économies contrats potentielles** (hypothèse) = budget IT × 20%
+- **Potentiel de gain mensuel estimé** = somme des deux composantes, affichée avec détail inline
+- Le titre du total a été renommé de "Impact mensuel estimé" à "Potentiel de gain mensuel estimé" (précision sémantique)
+- Un sous-titre détaille les deux composantes (temps récupérable + contrats)
 
 ---
 

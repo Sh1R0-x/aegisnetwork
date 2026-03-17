@@ -884,7 +884,7 @@ const ImpactCalculator = () => {
 
             <div className="space-y-5 relative z-10">
               <CalcResult label="Temps consacré à l'IT / mois" value={`${hoursPerMonth}h`} />
-              <CalcResult label="Coût du temps mobilisé" value={`${fmt(timeSavingMonth)}€ /mois`} highlight />
+              <CalcResult label="Valeur du temps mobilisé" value={`${fmt(timeSavingMonth)}€ /mois`} highlight />
 
               <div className="border-t border-white/5 my-2" />
 
@@ -892,10 +892,13 @@ const ImpactCalculator = () => {
 
               <div className="border-t border-white/10 pt-4 mt-4">
                 <div className="text-center">
-                  <p className="text-xs text-slate-400 uppercase tracking-widest font-bold mb-1">Impact mensuel estimé</p>
+                  <p className="text-xs text-slate-400 uppercase tracking-widest font-bold mb-1">Potentiel de gain mensuel estimé</p>
                   <div className="text-4xl font-black text-white">+{fmt(totalMonthly)}€</div>
                   <p className="text-sm text-slate-400 mt-2">
                     Soit <span className="text-optical-blue font-bold">+{fmt(totalAnnual)}€</span> /an
+                  </p>
+                  <p className="text-[10px] text-slate-600 mt-2 leading-snug">
+                    dont {fmt(timeSavingMonth)}€ récupérables sur le temps mobilisé + {fmt(contractSavingMonth)}€ sur contrats (hyp. 20%)
                   </p>
                 </div>
               </div>
@@ -1042,10 +1045,10 @@ const DIAG_QUESTIONS = [
     id: 1,
     question: "Votre environnement IT correspond-il à vos besoins actuels ?",
     options: [
-      { id: 'A', label: "Oui, il répond bien à nos besoins", score: 20 },
+      { id: 'A', label: "Oui, nous travaillons sans friction particulière", score: 20 },
       { id: 'B', label: "Globalement, avec quelques limites", score: 14 },
-      { id: 'C', label: "Pas vraiment, certains points nous freinent", score: 7 },
-      { id: 'D', label: "Non, il n'est pas adapté", score: 0 },
+      { id: 'C', label: "Pas vraiment, certains points nous freinent au quotidien", score: 7 },
+      { id: 'D', label: "Non, certaines limitations nous coûtent du temps", score: 0 },
     ],
   },
   {
@@ -1070,12 +1073,12 @@ const DIAG_QUESTIONS = [
   },
   {
     id: 4,
-    question: "Vos contrats IT sont-ils régulièrement revus et challengés ?",
+    question: "Avez-vous une bonne lisibilité sur vos dépenses IT et télécom, et challengez-vous régulièrement vos contrats ?",
     options: [
-      { id: 'A', label: "Oui, on revoit régulièrement ce qu'on paie", score: 20 },
-      { id: 'B', label: "De temps en temps, sans méthode précise", score: 14 },
-      { id: 'C', label: "Rarement, on garde l'existant par habitude", score: 7 },
-      { id: 'D', label: "Non, presque jamais", score: 0 },
+      { id: 'A', label: "Oui, on sait ce qu'on paie et on les remet régulièrement en concurrence", score: 20 },
+      { id: 'B', label: "On a une vision globale, mais sans méthode structurée", score: 14 },
+      { id: 'C', label: "Peu de visibilité, on reconduit plutôt par habitude", score: 7 },
+      { id: 'D', label: "Non, manque de lisibilité ou de temps pour s'en occuper", score: 0 },
     ],
   },
   {
@@ -1144,7 +1147,7 @@ const computeResult = (answers: Record<number, { id: string; score: number }>): 
     return {
       score,
       level: "Environnement bien tenu",
-      interpretation: "Votre base semble saine. C'est justement le bon moment pour identifier ce qui peut encore être simplifié, automatisé ou sécurisé davantage afin de gagner en efficacité sur le long terme.",
+      interpretation: "Votre base semble saine. C'est justement le bon moment pour identifier ce qui peut encore être simplifié, optimisé ou renégocié afin de réduire les coûts inutiles et gagner en efficacité sur le long terme.",
       points: finalPoints.length > 0 ? finalPoints : [
         { label: "Marges d'optimisation : renégociation de contrats, consolidation d'outils ou automatisation de tâches récurrentes", type: 'warning' },
       ],
@@ -1156,12 +1159,12 @@ const computeResult = (answers: Record<number, { id: string; score: number }>): 
     return {
       score,
       level: "Base correcte, encore perfectible",
-      interpretation: "L'ensemble tient, mais plusieurs signaux montrent une maîtrise encore partielle.",
+      interpretation: "Votre infrastructure fonctionne, mais certaines zones restent à reprendre en main : contrats insuffisamment challengés, dépendances prestataires ou frictions récurrentes qui pèsent sur l'efficacité.",
       points: finalPoints.length > 0 ? finalPoints : [
         { label: "Frictions ponctuelles", type: 'warning' },
         { label: "Services ou contrats pas assez revus", type: 'warning' },
       ],
-      priority: "Remettre à plat les zones qui font perdre du temps ou qui ne sont plus alignées avec votre besoin.",
+      priority: "Clarifier les zones de friction les plus coûteuses en temps, et vérifier que vos contrats reflètent encore votre besoin réel.",
       axes,
     };
   }
@@ -1169,24 +1172,24 @@ const computeResult = (answers: Record<number, { id: string; score: number }>): 
     return {
       score,
       level: "Fonctionnement trop subi",
-      interpretation: "Le quotidien tient, mais avec trop de limites, de dépendances ou de pertes de temps évitables.",
+      interpretation: "Votre quotidien tient, mais vous subissez trop de friction : prestataires à relancer, outils qui ne suivent pas, contrats jamais challengés. Ce n'est pas une fatalité.",
       points: finalPoints.length > 0 ? finalPoints : [
         { label: "Trop de relances ou de lenteurs", type: 'warning' },
         { label: "Existant insuffisamment challengé", type: 'danger' },
       ],
-      priority: "Reprendre la main sur l'existant avant d'ajouter de nouveaux outils ou coûts.",
+      priority: "Identifier les dépendances les plus coûteuses et reprendre la main sur l'existant avant d'envisager de nouveaux outils ou investissements.",
       axes,
     };
   }
   return {
     score,
     level: "Environnement à risque",
-    interpretation: "Votre environnement semble freiner clairement l'activité ou exposer l'entreprise à un impact disproportionné.",
+    interpretation: "Votre environnement freine clairement l'activité. Pertes de temps, dépendances mal pilotées et coûts non challengés pèsent sur la performance et la rentabilité.",
     points: finalPoints.length > 0 ? finalPoints : [
       { label: "Impact métier mal absorbé", type: 'danger' },
       { label: "Décalage fort entre besoin réel et existant", type: 'danger' },
     ],
-    priority: "Identifier rapidement les points de blocage, les dépendances critiques et les priorités d'optimisation.",
+    priority: "Démarrer par un état des lieux exhaustif pour prioriser les actions les plus impactantes, sans attendre qu'un incident oblige à réagir dans l'urgence.",
     axes,
   };
 };
@@ -1710,7 +1713,7 @@ const ContactSection = ({ diagResult, contactMode }: { diagResult: DiagResult | 
       const summary = [
         `Diagnostic Express — Score : ${diagResult.score}/100`,
         `Niveau : ${diagResult.level}`,
-        `Axes : ${diagResult.axes.map(a => `${a.label} (${a.detail})`).join(' · ')}`,
+        `Axes : ${diagResult.axes.map(a => `${a.label} ${a.score}/100 — ${a.detail}`).join(' · ')}`,
         diagResult.points.length > 0 ? `Points d'attention : ${diagResult.points.map(p => p.label).join(' · ')}` : '',
         `Priorité : ${diagResult.priority}`,
         '',
