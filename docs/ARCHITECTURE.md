@@ -163,10 +163,10 @@ Le site est **one-page**. Toutes les sections sont dans `src/App.tsx` (~1950 lig
 
 | Score | Niveau | Couleur |
 |-------|--------|---------|
-| 80–100 | Environnement bien tenu | Emerald |
+| 80–100 | Environnement IT bien tenu | Emerald |
 | 60–79 | Base correcte, encore perfectible | Blue |
 | 40–59 | Fonctionnement trop subi | Amber |
-| 0–39 | Environnement à risque | Rose |
+| 0–39 | Environnement IT à risque | Rose |
 
 ### Thèmes des questions
 1. Adéquation de l'environnement à l'activité (outils, réseau, téléphonie)
@@ -179,7 +179,7 @@ Le site est **one-page**. Toutes les sections sont dans `src/App.tsx` (~1950 lig
 
 1. **Score brut** : somme des points sélectionnés
 2. **Points d'attention** (max 2 affichés) :
-   - Q2 + Q3 ≤ 14 → alerte frictions/lenteurs
+   - Q2 + Q3 ≤ 14 → alerte contraintes/lenteurs
    - Q4 ≤ 7 → alerte contrats non challengés
    - Q5 ≤ 7 → alerte exposition opérationnelle
    - Q1 ≤ 7 → alerte environnement inadapté
@@ -202,7 +202,7 @@ Le site est **one-page**. Toutes les sections sont dans `src/App.tsx` (~1950 lig
 - Résultat : score circulaire coloré, cards warning/danger, priorité blue
 
 ### Contrainte métier
-- Zéro mention sécurité/cyber — uniquement performance, maîtrise, frictions, pilotage
+- Zéro mention sécurité/cyber - uniquement performance, maîtrise, contraintes, pilotage
 - CTA résultat → formulaire contact (pas de lead capture indépendante)
 
 ### Notes sur les résultats du simulateur

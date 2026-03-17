@@ -86,9 +86,9 @@ Flux narratif : gains concrets → diagnostic express → coûts → temps perdu
 ### DiagnosticExpress
 
 Module interactif en 3 phases : intro → quiz (5 questions) → résultat (score /100, 3 axes, alertes, priorité).
-Scoring : A=20, B=14, C=7, D=0. Niveaux : Bien tenu (80+), Perfectible (60–79), Trop subi (40–59), À risque (0–39).
+Scoring : A=20, B=14, C=7, D=0. Niveaux : Environnement IT bien tenu (80+), Base correcte encore perfectible (60–79), Fonctionnement trop subi (40–59), Environnement IT à risque (0–39).
 Export PDF via `exportDiagPDF()` (HTML + print). CTA résultat → scroll vers contact.
-Zéro mention sécurité/cyber — uniquement performance, maîtrise, frictions, pilotage.
+Zéro mention sécurité/cyber - uniquement performance, maîtrise, contraintes, pilotage.
 
 ### ContactSection (formulaire dual-mode)
 

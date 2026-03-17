@@ -1043,27 +1043,27 @@ const EvolutionConseil = () => (
 const DIAG_QUESTIONS = [
   {
     id: 1,
-    question: "Votre environnement IT correspond-il à vos besoins actuels ?",
+    question: "Votre environnement IT est-il toujours adapté à vos besoins actuels ?",
     options: [
-      { id: 'A', label: "Oui, nous travaillons sans friction particulière", score: 20 },
+      { id: 'A', label: "Oui, il répond bien à nos besoins", score: 20 },
       { id: 'B', label: "Globalement, avec quelques limites", score: 14 },
-      { id: 'C', label: "Pas vraiment, certains points nous freinent au quotidien", score: 7 },
-      { id: 'D', label: "Non, certaines limitations nous coûtent du temps", score: 0 },
+      { id: 'C', label: "Pas vraiment, certains points nous freinent", score: 7 },
+      { id: 'D', label: "Non, il n'est plus adapté", score: 0 },
     ],
   },
   {
     id: 2,
-    question: "Perdez-vous du temps à cause de vos outils, de votre réseau ou de votre téléphonie ?",
+    question: "Perdez-vous du temps à cause de votre réseau, de votre téléphonie ou de vos outils ?",
     options: [
       { id: 'A', label: "Non, très rarement", score: 20 },
-      { id: 'B', label: "Parfois, mais ça reste limité", score: 14 },
+      { id: 'B', label: "Parfois, mais cela reste limité", score: 14 },
       { id: 'C', label: "Oui, régulièrement", score: 7 },
       { id: 'D', label: "Oui, c'est un vrai problème au quotidien", score: 0 },
     ],
   },
   {
     id: 3,
-    question: "Les sujets avancent-ils bien avec vos prestataires IT ?",
+    question: "Vos sujets avancent-ils correctement avec vos prestataires IT ?",
     options: [
       { id: 'A', label: "Oui, les échanges sont clairs et efficaces", score: 20 },
       { id: 'B', label: "Globalement, même si certains sujets traînent", score: 14 },
@@ -1073,12 +1073,12 @@ const DIAG_QUESTIONS = [
   },
   {
     id: 4,
-    question: "Avez-vous une bonne lisibilité sur vos dépenses IT et télécom, et challengez-vous régulièrement vos contrats ?",
+    question: "Vos dépenses IT et télécoms sont-elles régulièrement revues, et vos contrats réellement challengés ?",
     options: [
-      { id: 'A', label: "Oui, on sait ce qu'on paie et on les remet régulièrement en concurrence", score: 20 },
-      { id: 'B', label: "On a une vision globale, mais sans méthode structurée", score: 14 },
-      { id: 'C', label: "Peu de visibilité, on reconduit plutôt par habitude", score: 7 },
-      { id: 'D', label: "Non, manque de lisibilité ou de temps pour s'en occuper", score: 0 },
+      { id: 'A', label: "Oui, nous revoyons régulièrement ce que nous payons", score: 20 },
+      { id: 'B', label: "De temps en temps, sans méthode précise", score: 14 },
+      { id: 'C', label: "Rarement, nous gardons l'existant par habitude", score: 7 },
+      { id: 'D', label: "Non, ou presque jamais", score: 0 },
     ],
   },
   {
@@ -1087,7 +1087,7 @@ const DIAG_QUESTIONS = [
     options: [
       { id: 'A', label: "Oui, l'impact serait limité", score: 20 },
       { id: 'B', label: "Probablement, avec une gêne temporaire", score: 14 },
-      { id: 'C', label: "Ce serait vite problématique", score: 7 },
+      { id: 'C', label: "Ce serait rapidement problématique", score: 7 },
       { id: 'D', label: "Ce serait un blocage important", score: 0 },
     ],
   },
@@ -1114,7 +1114,7 @@ const computeResult = (answers: Record<number, { id: string; score: number }>): 
   const points: { label: string; type: 'warning' | 'danger' }[] = [];
 
   if (q2 + q3 <= 14) {
-    points.push({ label: "Frictions fréquentes et temps perdu en relances ou résolution incomplète", type: q2 + q3 <= 7 ? 'danger' : 'warning' });
+    points.push({ label: "Contraintes fréquentes et temps perdu en relances ou résolution incomplète", type: q2 + q3 <= 7 ? 'danger' : 'warning' });
   }
   if (q4 <= 7) {
     points.push({ label: "Contrats et services insuffisamment challengés par rapport au besoin réel", type: q4 === 0 ? 'danger' : 'warning' });
@@ -1123,7 +1123,7 @@ const computeResult = (answers: Record<number, { id: string; score: number }>): 
     points.push({ label: "Exposition opérationnelle élevée en cas d'incident", type: q5 === 0 ? 'danger' : 'warning' });
   }
   if (q1 <= 7) {
-    points.push({ label: "Décalage entre l'environnement actuel et l'activité réelle", type: q1 === 0 ? 'danger' : 'warning' });
+    points.push({ label: "Décalage entre l'environnement IT actuel et l'activité réelle", type: q1 === 0 ? 'danger' : 'warning' });
   }
 
   // Keep max 2 points
@@ -1146,7 +1146,7 @@ const computeResult = (answers: Record<number, { id: string; score: number }>): 
   if (score >= 80) {
     return {
       score,
-      level: "Environnement bien tenu",
+      level: "Environnement IT bien tenu",
       interpretation: "Votre base semble saine. C'est justement le bon moment pour identifier ce qui peut encore être simplifié, optimisé ou renégocié afin de réduire les coûts inutiles et gagner en efficacité sur le long terme.",
       points: finalPoints.length > 0 ? finalPoints : [
         { label: "Marges d'optimisation : renégociation de contrats, consolidation d'outils ou automatisation de tâches récurrentes", type: 'warning' },
@@ -1159,12 +1159,12 @@ const computeResult = (answers: Record<number, { id: string; score: number }>): 
     return {
       score,
       level: "Base correcte, encore perfectible",
-      interpretation: "Votre infrastructure fonctionne, mais certaines zones restent à reprendre en main : contrats insuffisamment challengés, dépendances prestataires ou frictions récurrentes qui pèsent sur l'efficacité.",
+      interpretation: "Votre infrastructure fonctionne, mais certaines zones restent à reprendre en main : contrats insuffisamment challengés, dépendances prestataires ou contraintes récurrentes qui pèsent sur l'efficacité.",
       points: finalPoints.length > 0 ? finalPoints : [
-        { label: "Frictions ponctuelles", type: 'warning' },
+        { label: "Contraintes ponctuelles", type: 'warning' },
         { label: "Services ou contrats pas assez revus", type: 'warning' },
       ],
-      priority: "Clarifier les zones de friction les plus coûteuses en temps, et vérifier que vos contrats reflètent encore votre besoin réel.",
+      priority: "Clarifier les zones de contrainte les plus coûteuses en temps, et vérifier que vos contrats reflètent encore votre besoin réel.",
       axes,
     };
   }
@@ -1172,7 +1172,7 @@ const computeResult = (answers: Record<number, { id: string; score: number }>): 
     return {
       score,
       level: "Fonctionnement trop subi",
-      interpretation: "Votre quotidien tient, mais vous subissez trop de friction : prestataires à relancer, outils qui ne suivent pas, contrats jamais challengés. Ce n'est pas une fatalité.",
+      interpretation: "Votre quotidien tient, mais vous subissez trop de contraintes : prestataires à relancer, outils qui ne suivent pas, contrats jamais challengés. Ce n'est pas une fatalité.",
       points: finalPoints.length > 0 ? finalPoints : [
         { label: "Trop de relances ou de lenteurs", type: 'warning' },
         { label: "Existant insuffisamment challengé", type: 'danger' },
@@ -1183,8 +1183,8 @@ const computeResult = (answers: Record<number, { id: string; score: number }>): 
   }
   return {
     score,
-    level: "Environnement à risque",
-    interpretation: "Votre environnement freine clairement l'activité. Pertes de temps, dépendances mal pilotées et coûts non challengés pèsent sur la performance et la rentabilité.",
+    level: "Environnement IT à risque",
+    interpretation: "Votre environnement IT freine clairement l'activité. Pertes de temps, dépendances mal pilotées et coûts non challengés pèsent sur la performance et la rentabilité.",
     points: finalPoints.length > 0 ? finalPoints : [
       { label: "Impact métier mal absorbé", type: 'danger' },
       { label: "Décalage fort entre besoin réel et existant", type: 'danger' },
@@ -1196,7 +1196,7 @@ const computeResult = (answers: Record<number, { id: string; score: number }>): 
 
 const exportDiagPDF = (result: DiagResult) => {
   const scoreColor = result.score >= 80 ? '#34d399' : result.score >= 60 ? '#38bdf8' : result.score >= 40 ? '#fbbf24' : '#fb7185';
-  const html = `<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><title>Diagnostic Express — Aegis Network</title>
+  const html = `<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><title>Diagnostic Express | Aegis Network</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
 *{margin:0;padding:0;box-sizing:border-box}
@@ -1224,7 +1224,7 @@ h3{font-size:13px;font-weight:700;color:#0f172a;text-transform:uppercase;letter-
 .footer{margin-top:40px;padding-top:20px;border-top:1px solid #e2e8f0;font-size:11px;color:#94a3b8;display:flex;justify-content:space-between}
 @media print{body{padding:24px}}
 </style></head><body>
-<div class="header"><div><h1>AEGIS NETWORK</h1><span>Diagnostic Express — Résultat</span></div></div>
+<div class="header"><div><h1>AEGIS NETWORK</h1><span>Diagnostic Express : Résultat</span></div></div>
 <div class="score-section"><div class="score-circle"><div class="score-value">${result.score}</div><div class="score-label">sur 100</div></div>
 <div><div class="level">${result.level}</div><div class="interpretation">${result.interpretation}</div></div></div>
 <h3>Évaluation par axe</h3>
@@ -1236,7 +1236,7 @@ h3{font-size:13px;font-weight:700;color:#0f172a;text-transform:uppercase;letter-
 ${result.points.map(p => `<div class="point ${p.type}"><span>⚠</span><span>${p.label}</span></div>`).join('')}
 <h3>Priorité recommandée</h3>
 <div class="priority">${result.priority}</div>
-<div class="footer"><span>Aegis Network — Conseil &amp; Optimisation IT</span><span>04 82 53 26 99 · contact@aegisnetwork.fr</span></div>
+<div class="footer"><span>Aegis Network · Conseil &amp; Optimisation IT</span><span>04 82 53 26 99 · contact@aegisnetwork.fr</span></div>
 </body></html>`;
   const w = window.open('', '_blank');
   if (w) {
@@ -1586,7 +1586,7 @@ const DiagnosticExpress = ({ onComplete, onContact }: { onComplete: (r: DiagResu
 const FAQ_ITEMS = [
   {
     q: "Quelle est la différence entre Aegis Network et un prestataire informatique classique\u00a0?",
-    a: "Un prestataire classique vend des solutions ou des abonnements. Aegis Network est un consultant indépendant qui audite votre existant, challenge vos contrats et coordonne vos prestataires dans votre intérêt — sans commission fournisseur."
+    a: "Un prestataire classique vend des solutions ou des abonnements. Aegis Network est un consultant indépendant qui audite votre existant, challenge vos contrats et coordonne vos prestataires dans votre intérêt, sans commission fournisseur."
   },
   {
     q: "À quels types d'entreprises s'adresse Aegis Network\u00a0?",
@@ -1711,9 +1711,9 @@ const ContactSection = ({ diagResult, contactMode }: { diagResult: DiagResult | 
   useEffect(() => {
     if (diagResult) {
       const summary = [
-        `Diagnostic Express — Score : ${diagResult.score}/100`,
+        `Diagnostic Express - Score : ${diagResult.score}/100`,
         `Niveau : ${diagResult.level}`,
-        `Axes : ${diagResult.axes.map(a => `${a.label} ${a.score}/100 — ${a.detail}`).join(' · ')}`,
+        `Axes : ${diagResult.axes.map(a => `${a.label} ${a.score}/100 - ${a.detail}`).join(' · ')}`,
         diagResult.points.length > 0 ? `Points d'attention : ${diagResult.points.map(p => p.label).join(' · ')}` : '',
         `Priorité : ${diagResult.priority}`,
         '',
@@ -1798,7 +1798,7 @@ const ContactSection = ({ diagResult, contactMode }: { diagResult: DiagResult | 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="grid lg:grid-cols-2 gap-24">
           <div>
-            <p className="text-optical-blue font-bold text-sm uppercase tracking-[0.3em] mb-6">Contact — Audit IT gratuit</p>
+            <p className="text-optical-blue font-bold text-sm uppercase tracking-[0.3em] mb-6">Contact : Audit IT gratuit</p>
             <h2 className="text-5xl font-black text-white mb-10 leading-tight">Parlons de votre situation.</h2>
             <p className="text-slate-400 text-lg mb-8 leading-relaxed">Un diagnostic, un conseil, une question sur vos contrats ? Nous sommes disponibles pour en discuter.</p>
 
@@ -1811,7 +1811,7 @@ const ContactSection = ({ diagResult, contactMode }: { diagResult: DiagResult | 
               >
                 <Activity className="w-5 h-5 text-optical-blue shrink-0 mt-0.5" />
                 <div>
-                  <p className="text-sm font-bold text-white mb-1">Diagnostic complété — Score : {diagResult.score}/100</p>
+                  <p className="text-sm font-bold text-white mb-1">Diagnostic complété - Score : {diagResult.score}/100</p>
                   <p className="text-xs text-slate-400">{diagResult.level}. Le résumé a été ajouté à votre message.</p>
                 </div>
               </motion.div>
