@@ -24,7 +24,7 @@ index.html              ← Point d'entrée Vite (dev) + preload hero
 .env.example           ← Variables d'environnement (SMTP, serveur)
 src/
   main.tsx              ← Bootstrap React (StrictMode)
-  App.tsx               ← Composant racine — ~1950 lignes, toutes les sections
+  App.tsx               ← Composant racine — toutes les sections de la one-page
   index.css             ← Tailwind @theme + 15 keyframes + classes custom
   components/
     AegisLogo.tsx       ← Logo SVG animé (gradient + nœuds réseau)
@@ -40,6 +40,7 @@ server/
 public/
   favicon.svg           ← Favicon Aegis (shield)
   img/                  ← Images optimisées (WebP, compressées)
+  mentions-legales/     ← Page légale statique indexable
 dist/                   ← Build de production (versionné, déployé)
 docs/                   ← Documentation technique
 .claude/rules/          ← Règles pour agents IA (content.md, frontend.md)
@@ -72,9 +73,8 @@ Le site est **one-page**. Toutes les sections sont dans `src/App.tsx` (~1950 lig
 | 13 | `DiagnosticExpress` | 1275–1544 | `diag` | Diagnostic interactif 5 questions, scoring /100 |
 | 14 | `CTASection` | 1546–1571 | `cta` | Appel à l'action : échange gratuit, zone, visio |
 | 15 | `ContactSection` | 1573–1913 | `contact` | Formulaire dual-mode + pré-remplissage diagnostic |
-| 16 | `LegalModal` | 1915–1966 | — | Mentions légales (modal depuis footer) |
-| 17 | `Footer` | 1968–2000 | — | Pied de page + lien mentions |
-| 18 | `App` | 2002–2027 | — | Composant racine, gestion d'état globale |
+| 16 | `Footer` | — | — | Pied de page + lien vers `/mentions-legales/` |
+| 17 | `App` | — | — | Composant racine, gestion d'état globale |
 
 **Flux narratif :** Gains concrets → Coûts → Temps perdu → Diagnostic de fond → Légitimité → Simulateur → Évolution → Diagnostic Express interactif → CTA → Contact → Footer
 
@@ -310,16 +310,16 @@ Les flèches sont **ancrées directement aux éléments cibles** via des wrapper
 
 | CTA | Section | Cible | Action |
 |-----|---------|-------|--------|
-| « Demander un diagnostic gratuit » | Hero | `#diag` | scroll vers DiagnosticExpress |
+| « Faites votre diagnostic » | Hero | `#diagnostic` | scroll vers DiagnosticExpress |
 | « Voir vos gains concrets » | Hero | `#gains` | scroll vers GainBlock |
-| « Simuler votre impact » | plusieurs | `#simulateur` | scroll vers ImpactCalculator |
+| « Estimer vos économies » | Hero | `#simulateur` | scroll vers ImpactCalculator |
 | « Échanger sur vos résultats » | DiagResult | `#contact` | scroll + mode callback |
 | « Prendre rendez-vous » | CTASection | `#contact` | scroll vers ContactSection |
 | « Contactez-nous » | Navbar | `#contact` | scroll vers ContactSection |
 
 ### Système de navigation
 - **Fonction `scrollToSection(id)`** : `document.getElementById(id).scrollIntoView({ behavior: 'smooth' })`
-- **Pas de hash dans l'URL** : `preventDefault()` sur tous les `<a href="#">`
+- **Ancres sémantiques** : liens `href="#section"` conservés dans le HTML et interceptés en JS
 - **Section active** : `IntersectionObserver` avec `rootMargin: '-80px 0px -50% 0px'`
 - **Scroll offset** : `scroll-padding-top: 5rem` (CSS) pour compenser le header fixe de 80px
 

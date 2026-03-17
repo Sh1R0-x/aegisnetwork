@@ -54,14 +54,12 @@ async function prerender() {
   };
   const appHtmlRaw = render();
 
-  // Strip Framer Motion's initial animation inline-style from heading elements.
-  // H2–H6 are plain <h> elements (not motion components) so they have no inline styles.
-  // Only motion.h1 in the hero has opacity:0;transform:... from the SSR initial state.
-  // Removing it keeps the H1 visible in the HTML source for SEO tools and avoids
-  // a blank-page flash before JS hydrates.
-  // React reconciles the style difference gracefully during hydrateRoot.
+  // Strip the initial inline Motion styles that would otherwise hide critical
+  // textual content in the prerendered HTML source.
+  // This keeps primary headings, paragraphs, cards and CTA wrappers visible for
+  // crawlers and no-JS snapshots while preserving client-side hydration.
   const appHtml = appHtmlRaw.replace(
-    /(<h[1-6][^>]*?) style="opacity[^"]*"/g,
+    /(<(?:div|section|article|h[1-6]|p|a|button)[^>]*?) style="opacity[^"]*"/g,
     '$1',
   );
 

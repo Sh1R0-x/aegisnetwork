@@ -27,8 +27,11 @@ import {
   Menu,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
-import { useEffect, useState, type ChangeEvent, type FormEvent } from 'react';
+import { useEffect, useState, type ChangeEvent, type FormEvent, type MouseEvent } from 'react';
 import { AegisLogo } from './components/AegisLogo';
+
+const CONTACT_API_BASE = import.meta.env.VITE_CONTACT_API_BASE?.trim().replace(/\/$/, '');
+const CONTACT_ENDPOINT = CONTACT_API_BASE ? `${CONTACT_API_BASE}/api/contact` : '/api/contact';
 
 const FiberBeams = () => (
   <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
@@ -42,6 +45,16 @@ const FiberBeams = () => (
 
 const scrollToSection = (id: string) => {
   document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+};
+
+const handleSectionLinkClick = (
+  event: MouseEvent<HTMLAnchorElement>,
+  id: string,
+  afterScroll?: () => void,
+) => {
+  event.preventDefault();
+  scrollToSection(id);
+  afterScroll?.();
 };
 
 const NAV_SECTIONS = [
@@ -99,9 +112,11 @@ const Navbar = () => {
         {/* Desktop nav */}
         <div className="hidden md:flex items-center gap-8 text-[15px] font-semibold text-slate-300">
           {NAV_SECTIONS.map(({ id, label }) => (
-            <button
+            <a
               key={id}
-              onClick={() => scrollToSection(id)}
+              href={`#${id}`}
+              onClick={(event) => handleSectionLinkClick(event, id)}
+              aria-current={activeSection === id ? 'page' : undefined}
               className={`py-1 border-b-2 transition-colors duration-300 cursor-pointer ${
                 activeSection === id
                   ? 'text-optical-blue border-optical-blue'
@@ -109,17 +124,18 @@ const Navbar = () => {
               }`}
             >
               {label}
-            </button>
+            </a>
           ))}
         </div>
 
         <div className="flex items-center gap-3">
-          <button
-            onClick={() => scrollToSection('contact')}
+          <a
+            href="#contact"
+            onClick={(event) => handleSectionLinkClick(event, 'contact')}
             className="glow-button hidden sm:flex items-center justify-center rounded-lg h-10 px-6 bg-gradient-to-r from-blue-600 to-accent-violet text-white text-sm font-bold cursor-pointer"
           >
             Contactez-nous
-          </button>
+          </a>
 
           {/* Mobile burger */}
           <button
@@ -144,9 +160,10 @@ const Navbar = () => {
           >
             <div className="flex flex-col px-6 py-6 gap-2">
               {NAV_SECTIONS.map(({ id, label }) => (
-                <button
+                <a
                   key={id}
-                  onClick={() => { scrollToSection(id); setMobileOpen(false); }}
+                  href={`#${id}`}
+                  onClick={(event) => handleSectionLinkClick(event, id, () => setMobileOpen(false))}
                   className={`text-left py-3 px-4 rounded-xl text-base font-semibold transition-colors cursor-pointer ${
                     activeSection === id
                       ? 'text-optical-blue bg-blue-600/10'
@@ -154,14 +171,15 @@ const Navbar = () => {
                   }`}
                 >
                   {label}
-                </button>
+                </a>
               ))}
-              <button
-                onClick={() => { scrollToSection('contact'); setMobileOpen(false); }}
+              <a
+                href="#contact"
+                onClick={(event) => handleSectionLinkClick(event, 'contact', () => setMobileOpen(false))}
                 className="mt-4 glow-button flex items-center justify-center rounded-xl h-12 bg-gradient-to-r from-blue-600 to-accent-violet text-white font-bold text-base cursor-pointer"
               >
                 Contactez-nous
-              </button>
+              </a>
             </div>
           </motion.div>
         )}
@@ -190,7 +208,7 @@ const Hero = () => {
       {/* Left: text content with staggered entrance */}
       <div className="relative z-10">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={false}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
           className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-600/20 border border-blue-600/30 text-optical-blue text-xs font-bold uppercase tracking-widest mb-8"
@@ -203,7 +221,7 @@ const Hero = () => {
         </motion.div>
 
         <motion.h1
-          initial={{ opacity: 0, y: 20 }}
+          initial={false}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.15, duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
           className="text-4xl md:text-5xl lg:text-7xl font-black text-white leading-[1.05] mb-8"
@@ -216,7 +234,7 @@ const Hero = () => {
         </motion.h1>
 
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
+          initial={false}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
           className="text-lg text-slate-400 leading-relaxed max-w-xl mb-12"
@@ -225,24 +243,24 @@ const Hero = () => {
         </motion.p>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={false}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.45, duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
           className="flex flex-col gap-4 sm:items-start"
         >
-          <button onClick={() => scrollToSection('diagnostic')} className="glow-button h-14 px-10 rounded-xl bg-gradient-to-r from-blue-600 to-accent-violet text-white font-bold text-lg flex items-center justify-center gap-3 cursor-pointer w-full sm:w-auto">
+          <a href="#diagnostic" onClick={(event) => handleSectionLinkClick(event, 'diagnostic')} className="glow-button h-14 px-10 rounded-xl bg-gradient-to-r from-blue-600 to-accent-violet text-white font-bold text-lg flex items-center justify-center gap-3 cursor-pointer w-full sm:w-auto">
             Faites votre diagnostic
             <Activity size={20} />
-          </button>
+          </a>
           <div className="flex flex-wrap gap-3">
-            <button onClick={() => scrollToSection('gains')} className="h-11 px-6 rounded-lg bg-emerald-500/10 border border-emerald-500/25 text-emerald-300 font-semibold text-sm flex items-center justify-center gap-2 hover:bg-emerald-500/20 hover:text-emerald-200 transition-colors backdrop-blur-sm cursor-pointer">
+            <a href="#gains" onClick={(event) => handleSectionLinkClick(event, 'gains')} className="h-11 px-6 rounded-lg bg-emerald-500/10 border border-emerald-500/25 text-emerald-300 font-semibold text-sm flex items-center justify-center gap-2 hover:bg-emerald-500/20 hover:text-emerald-200 transition-colors backdrop-blur-sm cursor-pointer">
               <Sparkles size={15} />
               Ce qu'on vous apporte
-            </button>
-            <button onClick={() => scrollToSection('simulateur')} className="h-11 px-6 rounded-lg bg-sky-500/10 border border-sky-500/25 text-sky-300 font-semibold text-sm flex items-center justify-center gap-2 hover:bg-sky-500/20 hover:text-sky-200 transition-colors backdrop-blur-sm cursor-pointer">
+            </a>
+            <a href="#simulateur" onClick={(event) => handleSectionLinkClick(event, 'simulateur')} className="h-11 px-6 rounded-lg bg-sky-500/10 border border-sky-500/25 text-sky-300 font-semibold text-sm flex items-center justify-center gap-2 hover:bg-sky-500/20 hover:text-sky-200 transition-colors backdrop-blur-sm cursor-pointer">
               <Calculator size={15} />
               Estimer vos économies
-            </button>
+            </a>
           </div>
         </motion.div>
       </div>
@@ -363,7 +381,7 @@ const GainBlock = () => (
     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-blue-600/[0.04] blur-[150px] rounded-full pointer-events-none" />
     <div className="max-w-7xl mx-auto px-6 relative z-10">
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
+        initial={false}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
         viewport={{ once: true }}
@@ -415,7 +433,7 @@ const CostControl = () => (
     <FiberBeams />
     <div className="max-w-7xl mx-auto px-6">
       <motion.div
-        initial={{ opacity: 0, y: 25 }}
+        initial={false}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
         viewport={{ once: true }}
@@ -709,7 +727,7 @@ const WhyAegis = () => (
       </div>
 
       <motion.div
-        initial={{ opacity: 0, y: 20, scale: 0.98 }}
+        initial={false}
         whileInView={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
         viewport={{ once: true }}
@@ -787,7 +805,7 @@ const ImpactCalculator = () => {
     <section id="simulateur" className="py-32 relative bg-background-deep overflow-hidden">
       <div className="max-w-6xl mx-auto px-6">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={false}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
@@ -806,7 +824,7 @@ const ImpactCalculator = () => {
         <div className="grid lg:grid-cols-2 gap-10">
           {/* Inputs */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={false}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
@@ -849,7 +867,7 @@ const ImpactCalculator = () => {
 
           {/* Results */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={false}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
             viewport={{ once: true }}
@@ -1297,7 +1315,7 @@ const DiagnosticExpress = ({ onComplete, onContact }: { onComplete: (r: DiagResu
         {/* ── INTRO ── */}
         {step === 'intro' && (
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={false}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="text-center"
@@ -1591,7 +1609,7 @@ const FAQSection = () => {
     <section className="py-32 relative bg-background-deep overflow-hidden">
       <div className="max-w-3xl mx-auto px-6">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={false}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
@@ -1608,7 +1626,7 @@ const FAQSection = () => {
           {FAQ_ITEMS.map((item, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 15 }}
+              initial={false}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.08, duration: 0.4 }}
               viewport={{ once: true }}
@@ -1659,9 +1677,9 @@ const CTASection = () => (
             <span className="flex items-center gap-2"><MapPin size={16} /> Déplacements Lyon, Ain, Isère</span>
             <span className="flex items-center gap-2"><Users size={16} /> Aussi en visio</span>
           </div>
-          <button onClick={() => scrollToSection('contact')} className="h-12 sm:h-14 md:h-16 px-4 sm:px-6 md:px-10 rounded-2xl bg-white text-blue-700 font-bold text-sm sm:text-base md:text-xl hover:shadow-2xl transition-all hover:scale-105 cursor-pointer">
+          <a href="#contact" onClick={(event) => handleSectionLinkClick(event, 'contact')} className="h-12 sm:h-14 md:h-16 px-4 sm:px-6 md:px-10 rounded-2xl bg-white text-blue-700 font-bold text-sm sm:text-base md:text-xl hover:shadow-2xl transition-all hover:scale-105 cursor-pointer inline-flex items-center justify-center">
             Prendre rendez-vous
-          </button>
+          </a>
         </div>
       </div>
     </div>
@@ -1733,16 +1751,27 @@ const ContactSection = ({ diagResult, contactMode }: { diagResult: DiagResult | 
     };
 
     try {
-      const res = await fetch('/api/contact', {
+      const res = await fetch(CONTACT_ENDPOINT, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify(payload),
       });
 
-      const result = await res.json();
+      const contentType = res.headers.get('content-type') || '';
+      const result = contentType.includes('application/json')
+        ? await res.json()
+        : null;
 
-      if (!res.ok || !result.success) {
-        throw new Error(result.message || 'Une erreur est survenue.');
+      if (!res.ok || !result?.success) {
+        throw new Error(
+          result?.message ||
+          (res.status === 404
+            ? "Le service de contact n'est pas encore relié à un backend opérationnel. Appelez-nous au 04 82 53 26 99 ou écrivez à contact@aegisnetwork.fr."
+            : 'Une erreur est survenue. Veuillez réessayer ou nous contacter directement.')
+        );
       }
 
       setSubmitted(true);
@@ -1806,7 +1835,7 @@ const ContactSection = ({ diagResult, contactMode }: { diagResult: DiagResult | 
                     {item.icon}
                   </div>
                   <div>
-                    <p className="text-sm text-slate-500 font-bold uppercase tracking-widest">{item.label}</p>
+                    <p className="text-sm text-slate-400 font-bold uppercase tracking-widest">{item.label}</p>
                     {item.href ? (
                       <a href={item.href} className="text-lg sm:text-xl font-bold text-white hover:text-optical-blue transition-colors break-all">{item.value}</a>
                     ) : (
@@ -1948,7 +1977,7 @@ const ContactSection = ({ diagResult, contactMode }: { diagResult: DiagResult | 
                 {submitError && (
                   <p className="text-center text-sm text-red-400">{submitError}</p>
                 )}
-                <p className="text-center text-xs text-slate-500">Nous vous répondons sous 24 heures.</p>
+                <p className="text-center text-xs text-slate-400">Nous vous répondons sous 24 heures.</p>
               </form>
             )}
           </div>
@@ -1958,87 +1987,27 @@ const ContactSection = ({ diagResult, contactMode }: { diagResult: DiagResult | 
   );
 };
 
-const LegalModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
-  if (!isOpen) return null;
-
+const Footer = () => {
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-label="Mentions légales">
-      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative bg-slate-900 border border-white/10 rounded-3xl max-w-2xl w-full max-h-[80vh] overflow-y-auto p-8 md:p-12 shadow-2xl">
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 p-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/10 transition-all"
-          aria-label="Fermer"
-        >
-          <X size={20} />
-        </button>
-
-        <h2 className="text-2xl font-black text-white mb-8">Mentions légales</h2>
-
-        <div className="space-y-6 text-sm text-slate-400 leading-relaxed">
-          <div>
-            <h3 className="text-white font-bold mb-2">Éditeur du site</h3>
-            <p>Aegis Network. Conseil et optimisation en infrastructures IT et télécommunications</p>
-            <p>Contact : <a href="mailto:contact@aegisnetwork.fr" className="text-optical-blue hover:underline">contact@aegisnetwork.fr</a></p>
-            <p>Téléphone : <a href="tel:+33482532699" className="text-optical-blue hover:underline">04 82 53 26 99</a></p>
-            <p>Centre opérationnel : Lyon, France</p>
-            <p className="mt-2 text-yellow-500/80 text-xs">TODO: compléter : forme juridique, SIRET/RCS, capital social, nom du directeur de publication</p>
+    <footer className="bg-background-deep py-16 border-t border-white/5">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-8">
+          <div className="flex items-center gap-3">
+            <AegisLogo className="w-8 h-8" />
+            <div className="flex flex-col">
+              <span className="text-lg font-black tracking-[0.06em] text-white leading-none" style={{ wordSpacing: '0.2em' }}>
+                AEGIS <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-violet-400">NETWORK</span>
+              </span>
+              <span className="text-[8px] uppercase tracking-[0.25em] text-slate-300 font-bold mt-0.5">Conseil & Optimisation IT</span>
+            </div>
           </div>
-
-          <div>
-            <h3 className="text-white font-bold mb-2">Hébergement</h3>
-            <p>OVHcloud, 2 rue Kellermann, 59100 Roubaix, France</p>
-            <p>Tél. : 1007</p>
-            <p><a href="https://www.ovhcloud.com" className="text-optical-blue hover:underline" target="_blank" rel="noopener noreferrer">www.ovhcloud.com</a></p>
+          <div className="flex gap-8 text-xs font-bold text-slate-400 uppercase tracking-widest">
+            <a href="/mentions-legales/" className="hover:text-optical-blue transition-colors cursor-pointer">Mentions légales</a>
           </div>
-
-          <div>
-            <h3 className="text-white font-bold mb-2">Propriété intellectuelle</h3>
-            <p>L'ensemble du contenu de ce site (textes, images, logo, éléments graphiques) est la propriété d'Aegis Network, sauf mention contraire. Toute reproduction, même partielle, est interdite sans autorisation préalable.</p>
-          </div>
-
-          <div>
-            <h3 className="text-white font-bold mb-2">Données personnelles</h3>
-            <p>Ce site ne collecte aucune donnée personnelle de manière automatique. Le formulaire de contact transmet les informations saisies par l'utilisateur dans le seul but de répondre à sa demande. Aucun cookie de suivi ou d'analyse n'est utilisé.</p>
-            <p className="mt-2 text-yellow-500/80 text-xs">TODO: à adapter si un outil d'analytics ou des cookies sont ajoutés ultérieurement</p>
-          </div>
-
-          <div>
-            <h3 className="text-white font-bold mb-2">Responsabilité</h3>
-            <p>Aegis Network s'efforce de fournir des informations aussi précises que possible. Toutefois, l'entreprise ne saurait être tenue responsable des omissions, inexactitudes ou résultats obtenus suite à l'utilisation de ces informations.</p>
-          </div>
+          <p className="text-xs text-slate-400 font-medium">© 2026 Aegis Network.</p>
         </div>
       </div>
-    </div>
-  );
-};
-
-const Footer = () => {
-  const [legalOpen, setLegalOpen] = useState(false);
-
-  return (
-    <>
-      <footer className="bg-background-deep py-16 border-t border-white/5">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-8">
-            <div className="flex items-center gap-3">
-              <AegisLogo className="w-8 h-8" />
-              <div className="flex flex-col">
-                <span className="text-lg font-black tracking-[0.06em] text-white leading-none" style={{ wordSpacing: '0.2em' }}>
-                  AEGIS <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-violet-400">NETWORK</span>
-                </span>
-                <span className="text-[8px] uppercase tracking-[0.25em] text-slate-300 font-bold mt-0.5">Conseil & Optimisation IT</span>
-              </div>
-            </div>
-            <div className="flex gap-8 text-xs font-bold text-slate-500 uppercase tracking-widest">
-              <button onClick={() => setLegalOpen(true)} className="hover:text-optical-blue transition-colors cursor-pointer">Mentions Légales</button>
-            </div>
-            <p className="text-xs text-slate-500 font-medium">© 2026 Aegis Network.</p>
-          </div>
-        </div>
-      </footer>
-      <LegalModal isOpen={legalOpen} onClose={() => setLegalOpen(false)} />
-    </>
+    </footer>
   );
 };
 

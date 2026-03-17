@@ -60,7 +60,8 @@ Le serveur écoute sur le port 3001 par défaut. Au démarrage, il vérifie la c
 | `CONTACT_FROM_NAME` | `AEGIS NETWORK` | Nom d'expéditeur affiché |
 | `CONTACT_FROM_EMAIL` | `website@aegisnetwork.fr` | Adresse From visible (alias) |
 | `PORT` | `3001` | Port du serveur API |
-| `CORS_ORIGIN` | `http://localhost:3000` | Origine CORS autorisée (dev) |
+| `CORS_ORIGIN` | `http://localhost:3000` | Une ou plusieurs origines CORS autorisées, séparées par des virgules |
+| `VITE_CONTACT_API_BASE` | *(vide)* | URL de l'API de production si le frontend n'appelle pas `/api/*` en same-origin |
 
 ### OVH Email Pro
 
@@ -169,6 +170,11 @@ npm run server:dev   # → http://localhost:3001
 
 Le `vite.config.ts` contient un proxy qui redirige `/api/*` vers le serveur Express, donc le frontend appelle `/api/contact` sans se soucier du port.
 
+En production statique, deux options restent valides :
+
+- laisser le frontend appeler `/api/contact` si un reverse proxy same-origin existe
+- définir `VITE_CONTACT_API_BASE` puis rebuild le frontend si l'API est exposée sur une URL distincte
+
 ### Test local e-mail
 
 1. Copier `.env.example` → `.env` et renseigner `SMTP_PASS`
@@ -216,12 +222,15 @@ CORS_ORIGIN=https://aegisnetwork.fr
 PORT=3001  # ou 80/443 selon la config
 ```
 
+Le serveur expose aussi `GET /api/health` pour vérifier le branchement backend sans envoyer d'e-mail.
+
 ### Option 2 : API séparée
 
 Le site statique reste sur OVH Starter, l'API est hébergée séparément :
 1. Déployer `dist/` sur OVH Starter (comme avant)
 2. Déployer `server/` sur un hébergement Node.js
-3. Dans le frontend, pointer les appels API vers l'URL de l'API
+3. Définir `CORS_ORIGIN=https://aegisnetwork.fr`
+4. Définir `VITE_CONTACT_API_BASE=https://votre-api.example` puis rebuild le frontend
 
 **Important :** dans cette configuration, ajuster `CORS_ORIGIN` pour autoriser le domaine du site.
 
@@ -280,6 +289,7 @@ En cas de problème, le rollback est simple :
 - [ ] Alias `website@aegisnetwork.fr` → `contact@aegisnetwork.fr` créé côté OVH
 - [ ] `SMTP_PASS` défini en variable d'environnement sur le serveur de production
 - [ ] `CORS_ORIGIN` ajusté au domaine de production (ex. `https://aegisnetwork.fr`)
+- [ ] `VITE_CONTACT_API_BASE` défini puis rebuildé si l'API n'est pas same-origin
 - [ ] Backend déployé sur un hébergement Node.js (pas OVH Starter)
 - [ ] Test d'envoi via le formulaire : notification interne reçue
 - [ ] Test d'envoi via le formulaire : accusé de réception reçu par le visiteur

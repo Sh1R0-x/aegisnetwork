@@ -18,20 +18,31 @@ import contactRouter from './routes/contact.js';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PORT = parseInt(process.env.PORT || '3001', 10);
 const CORS_ORIGIN = process.env.CORS_ORIGIN || 'http://localhost:3000';
+const ALLOWED_ORIGINS = CORS_ORIGIN.split(',')
+  .map((origin) => origin.trim())
+  .filter(Boolean);
 
 const app = express();
 
 // ── Sécurité de base ────────────────────────────────────────────────────────
 app.disable('x-powered-by');
+app.set('trust proxy', 1);
 
-// ── CORS (utile en dev : Vite tourne sur un autre port) ─────────────────────
-app.use(
-  cors({
-    origin: CORS_ORIGIN,
-    methods: ['POST'],
-    allowedHeaders: ['Content-Type'],
-  }),
-);
+// ── CORS (utile en dev ou si l'API de prod est sur un autre domaine) ───────
+const apiCors = cors({
+  origin: (origin, callback) => {
+    if (!origin || ALLOWED_ORIGINS.includes(origin)) {
+      callback(null, true);
+      return;
+    }
+
+    callback(new Error('Origin non autorisée par CORS'));
+  },
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type'],
+});
+
+app.use('/api', apiCors);
 
 // ── Body parsing ────────────────────────────────────────────────────────────
 app.use(express.json({ limit: '16kb' }));
@@ -51,6 +62,9 @@ const contactLimiter = rateLimit({
 app.use('/api/contact', contactLimiter);
 
 // ── Routes API ──────────────────────────────────────────────────────────────
+app.get('/api/health', (_req, res) => {
+  res.json({ success: true });
+});
 app.use(contactRouter);
 
 // ── Fichiers statiques (production) ─────────────────────────────────────────

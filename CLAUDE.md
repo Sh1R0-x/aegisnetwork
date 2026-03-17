@@ -79,7 +79,7 @@ docs/               ← documentation technique
 
 ## Sections du site (App.tsx)
 
-Navbar → Hero → GainBlock → DiagnosticExpress → CostControl → TimeLoss → RootCause → WhyAegis → ImpactCalculator → EvolutionConseil → FAQSection → CTASection → ContactSection → Footer (+ LegalModal)
+Navbar → Hero → GainBlock → DiagnosticExpress → CostControl → TimeLoss → RootCause → WhyAegis → ImpactCalculator → EvolutionConseil → FAQSection → CTASection → ContactSection → Footer
 
 Flux narratif : gains concrets → diagnostic express → coûts → temps perdu → diagnostic de fond → légitimité/approche → simulateur → évolution → FAQ → CTA → contact
 
@@ -128,7 +128,7 @@ Ne jamais modifier ces informations sans validation explicite.
 - Composants React fonctionnels (pas de classes)
 - TypeScript strict, pas d'`any` explicite
 - Tailwind utility-first, custom properties dans `@theme` (index.css)
-- Navigation via `scrollToSection()` (pas de `<a href="#">` natif)
+- Navigation via ancres sémantiques (`href="#section"`) + interception JS via `scrollToSection()`
 - Indentation : 2 espaces
 - Encoding : UTF-8, LF
 - Code lisible, pas de minification manuelle
@@ -173,15 +173,14 @@ Source de vérité :
 
 ## Mentions légales
 
-- Intégrées dans une modal accessible depuis le footer
-- Composant `LegalModal` dans `App.tsx`
-- Placeholders `TODO:` pour les données non confirmées (SIRET, forme juridique, directeur de publication)
+- Page statique dédiée : `public/mentions-legales/index.html`
+- Lien footer vers `/mentions-legales/`
 - Hébergeur OVH documenté avec adresse réelle
 - Pas de politique de confidentialité séparée tant qu'aucun cookie/analytics n'est actif
 
 ## Interdictions
 
-- Ne pas ajouter de pages supplémentaires (one-page)
+- Ne pas ajouter de pages supplémentaires hors besoin légal ou technique strict
 - Ne pas ajouter de CMS ou de formulaire backend fonctionnel
 - Ne pas ajouter de cookie banner sans besoin réel
 - Ne pas ajouter d'analytics sans validation explicite
@@ -190,10 +189,10 @@ Source de vérité :
 
 ## Stratégie de navigation
 
-- Navigation JS sans hash URL : `scrollToSection()` avec `scrollIntoView({ behavior: 'smooth' })`
+- Navigation par ancres sémantiques (`href="#..."`) interceptées par `scrollToSection()`
 - Section active détectée via `IntersectionObserver` (rootMargin: `-80px 0px -50% 0px`)
 - `scroll-padding-top: 5rem` en CSS pour compenser le header fixe
-- Liens `<a href="#section">` conservés pour la sémantique mais neutralisés par `preventDefault()`
+- Les ancres gardent une cible HTML lisible pour le crawl et les no-JS snapshots
 
 ## Animations
 

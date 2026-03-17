@@ -73,14 +73,21 @@ npm run build
 
 ## Déploiement
 
-Le dépôt versionne volontairement `dist/` car le site statique est synchronisé vers l'hébergement OVH Starter. Le `.htaccess` force HTTPS et redirige les requêtes vers `dist/`.
+Le dépôt versionne volontairement `dist/` car le site statique est synchronisé vers l'hébergement OVH Starter. Le `.htaccess` :
 
-Point important : le frontend appelle actuellement `/api/contact` en same-origin. Un déploiement statique OVH Starter seul ne suffit donc pas pour faire fonctionner le formulaire de contact.
+- force l'URL canonique `https://aegisnetwork.fr/`
+- redirige `/index.html` et `/dist/*` vers leurs URLs publiques
+- sert les fichiers depuis `dist/`
+- applique un cache long sur les assets fingerprintés, mais pas sur les HTML/XML/TXT
+
+Point important : le frontend appelle par défaut `/api/contact` en same-origin. Si l'API est hébergée séparément, le build peut être pointé vers elle via `VITE_CONTACT_API_BASE`.
 
 Deux modes de production sont cohérents avec l'état actuel du code :
 
 1. un hébergement Node.js qui sert à la fois `dist/` et l'API Express
-2. un site statique sur OVH Starter avec un reverse proxy same-origin pour `/api/*` vers un backend Node.js séparé
+2. un site statique sur OVH Starter avec :
+   - soit un reverse proxy same-origin pour `/api/*` vers un backend Node.js séparé
+   - soit un backend Node.js séparé exposé sur une autre URL et référencé via `VITE_CONTACT_API_BASE`
 
 Sans l'un de ces deux montages, le site s'affiche mais le formulaire ne peut pas envoyer d'e-mails.
 
@@ -93,6 +100,7 @@ Règles à respecter :
 - ne jamais commiter de `.env`
 - ne jamais commiter `SMTP_PASS`
 - garder les secrets uniquement côté serveur
+- définir `VITE_CONTACT_API_BASE` uniquement si l'API de production n'est pas same-origin
 
 ## Structure utile
 
