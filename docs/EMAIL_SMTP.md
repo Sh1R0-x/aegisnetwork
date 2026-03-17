@@ -35,6 +35,8 @@ export SMTP_PASS=votre_mot_de_passe_smtp
 
 C'est le mot de passe de la boîte `contact@aegisnetwork.fr` configurée chez OVH (espace client OVH → Emails → Gérer le mot de passe).
 
+Si vous utilisez un fichier `.env` local et que le mot de passe commence par `#` ou contient des caractères sensibles, entourez la valeur de guillemets. Sinon `dotenv` peut interpréter le début de ligne comme un commentaire.
+
 ### 3. Démarrer le serveur
 
 ```bash
