@@ -160,7 +160,7 @@ Source de vérité :
 
 ## SEO
 
-- **Title** : `Conseil, audit & optimisation IT / télécom pour PME à Lyon | Aegis Network`
+- **Title** : `Conseil & optimisation IT pour PME à Lyon | Aegis Network`
 - **Meta description** : focus TPE-PME Lyon, réduction coûts IT/télécom, pilotage prestataires, audit et accompagnement pragmatiques
 - **Canonical** : `https://aegisnetwork.fr/`
 - **Open Graph** : og:title, og:description, og:url, og:type, og:locale, og:site_name
