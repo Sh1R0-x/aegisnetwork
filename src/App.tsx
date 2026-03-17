@@ -27,7 +27,7 @@ import {
   Menu,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
-import { useEffect, useState, type ChangeEvent, type FormEvent, type MouseEvent } from 'react';
+import { useEffect, useRef, useState, type ChangeEvent, type FormEvent, type MouseEvent } from 'react';
 import { AegisLogo } from './components/AegisLogo';
 
 const CONTACT_API_BASE = import.meta.env.VITE_CONTACT_API_BASE?.trim().replace(/\/$/, '');
@@ -190,6 +190,16 @@ const Navbar = () => {
 
 const Hero = () => {
   const [heroReady, setHeroReady] = useState(false);
+  const imgRef = useRef<HTMLImageElement>(null);
+
+  // If the image was preloaded before React hydrated, onLoad never fires.
+  // Check img.complete at mount and resolve heroReady immediately.
+  useEffect(() => {
+    const img = imgRef.current;
+    if (img && img.complete && img.naturalWidth > 0) {
+      setHeroReady(true);
+    }
+  }, []);
 
   return (
   <section className="relative pt-28 pb-24 lg:pt-36 lg:pb-40 overflow-hidden">
@@ -281,6 +291,7 @@ const Hero = () => {
             fetchPriority="high"
             width={1600}
             height={1064}
+            ref={imgRef}
             onLoad={(e) => {
               const img = e.currentTarget;
               if (img.decode) {
