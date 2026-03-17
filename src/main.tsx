@@ -17,4 +17,3 @@ if (container.childElementCount > 0) {
 } else {
   createRoot(container).render(app);
 }
-

@@ -309,7 +309,7 @@ const Hero = () => {
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,var(--color-background-deep)_100%)] opacity-70" />
         </motion.div>
 
-        {/* KPI: Réduction Coûts */}
+        {/* KPI: Temps perdu en gestion IT */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={heroReady ? { opacity: 1 } : { opacity: 0 }}
@@ -319,23 +319,16 @@ const Hero = () => {
           <div className="animate-float">
             <div className="hero-kpi-card bg-slate-900/80 backdrop-blur-xl border border-white/10 p-4 lg:p-5 rounded-xl shadow-2xl w-40 lg:w-48">
               <div className="flex items-center gap-2 mb-2">
-                <TrendingDown className="w-4 h-4 text-optical-blue" />
-                <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400">Réduction Coûts</span>
+                <Clock className="w-4 h-4 text-amber-400" />
+                <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400">Temps perdu / mois</span>
               </div>
-              <span className="text-2xl lg:text-3xl font-black text-white">-30%</span>
-              <div className="w-full bg-white/5 h-1.5 rounded-full mt-3 overflow-hidden">
-                <motion.div
-                  initial={{ width: 0 }}
-                  animate={{ width: '70%' }}
-                  transition={{ duration: 1.5, delay: 1, ease: 'easeOut' }}
-                  className="bg-optical-blue h-full rounded-full"
-                />
-              </div>
+              <span className="text-2xl lg:text-3xl font-black text-white">15h</span>
+              <p className="text-[9px] text-slate-500 mt-2 leading-snug">en gestion IT dans les PME</p>
             </div>
           </div>
         </motion.div>
 
-        {/* KPI: Efficacité Réseau */}
+        {/* KPI: Conseil indépendant */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={heroReady ? { opacity: 1 } : { opacity: 0 }}
@@ -344,18 +337,14 @@ const Hero = () => {
         >
           <div className="animate-float" style={{ animationDelay: '1.5s' }}>
             <div className="hero-kpi-card bg-slate-900/80 backdrop-blur-xl border border-white/10 p-4 lg:p-5 rounded-xl shadow-2xl w-44 lg:w-52">
-              <div className="flex items-center gap-2 mb-2">
-                <Zap className="w-4 h-4 text-emerald-400" />
-                <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400">Efficacité Réseau</span>
-              </div>
-              <span className="text-2xl lg:text-3xl font-black text-white">+45%</span>
-              <div className="w-full bg-white/5 h-1.5 rounded-full mt-3 overflow-hidden">
-                <motion.div
-                  initial={{ width: 0 }}
-                  animate={{ width: '45%' }}
-                  transition={{ duration: 1.5, delay: 1.2, ease: 'easeOut' }}
-                  className="bg-emerald-400 h-full rounded-full"
-                />
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg bg-emerald-600/20 flex items-center justify-center text-emerald-400 border border-emerald-600/25">
+                  <ShieldCheck className="w-5 h-5" />
+                </div>
+                <div>
+                  <div className="text-sm font-black text-white leading-none">Conseil indépendant</div>
+                  <div className="text-[9px] text-emerald-400/70 mt-1 uppercase tracking-[0.12em] font-bold">Neutre · Objectif</div>
+                </div>
               </div>
             </div>
           </div>
@@ -579,8 +568,8 @@ const TimeLoss = () => (
             <p className="text-xs font-bold text-accent-violet uppercase tracking-widest mb-6">Impact concret</p>
             <div className="space-y-6">
               {[
-                { value: "4h", label: "par mois en moyenne passées à gérer des incidents IT dans une PME de 10 à 50 salariés" },
-                { value: "54%", label: "des TPE estiment que les charges administratives déléguées pèsent 1 à 3 % du CA" },
+                { value: "15h", label: "par mois en moyenne consacrées à la gestion informatique dans les PME" },
+                { value: "38%", label: "des dirigeants de PME considèrent leurs solutions IT comme source de frustrations majeures" },
                 { value: "29%", label: "des TPE-PME victimes d'incidents déclarent des interruptions de service" }
               ].map((stat, i) => (
                 <motion.div
@@ -596,7 +585,7 @@ const TimeLoss = () => (
                 </motion.div>
               ))}
             </div>
-            <p className="text-[11px] text-slate-600 mt-6 leading-relaxed">Sources : SDI 2023, Cybermalveillance.gouv.fr 2025</p>
+            <p className="text-[11px] text-slate-600 mt-6 leading-relaxed">Sources : France Num 2024, Cybermalveillance.gouv.fr 2025</p>
           </div>
         </div>
       </div>
@@ -960,9 +949,10 @@ const ImpactCalculator = () => {
                   <div className="border-t border-white/5 mt-4 pt-4">
                     <p className="text-xs font-bold text-slate-300 uppercase tracking-widest mb-3">Contexte marché (sources indépendantes)</p>
                     <ul className="space-y-2 text-xs text-slate-400">
+                      <li>15 heures par mois en moyenne consacrées à la gestion IT dans les PME. <span className="text-slate-500">France Num, 2024</span></li>
+                      <li>38 % des dirigeants de PME considèrent leurs solutions IT comme source de frustrations majeures. <span className="text-slate-500">France Num, 2024</span></li>
                       <li>78 % des dirigeants de TPE/PME estiment que le numérique représente un bénéfice réel. <span className="text-slate-500">France Num, Baromètre 2025</span></li>
                       <li>Les PME renégocient plus souvent avec le même fournisseur, les grandes entreprises remettent davantage en concurrence. <span className="text-slate-500">BEREC, 2022</span></li>
-                      <li>Pour 54 % des TPE, les charges administratives déléguées représentent 1 à 3 % du CA. <span className="text-slate-500">SDI, 2023</span></li>
                       <li>29 % des TPE-PME victimes d'incidents déclarent des interruptions de service. <span className="text-slate-500">Cybermalveillance.gouv.fr, 2025</span></li>
                     </ul>
                   </div>
@@ -1605,7 +1595,7 @@ const FAQ_ITEMS = [
   },
   {
     q: "Quels gains concrets peut-on attendre d'un audit\u00a0?",
-    a: "En moyenne, les entreprises accompagnées constatent une réduction de 15 à 30\u00a0% sur leurs contrats IT et télécom, un gain de temps significatif sur la gestion des prestataires, et une meilleure visibilité sur leurs dépenses."
+    a: "Les audits IT et télécom permettent généralement d'identifier 10 à 30\u00a0% d'économies sur les contrats, selon la situation de départ. S'y ajoutent un gain de temps sur la gestion quotidienne des prestataires et une meilleure visibilité sur les dépenses réelles. Ces chiffres sont des ordres de grandeur observés, pas une promesse."
   },
   {
     q: "Aegis Network intervient-il uniquement à Lyon\u00a0?",

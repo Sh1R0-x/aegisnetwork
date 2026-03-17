@@ -116,8 +116,9 @@ Le site est **one-page**. Toutes les sections sont dans `src/App.tsx` (~1950 lig
 
 | Carte | Position | Icône | Valeur | Entrée Framer |
 |-------|----------|-------|--------|---------------|
-| Réduction Coûts | haut-gauche | TrendingDown | -30% | `x: -20` |
-| Efficacité Réseau | bas-droite | Zap (emerald) | +45% | `x: 20` |
+| Temps perdu / mois | haut-gauche | Clock (amber) | 15h | fade-in |
+| Temps perdu / mois | haut-gauche | Clock (amber) | 15h | fade-in |
+| Conseil indépendant | bas-droite | ShieldCheck (emerald) | badge qualitative | fade-in |
 | Audit de Performance | centre | Search | badge glow | `scale: 0.9` |
 
 ### KPI cards — effets visuels
@@ -125,7 +126,6 @@ Le site est **one-page**. Toutes les sections sont dans `src/App.tsx` (~1950 lig
 - `.audit-scan-card` : scan vertical via `::after` (keyframe `audit-scan`, 5s)
 - Glass effect : `bg-slate-900/80 backdrop-blur-xl border-white/10`
 - Float CSS (`animate-float`) : amplitude 8px / 8s, delays échelonnés (0s, 1.5s, 3s)
-- Progress bars : Framer Motion one-shot
 
 ### Fond animé
 - 3 orbes ambient (`blur-[120px]`, blue + violet) avec drift CSS lent (20–25s)
