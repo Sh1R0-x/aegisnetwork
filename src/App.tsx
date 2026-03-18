@@ -287,7 +287,7 @@ const Hero = () => {
           <img
             className="w-full h-full object-cover opacity-60"
             src="/img/hero-network.webp"
-            alt="Audit réseau et infrastructure IT pour PME — Aegis Network Lyon"
+            alt="Audit réseau et infrastructure IT pour PME - AEGIS Network Lyon"
             fetchPriority="high"
             width={1600}
             height={1064}
@@ -393,7 +393,7 @@ const GainBlock = () => (
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-violet-400">maîtrisés.</span>
         </h2>
         <p className="text-slate-400 text-lg leading-relaxed">
-          Un accompagnement Aegis, c'est du temps récupéré, des coûts maîtrisés et une infrastructure qui travaille pour vous, pas l'inverse.
+          Un accompagnement AEGIS, c'est du temps récupéré, des coûts maîtrisés et une infrastructure qui travaille pour vous, pas l'inverse.
         </p>
       </motion.div>
 
@@ -686,7 +686,7 @@ const WhyAegis = () => (
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-violet-400">Pas un revendeur.</span>
         </h2>
         <p className="text-slate-400 text-lg leading-relaxed">
-          Aegis Network n'est pas un opérateur, pas un intégrateur, pas un revendeur. Nous sommes un interlocuteur unique qui travaille exclusivement dans votre intérêt.
+          AEGIS Network n'est pas un opérateur, pas un intégrateur, pas un revendeur. Nous sommes un interlocuteur unique qui travaille exclusivement dans votre intérêt.
         </p>
       </div>
 
@@ -736,14 +736,14 @@ const WhyAegis = () => (
         <div className="absolute top-0 left-0 w-32 h-32 bg-blue-600/5 rounded-full blur-[40px]" />
         <div className="relative z-10">
           <p className="text-lg lg:text-xl text-slate-300 leading-relaxed italic mb-6">
-            « J'ai créé Aegis parce que j'ai vu trop d'entreprises payer pour des services inadaptés, sans jamais avoir quelqu'un de leur côté pour les aider à y voir clair. Mon rôle, c'est d'être ce regard extérieur, objectif et concret. »
+            « J'ai créé AEGIS parce que j'ai vu trop d'entreprises payer pour des services inadaptés, sans jamais avoir quelqu'un de leur côté pour les aider à y voir clair. Mon rôle, c'est d'être ce regard extérieur, objectif et concret. »
           </p>
           <div className="flex items-center gap-4">
             <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-600 to-violet-600 flex items-center justify-center text-white font-bold text-sm">
               AN
             </div>
             <div>
-              <p className="text-white font-bold">Fondateur, Aegis Network</p>
+              <p className="text-white font-bold">Fondateur, AEGIS Network</p>
               <p className="text-xs text-slate-500">Consultant IT indépendant · Lyon</p>
             </div>
           </div>
@@ -1196,7 +1196,7 @@ const computeResult = (answers: Record<number, { id: string; score: number }>): 
 
 const exportDiagPDF = (result: DiagResult) => {
   const scoreColor = result.score >= 80 ? '#34d399' : result.score >= 60 ? '#38bdf8' : result.score >= 40 ? '#fbbf24' : '#fb7185';
-  const html = `<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><title>Diagnostic Express | Aegis Network</title>
+  const html = `<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><title>Diagnostic Express | AEGIS Network</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
 *{margin:0;padding:0;box-sizing:border-box}
@@ -1236,7 +1236,7 @@ h3{font-size:13px;font-weight:700;color:#0f172a;text-transform:uppercase;letter-
 ${result.points.map(p => `<div class="point ${p.type}"><span>⚠</span><span>${p.label}</span></div>`).join('')}
 <h3>Priorité recommandée</h3>
 <div class="priority">${result.priority}</div>
-<div class="footer"><span>Aegis Network · Conseil &amp; Optimisation IT</span><span>04 82 53 26 99 · contact@aegisnetwork.fr</span></div>
+<div class="footer"><span>AEGIS Network · Conseil &amp; Optimisation IT</span><span>04 82 53 26 99 · contact@aegisnetwork.fr</span></div>
 </body></html>`;
   const w = window.open('', '_blank');
   if (w) {
@@ -1585,15 +1585,15 @@ const DiagnosticExpress = ({ onComplete, onContact }: { onComplete: (r: DiagResu
 
 const FAQ_ITEMS = [
   {
-    q: "Quelle est la différence entre Aegis Network et un prestataire informatique classique\u00a0?",
-    a: "Un prestataire classique vend des solutions ou des abonnements. Aegis Network est un consultant indépendant qui audite votre existant, challenge vos contrats et coordonne vos prestataires dans votre intérêt, sans commission fournisseur."
+    q: "Quelle est la différence entre AEGIS Network et un prestataire informatique classique\u00a0?",
+    a: "Un prestataire classique vend des solutions ou des abonnements. AEGIS Network est un consultant indépendant qui audite votre existant, challenge vos contrats et coordonne vos prestataires dans votre intérêt, sans commission fournisseur."
   },
   {
-    q: "À quels types d'entreprises s'adresse Aegis Network\u00a0?",
+    q: "À quels types d'entreprises s'adresse AEGIS Network\u00a0?",
     a: "Principalement aux TPE et PME de la région lyonnaise qui veulent reprendre le contrôle sur leur IT, leur réseau ou leur téléphonie, réduire leurs coûts et gagner en performance sans embaucher un DSI à temps plein."
   },
   {
-    q: "Combien coûte un audit IT avec Aegis Network\u00a0?",
+    q: "Combien coûte un audit IT avec AEGIS Network\u00a0?",
     a: "Le premier échange est gratuit et sans engagement. Il permet d'évaluer votre situation et de déterminer si un accompagnement est pertinent. Le périmètre et le budget sont ensuite définis ensemble, en toute transparence."
   },
   {
@@ -1601,7 +1601,7 @@ const FAQ_ITEMS = [
     a: "Les audits IT et télécom permettent généralement d'identifier 10 à 30\u00a0% d'économies sur les contrats, selon la situation de départ. S'y ajoutent un gain de temps sur la gestion quotidienne des prestataires et une meilleure visibilité sur les dépenses réelles. Ces chiffres sont des ordres de grandeur observés, pas une promesse."
   },
   {
-    q: "Aegis Network intervient-il uniquement à Lyon\u00a0?",
+    q: "AEGIS Network intervient-il uniquement à Lyon\u00a0?",
     a: "L'accompagnement est basé à Lyon et couvre principalement la région Auvergne-Rhône-Alpes (Lyon, Ain, Isère). Les échanges en visio permettent également un suivi à distance sur tout le territoire."
   },
 ];
@@ -2008,7 +2008,7 @@ const Footer = () => {
           <div className="flex gap-8 text-xs font-bold text-slate-400 uppercase tracking-widest">
             <a href="/mentions-legales/" className="hover:text-optical-blue transition-colors cursor-pointer">Mentions légales</a>
           </div>
-          <p className="text-xs text-slate-400 font-medium">© 2026 Aegis Network.</p>
+          <p className="text-xs text-slate-400 font-medium">© 2026 AEGIS Network.</p>
         </div>
       </div>
     </footer>

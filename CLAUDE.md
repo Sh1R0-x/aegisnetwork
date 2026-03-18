@@ -156,14 +156,15 @@ Source de vérité :
 - Pas de superlatifs gratuits ("le meilleur", "n°1", "révolutionnaire")
 - Axes : optimisation, pilotage, réduction des coûts, productivité, accompagnement
 - Aegis Network est présenté comme consultant/chef de projet, jamais comme opérateur ou fournisseur
+- Convention de marque : "AEGIS Network" partout (AEGIS en majuscules, Network en titre), "AEGIS NETWORK" uniquement en display visuel (navbar, footer, hero)
 - Ne jamais inventer d'informations légales, d'adresse ou de téléphone
 
 ## SEO
 
-- **Title** : `Conseil & optimisation IT pour PME à Lyon | Aegis Network`
+- **Title** : `Conseil & optimisation IT pour PME à Lyon | AEGIS Network`
 - **Meta description** : focus TPE-PME Lyon, réduction coûts IT/télécom, pilotage prestataires, audit et accompagnement pragmatiques
 - **Canonical** : `https://aegisnetwork.fr/`
-- **Open Graph** : og:title, og:description, og:url, og:type, og:locale, og:site_name
+- **Open Graph** : og:title, og:description, og:url, og:type, og:locale, og:site_name — tous alignés sur "AEGIS Network"
 - **Structured data** (JSON-LD dans `index.html`) :
   - `ProfessionalService` : name "AEGIS Network", adresse complète (19 Avenue de Pérouges, 69580 Sathonay-Camp), téléphone, email, logo (favicon.svg), image (hero-network.webp 1600×1064), areaServed ["Lyon", "Rhône", "Isère", "Ain"], knowsAbout, hasOfferCatalog (3 services)
   - `FAQPage` : 5 questions/réponses alignées positionnement
