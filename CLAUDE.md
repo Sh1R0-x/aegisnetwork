@@ -165,8 +165,9 @@ Source de vérité :
 - **Canonical** : `https://aegisnetwork.fr/`
 - **Open Graph** : og:title, og:description, og:url, og:type, og:locale, og:site_name
 - **Structured data** (JSON-LD dans `index.html`) :
-  - `ProfessionalService` : identité, services, zone géographique, contact
+  - `ProfessionalService` : name "AEGIS Network", adresse complète (19 Avenue de Pérouges, 69580 Sathonay-Camp), téléphone, email, logo (favicon.svg), image (hero-network.webp 1600×1064), areaServed ["Lyon", "Rhône", "Isère", "Ain"], knowsAbout, hasOfferCatalog (3 services)
   - `FAQPage` : 5 questions/réponses alignées positionnement
+  - Pas de `sameAs` : aucun profil social officiel confirmé à ce stade
 - **robots.txt** + **sitemap.xml** dans `public/`
 - **Un seul H1** (hero) — H2 orientés intentions SEO business
 - **FAQ** : section accordion avec 5 questions (différenciation, cible, coût, gains, zone)
